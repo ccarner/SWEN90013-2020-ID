@@ -49,3 +49,10 @@ Implementation of IDecide project frontend is built with React.js
             - IDecide logo.
         / data
           - json file
+
+
+## Progress:
+```
+1. Basic structure of the project
+2. Basic display of the 5 recommendations page, need to update the design.
+```
