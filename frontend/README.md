@@ -49,7 +49,7 @@ Implementation of IDecide project frontend is built with React.js
             - IDecide logo.
         / data
           - json file
-
+```
 
 ## Progress:
 ```
