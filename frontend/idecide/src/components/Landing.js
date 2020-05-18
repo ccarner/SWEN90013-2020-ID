@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 
 
 
@@ -14,8 +16,10 @@ class Landing extends Component {
         <h2>Do you sometimes wonder if you are safe?</h2>
         <p>This website is for women who feel unsafe or afraid of a current or ex-partner.</p>
         <button >Start(anonmously)</button><br></br>
+        <Link to="./loginComponent/loginPage">
+          <button >Log in</button>
+        </Link>
 
-        <button >Log in</button>
 
       </div>
     )
