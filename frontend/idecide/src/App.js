@@ -12,6 +12,10 @@ import Framework from './components/Framework'
 
 import LoginPage from './components/loginComponent/loginPage'
 import RegisterPage from './components/loginComponent/registerPage'
+import SurveyHome from './components/surveyComponent/surveyHome'
+import RelationshipSurvey from './components/surveyComponent/relationshipSurvey'
+import SafetySurvey from './components/surveyComponent/safetySurvey'
+import PrioritiesSurvey from './components/surveyComponent/prioritiesSurvey'
 
 class App extends Component {
   render() {
@@ -27,6 +31,10 @@ class App extends Component {
             <Route path="/survey/3.3" component={Framework} />
             <Route path="/loginComponent/loginPage" component={LoginPage} />
             <Route path="/loginComponent/registerPage" component={RegisterPage} />
+            <Route path="/surveyComponent/surveyHome" component={SurveyHome} />
+            <Route path="/surveyComponent/relationshipSurvey" component={RelationshipSurvey} />
+            <Route path="/surveyComponent/safetySurvey" component={SafetySurvey} />
+            <Route path="/surveyComponent/prioritiesSurvey" component={PrioritiesSurvey} />
           </div>
         </div>
       </Router>
