@@ -7,12 +7,13 @@ export default class RegisterPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstname: null,
-            lastname: null,
-            email: null,
+            username: null,
             password: null,
-            error: null,
-            isLoaded: false,
+            partnerGender: null,
+            email: null,
+            phoneNumber: null,
+            postcode: null,
+            response: "Nothing yet"
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -34,52 +35,58 @@ export default class RegisterPage extends React.Component {
     render() {
 
         return (
-            <form onSubmit={this.handleSubmit}>
-                <div>
-                    <div className="header">Register</div>
-                    <div className="content">
+            <div>
+                <form onSubmit={this.handleSubmit}>
+                    <div>
+                        <div className="header">Register</div>
+                        <div className="content">
 
-                        <div className="form">
-                            <div >
-                                <label htmlFor="firstname">First Name: </label>
-                                <input type="text" name="firstname" placeholder="First Name" />
-                            </div>
-                            <div>
-                                <label htmlFor="lastname">Last Name: </label>
-                                <input type="text" name="lastname" placeholder="Last Name" />
-                            </div>
-                            <div >
-                                <label htmlFor="email">Email Address: </label>
-                                <input type="text" name="email" placeholder="Email Address" />
-                            </div>
+                            <div className="form">
+                                <div >
+                                    <label htmlFor="username">Username: </label>
+                                    <input type="text" name="username" placeholder="username" />
+                                </div>
+                                <div>
+                                    <label htmlFor="password">Password: </label>
+                                    <input type="password" name="password" placeholder="Password" />
+                                </div>
+                                <div>
+                                    <label htmlFor="partnerGender">Last Name: </label>
+                                    <input type="text" name="partnerGender" placeholder="partnerGender" />
+                                </div>
+                                <div >
+                                    <label htmlFor="email">Email Address: </label>
+                                    <input type="text" name="email" placeholder="Email Address" />
+                                </div>
 
-                            <div >
-                                <label htmlFor="email2">Confirm Email Address: </label>
-                                <input type="text" name="email2" placeholder="Confirm Email Address" />
-                            </div>
+                                <div >
+                                    <label htmlFor="phoneNumber">Phone Number: </label>
+                                    <input type="text" name="phoneNumber" placeholder="phoneNumber" />
+                                </div>
 
-                            <div>
-                                <label htmlFor="password">Password: </label>
-                                <input type="password" name="password" placeholder="Password" />
-                            </div>
 
-                            <div >
-                                <label htmlFor="password2">Confirm Password</label>
-                                <input type="password" name="password2" placeholder="Confirm Password" />
+
+                                <div >
+                                    <label htmlFor="postcode">Post Code:</label>
+                                    <input type="text" name="postcode" placeholder="postcode" />
+                                </div>
+
                             </div>
 
                         </div>
 
-                    </div>
+                        <div className="footer">
+                            <button >Register</button>
+                            <br />
+                            <NavLink to='./loginPage'>
+                                <button>Login here</button>
+                            </NavLink>
+                        </div>
 
-                    <div className="footer">
-                        <button >Register</button>
-                        <br />
-                        <NavLink to='./loginPage'>Already have an account? Login here</NavLink>
                     </div>
-
-                </div>
-            </form>
+                </form>
+                {/* <div><h1>Returned message:{this.state.response}</h1></div> */}
+            </div>
         );
     }
 }

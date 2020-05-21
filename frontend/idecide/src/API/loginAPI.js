@@ -1,14 +1,20 @@
 const axios = require('axios');
 
 
-const BACKEND_URL = "https://idecide-back-end-server.com";
+const BACKEND_URL = "http://35.189.32.209:9008";
 // const BACKEND_URL = "http://localhost:3000";
 
-export function loginUser(userIn) {
+export function registerUser(userIn) {
 
-    const { email, password } = userIn;
-    const endpoint = BACKEND_URL + `/userLogin`;
-    // check if the email is present
+    const { username,
+        password,
+        partnerGender,
+        email,
+        phoneNumber,
+        postcode } = userIn;
+
+    const endpoint = BACKEND_URL + `/user`;
+
 
     if (!email) {
         alert("must include a valid email address");
@@ -22,13 +28,30 @@ export function loginUser(userIn) {
             "Content-Type": "application/json"
         },
         data: JSON.stringify({
+            username,
+            password,
+            partnerGender,
             email,
-            password
+            phoneNumber,
+            postcode
         })
     })
 }
 
-export function registerUser(userIn) {
+
+export function getAllAdmins() {
+    const endpoint = BACKEND_URL + `/admin/adminList`;
+    try {
+        return axios.get(endpoint).then(res => res.data);
+    } catch (e) {
+        return e;
+    }
+}
+
+
+
+
+export function loginUser(userIn) {
 
     const { email, password } = userIn;
     const endpoint = BACKEND_URL + `/userRegister`;
