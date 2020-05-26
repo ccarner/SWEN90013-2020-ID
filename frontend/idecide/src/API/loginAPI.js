@@ -1,8 +1,8 @@
 const axios = require('axios');
 
 
-const BACKEND_URL = "http://35.189.32.209:9008";
-// const BACKEND_URL = "http://localhost:3000";
+const USER_URL = "http://8.210.28.169:9008";
+
 
 export function registerUser(userIn) {
 
@@ -13,7 +13,7 @@ export function registerUser(userIn) {
         phoneNumber,
         postcode } = userIn;
 
-    const endpoint = BACKEND_URL + `/user`;
+    const endpoint = USER_URL + `/user`;
 
 
     if (!email) {
@@ -40,7 +40,7 @@ export function registerUser(userIn) {
 
 
 export function getAllAdmins() {
-    const endpoint = BACKEND_URL + `/admin/adminList`;
+    const endpoint = USER_URL + `/admin/adminList`;
     try {
         return axios.get(endpoint).then(res => res.data);
     } catch (e) {
@@ -54,7 +54,7 @@ export function getAllAdmins() {
 export function loginUser(userIn) {
 
     const { email, password } = userIn;
-    const endpoint = BACKEND_URL + `/userRegister`;
+    const endpoint = USER_URL + `/userRegister`;
 
     // check if the email is present
 

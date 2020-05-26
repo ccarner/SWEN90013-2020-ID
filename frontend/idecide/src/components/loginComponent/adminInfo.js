@@ -20,7 +20,6 @@ export default class AdminInfo extends React.Component {
 
     async  fetchAdmins() {
         const data = await getAllAdmins();
-
         this.setState({ admins: data["data"], isLoaded: true });
     }
 
