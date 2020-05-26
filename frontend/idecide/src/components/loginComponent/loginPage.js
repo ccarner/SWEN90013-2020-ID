@@ -25,7 +25,6 @@ export default class LoginPage extends React.Component {
 
         // the following call will stop the form from submitting
         event.preventDefault();
-
         // get the user information
         const data = new FormData(event.target);
         var userObject = {};
