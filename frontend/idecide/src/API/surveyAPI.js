@@ -1,14 +1,14 @@
 const axios = require('axios');
 
 
-const Survey_URL = "http://8.210.28.169:9009";
+const SURVEY_URL = "http://8.210.28.169:9009";
 
 
 
 
 
 export function getRelationQuestions() {
-    const endpoint = Survey_URL + `/module/1265237263474888704`;
+    const endpoint = SURVEY_URL + `/module/1265280071179046912`;
     try {
         return axios.get(endpoint).then(res => res.data);
     } catch (e) {

@@ -9,9 +9,9 @@ export default class RelationQuestions extends React.Component {
         super(props);
         this.state = {
             questionCount: null,
-            numQuestions: null,
+            numQuestions: 0,
             partCount: 0,
-            questions: [],
+            questions: [1, 2, 3],
             isCompleted: false,
             isLoaded: false,
         };
@@ -24,17 +24,12 @@ export default class RelationQuestions extends React.Component {
             questions: dataIn["data"]["parts"][this.state.partCount]["questions"],
             isLoaded: true,
             questionCount: 0,
-            numQuestions: (dataIn["data"]["parts"][this.state.partCount]["questions"]).length
+
         });
-        console.log(999, this.state.numQuestions);
     }
 
     addCount() {
-        if (this.state.questionCount > 1) {
-            this.setState({ isCompleted: true });
-        } else {
-            this.setState({ questionCount: this.state.questionCount + 1 });
-        }
+        this.setState({ questionCount: this.state.questionCount + 1 });
     }
 
     componentDidMount() {
@@ -44,23 +39,29 @@ export default class RelationQuestions extends React.Component {
 
 
     render() {
-        const { isLoaded, questions, questionCount, partCount, isCompleted } = this.state;
-        if (isCompleted) {
-            return <Redirect to="/surveyComponent/surveyHome" />;
+        const { isLoaded, questions, questionCount, numQuestions, isCompleted } = this.state;
+        if ((isLoaded) && (questionCount >= questions.length)) {
+            return <Redirect to="/surveyComponent/surveyComplete" />;
         } else if (!isLoaded) {
             return <div>Loading...</div>;
         } else {
             return (
                 <div>
-                    {/* <div>{questions.map(question =>
-                        <div>{question.content}<span>:</span>{question.description1}</div>)}
-                    </div> */}
                     <div>
-                        {this.state.questionCount == this.state.numQuestions}<br />
-                        {questions[questionCount].description1}:{this.state.questions.length}
+                        <h1 style={{ color: "purple" }}>Relationship Survey</h1><br />
                     </div>
                     <div>
-                        <button onClick={this.addCount}>Next Question</button>
+                        <h3>{questions[questionCount].description1}</h3>
+                        <p>{questions[questionCount].description2}</p><br />
+                    </div>
+                    <div>
+                        <h3 style={{ color: "purple" }}>{questions[questionCount].content}</h3>
+                        <label for="surveyQuestion">Points (between 0 and 10):</label><br />
+                        <input type="range" name="surveyQuestion" min="0" max="10" />
+
+                    </div><br />
+                    <div>
+                        <button onClick={this.addCount}>Confirm, Next Question</button>
                     </div>
 
                 </div>

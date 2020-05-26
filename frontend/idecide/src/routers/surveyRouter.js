@@ -8,6 +8,8 @@ import RelationshipSurvey from '../components/surveyComponent/relationshipSurvey
 import RelationshipQuestions from '../components/surveyComponent/relationshipQuestions'
 import SafetySurvey from '../components/surveyComponent/safetySurvey'
 import PrioritiesSurvey from '../components/surveyComponent/prioritiesSurvey'
+import SurveyComplete from '../components/surveyComponent/surveyComplete'
+
 
 class SurveyRouter extends Component {
     render() {
@@ -17,6 +19,7 @@ class SurveyRouter extends Component {
                 <Route path="/surveyComponent/relationshipSurvey" component={RelationshipSurvey} />
                 <Route path="/surveyComponent/relationQuestions" component={RelationshipQuestions} />
                 <Route path="/surveyComponent/safetySurvey" component={SafetySurvey} />
+                <Route path="/surveyComponent/surveyComplete" component={SurveyComplete} />
                 <Route path="/surveyComponent/prioritiesSurvey" component={PrioritiesSurvey} />
             </Switch>
         )
