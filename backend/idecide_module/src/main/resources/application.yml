@@ -1,0 +1,24 @@
+server: 
+  port: 9009
+spring: 
+  application:  
+    name: idecide-module #指定服务名
+  datasource:  
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.187.134:3306/idecide_question?useUnicode=true&amp;characterEncoding=UTF8
+    username: root
+    password: 123456
+  jpa: 
+    database: MySQL
+    show-sql: true
+  data:
+    mongodb:
+      host: 192.168.187.134
+      database: moduledb
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:6868/eureka #服务发现的地址
+  instance:
+    prefer-ip-address: true   #写上这个之后，不同模块之间可以跨域访问！

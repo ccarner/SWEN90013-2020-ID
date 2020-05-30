@@ -1,0 +1,31 @@
+server: 
+  port: 9008
+spring: 
+  application:  
+    name: idecide-user #指定服务名
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://35.189.32.209:3306/idecide_user?useUnicode=true&amp;characterEncoding=UTF8
+    #url: jdbc:mysql://192.168.187.134:3306/idecide_user?useUnicode=true&amp;characterEncoding=UTF8
+    username: root
+    password: 123456
+  jpa:
+    database: MySQL
+    show-sql: true
+#  redis:
+#    host: 192.168.187.133
+#  rabbitmq:
+#    host: 192.168.187.133
+
+jwt:
+  config:
+    key: UniversityOfMelbourne   #盐
+    ttl: 360000   #过期时间这里是一小时
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:6868/eureka #服务发现的地址
+  instance:
+    prefer-ip-address: true   #写上这个之后，不同模块之间可以跨域访问！
