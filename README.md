@@ -20,7 +20,10 @@ iDecide currently lacks a mobile-friendly site, and its overall design requires 
 ```
 
 ## Licence:
-
+```
+Frontend: MIT License
+Backend: Apache 2.0
+```
 
 ## Deployment
 1. Frontend Deployment:
