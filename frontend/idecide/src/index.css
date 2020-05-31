@@ -1,8 +1,6 @@
-
-
-.App{
+.App {
   text-align: center;
-  background-image: url('./images/homeBackground.png');
+  background-image: url("./images/homeBackground.png");
   position: fixed;
   max-width: 100%;
   min-width: 100%;
@@ -12,25 +10,54 @@
   background-position: center;
 }
 
-button{
-  height: 50px;
-  width: 150px;
+button:hover {
   background-color: purple;
-  color: white;
 }
 
+button {
+  height: 50px;
+  width: 150px;
+  text-align: justify;
+  background-color: #e7e7e7;
+  font-style: normal;
+  text-align: center;
+  padding-bottom: 20px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
+div.header {
+  height: 2em;
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div.form {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+label {
+  font: bold;
+  width: 130px;
+  display: inline;
+}
