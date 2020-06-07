@@ -7,6 +7,7 @@ import SurveyHome from '../components/surveyComponent/surveyHome'
 import RelationshipSurvey from '../components/surveyComponent/relationshipSurvey'
 import RelationshipQuestions from '../components/surveyComponent/relationshipQuestions'
 import SafetySurvey from '../components/surveyComponent/safetySurvey'
+import SafetyQuestions from '../components/surveyComponent/safetyQuestions'
 import PrioritiesSurvey from '../components/surveyComponent/prioritiesSurvey'
 
 
@@ -18,6 +19,7 @@ class SurveyRouter extends Component {
                 <Route path="/surveyComponent/relationshipSurvey" component={RelationshipSurvey} />
                 <Route path="/surveyComponent/relationQuestions" component={RelationshipQuestions} />
                 <Route path="/surveyComponent/safetySurvey" component={SafetySurvey} />
+				<Route path="/surveyComponent/safetyQuestions" component={SafetyQuestions} />
                 <Route path="/surveyComponent/prioritiesSurvey" component={PrioritiesSurvey} />
             </Switch>
         )
