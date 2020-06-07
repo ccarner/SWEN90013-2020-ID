@@ -106,7 +106,7 @@ export default class RelationQuestions extends React.Component {
         } else if (actionPlan) {
             return (
                 <div>
-                    <h3 style={{ color: "purple" }}>{actionPlan}</h3>
+                    <h3 style={{ color: "purple" }}>Message from backend: {actionPlan}</h3>
                     <h5>Your Selections:</h5>
                     <div>
                         {results.questions.map(question =>
@@ -125,7 +125,7 @@ export default class RelationQuestions extends React.Component {
         } else if (sectionCount >= surveyFile.surveySections.length) {
             return (
                 <div>
-                    <button onClick={this.submitHandler}>Submit Survey</button>
+                    <br /><br /><button onClick={this.submitHandler}>Submit Survey</button>
                 </div>
             );
         } else {
