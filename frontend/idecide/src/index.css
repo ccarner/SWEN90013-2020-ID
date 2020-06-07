@@ -18,12 +18,13 @@ button {
   height: 50px;
   width: 150px;
   text-align: justify;
-  background-color: #e7e7e7;
+  background-color:purple;
   font-style: normal;
   text-align: center;
   padding-bottom: 20px;
   transition-duration: 0.4s;
   cursor: pointer;
+  color: whitesmoke;
 
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }

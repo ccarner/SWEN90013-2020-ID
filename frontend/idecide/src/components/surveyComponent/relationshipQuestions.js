@@ -12,7 +12,7 @@ export default class RelationQuestions extends React.Component {
             numQuestions: 0,
             numSections: 0,
             results: {
-                "userId": 99999,
+                "userId": 1,
                 "surveyId": 1,
                 "sectionId": 1,
                 "completedTime": 99999,
@@ -38,8 +38,8 @@ export default class RelationQuestions extends React.Component {
                 isLoaded: true,
                 questionCount: 0,
                 sectionCount: 0
-
             });
+            console.log(999, this.state.surveyFile);
         } catch (err) {
             return err;
         }
@@ -52,12 +52,14 @@ export default class RelationQuestions extends React.Component {
 
 
     questionHandler(event) {
-
+        const { surveyFile, questionCount, sectionCount } = this.state;
         var currentResults = this.state.results;
-        var questionID = "SurveyID:" + this.state.surveyFile.surveyId + " SectionID:" + this.state.sectionCount + " QuestionID:" + this.state.questionCount;
-        // currentResults["questions"][questionID] = event.target.value;
+        // var questionID2 = "SurveyID:" + this.state.surveyFile.surveyId + " SectionID:" + this.state.sectionCount + " QuestionID:" + this.state.questionCount;
+
         currentResults["questions"].push({
-            questionId: questionID,
+            questionId: surveyFile.surveySections[sectionCount].questions[questionCount].questionId,
+            questionText: surveyFile.surveySections[sectionCount].questions[questionCount].questionText,
+            questionType: surveyFile.surveySections[sectionCount].questions[questionCount].questionType,
             questionAnswer: event.target.value
         })
         this.setState({
@@ -80,7 +82,9 @@ export default class RelationQuestions extends React.Component {
     async submitHandler(event) {
 
         this.setState({
-            isLoaded: false
+            isLoaded: false,
+            surveyId: this.state.surveyFile.surveyId,
+            sectionId: this.state.surveyFile.sectionId
         });
 
         var feedback = await postingSurvey(this.state.results);
@@ -95,18 +99,24 @@ export default class RelationQuestions extends React.Component {
 
 
     render() {
-        const { isLoaded, surveyFile, questionCount, sectionCount, actionPlan } = this.state;
+        const { isLoaded, surveyFile, questionCount, sectionCount, actionPlan, results } = this.state;
 
         if (!isLoaded) {
             return <div>Loading...</div>;
         } else if (actionPlan) {
             return (
                 <div>
-                    <h2>Your Selections:</h2>
+                    <h3 style={{ color: "purple" }}>{actionPlan}</h3>
+                    <h5>Your Selections:</h5>
                     <div>
-                        {this.state.results.questions.map(question => <div>{question.questionId}:{question.questionAnswer}</div>)}
-                    </div><br /><br /><br />
-                    <h3>{actionPlan}</h3>
+                        {results.questions.map(question =>
+                            <div>
+                                Question ID:{question.questionId}___Question Type:{question.questionType}<br />
+                                Question Text:{question.questionText}<br />
+                                Question Selection:{question.questionAnswer}<br /><br />
+                            </div>
+                        )}
+                    </div>
                     <NavLink to="/surveyComponent/surveyHome">
                         <button >Back</button>
                     </NavLink>
@@ -126,15 +136,22 @@ export default class RelationQuestions extends React.Component {
                         {surveyFile.surveySections[sectionCount].questions[questionCount].questionText}
                     </div>
 
-                    <div onChange={this.questionHandler}>
-                        <label htmlFor="option1">option1:</label>
-                        <input type="radio" name="questionResult" value="option1" /><br />
-                        <label htmlFor="option2">option2:</label>
-                        <input type="radio" name="questionResult" value="option2" /><br />
-                        <label htmlFor="option3">option3:</label>
-                        <input type="radio" name="questionResult" value="option3" /><br />
-                    </div>
 
+                    {surveyFile.surveySections[sectionCount].questions[questionCount].questionType === "slider" ?
+                        <div onClick={this.questionHandler}>
+                            0<input type="range" min="0" max="10" />10
+                        </div>
+                        :
+
+                        <div onChange={this.questionHandler}>
+
+                            <label htmlFor="option1">{surveyFile.surveySections[sectionCount].questions[questionCount].selectionOptions[0]}:</label>
+                            <input type="radio" name="questionResult" value="option1" /><br />
+                            <label htmlFor="option2">{surveyFile.surveySections[sectionCount].questions[questionCount].selectionOptions[1]}:</label>
+                            <input type="radio" name="questionResult" value="option2" /><br />
+                            <label htmlFor="option3">{surveyFile.surveySections[sectionCount].questions[questionCount].selectionOptions[2]}:</label>
+                            <input type="radio" name="questionResult" value="option3" /><br />
+                        </div>}
                     <div>
                         <button onClick={this.submitHandler}>Submit Survey</button>
                     </div>
