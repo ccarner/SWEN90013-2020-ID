@@ -13,8 +13,8 @@ export default class RelationQuestions extends React.Component {
             numSections: 0,
             results: {
                 "userId": 1,
-                "surveyId": 1,
-                "sectionId": 1,
+                "surveyId": null,
+                "sectionId": null,
                 "completedTime": 99999,
                 "questions": []
             },
@@ -39,7 +39,7 @@ export default class RelationQuestions extends React.Component {
                 questionCount: 0,
                 sectionCount: 0
             });
-            console.log(999, this.state.surveyFile);
+
         } catch (err) {
             return err;
         }
@@ -97,7 +97,6 @@ export default class RelationQuestions extends React.Component {
 
 
 
-
     render() {
         const { isLoaded, surveyFile, questionCount, sectionCount, actionPlan, results } = this.state;
 
@@ -113,7 +112,7 @@ export default class RelationQuestions extends React.Component {
                             <div>
                                 Question ID:{question.questionId}___Question Type:{question.questionType}<br />
                                 Question Text:{question.questionText}<br />
-                                Question Selection:{question.questionAnswer}<br /><br />
+                                Question Selection:<span style={{ color: "red" }}>{question.questionAnswer}</span><br /><br />
                             </div>
                         )}
                     </div>
@@ -131,33 +130,29 @@ export default class RelationQuestions extends React.Component {
         } else {
             return (
                 <div>
-
                     <div style={{ color: "purple" }}>
                         {surveyFile.surveySections[sectionCount].questions[questionCount].questionText}
                     </div>
 
-
                     {surveyFile.surveySections[sectionCount].questions[questionCount].questionType === "slider" ?
                         <div onClick={this.questionHandler}>
                             0<input type="range" min="0" max="10" />10
+                            <br /><button>Skip</button><br />
                         </div>
                         :
 
-                        <div onChange={this.questionHandler}>
-
+                        <div onClick={this.questionHandler}>
                             <label htmlFor="option1">{surveyFile.surveySections[sectionCount].questions[questionCount].selectionOptions[0]}:</label>
                             <input type="radio" name="questionResult" value="option1" /><br />
                             <label htmlFor="option2">{surveyFile.surveySections[sectionCount].questions[questionCount].selectionOptions[1]}:</label>
                             <input type="radio" name="questionResult" value="option2" /><br />
                             <label htmlFor="option3">{surveyFile.surveySections[sectionCount].questions[questionCount].selectionOptions[2]}:</label>
                             <input type="radio" name="questionResult" value="option3" /><br />
+                            <br /><button >Rather not to say</button><br />
                         </div>}
                     <div>
                         <button onClick={this.submitHandler}>Submit Survey</button>
                     </div>
-
-
-
                 </div>
             );
         }
