@@ -31,7 +31,7 @@ export default class LoginPage extends React.Component {
         data.forEach((value, key) => { userObject[key] = value });
 
         let response = await loginUser(userObject);
-        console.log(response);
+
 
         window.location.replace("/");
     }

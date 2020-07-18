@@ -1,6 +1,7 @@
 import React from "react";
-import { Redirect } from 'react-router-dom';
-import { getRelationQuestions } from "../../API/surveyAPI";
+import { NavLink } from 'react-router-dom';
+import { postingSurvey } from "../../API/surveyAPI";
+import Question from "./question";
 
 
 
@@ -8,61 +9,110 @@ export default class RelationQuestions extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            questionCount: null,
-            numQuestions: 0,
-            partCount: 0,
-            questions: [1, 2, 3],
-            isCompleted: false,
-            isLoaded: false,
-        };
-        this.addCount = this.addCount.bind(this);
-    }
-
-    async fetchQuestions() {
-        const dataIn = await getRelationQuestions();
-        this.setState({
-            questions: dataIn["data"]["parts"][this.state.partCount]["questions"],
             isLoaded: true,
             questionCount: 0,
+            sectionCount: 0,
+            surveySections: props.allSections,
+            actionPlan: null,
+            results: {
+                "userId": 1,
+                "surveyId": props.surveyFile.surveyId,
+                "sectionId": "ALL",
+                "completedTime": 99999,
+                "questions": []
+            }
+        };
+        this.questionHandler = this.questionHandler.bind(this);
+    }
 
+
+
+    questionHandler(received) {
+        console.log(796, received, 796);
+
+        const { questionCount, sectionCount, surveySections } = this.state;
+        const currentQuestion = surveySections[sectionCount].questions[questionCount];
+
+        var currentResults = this.state.results;
+
+        currentResults["questions"].push({
+            questionId: currentQuestion.questionId,
+            questionText: currentQuestion.questionText,
+            questionType: currentQuestion.questionType,
+            questionAnswer: received
+        })
+        this.setState({
+            results: currentResults
         });
+
+
+        if (this.state.questionCount + 1 >= this.state.surveySections[this.state.sectionCount].questions.length) {
+            if (sectionCount + 1 >= surveySections.length) {
+                this.setState({
+                    actionPlan: "FINISHED"
+                })
+            } else {
+                this.setState({
+                    sectionCount: this.state.sectionCount + 1,
+                    questionCount: 0
+                });
+            }
+        } else {
+            this.setState({
+                questionCount: this.state.questionCount + 1
+            });
+        }
     }
 
-    addCount() {
-        this.setState({ questionCount: this.state.questionCount + 1 });
+
+
+    submitHandler = async (event) => {
+
+        this.setState({
+            isLoaded: false
+        });
+
+        const feedback = await postingSurvey(this.state.results);
+        console.log(783, this.state.results);
+        this.setState({
+            actionPlan: feedback.data.data,
+            isLoaded: true
+        });
+
     }
 
-    componentDidMount() {
-        this.addCount();
-        this.fetchQuestions();
-    }
 
 
     render() {
-        const { isLoaded, questions, questionCount, numQuestions, isCompleted } = this.state;
-        if ((isLoaded) && (questionCount >= questions.length)) {
-            return <Redirect to="/surveyComponent/surveyComplete" />;
-        } else if (!isLoaded) {
-            return <div>Loading...</div>;
+        const { isLoaded, surveySections, questionCount, sectionCount, actionPlan, results } = this.state;
+        const question = surveySections[sectionCount].questions[questionCount];
+        if (!isLoaded) {
+            return (<div>Loading...</div>);
+        } else if (actionPlan) {
+            return (
+                <div>
+                    {actionPlan === "FINISHED" ?
+                        <div>
+                            <button onClick={this.submitHandler}>Submit Survey</button>
+                        </div>
+                        :
+                        <div>
+                            <h3 style={{ color: "purple" }}>Message from the backend: <br />
+                                {actionPlan}
+                            </h3>
+                            <NavLink to="/surveyComponent/surveyHome">
+                                <button >Back</button>
+                            </NavLink>
+                        </div>}
+                </div>
+            );
         } else {
             return (
                 <div>
-                    <div>
-                        <h1 style={{ color: "purple" }}>Relationship Survey</h1><br />
-                    </div>
-                    <div>
-                        <h3>{questions[questionCount].description1}</h3>
-                        <p>{questions[questionCount].description2}</p><br />
-                    </div>
-                    <div>
-                        <h3 style={{ color: "purple" }}>{questions[questionCount].content}</h3>
-                        <label for="surveyQuestion">Points (between 0 and 10):</label><br />
-                        <input type="range" name="surveyQuestion" min="0" max="10" />
 
-                    </div><br />
-                    <div>
-                        <button onClick={this.addCount}>Confirm, Next Question</button>
-                    </div>
+                    <Question handleQuestion={this.questionHandler} question={question} />
+
+                    <button onClick={this.submitHandler}>Submit Survey</button>
 
                 </div>
             );
