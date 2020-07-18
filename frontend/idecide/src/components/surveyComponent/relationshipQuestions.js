@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from 'react-router-dom';
-import { getRelationQuestions, postingSurvey } from "../../API/surveyAPI";
+import { postingSurvey } from "../../API/surveyAPI";
+import Question from "./question";
 
 
 
@@ -8,70 +9,54 @@ export default class RelationQuestions extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            questionCount: null,
-            numQuestions: 0,
-            numSections: 0,
+            isLoaded: true,
+            questionCount: 0,
+            sectionCount: 0,
+            surveySections: props.allSections,
+            actionPlan: null,
             results: {
                 "userId": 1,
-                "surveyId": null,
-                "sectionId": null,
+                "surveyId": props.surveyFile.surveyId,
+                "sectionId": "ALL",
                 "completedTime": 99999,
                 "questions": []
-            },
-            actionPlan: null,
-            sectionCount: null,
-            surveyFile: null,
-            isCompleted: false,
-            isLoaded: false,
+            }
         };
         this.questionHandler = this.questionHandler.bind(this);
-        this.submitHandler = this.submitHandler.bind(this);
-        this.fetchQuestions = this.fetchQuestions.bind(this);
-    }
-
-
-    async fetchQuestions() {
-        try {
-            const dataIn = await getRelationQuestions();
-            this.setState({
-                surveyFile: JSON.parse(dataIn["data"]["jsonStr"]),
-                isLoaded: true,
-                questionCount: 0,
-                sectionCount: 0
-            });
-
-        } catch (err) {
-            return err;
-        }
-    }
-
-    componentDidMount() {
-        this.fetchQuestions();
     }
 
 
 
-    questionHandler(event) {
-        const { surveyFile, questionCount, sectionCount } = this.state;
+    questionHandler(received) {
+        console.log(796, received, 796);
+
+        const { questionCount, sectionCount, surveySections } = this.state;
+        const currentQuestion = surveySections[sectionCount].questions[questionCount];
+
         var currentResults = this.state.results;
-        // var questionID2 = "SurveyID:" + this.state.surveyFile.surveyId + " SectionID:" + this.state.sectionCount + " QuestionID:" + this.state.questionCount;
 
         currentResults["questions"].push({
-            questionId: surveyFile.surveySections[sectionCount].questions[questionCount].questionId,
-            questionText: surveyFile.surveySections[sectionCount].questions[questionCount].questionText,
-            questionType: surveyFile.surveySections[sectionCount].questions[questionCount].questionType,
-            questionAnswer: event.target.value
+            questionId: currentQuestion.questionId,
+            questionText: currentQuestion.questionText,
+            questionType: currentQuestion.questionType,
+            questionAnswer: received
         })
         this.setState({
             results: currentResults
         });
 
 
-        if (this.state.questionCount + 1 >= this.state.surveyFile.surveySections[this.state.sectionCount].questions.length) {
-            this.setState({
-                sectionCount: this.state.sectionCount + 1,
-                questionCount: 0
-            });
+        if (this.state.questionCount + 1 >= this.state.surveySections[this.state.sectionCount].questions.length) {
+            if (sectionCount + 1 >= surveySections.length) {
+                this.setState({
+                    actionPlan: "FINISHED"
+                })
+            } else {
+                this.setState({
+                    sectionCount: this.state.sectionCount + 1,
+                    questionCount: 0
+                });
+            }
         } else {
             this.setState({
                 questionCount: this.state.questionCount + 1
@@ -79,15 +64,16 @@ export default class RelationQuestions extends React.Component {
         }
     }
 
-    async submitHandler(event) {
+
+
+    submitHandler = async (event) => {
 
         this.setState({
-            isLoaded: false,
-            surveyId: this.state.surveyFile.surveyId,
-            sectionId: this.state.surveyFile.sectionId
+            isLoaded: false
         });
 
-        var feedback = await postingSurvey(this.state.results);
+        const feedback = await postingSurvey(this.state.results);
+        console.log(783, this.state.results);
         this.setState({
             actionPlan: feedback.data.data,
             isLoaded: true
@@ -98,61 +84,36 @@ export default class RelationQuestions extends React.Component {
 
 
     render() {
-        const { isLoaded, surveyFile, questionCount, sectionCount, actionPlan, results } = this.state;
-
+        const { isLoaded, surveySections, questionCount, sectionCount, actionPlan, results } = this.state;
+        const question = surveySections[sectionCount].questions[questionCount];
         if (!isLoaded) {
-            return <div>Loading...</div>;
+            return (<div>Loading...</div>);
         } else if (actionPlan) {
             return (
                 <div>
-                    <h3 style={{ color: "purple" }}>Message from backend: {actionPlan}</h3>
-                    <h5>Your Selections:</h5>
-                    <div>
-                        {results.questions.map(question =>
-                            <div>
-                                Question ID:{question.questionId}___Question Type:{question.questionType}<br />
-                                Question Text:{question.questionText}<br />
-                                Question Selection:<span style={{ color: "red" }}>{question.questionAnswer}</span><br /><br />
-                            </div>
-                        )}
-                    </div>
-                    <NavLink to="/surveyComponent/surveyHome">
-                        <button >Back</button>
-                    </NavLink>
-                </div>
-            );
-        } else if (sectionCount >= surveyFile.surveySections.length) {
-            return (
-                <div>
-                    <br /><br /><button onClick={this.submitHandler}>Submit Survey</button>
+                    {actionPlan === "FINISHED" ?
+                        <div>
+                            <button onClick={this.submitHandler}>Submit Survey</button>
+                        </div>
+                        :
+                        <div>
+                            <h3 style={{ color: "purple" }}>Message from the backend: <br />
+                                {actionPlan}
+                            </h3>
+                            <NavLink to="/surveyComponent/surveyHome">
+                                <button >Back</button>
+                            </NavLink>
+                        </div>}
                 </div>
             );
         } else {
             return (
                 <div>
-                    <div style={{ color: "purple" }}>
-                        {surveyFile.surveySections[sectionCount].questions[questionCount].questionText}
-                    </div>
 
-                    {surveyFile.surveySections[sectionCount].questions[questionCount].questionType === "slider" ?
-                        <div onClick={this.questionHandler}>
-                            0<input type="range" min="0" max="10" />10
-                            <br /><button>Skip</button><br />
-                        </div>
-                        :
+                    <Question handleQuestion={this.questionHandler} question={question} />
 
-                        <div onClick={this.questionHandler}>
-                            <label htmlFor="option1">{surveyFile.surveySections[sectionCount].questions[questionCount].selectionOptions[0]}:</label>
-                            <input type="radio" name="questionResult" value="option1" /><br />
-                            <label htmlFor="option2">{surveyFile.surveySections[sectionCount].questions[questionCount].selectionOptions[1]}:</label>
-                            <input type="radio" name="questionResult" value="option2" /><br />
-                            <label htmlFor="option3">{surveyFile.surveySections[sectionCount].questions[questionCount].selectionOptions[2]}:</label>
-                            <input type="radio" name="questionResult" value="option3" /><br />
-                            <br /><button >Rather not to say</button><br />
-                        </div>}
-                    <div>
-                        <button onClick={this.submitHandler}>Submit Survey</button>
-                    </div>
+                    <button onClick={this.submitHandler}>Submit Survey</button>
+
                 </div>
             );
         }

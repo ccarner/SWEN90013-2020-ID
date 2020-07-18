@@ -4,10 +4,11 @@ const axios = require('axios');
 const SURVEY_URL = "http://8.210.28.169:9009";
 
 
-export function getRelationQuestions() {
-    const endpoint = SURVEY_URL + `/survey/5`;
+export async function getRelationQuestions() {
+    const endpoint = SURVEY_URL + `/survey/13`;
     try {
-        return axios.get(endpoint).then(res => res.data);
+        const dataFetched = await axios.get(endpoint).then(res => res.data);
+        return dataFetched;
     } catch (e) {
         return e;
     }
