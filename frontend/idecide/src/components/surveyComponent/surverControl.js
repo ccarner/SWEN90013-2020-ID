@@ -1,26 +1,16 @@
 import React, { Component } from 'react';
-import { getSafetyQuestions, postingSurvey } from "../../API/surveyAPI";
-import RelationQuestions from "./relationshipQuestions";
+import { getSurveyQuestions } from "../../API/surveyAPI";
+import SurveyQuestions from "./surveyQuestions";
 
-export default class SafetySurvey extends Component {
+export default class SurveyControl extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            results: {
-                "userId": 1,
-                "surveyId": null,
-                "sectionId": null,
-                "completedTime": 99999,
-                "questions": []
-            },
-            isStarted: false,
-            actionPlan: null,
-            surveyFile: null,
             isLoaded: false,
+            isStarted: false,
+            surveyType: props.surveyType
         };
-
-        this.fetchQuestions = this.fetchQuestions.bind(this);
     }
 
     handleStart = () => {
@@ -30,19 +20,22 @@ export default class SafetySurvey extends Component {
     }
 
 
-    async fetchQuestions() {
+    fetchQuestions = async () => {
         try {
-            const dataIn = await getSafetyQuestions();
-
-            console.log(775, dataIn, 775);
+            const dataIn = await getSurveyQuestions(this.state.surveyType);
             this.setState({
                 surveyFile: JSON.parse(dataIn["data"]["jsonStr"]),
                 isLoaded: true
             });
-            console.log(777, this.state.surveyFile, 777);
         } catch (err) {
             return err;
         }
+    }
+
+
+    completeHandler = (receivedResults) => {
+        localStorage.setItem(this.state.surveyType, receivedResults);
+        this.props.completeHandler(this.state.surveyType);
     }
 
     componentDidMount() {
@@ -57,11 +50,9 @@ export default class SafetySurvey extends Component {
         } else {
             return (
                 <div>
-
-
                     {isStarted ?
                         <div>
-                            <RelationQuestions surveyFile={surveyFile} allSections={surveyFile.surveySections} />
+                            <SurveyQuestions surveyFile={surveyFile} allSections={surveyFile.surveySections} completeHandler={this.completeHandler} />
                         </div>
                         :
                         <div>
@@ -70,7 +61,7 @@ export default class SafetySurvey extends Component {
                                 <p style={{ color: "black" }}>{surveyFile.surveyIntroduction}</p>
                             </div >
                             <div style={{ padding: "10px" }}>
-                                <button onClick={this.handleStart}>Next</button>
+                                <button onClick={this.handleStart}>Start</button>
                             </div >
                         </div>
                     }

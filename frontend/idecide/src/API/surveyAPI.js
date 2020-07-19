@@ -4,15 +4,31 @@ const axios = require('axios');
 const SURVEY_URL = "http://8.210.28.169:9009";
 
 
-export async function getRelationQuestions() {
+export async function getSurveyQuestions(surveyType) {
+
+    if (surveyType === "RELATIONSHIP") {
+        return await getRelationQuestions();
+    } else if (surveyType === "SAFETY") {
+        return await getSafetyQuestions();
+    } else if (surveyType === "RELATIONSHIP") {
+        return await getRelationQuestions();
+    } else {
+        return "Nothing Fetched, error";
+    }
+}
+
+export function getRelationQuestions() {
     const endpoint = SURVEY_URL + `/survey/13`;
     try {
-        const dataFetched = await axios.get(endpoint).then(res => res.data);
+        const dataFetched = axios.get(endpoint).then(res => res.data);
         return dataFetched;
     } catch (e) {
         return e;
     }
 }
+
+
+
 
 export function getSafetyQuestions() {
     const endpoint = SURVEY_URL + `/survey/22`;

@@ -5,7 +5,7 @@ import Question from "./question";
 
 
 
-export default class RelationQuestions extends React.Component {
+export default class SurveyQuestions extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -81,9 +81,13 @@ export default class RelationQuestions extends React.Component {
     }
 
 
+    completeHandler = () => {
+        this.props.completeHandler(this.state.results);
+    }
+
 
     render() {
-        const { isLoaded, surveySections, questionCount, sectionCount, actionPlan, results } = this.state;
+        const { isLoaded, surveySections, questionCount, sectionCount, actionPlan } = this.state;
         const question = surveySections[sectionCount].questions[questionCount];
         if (!isLoaded) {
             return (<div>Loading...</div>);
@@ -99,9 +103,9 @@ export default class RelationQuestions extends React.Component {
                             <h3 style={{ color: "purple" }}>Message from the backend: <br />
                                 {actionPlan}
                             </h3>
-                            <NavLink to="/surveyComponent/surveyHome">
-                                <button >Back</button>
-                            </NavLink>
+                            {/* <NavLink to="/surveyComponent/surveyHome"> */}
+                            <button onClick={this.completeHandler}>Complete</button>
+                            {/* </NavLink> */}
                         </div>}
                 </div>
             );
@@ -114,8 +118,6 @@ export default class RelationQuestions extends React.Component {
                         <p style={{ color: "black" }}>{surveySections[sectionCount].sectionIntroduction}</p>
                     </div >
                     <Question handleQuestion={this.questionHandler} question={question} />
-
-                    {/* <button onClick={this.submitHandler}>Submit Survey</button> */}
 
                 </div>
             );

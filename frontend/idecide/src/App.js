@@ -13,11 +13,6 @@ import Framework from './components/Framework'
 import LoginPage from './components/loginComponent/loginPage'
 import RegisterPage from './components/loginComponent/registerPage'
 import AdminInfo from './components/loginComponent/adminInfo'
-import SurveyHome from './components/surveyComponent/surveyHome'
-import RelationshipSurvey from './components/surveyComponent/relationshipSurvey'
-import SafetySurvey from './components/surveyComponent/safetySurvey'
-import SafetyQuestions from './components/surveyComponent/safetyQuestions'
-import PrioritiesSurvey from './components/surveyComponent/prioritiesSurvey'
 
 import SurveyRouter from './routers/surveyRouter'
 
