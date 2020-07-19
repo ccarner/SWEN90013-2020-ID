@@ -112,7 +112,7 @@ export default class RelationQuestions extends React.Component {
 
                     <Question handleQuestion={this.questionHandler} question={question} />
 
-                    <button onClick={this.submitHandler}>Submit Survey</button>
+                    {/* <button onClick={this.submitHandler}>Submit Survey</button> */}
 
                 </div>
             );

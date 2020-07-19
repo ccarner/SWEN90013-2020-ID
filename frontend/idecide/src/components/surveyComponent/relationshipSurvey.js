@@ -8,9 +8,6 @@ export default class RelationshipSurvey extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            questionCount: null,
-            numQuestions: 0,
-            numSections: 0,
             results: {
                 "userId": 1,
                 "surveyId": null,
@@ -20,7 +17,6 @@ export default class RelationshipSurvey extends Component {
             },
             isStarted: false,
             actionPlan: null,
-            sectionCount: null,
             surveyFile: null,
             isCompleted: false,
             isLoaded: false,
@@ -44,9 +40,7 @@ export default class RelationshipSurvey extends Component {
             console.log(775, dataIn, 775);
             this.setState({
                 surveyFile: JSON.parse(dataIn["data"]["jsonStr"]),
-                isLoaded: true,
-                questionCount: 0,
-                sectionCount: 0
+                isLoaded: true
             });
             console.log(777, this.state.surveyFile, 777);
         } catch (err) {
@@ -60,7 +54,7 @@ export default class RelationshipSurvey extends Component {
 
 
     render() {
-        const { isLoaded, surveyFile, isStarted, questionCount, sectionCount, actionPlan, results } = this.state;
+        const { isLoaded, surveyFile, isStarted } = this.state;
         if (!isLoaded) {
             return <div>Loading...</div>;
         } else {
