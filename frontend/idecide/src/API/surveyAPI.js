@@ -5,7 +5,6 @@ const SURVEY_URL = "http://8.210.28.169:9009";
 
 
 export async function getSurveyQuestions(surveyType) {
-    console.log(225, surveyType, 225)
 
     if (surveyType === "RELATIONSHIP") {
         return await getRelationQuestions();

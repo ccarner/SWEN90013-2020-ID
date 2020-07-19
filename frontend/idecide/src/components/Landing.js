@@ -5,6 +5,11 @@ import { NavLink } from 'react-router-dom';
 
 
 class Landing extends Component {
+
+  componentDidMount() {
+    localStorage.clear()
+  }
+
   render() {
     return (
       <div className="container" style={{ padding: "150px" }}>
@@ -21,8 +26,6 @@ class Landing extends Component {
         <NavLink to="./loginComponent/loginPage">
           <button >Log in</button>
         </NavLink>
-
-
       </div >
     );
   }

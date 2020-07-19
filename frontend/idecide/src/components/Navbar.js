@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import {
   Navbar,
   Nav,
@@ -15,10 +15,10 @@ class Landing extends Component {
   render() {
     return (
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="/">
           <img
             src={IconLogo}
-            alt="Background"
+            alt="IconLogo"
             style={{ height: 40, marginTop: 10 }}
           />
         </Navbar.Brand>

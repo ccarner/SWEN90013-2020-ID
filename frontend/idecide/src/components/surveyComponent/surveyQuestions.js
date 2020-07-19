@@ -1,5 +1,4 @@
 import React from "react";
-import { NavLink } from 'react-router-dom';
 import { postingSurvey } from "../../API/surveyAPI";
 import Question from "./question";
 
@@ -28,19 +27,18 @@ export default class SurveyQuestions extends React.Component {
 
 
     questionHandler(received) {
-        console.log(796, received, 796);
 
         const { questionCount, sectionCount, surveySections } = this.state;
         const currentQuestion = surveySections[sectionCount].questions[questionCount];
 
-        var currentResults = this.state.results;
 
+        var currentResults = this.state.results;
         currentResults["questions"].push({
             questionId: currentQuestion.questionId,
             questionText: currentQuestion.questionText,
             questionType: currentQuestion.questionType,
             questionAnswer: received
-        })
+        });
         this.setState({
             results: currentResults
         });
@@ -67,6 +65,8 @@ export default class SurveyQuestions extends React.Component {
 
 
     submitHandler = async (event) => {
+
+        console.log("Data send to the backend:", this.state.results, ":Data send to the backend")
 
         this.setState({
             isLoaded: false
@@ -96,16 +96,17 @@ export default class SurveyQuestions extends React.Component {
                 <div>
                     {actionPlan === "FINISHED" ?
                         <div>
+                            <br /><br /><br /><br /><br /><br />
                             <button onClick={this.submitHandler}>Submit Survey</button>
                         </div>
                         :
                         <div>
+                            <h3 style={{ color: "purple" }}>You can see the message send to the backend by viewing console</h3>
+                            <br /><br /><br />
                             <h3 style={{ color: "purple" }}>Message from the backend: <br />
                                 {actionPlan}
                             </h3>
-                            {/* <NavLink to="/surveyComponent/surveyHome"> */}
                             <button onClick={this.completeHandler}>Complete</button>
-                            {/* </NavLink> */}
                         </div>}
                 </div>
             );

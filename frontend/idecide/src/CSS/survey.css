@@ -48,6 +48,13 @@
   }
 
 
+  .surveyIcon:hover{
+    cursor: pointer;
+    transition: 0.3s ease;
+    opacity: 0.6;
+  }
+
+
   .questionContainer{
     background: rgba(199, 188, 199, 0.753);
     /* margin: 2em 2em 2em 2em; */
