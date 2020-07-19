@@ -1,4 +1,5 @@
   .sliderContainer {
+    
     padding: 1em 0 1em 0;
     color:purple;
   }
@@ -42,8 +43,21 @@
     padding: 2em 2em 2em 2em;
   }
 
-  
+  .numInput{
+    color:purple;
+    text-align: center;
+    width: 3em;
+    background: none;
+  }
 
+  input::-webkit-inner-spin-button,
+  input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
+
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
 
 
 
@@ -75,7 +89,7 @@
   }
   
   .radio-toolbar input[type="radio"]:checked + label {
-      background-color: #bfb;
-      border-color: #4c4;
+      background-color: rgba(172, 13, 172, 0.651);
+      border-color: purple;
   }
   

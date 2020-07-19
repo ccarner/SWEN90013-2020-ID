@@ -15,9 +15,10 @@ export async function getRelationQuestions() {
 }
 
 export function getSafetyQuestions() {
-    const endpoint = SURVEY_URL + `/survey/2`;
+    const endpoint = SURVEY_URL + `/survey/22`;
     try {
-        return axios.get(endpoint).then(res => res.data);
+        const dataFetched = axios.get(endpoint).then(res => res.data);
+        return dataFetched;
     } catch (e) {
         return e;
     }

@@ -73,7 +73,6 @@ export default class RelationQuestions extends React.Component {
         });
 
         const feedback = await postingSurvey(this.state.results);
-        console.log(783, this.state.results);
         this.setState({
             actionPlan: feedback.data.data,
             isLoaded: true
@@ -110,6 +109,10 @@ export default class RelationQuestions extends React.Component {
             return (
                 <div>
 
+                    <div className="container" style={{ padding: "50px" }}>
+                        <h2 style={{ color: "purple" }}>{surveySections[sectionCount].sectionTitle}</h2>
+                        <p style={{ color: "black" }}>{surveySections[sectionCount].sectionIntroduction}</p>
+                    </div >
                     <Question handleQuestion={this.questionHandler} question={question} />
 
                     {/* <button onClick={this.submitHandler}>Submit Survey</button> */}
