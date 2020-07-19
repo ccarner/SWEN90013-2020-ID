@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
 import SurveyControl from "./surverControl";
 import "../../CSS/survey.css";
 
@@ -15,6 +14,7 @@ export default class SurveyHome extends Component {
 
 
     startSurvey = (surveyType) => {
+        console.log(223, surveyType.target, 223)
         this.setState({
             currentComponent: surveyType.target.id,
             isStarted: true
@@ -44,15 +44,15 @@ export default class SurveyHome extends Component {
                     <h6>The 'My Relationship' module is optional,</h6>
                     <h6>but you must complete 'Safety' and 'Priorities' before you can continue.</h6>
                     <h6>Click 'Next' in the bottom right corner when you are finished.</h6>
-
-                    <img src={require("./iconRelationshipSurvey.png")} alt="Relationship_Survey_Icon"
-                        id="RELATIONSHIP" onClick={this.startSurvey} />
-
-                    <img src={require("./iconSafetySurvey.png")} alt="Safety_Survey_Icon"
-                        id="SAFETY" onClick={this.startSurvey} />
-
-                    <img src={require("./iconPrioritiesSurvey.png")} alt="Priorities_Survey_Icon"
-                        id="PRIORITIS" onClick={this.startSurvey} />
+                    <div className="surveyIcon" onClick={this.startSurvey} >
+                        <img src={require("./iconRelationshipSurvey.png")} alt="Relationship_Survey_Icon" id="RELATIONSHIP" />
+                    </div>
+                    <div className="surveyIcon" onClick={this.startSurvey} >
+                        <img src={require("./iconSafetySurvey.png")} alt="Safety_Survey_Icon" id="SAFETY" />
+                    </div>
+                    <div className="surveyIcon" onClick={this.startSurvey} >
+                        <img src={require("./iconPrioritiesSurvey.png")} alt="Priorities_Survey_Icon" id="PRIORITIS" />
+                    </div>
 
 
                     {/* <div style={{ padding: "10px" }}>

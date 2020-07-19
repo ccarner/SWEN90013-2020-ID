@@ -6,7 +6,7 @@
   
   .slider {
     -webkit-appearance: none;
-    width: 80%;
+    width: 75%;
     height: 25px;
     background: linear-gradient(90deg,red, yellow, green);;
     outline: none;
@@ -36,11 +36,22 @@
   }
 
 
+  .sliderLabel{
+    display: inline-block;
+    width: 10%;
+  }
+
+
+  .surveyIcon{
+    display: inline-block;
+    margin: 2em 0.5em 2em 0.5em;
+  }
+
 
   .questionContainer{
     background: rgba(199, 188, 199, 0.753);
     /* margin: 2em 2em 2em 2em; */
-    padding: 2em 2em 2em 2em;
+    padding: 2em 0em 2em 0em;
   }
 
   .numInput{

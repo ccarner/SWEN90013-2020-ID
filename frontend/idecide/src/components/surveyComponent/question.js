@@ -40,7 +40,9 @@ export default class Question extends React.Component {
                     {
                         question.questionType === "slider" ?
                             <div className="sliderContainer">
-                                0<input className="slider" id="sliderBar" name="option" type="range" min="1" max="10" onChange={this.handleChange} />10
+                                <span className="sliderLabel">{question.sliderMinValue}</span>
+                                <input className="slider" id="sliderBar" name="option" type="range" min="1" max="10" onChange={this.handleChange} />
+                                <span className="sliderLabel">{question.sliderMaxValue}</span>
                                 <br />
                                 <input className="numInput" id="sliderNum" name="option" type="number" min="1" max="10" onChange={this.handleChange} />
                             </div>

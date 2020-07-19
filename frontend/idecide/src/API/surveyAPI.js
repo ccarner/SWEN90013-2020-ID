@@ -5,13 +5,14 @@ const SURVEY_URL = "http://8.210.28.169:9009";
 
 
 export async function getSurveyQuestions(surveyType) {
+    console.log(225, surveyType, 225)
 
     if (surveyType === "RELATIONSHIP") {
         return await getRelationQuestions();
     } else if (surveyType === "SAFETY") {
         return await getSafetyQuestions();
-    } else if (surveyType === "RELATIONSHIP") {
-        return await getRelationQuestions();
+    } else if (surveyType === "PRIORITIS") {
+        return await getPriorityQuestions();
     } else {
         return "Nothing Fetched, error";
     }
@@ -28,10 +29,19 @@ export function getRelationQuestions() {
 }
 
 
-
-
 export function getSafetyQuestions() {
     const endpoint = SURVEY_URL + `/survey/22`;
+    try {
+        const dataFetched = axios.get(endpoint).then(res => res.data);
+        return dataFetched;
+    } catch (e) {
+        return e;
+    }
+}
+
+
+export function getPriorityQuestions() {
+    const endpoint = SURVEY_URL + `/survey/31`;
     try {
         const dataFetched = axios.get(endpoint).then(res => res.data);
         return dataFetched;
