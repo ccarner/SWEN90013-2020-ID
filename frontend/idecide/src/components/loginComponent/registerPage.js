@@ -40,14 +40,15 @@ export default class RegisterPage extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <div>
-            <div className="header">Register</div>
+          <div className="font-of-input-box">
+            <div className="padding-1">Register</div>
             <div className="content">
               <div className="form">
                 <div>
                   <label htmlFor="username">Username: </label>
                   <input type="text" name="username" placeholder="username" />
                 </div>
+                <br />
                 <div>
                   <label htmlFor="password">Password: </label>
                   <input
@@ -56,6 +57,7 @@ export default class RegisterPage extends React.Component {
                     placeholder="Password"
                   />
                 </div>
+                <br />
                 <div>
                   <label htmlFor="partnerGender">Last Name: </label>
                   <input
@@ -64,11 +66,12 @@ export default class RegisterPage extends React.Component {
                     placeholder="partnerGender"
                   />
                 </div>
+                <br />
                 <div>
                   <label htmlFor="email">Email Address: </label>
                   <input type="text" name="email" placeholder="Email Address" />
                 </div>
-
+                <br />
                 <div>
                   <label htmlFor="phoneNumber">Phone Number: </label>
                   <input
@@ -77,17 +80,17 @@ export default class RegisterPage extends React.Component {
                     placeholder="phoneNumber"
                   />
                 </div>
-
+                <br />
                 <div>
                   <label htmlFor="postcode">Post Code:</label>
                   <input type="text" name="postcode" placeholder="postcode" />
                 </div>
               </div>
             </div>
-
+            <br />
             <div className="footer">
               <MDBBtn gradient="purple">Register</MDBBtn>
-              <br />
+
               <NavLink to="./loginPage">
                 <MDBBtn gradient="purple">Login here</MDBBtn>
               </NavLink>

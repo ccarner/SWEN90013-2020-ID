@@ -41,19 +41,23 @@ export default class LoginPage extends React.Component {
   }
 
   render() {
-    const style = { width: "300px", high: "0px" };
+    const style = {
+      width: "300px",
+      high: "500px",
+      padding: "10px 10px 50px 10px",
+    };
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <div>
-            <div className="header">Login</div>
+          <div className="font-of-input-box">
+            <div className="padding-1">Login</div>
             <div className="content">
               <div className="form">
                 <div>
                   <label htmlFor="email">Email Address: </label>
                   <input type="text" name="email" placeholder="Email Address" />
                 </div>
-
+                <br />
                 <div>
                   <label htmlFor="password">Password: </label>
                   <input
@@ -64,24 +68,32 @@ export default class LoginPage extends React.Component {
                 </div>
               </div>
             </div>
-
+            <br />
+            <br />
             <div className="footer">
-              <MDBBtn gradient="purple">Login</MDBBtn>
-              <br />
+              <div className="login-form">
+                <MDBBtn gradient="purple">Login</MDBBtn>
 
-              <NavLink to="./registerPage">
-                <MDBBtn gradient="purple">Sign up here</MDBBtn>
-              </NavLink>
+                <NavLink to="./registerPage">
+                  <MDBBtn gradient="purple">Sign up here</MDBBtn>
+                </NavLink>
+              </div>
             </div>
           </div>
         </form>
 
-        <div style={{ padding: "80px" }}>
+        <div style={{ padding: "5px" }}>
           <h6>For Demo Purpose Only:</h6>
-          <MDBBtn style={style} onClick={this.displayAdmins} gradient="purple">
-            Display <br />
-            Admins
-          </MDBBtn>
+          <div className="login-form2">
+            <MDBBtn
+              style={style}
+              onClick={this.displayAdmins}
+              gradient="purple"
+            >
+              Display <br />
+              Admins
+            </MDBBtn>
+          </div>
 
           {this.state.showAdmin ? <AdminInfo /> : null}
         </div>
