@@ -1,8 +1,10 @@
 import React from "react";
 import { postingSurvey } from "../../API/surveyAPI";
 import Question from "./question";
-
-
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap-css-only/css/bootstrap.min.css";
+import "mdbreact/dist/css/mdb.css";
+import { MDBBtn, MDBFormInline, MDBCol } from "mdbreact";
 
 export default class SurveyQuestions extends React.Component {
     constructor(props) {
@@ -69,15 +71,19 @@ export default class SurveyQuestions extends React.Component {
         console.log("Data send to the backend:", this.state.results, ":Data send to the backend")
 
         this.setState({
-            isLoaded: false
+          actionPlan: "FINISHED",
         });
 
         const feedback = await postingSurvey(this.state.results);
         this.setState({
-            actionPlan: feedback.data.data,
-            isLoaded: true
+          sectionCount: this.state.sectionCount + 1,
+          questionCount: 0,
         });
-
+      }
+    } else {
+      this.setState({
+        questionCount: this.state.questionCount + 1,
+      });
     }
 
 
@@ -124,4 +130,5 @@ export default class SurveyQuestions extends React.Component {
             );
         }
     }
+  }
 }

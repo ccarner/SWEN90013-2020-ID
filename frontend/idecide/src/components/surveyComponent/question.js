@@ -1,5 +1,5 @@
 import React from "react";
-
+import { MDBBtn, MDBInput, MDBContainer } from "mdbreact";
 
 export default class Question extends React.Component {
     constructor(props) {
@@ -80,5 +80,22 @@ export default class Question extends React.Component {
             </div >
         );
 
-    }
+                <div className="radio">
+                  <label hlabel htmlFor="option5">
+                    <input type="radio" value="option5" unchecked={true} />
+                    {options[4]}:
+                  </label>
+                </div>
+              </form>
+
+              {/* <br /><button >Rather not to say</button><br /> */}
+            </div>
+          ) : (
+            "Unrecognized Question Type"
+          )}
+          <button>NEXT</button>
+        </form>
+      </div>
+    );
+  }
 }
