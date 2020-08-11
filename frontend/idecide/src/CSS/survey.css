@@ -33,10 +33,6 @@
   cursor: pointer;
 }
 
-.label {
-  display: inline;
-}
-
 /* these all the CSS related to the loginpage and registration page  */
 .padding-1 {
   padding-top: 10px;
@@ -104,4 +100,14 @@
   padding-top: 5px;
   padding-bottom: 5px;
   size: 100px;
+}
+
+.radio {
+  text-align: center;
+  margin: 0 10px 0 10px;
+}
+
+.label {
+  text-align: center;
+  margin: 0 10px 0 10px;
 }
