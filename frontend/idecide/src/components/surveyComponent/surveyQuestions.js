@@ -71,19 +71,15 @@ export default class SurveyQuestions extends React.Component {
         console.log("Data send to the backend:", this.state.results, ":Data send to the backend")
 
         this.setState({
-          actionPlan: "FINISHED",
+            isLoaded: false
         });
 
         const feedback = await postingSurvey(this.state.results);
         this.setState({
-          sectionCount: this.state.sectionCount + 1,
-          questionCount: 0,
+            actionPlan: feedback.data.data,
+            isLoaded: true
         });
-      }
-    } else {
-      this.setState({
-        questionCount: this.state.questionCount + 1,
-      });
+
     }
 
 
@@ -130,5 +126,5 @@ export default class SurveyQuestions extends React.Component {
             );
         }
     }
-  }
 }
+
