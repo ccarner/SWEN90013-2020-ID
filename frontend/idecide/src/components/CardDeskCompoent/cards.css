@@ -1,0 +1,338 @@
+.eeyCoj {
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  width: 100%;
+}
+.cards-container {
+  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.cards-wrapper {
+  position: relative;
+}
+.cards-container-checkbox .cards-list {
+  display: flex;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  justify-content: center;
+  height: 450px;
+  width: calc(100vw - 40px);
+  max-width: 420px;
+  position: relative;
+  perspective: 100px;
+  perspective-origin: 50% -28%;
+  margin: 0px auto 40px;
+}
+.card-container {
+  display: flex;
+  position: absolute;
+  left: 50%;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 20px 40px 0px;
+  opacity: 1;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  border-radius: 5px;
+  background: rgb(255, 255, 255);
+  transition: all 0.6s ease 0s;
+  padding: 30px 25px;
+}
+
+.card-container.opaque {
+  opacity: 1 !important;
+}
+
+.card-container:nth-child(1) {
+  z-index: 4;
+  transform: translate3d(-50%, 0%, 0px);
+}
+.card-container:nth-child(2) {
+  z-index: 3;
+  opacity: 0.8;
+  transform: translate3d(-50%, 0%, -10px);
+}
+.card-container:nth-child(3) {
+  z-index: 2;
+  opacity: 0.5;
+  transform: translate3d(-50%, 0%, -20px);
+}
+.card-container:nth-child(4) {
+  z-index: 1;
+  opacity: 0.2;
+  transform: translate3d(-50%, 0%, -30px);
+}
+.card-container:nth-of-type(n + 5) {
+  opacity: 0;
+  visibility: hidden;
+  z-index: -1;
+  transform: translate3d(-50%, 0%, -40px) !important;
+  transition: all 0.3s ease 0s;
+}
+.card-container .counter {
+  display: inline-block;
+  position: relative;
+  margin-bottom: 20px;
+}
+.card-container .counter::after {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 2px;
+  background: rgb(35, 190, 163);
+}
+.card-container h5 {
+  display: inline-block;
+  font-size: 12px;
+  color: rgb(132, 143, 148);
+}
+.card-container .counter h5.current {
+  color: rgb(0, 126, 174);
+  margin-right: 4px;
+}
+.card-container .primary-card-text {
+  text-align: center;
+  font-size: 18px;
+  color: rgb(74, 90, 128);
+  font-family: Adelle, "Times New Roman", serif;
+  line-height: 150%;
+  margin-bottom: 25px;
+}
+.card-container .button-container {
+  z-index: 10;
+  display: flex;
+  opacity: 1;
+  position: relative;
+  left: auto;
+  transform: none;
+  transition: all 240ms ease 100ms;
+  margin: 24px auto 0px;
+}
+.card-container .button-container .btn {
+  outline: none;
+  color: white;
+  text-align: center;
+  font-weight: 500;
+  opacity: 1;
+  position: static;
+  height: 36px;
+  width: 76px;
+  font-family: "Azo Sans", Arial, sans-serif;
+  line-height: 116%;
+  font-size: 11px;
+  box-shadow: none;
+  background: rgb(59, 16, 177);
+  border: 1px solid rgb(59, 16, 177);
+  border-radius: 5px;
+  padding: 0px;
+  transition: all 240ms ease 100ms;
+  margin: 0px;
+}
+.card-container .button-container .btn:hover {
+  background: rgb(38, 7, 124);
+}
+.card-container .composite-scale-container {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.card-container .composite-scale-container .option-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  grid-column-gap: 10px;
+  grid-row-gap: 33px;
+}
+.cards-container .composite-scale-container .composite-option-button {
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  background: none;
+  border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+  padding: 0px;
+  outline: none;
+  height: auto;
+  width: auto;
+}
+.card-container .composite-scale-container .composite-circle {
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 36px;
+  width: 36px;
+  position: relative;
+  cursor: pointer;
+  margin-bottom: 7px;
+  padding: 0px;
+  outline: none;
+  border-radius: 50%;
+  background: none;
+  border-width: 7px;
+  border-style: solid;
+  border-color: rgb(221, 0, 103);
+  border-image: initial;
+}
+.card-container .top::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0px);
+  height: 12px;
+  width: 12px;
+  opacity: 0;
+  z-index: -1;
+  background: rgb(221, 0, 103);
+  border-radius: 50%;
+  transition: all 60ms ease 0s;
+}
+.option-container .composite-option-button:nth-of-type(2) .top {
+  border-width: 7px;
+  border-style: solid;
+  border-color: rgb(163, 34, 123);
+  border-image: initial;
+}
+.option-container .composite-option-button:nth-of-type(3) .top {
+  border-width: 7px;
+  border-style: solid;
+  border-color: rgb(112, 62, 138);
+  border-image: initial;
+}
+.card-container .composite-option-button:nth-of-type(4) .top {
+  border-width: 7px;
+  border-style: solid;
+  border-color: rgb(92, 74, 145);
+  border-image: initial;
+}
+.card-container .composite-option-button:nth-of-type(5) .top {
+  border-width: 7px;
+  border-style: solid;
+  border-color: rgb(41, 104, 162);
+  border-image: initial;
+}
+.card-container .composite-option-button:nth-of-type(6) .top {
+  border-width: 7px;
+  border-style: solid;
+  border-color: rgb(2, 126, 174);
+  border-image: initial;
+}
+.card-container .composite-scale-container .composite-circle::before {
+  opacity: 0;
+}
+.option-container .composite-option-button:hover .top::before {
+  opacity: 1;
+}
+.card-container .bottom {
+  font-size: 14px;
+  color: rgb(221, 0, 103);
+}
+.card-container .composite-option-button:nth-of-type(2) .top::before {
+  background-color: rgb(163, 34, 123);
+}
+.card-container .composite-option-button:nth-of-type(3) .top::before {
+  background-color: rgb(112, 62, 138);
+}
+.card-container .composite-option-button:nth-of-type(4) .top::before {
+  background-color: rgb(92, 74, 145);
+}
+.card-container .composite-option-button:nth-of-type(5) .top::before {
+  background-color: rgb(41, 104, 162);
+}
+.card-container .composite-option-button:nth-of-type(6) .top::before {
+  background-color: rgb(2, 126, 174);
+}
+.card-container .composite-option-button:nth-of-type(2) .bottom {
+  color: rgb(163, 34, 123);
+}
+.card-container .composite-option-button:nth-of-type(3) .bottom {
+  color: rgb(112, 62, 138);
+}
+.card-container .composite-option-button:nth-of-type(4) .bottom {
+  color: rgb(92, 74, 145);
+}
+.card-container .composite-option-button:nth-of-type(5) .bottom {
+  color: rgb(41, 104, 162);
+}
+.card-container .composite-option-button:nth-of-type(6) .bottom {
+  color: rgb(2, 126, 174);
+}
+@media (min-width: 360px) {
+  .card-container .button-container .btn {
+    margin-right: 15px;
+    height: 46px;
+    width: 96px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .cards-container-checkbox .cards-list {
+    height: 352px;
+    max-width: 540px;
+    margin-bottom: 25px;
+    perspective-origin: 50% -60%;
+  }
+  .card-container {
+    padding: 30px 35px;
+  }
+  .card-container .counter {
+    margin-bottom: 20px;
+  }
+  .card-container .counter h5.current {
+    font-size: 14px;
+  }
+  .card-container .primary-card-text {
+    margin-bottom: 15px;
+    font-size: 20px;
+  }
+  .card-container .button-container {
+    margin-top: 15px;
+  }
+  .card-container .button-container .btn {
+    height: 44px;
+    width: 120px;
+  }
+
+  .card-container .composite-scale-container {
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+  .card-container .composite-scale-container .option-container {
+    grid-template-columns: repeat(6, 1fr);
+    grid-column-gap: 0px;
+  }
+  .card-container .top {
+    margin-bottom: 13px;
+  }
+  .card-container .bottom {
+    font-size: 16px;
+  }
+}
+
+.fade-enter-active，fade-appear-active {
+  opacity: 0.5;
+  transition: opacity 1s ease-in;
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit-active {
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(-50%, 130px, 0px) scale(0.7) !important;
+}
