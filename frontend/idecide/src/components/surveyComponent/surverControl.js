@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { getSurveyQuestions } from "../../API/surveyAPI";
 import SurveyQuestions from "./surveyQuestions";
-import CardDesk from "../CardDeskCompoent/cardDesk";
+
 
 export default class SurveyControl extends Component {
   constructor(props) {
@@ -56,19 +56,19 @@ export default class SurveyControl extends Component {
               />
             </div>
           ) : (
-            <div>
-              <div className="container" style={{ padding: "50px" }}>
-                <h2 style={{ color: "purple" }}>{surveyFile.surveyTitle}</h2>
-                <p style={{ color: "black" }}>
-                  {surveyFile.surveyIntroduction}
-                </p>
+              <div>
+                <div className="container" style={{ padding: "50px" }}>
+                  <h2 style={{ color: "purple" }}>{surveyFile.surveyTitle}</h2>
+                  <p style={{ color: "black" }}>
+                    {surveyFile.surveyIntroduction}
+                  </p>
+                </div>
+                <div style={{ padding: "10px" }}>
+                  <button onClick={this.handleStart}>Start</button>
+                </div>
+
               </div>
-              <div style={{ padding: "10px" }}>
-                <button onClick={this.handleStart}>Start</button>
-              </div>
-              <CardDesk />
-            </div>
-          )}
+            )}
         </div>
       );
     }

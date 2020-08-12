@@ -3,7 +3,9 @@ import React, { Component } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./cards.css";
 import questions from "./testdata.js";
-class CardDesk extends Component {
+
+
+export default class CardDesk extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -116,5 +118,3 @@ class CardDesk extends Component {
     );
   }
 }
-
-export default CardDesk;

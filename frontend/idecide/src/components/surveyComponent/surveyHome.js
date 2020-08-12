@@ -5,6 +5,7 @@ import { MDBBtn } from "mdbreact";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
+import CardDesk from "../CardDeskCompoent/cardDesk";
 
 export default class SurveyHome extends Component {
 
@@ -12,6 +13,7 @@ export default class SurveyHome extends Component {
         super(props);
         this.state = {
             isStarted: false,
+            showCardDesk: false,
             currentComponent: "HOME"
         };
     }
@@ -40,9 +42,15 @@ export default class SurveyHome extends Component {
         });
     }
 
+    handleCardDesk = () => {
+        this.setState({
+            showCardDesk: !this.state.showCardDesk
+        });
+    }
+
     render() {
 
-        const { isStarted, currentComponent } = this.state;
+        const { isStarted, currentComponent, showCardDesk } = this.state;
 
         if (isStarted) {
             return (
@@ -83,6 +91,16 @@ export default class SurveyHome extends Component {
                                     onClick={this.startSurvey} id="PRIORITIS" />}
                         </div>
                     </div>
+
+                    {/* ########## BELOW For demonstration purpose only ##########*/}
+                    <button onClick={this.handleCardDesk}>Card desk(DEMO) </button>
+                    {showCardDesk ?
+                        <CardDesk />
+                        :
+                        null}
+                    {/* ########## ABOVE For demonstration purpose only ##########*/}
+
+
                     {(localStorage.getItem("SAFETY") && localStorage.getItem("PRIORITIS")) ?
                         < div ><button >Next(To Be Done in Sprint2)</button></div >
                         : null
