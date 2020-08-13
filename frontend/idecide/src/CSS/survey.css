@@ -4,13 +4,15 @@
 
 .slider {
   -webkit-appearance: none;
-  width: 100%;
+  -moz-appearance: none;
+  appearance: none;
+  width: 50%;
   height: 25px;
-  background: linear-gradient(90deg, red, yellow, green);
+  background:white;
   outline: none;
   opacity: 0.7;
-  -webkit-transition: 0.2s;
-  transition: opacity 0.2s;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
 }
 
 .slider:hover {
@@ -19,10 +21,12 @@
 
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
-  width: 25px;
-  height: 25px;
-  background: purple;
+  box-shadow: 0 0 2px;
+  width: 2.6rem;
+  height: 1.6rem;
+  background: linear-gradient(90deg, white,rgb(167, 125, 167), rgb(174, 86, 182));;
   cursor: pointer;
 }
 
@@ -100,6 +104,7 @@
   padding-top: 5px;
   padding-bottom: 5px;
   size: 100px;
+  
 }
 
 .radio {
