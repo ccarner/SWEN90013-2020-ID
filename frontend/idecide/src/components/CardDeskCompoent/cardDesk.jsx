@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-//import { Slider } from "antd";
+import { Slider } from "antd";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./cards.css";
+import "antd/dist/antd.css";
 import questions from "./testdata.js";
-
 
 export default class CardDesk extends Component {
   constructor(props) {
@@ -18,7 +18,6 @@ export default class CardDesk extends Component {
   handleClick(item) {
     const _this = this;
     const questions = this.state.questions;
-    console.log(item.questionId);
     _this.setState({
       questions: questions.filter((ite) => ite.questionId !== item.questionId),
       fadeAwayState: true,
@@ -36,31 +35,74 @@ export default class CardDesk extends Component {
     console.log(item.questionId + " " + result);
     this.handleClick(item);
   }
-  test() {
-    return <h4> haha</h4>;
-  }
 
   questionTypeController(item) {
-    console.log(item);
     if (item.questionType == "singleSelection") {
       return (
-        <div className="composite-scale-container">
-          <div className="option-container">
-            {item.selectionOptions.map((option, index) => (
-              <button
-                key={index}
-                onClick={() => this.handleResult(item, option)}
-                className="composite-option-button"
-              >
-                <span className="composite-circle top"></span>
-                <span className="composite-label bottom">{option.name}</span>
-              </button>
-            ))}
+        <div className="questionContainer">
+          <div className="composite-scale-container">
+            <div className="option-container">
+              {item.selectionOptions.map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => this.handleResult(item, option.name)}
+                  className="composite-option-button"
+                >
+                  <span className="composite-circle top"></span>
+                  <span className="composite-label bottom">{option.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="button-container">
+            <button
+              className="btn"
+              onClick={() => this.handleResult(item, this.state.skiped)}
+            >
+              i rather not anser
+            </button>
           </div>
         </div>
       );
     } else if (item.questionType == "slider") {
-      return <h4>slider</h4>;
+      let silderresult = 0;
+
+      return (
+        <div className="questionContainer">
+          <Slider
+            ref={`slider-${item.questionId}`}
+            className="ranger-container-silder"
+            defaultValue={0}
+            min={item.sliderMinValue}
+            max={item.sliderMaxValue}
+            onAfterChange={(event) => {
+              silderresult = event;
+            }}
+          />
+
+          <div className="label-container">
+            {item.labellist.map((v, t) => (
+              <span className="label" key={v.index}>
+                {v.name}
+              </span>
+            ))}
+          </div>
+          <div className="button-container">
+            <button
+              className="btn"
+              onClick={() => this.handleResult(item, this.state.skiped)}
+            >
+              I rather not answer
+            </button>
+            <button
+              className="btn btn2"
+              onClick={() => this.handleResult(item, silderresult)}
+            >
+              CONFIRM?
+            </button>
+          </div>
+        </div>
+      );
     }
   }
 
@@ -91,15 +133,6 @@ export default class CardDesk extends Component {
 
               <h4 className="primary-card-text">{item.questionText}</h4>
               {this.questionTypeController(item)}
-
-              <div className="button-container">
-                <button
-                  className="btn"
-                  onClick={() => this.handleResult(item, this.state.skiped)}
-                >
-                  i rather not anser
-                </button>
-              </div>
             </div>
           </CSSTransition>
         ))}

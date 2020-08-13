@@ -272,6 +272,71 @@
 .card-container .composite-option-button:nth-of-type(6) .bottom {
   color: rgb(2, 126, 174);
 }
+
+.card-container .ranger-container-silder {
+  width: 100%;
+}
+.cards-container .ranger-container-silder .ant-slider-rail {
+  background-image: linear-gradient(
+    90deg,
+    rgb(222, 0, 103) 0%,
+    rgb(0, 126, 174) 100%
+  );
+  border-radius: 5px;
+  height: 8px;
+  width: 100%;
+  border-radius: 4px;
+  align-self: center;
+}
+.cards-container .ranger-container-silder .ant-slider-track {
+  opacity: 0;
+}
+.cards-container .ranger-container-silder .ant-slider-handle {
+  height: 30px;
+  width: 30px;
+  background: rgb(222, 12, 111);
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(255, 255, 255);
+  border-image: initial;
+  border-radius: 50%;
+  margin-top: -10px;
+}
+.card-container .label-container {
+  width: 100%;
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 126px 146px 126px;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+  gap: 6px;
+}
+/* .card-container .label-container {
+  display: flex;
+  justify-content: space-between;
+} */
+.card-container .label-container .label {
+  font-size: 12px;
+}
+.card-container .label-container .label:first-of-type {
+  color: rgb(221, 1, 104);
+}
+.card-container .label-container .label:nth-of-type(2) {
+  color: rgb(115, 60, 137);
+}
+.card-container .label-container .label:nth-of-type(3) {
+  color: rgb(0, 126, 174);
+}
+
+.cards-container .questionContainer {
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  width: inherit;
+}
 @media (min-width: 360px) {
   .card-container .button-container .btn {
     margin-right: 15px;
