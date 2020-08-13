@@ -260,28 +260,28 @@ export default [
       { name: "Daily" },
     ],
   },
-  // {
-  //   questionId: "21",
-  //   questionType: "slider",
-  //   questionText: "Which of these two factors is more important to YOU?",
-  //   sliderMaxValue: 10,
-  //   sliderMinValue: 0,
-  //   labellist: [
-  //     { index: 0, name: "Very unhealthy or abusive" },
-  //     { index: 1, name: "Somewhat unhealthy" },
-  //     { index: 3, name: "Healthy Relationship" },
-  //   ],
-  // },
-  // {
-  //   questionId: "22",
-  //   questionType: "slider",
-  //   questionText: "Which of these two factors is more important to YOU?",
-  //   sliderMaxValue: 10,
-  //   sliderMinValue: 0,
-  //   labellist: [
-  //     { index: 0, name: "Very unhealthy or abusive" },
-  //     { index: 1, name: "Somewhat unhealthy" },
-  //     { index: 3, name: "Healthy Relationship" },
-  //   ],
-  // },
+  {
+    questionId: "21",
+    questionType: "slider",
+    questionText: "Which of these two factors is more important to YOU?",
+    sliderMaxValue: 10,
+    sliderMinValue: 0,
+    labellist: [
+      { index: 0, name: "Very unhealthy or abusive" },
+      { index: 1, name: "Somewhat unhealthy" },
+      { index: 3, name: "Healthy Relationship" },
+    ],
+  },
+  {
+    questionId: "22",
+    questionType: "slider",
+    questionText: "Which of these two factors is more important to YOU?",
+    sliderMaxValue: 10,
+    sliderMinValue: 0,
+    labellist: [
+      { index: 0, name: "Very unhealthy or abusive" },
+      { index: 1, name: "Somewhat unhealthy" },
+      { index: 3, name: "Healthy Relationship" },
+    ],
+  },
 ];
