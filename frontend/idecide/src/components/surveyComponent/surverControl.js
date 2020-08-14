@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { getSurveyQuestions } from "../../API/surveyAPI";
 import SurveyQuestions from "./surveyQuestions";
-
+import { Spinner } from "react-bootstrap";
 
 export default class SurveyControl extends Component {
   constructor(props) {
@@ -43,7 +43,11 @@ export default class SurveyControl extends Component {
   render() {
     const { isLoaded, surveyFile, isStarted } = this.state;
     if (!isLoaded) {
-      return <div>Loading...</div>;
+      return (
+        <div>
+          <Spinner animation="border" />
+        </div>
+      );
     } else {
       return (
         <div>
@@ -51,24 +55,22 @@ export default class SurveyControl extends Component {
             <div>
               <SurveyQuestions
                 surveyFile={surveyFile}
-                allSections={surveyFile.surveySections}
                 completeHandler={this.completeHandler}
               />
             </div>
           ) : (
-              <div>
-                <div className="container" style={{ padding: "50px" }}>
-                  <h2 style={{ color: "purple" }}>{surveyFile.surveyTitle}</h2>
-                  <p style={{ color: "black" }}>
-                    {surveyFile.surveyIntroduction}
-                  </p>
-                </div>
-                <div style={{ padding: "10px" }}>
-                  <button onClick={this.handleStart}>Start</button>
-                </div>
-
+            <div>
+              <div className="container" style={{ padding: "50px" }}>
+                <h2 style={{ color: "purple" }}>{surveyFile.surveyTitle}</h2>
+                <p style={{ color: "black" }}>
+                  {surveyFile.surveyIntroduction}
+                </p>
               </div>
-            )}
+              <div style={{ padding: "10px" }}>
+                <button onClick={this.handleStart}>Start</button>
+              </div>
+            </div>
+          )}
         </div>
       );
     }
