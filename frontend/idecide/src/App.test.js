@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import App from './App';
 
 test('renders login link', () => {
@@ -9,8 +9,8 @@ test('renders login link', () => {
 });
 
 test('renders anonymous link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/Anonymous/i);
+  render(<App />);
+  const linkElement = screen.getByText(/Anonymous/i);
   expect(linkElement).toBeInTheDocument();
 });
 

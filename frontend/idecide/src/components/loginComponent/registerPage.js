@@ -1,7 +1,7 @@
 import React from "react";
 
 import { registerUser } from "../../API/loginAPI";
-import { NavLink } from 'react-router-dom';
+import { NavLink, BrowserRouter } from 'react-router-dom';
 
 export default class RegisterPage extends React.Component {
     constructor(props) {
@@ -78,9 +78,11 @@ export default class RegisterPage extends React.Component {
                         <div className="footer">
                             <button >Register</button>
                             <br />
+                            <BrowserRouter>
                             <NavLink to='./loginPage'>
                                 <button>Login here</button>
                             </NavLink>
+                            </BrowserRouter>
                         </div>
 
                     </div>
