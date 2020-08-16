@@ -39,7 +39,7 @@ export default class RegisterPage extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <section onSubmit={this.handleSubmit}>
           <div className="font-of-input-box">
             <div className="padding-1">Register</div>
             <div className="content">
@@ -91,13 +91,13 @@ export default class RegisterPage extends React.Component {
             <div className="footer">
               <MDBBtn gradient="purple">Register</MDBBtn>
               <BrowserRouter>
-              <NavLink to="./loginPage">
-                <MDBBtn gradient="purple">Login here</MDBBtn>
-              </NavLink>
+                <NavLink to="./loginPage">
+                  <MDBBtn gradient="purple">Login here</MDBBtn>
+                </NavLink>
               </BrowserRouter>
             </div>
           </div>
-        </form>
+        </section>
         {/* <div><h1>Returned message:{this.state.response}</h1></div> */}
       </div>
     );
