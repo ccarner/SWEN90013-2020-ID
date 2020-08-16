@@ -1,12 +1,16 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { MDBBtn, MDBFormInline, MDBCol } from "mdbreact";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap-css-only/css/bootstrap.min.css";
+import "mdbreact/dist/css/mdb.css";
+import { Link, withRouter } from "react-router-dom";
 import {
   Navbar,
   Nav,
   NavDropdown,
   Form,
   FormControl,
-  Button
+  Button,
 } from "react-bootstrap";
 
 import IconLogo from "../images/idecide-logo.png";
@@ -40,8 +44,25 @@ class Landing extends Component {
             </NavDropdown>
           </Nav>
           <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-success">Search</Button>
+            <MDBCol md="12">
+              <MDBFormInline className="md-form mr-auto mb-4">
+                <input
+                  className="form-control mr-sm-2"
+                  type="text"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+                <MDBBtn
+                  gradient="purple-gradient"
+                  rounded
+                  size="sm"
+                  type="submit"
+                  className="purple-gradient"
+                >
+                  Search
+                </MDBBtn>
+              </MDBFormInline>
+            </MDBCol>
           </Form>
         </Navbar.Collapse>
       </Navbar>

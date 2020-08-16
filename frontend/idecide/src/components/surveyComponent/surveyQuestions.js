@@ -1,8 +1,10 @@
 import React from "react";
 import { postingSurvey } from "../../API/surveyAPI";
 import Question from "./question";
-
-
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap-css-only/css/bootstrap.min.css";
+import "mdbreact/dist/css/mdb.css";
+import { MDBBtn, MDBFormInline, MDBCol } from "mdbreact";
 
 export default class SurveyQuestions extends React.Component {
     constructor(props) {
@@ -125,3 +127,4 @@ export default class SurveyQuestions extends React.Component {
         }
     }
 }
+
