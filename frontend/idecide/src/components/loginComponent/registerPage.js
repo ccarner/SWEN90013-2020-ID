@@ -4,7 +4,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import { registerUser } from "../../API/loginAPI";
-import { NavLink } from "react-router-dom";
+import { NavLink, BrowserRouter } from "react-router-dom";
 
 export default class RegisterPage extends React.Component {
   constructor(props) {
@@ -39,7 +39,7 @@ export default class RegisterPage extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <section onSubmit={this.handleSubmit}>
           <div className="font-of-input-box">
             <div className="padding-1">Register</div>
             <div className="content">
@@ -90,13 +90,14 @@ export default class RegisterPage extends React.Component {
             <br />
             <div className="footer">
               <MDBBtn gradient="purple">Register</MDBBtn>
-
-              <NavLink to="./loginPage">
-                <MDBBtn gradient="purple">Login here</MDBBtn>
-              </NavLink>
+              <BrowserRouter>
+                <NavLink to="./loginPage">
+                  <MDBBtn gradient="purple">Login here</MDBBtn>
+                </NavLink>
+              </BrowserRouter>
             </div>
           </div>
-        </form>
+        </section>
         {/* <div><h1>Returned message:{this.state.response}</h1></div> */}
       </div>
     );
