@@ -5,9 +5,9 @@ import { NavLink } from 'react-router-dom';
 
 
 
-test('renders register link', () => {
+test('renders Password field', () => {
   render(<RegisterPage />);
-  const linkElement = screen.getByText(/Password:/i);
+  const linkElement = screen.getByText(/Register/i);
   expect(linkElement).toBeInTheDocument();
 });
 //Test example

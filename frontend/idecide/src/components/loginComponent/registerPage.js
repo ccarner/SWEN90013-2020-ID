@@ -4,7 +4,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import { registerUser } from "../../API/loginAPI";
-import { NavLink } from "react-router-dom";
+import { NavLink, BrowserRouter } from "react-router-dom";
 
 export default class RegisterPage extends React.Component {
   constructor(props) {
@@ -90,10 +90,11 @@ export default class RegisterPage extends React.Component {
             <br />
             <div className="footer">
               <MDBBtn gradient="purple">Register</MDBBtn>
-
+              <BrowserRouter>
               <NavLink to="./loginPage">
                 <MDBBtn gradient="purple">Login here</MDBBtn>
               </NavLink>
+              </BrowserRouter>
             </div>
           </div>
         </form>
