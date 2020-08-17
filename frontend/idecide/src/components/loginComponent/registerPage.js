@@ -4,7 +4,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import { registerUser } from "../../API/loginAPI";
-import { NavLink, BrowserRouter } from "react-router-dom";
+// import { NavLink, BrowserRouter } from "react-router-dom";
 
 export default class RegisterPage extends React.Component {
   constructor(props) {
@@ -22,6 +22,7 @@ export default class RegisterPage extends React.Component {
   }
 
   async handleSubmit(event) {
+    console.log(331)
     // the following call will stop the form from submitting
     event.preventDefault();
 
@@ -32,14 +33,15 @@ export default class RegisterPage extends React.Component {
       userObject[key] = value;
     });
 
-    await registerUser(userObject);
-    window.location.replace("/");
+    const response = await registerUser(userObject);
+    console.log(333, response);
+    // window.location.replace("/");
   }
 
   render() {
     return (
       <div>
-        <section onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
           <div className="font-of-input-box">
             <div className="padding-1">Register</div>
             <div className="content">
@@ -89,16 +91,13 @@ export default class RegisterPage extends React.Component {
             </div>
             <br />
             <div className="footer">
-              <MDBBtn gradient="purple">Register</MDBBtn>
-              <BrowserRouter>
-                <NavLink to="./loginPage">
-                  <MDBBtn gradient="purple">Login here</MDBBtn>
-                </NavLink>
-              </BrowserRouter>
+              <MDBBtn type="submit" gradient="purple">Register</MDBBtn>
+
+              <MDBBtn gradient="purple" onClick={this.props.registerToggle}>Login here</MDBBtn>
+
             </div>
           </div>
-        </section>
-        {/* <div><h1>Returned message:{this.state.response}</h1></div> */}
+        </form>
       </div>
     );
   }

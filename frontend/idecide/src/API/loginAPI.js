@@ -1,10 +1,10 @@
 const axios = require('axios');
 
 
-const USER_URL = "http://8.210.28.169:9008";
+const USER_URL = "http://34.64.134.143:9008";
 
 
-export function registerUser(userIn) {
+export async function registerUser(userIn) {
 
     const { username,
         password,
@@ -18,24 +18,26 @@ export function registerUser(userIn) {
 
     if (!email) {
         alert("must include a valid email address");
-        return;
+        return false;
     }
 
-    return axios({
+    const result = await axios({
         url: endpoint,  // send a request to the library API
         method: "POST", // HTTP POST method
         headers: {
             "Content-Type": "application/json"
         },
         data: JSON.stringify({
+            // partnerGender,            
+            // phoneNumber,
+            // postcode,
             username,
             password,
-            partnerGender,
-            email,
-            phoneNumber,
-            postcode
+            email
         })
-    })
+    });
+
+    return result.data;
 }
 
 
@@ -51,10 +53,10 @@ export function getAllAdmins() {
 
 
 
-export function loginUser(userIn) {
+export async function loginUser(userIn) {
 
     const { email, password } = userIn;
-    const endpoint = USER_URL + `/userRegister`;
+    const endpoint = USER_URL + `/user/login`;
 
     // check if the email is present
 
@@ -63,7 +65,7 @@ export function loginUser(userIn) {
         return;
     }
 
-    return axios({
+    const result = await axios({
         url: endpoint,  // send a request to the library API
         method: "POST", // HTTP POST method
         headers: {
@@ -73,5 +75,7 @@ export function loginUser(userIn) {
             email,
             password
         })
-    })
+    });
+
+    return result.data;
 }
