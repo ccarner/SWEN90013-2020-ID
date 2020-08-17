@@ -62,7 +62,7 @@ export async function loginUser(userIn) {
 
     if (!email) {
         alert("must include a valid email address");
-        return;
+        return false;
     }
 
     const result = await axios({

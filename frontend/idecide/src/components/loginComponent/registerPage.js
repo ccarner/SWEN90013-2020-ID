@@ -22,7 +22,7 @@ export default class RegisterPage extends React.Component {
   }
 
   async handleSubmit(event) {
-    console.log(331)
+
     // the following call will stop the form from submitting
     event.preventDefault();
 
@@ -34,8 +34,12 @@ export default class RegisterPage extends React.Component {
     });
 
     const response = await registerUser(userObject);
-    console.log(333, response);
-    // window.location.replace("/");
+    if (response.flag) {
+      alert("Sign up Successful!")
+    } else {
+      alert("Sign up Failed")
+    }
+    window.location.replace("/");
   }
 
   render() {
