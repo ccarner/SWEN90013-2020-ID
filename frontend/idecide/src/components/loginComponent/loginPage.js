@@ -1,12 +1,12 @@
 import React from "react";
 
 import { loginUser } from "../../API/loginAPI";
-import { NavLink } from "react-router-dom";
 import AdminInfo from "./adminInfo";
 import { MDBBtn } from "mdbreact";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
+import { NavLink, BrowserRouter } from "react-router-dom";
 
 export default class LoginPage extends React.Component {
   constructor(props) {
@@ -73,10 +73,11 @@ export default class LoginPage extends React.Component {
             <div className="footer">
               <div className="login-form">
                 <MDBBtn gradient="purple">Login</MDBBtn>
-
-                <NavLink to="./registerPage">
-                  <MDBBtn gradient="purple">Sign up here</MDBBtn>
-                </NavLink>
+                <BrowserRouter>
+                  <NavLink to="./registerPage">
+                    <MDBBtn gradient="purple">Sign up here</MDBBtn>
+                  </NavLink>
+                </BrowserRouter>
               </div>
             </div>
           </div>
