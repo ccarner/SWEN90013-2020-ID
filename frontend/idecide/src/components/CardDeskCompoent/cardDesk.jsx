@@ -4,6 +4,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./cards.css";
 import "antd/dist/antd.css";
 import questions from "./testdata.js";
+import RuleEngine from "../RuleEngine/ruleEngine.js";
 
 export default class CardDesk extends Component {
   constructor(props) {
@@ -12,7 +13,8 @@ export default class CardDesk extends Component {
       len: questions.length, // question lenght
       questions: questions,
       fadeAwayState: false,
-      skiped: { name: "skpied" },
+      skiped: { name: "skpied", weight: "0" },
+      result: [],
     };
   }
   handleClick(item) {
@@ -32,8 +34,21 @@ export default class CardDesk extends Component {
 
   handleResult(item, result) {
     //here will handle the result !
-    console.log(item.questionId + " " + result);
+    console.log(item.questionId + " " + result.weight);
+    var currentResults = this.state.result;
+    currentResults.push({
+      questionId: item.questionId,
+      answer: result,
+    });
+    this.setState({
+      result: currentResults,
+    });
     this.handleClick(item);
+    //this.props.completeHandler(this.state.result);
+    if (item.questionId == this.state.len) {
+      console.log(this.state.result);
+      RuleEngine(this.state.result);
+    }
   }
 
   questionTypeController(item) {
@@ -45,7 +60,7 @@ export default class CardDesk extends Component {
               {item.selectionOptions.map((option, index) => (
                 <button
                   key={index}
-                  onClick={() => this.handleResult(item, option.name)}
+                  onClick={() => this.handleResult(item, option)}
                   className="composite-option-button"
                 >
                   <span className="composite-circle top"></span>
