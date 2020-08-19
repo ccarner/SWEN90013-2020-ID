@@ -50,11 +50,11 @@ export function getPriorityQuestions() {
 }
 
 
-export function postingSurvey(surveyIn) {
+export async function postingSurvey(surveyIn) {
 
     const endpoint = `http://8.210.28.169:9010/answer`;
 
-    const dataPost = axios({
+    const dataPost = await axios({
         url: endpoint,  // send a request to the library API
         method: "POST", // HTTP POST method
         headers: {
