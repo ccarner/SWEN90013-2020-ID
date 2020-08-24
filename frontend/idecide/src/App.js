@@ -13,7 +13,7 @@ import LoginPage from "./components/loginComponent/loginPage";
 import RegisterPage from "./components/loginComponent/registerPage";
 import AdminInfo from "./components/loginComponent/adminInfo";
 
-import SurveyHome from "./components/surveyComponent/surveyHome";
+import SurveyHome from "./components/surveyComponents/surveyHome";
 
 class App extends Component {
   render() {
