@@ -13,7 +13,7 @@ export default class SurveyQuestions extends React.Component {
     var questionResults = this.setupResults(props);
     this.state = {
       isLoaded: true,
-      sectionCount: 0,
+      currentSection: 0,
       actionPlan: null,
       results: {
         userId: 1,
@@ -27,6 +27,10 @@ export default class SurveyQuestions extends React.Component {
     this.handleNavigateSections = this.handleNavigateSections.bind(this);
   }
 
+  /**
+   * Sets up survey results array that will later be sent to the server
+   * @param {*} props react component props
+   */
   setupResults(props) {
     var questionResults = [];
     props.surveyFile.surveySections.forEach((section) => {
@@ -42,55 +46,38 @@ export default class SurveyQuestions extends React.Component {
     return questionResults;
   }
 
+  /**
+   * Called when answer to a question is changed
+   * @param {*} questionId
+   * @param {*} responseValue
+   */
   questionHandler(questionId, responseValue) {
-    const { sectionCount } = this.state;
+    const { currentSection } = this.state;
     const surveySections = this.props.surveyFile.surveySections;
 
-    const currentQuestion = surveySections[sectionCount].questions[questionId];
+    const currentQuestion =
+      surveySections[currentSection].questions[questionId];
 
     var currentResults = this.state.results;
     currentResults["questions"][questionId]["questionAnswer"] = responseValue;
     this.setState({
       results: currentResults,
     });
-
-    // if (this.state.sectionCount + 1 >= this.state.surveySections.length) {
-    //   if (sectionCount + 1 >= surveySections.length) {
-    //     this.setState({
-    //       actionPlan: "FINISHED",
-    //     });
-    //   } else {
-    //     this.setState({
-    //       sectionCount: this.state.sectionCount + 1,
-    //       questionCount: 0,
-    //     });
-    //   }
-    // } else {
-    //   this.setState({
-    //     questionCount: this.state.questionCount + 1,
-    //   });
-    // }
   }
 
   handleNavigateSections(lambdaSection) {
-    const currentSection = this.state.sectionCount;
+    const currentSection = this.state.currentSection;
     if (
       currentSection + lambdaSection >
       this.props.surveyFile.surveySections.length
     ) {
       this.completeHandler(this.state.results);
     } else {
-      this.setState({ sectionCount: currentSection + lambdaSection });
+      this.setState({ currentSection: currentSection + lambdaSection });
     }
   }
 
   submitHandler = async (event) => {
-    console.log(
-      "Data send to the backend:",
-      this.state.results,
-      ":Data send to the backend"
-    );
-
     this.setState({
       isLoaded: false,
     });
@@ -107,7 +94,7 @@ export default class SurveyQuestions extends React.Component {
   };
 
   render() {
-    const { isLoaded, sectionCount, actionPlan } = this.state;
+    const { isLoaded, currentSection, actionPlan } = this.state;
     if (!isLoaded) {
       return (
         <div>
@@ -149,11 +136,14 @@ export default class SurveyQuestions extends React.Component {
         <div>
           <div className="container" style={{ padding: "50px" }}>
             <h2 style={{ color: "purple" }}>
-              {this.props.surveyFile.surveySections[sectionCount].sectionTitle}
+              {
+                this.props.surveyFile.surveySections[currentSection]
+                  .sectionTitle
+              }
             </h2>
             <p style={{ color: "black" }}>
               {
-                this.props.surveyFile.surveySections[sectionCount]
+                this.props.surveyFile.surveySections[currentSection]
                   .sectionIntroduction
               }
             </p>
@@ -161,7 +151,7 @@ export default class SurveyQuestions extends React.Component {
           <SurveySection
             handleQuestion={this.questionHandler}
             section={
-              this.props.surveyFile.surveySections[this.state.sectionCount]
+              this.props.surveyFile.surveySections[this.state.currentSection]
             }
             results={this.state.results.questions}
           />

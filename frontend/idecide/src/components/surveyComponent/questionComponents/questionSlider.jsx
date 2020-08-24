@@ -35,10 +35,9 @@ export default class QuestionSlider extends Component {
             min={minVal}
             max={maxVal}
             onChange={(e) =>
-              this.props.handleChange(
-                this.props.question.questionId,
-                e.target.value
-              )
+              this.props.handleChange(this.props.question.questionId, [
+                e.target.value,
+              ])
             }
           />
           <span className="sliderLabel">{question.sliderMaxValue}</span>
@@ -52,10 +51,9 @@ export default class QuestionSlider extends Component {
             min={minVal}
             max={maxVal}
             onChange={(e) => {
-              this.props.handleChange(
-                this.props.question.questionId,
-                e.target.value
-              );
+              this.props.handleChange(this.props.question.questionId, [
+                e.target.value,
+              ]);
             }}
           />
         </div>

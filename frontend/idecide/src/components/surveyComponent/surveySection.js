@@ -10,63 +10,54 @@ export default class SurveySection extends React.Component {
     this.setState = this.setState.bind(this);
   }
 
-  // handleChange = (event) => {
-  //   document.getElementById("sliderBar").value = event.target.value;
-  //   document.getElementById("sliderNum").value = event.target.value;
-  // };
-
-  // handleQuestion = (event) => {
-  //   // the following call will stop the form from submitting
-  //   event.preventDefault();
-
-  //   // get the data from the form
-  //   const dataForm = new FormData(event.target);
-  //   var formObject = {};
-
-  //   dataForm.forEach((value, key) => {
-  //     formObject[key] = value;
-  //   });
-  //   // console.log("event.target is", event.target);
-  //   // console.log("dataForm is", dataForm);
-  //   // console.log(formObject);
-
-  //   this.props.handleQuestion(formObject);
-  // };
-
   handleInputChange(questionId, event) {
     const value = event.target.value;
     this.props.questionHandler(questionId, value);
   }
 
+  createQuestionArray() {
+    return this.props.section.questions.map((question, index) => {
+      if (question.questionType === "slider") {
+        return (
+          <div key={question.questionId}>
+            <QuestionSlider
+              handleChange={this.props.handleQuestion}
+              id={question.questionId}
+              currentValue={
+                this.props.results[question.questionId].questionAnswer
+              }
+              question={question}
+            />
+          </div>
+        );
+      } else if (question.questionType === "singleSelection") {
+        return (
+          <div key={question.questionId}>
+            <SingleChoice
+              handleChange={this.props.handleQuestion}
+              id={question.questionId}
+              currentValue={
+                this.props.results[question.questionId].questionAnswer
+              }
+              question={question}
+            />
+          </div>
+        );
+      }
+    });
+  }
+
   render() {
     return (
       <React.Fragment>
-        {this.props.section.questions.map((question, index) => {
-          if (question.questionType === "slider") {
-            return (
-              <QuestionSlider
-                handleChange={this.props.handleQuestion}
-                id={question.questionId}
-                currentValue={
-                  this.props.results[question.questionId].questionAnswer
-                }
-                question={question}
-              />
-            );
-          } else if (question.questionType === "singleSelection") {
-            return (
-              <SingleChoice
-                handleChange={this.props.handleQuestion}
-                id={question.questionId}
-                currentValue={
-                  this.props.results[question.questionId].questionAnswer
-                }
-                question={question}
-              />
-            );
-          }
-        })}
-        <div className="questionContainer"></div>
+        <div className="container" style={{ padding: "50px" }}>
+          <h2 style={{ color: "purple" }}>{this.props.section.sectionTitle}</h2>
+          <p style={{ color: "black" }}>
+            {this.props.section.sectionIntroduction}
+          </p>
+        </div>
+
+        <div className="questionContainer">{this.createQuestionArray()}</div>
       </React.Fragment>
     );
   }
