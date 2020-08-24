@@ -10,6 +10,15 @@ import { getUserResults, getAllSurveys } from "../../API/surveyAPI";
 import SurveySelectionButton from "./surveySelectionButton";
 import SurveyResultsPage from "./surveyResultsPage";
 
+/**
+ * The parent component of all survey pages. This component:
+ * a) fetches all available surveys from the server
+ * b) displays all available surveys in a UI
+ * c) fetches all previous completions if logged in (INCOMPLETE)
+ * d) displays all previous completions in a UI for user to review
+ * Once a survey is selected, the ID is passed to a SurveyControl. SurveyHome
+ * doesn't fetch the survey itself or post the results.
+ */
 export default class SurveyHome extends Component {
   constructor(props) {
     super(props);

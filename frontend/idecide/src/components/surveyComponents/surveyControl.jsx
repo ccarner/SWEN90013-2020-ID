@@ -5,6 +5,13 @@ import { Spinner, Button } from "react-bootstrap";
 import SurveyInformationPage from "./surveyInformationPage";
 import SurveyResultsPage from "./surveyResultsPage";
 
+/**
+ * This component is passed an ID for a survey, and then:
+ * a) fetches survey data from server
+ * b) displays the different parts of the survey (introduction > sections > results)
+ * c) stores state of survey while being completed
+ * d) submits the survey to the server after completion
+ */
 export default class SurveyControl extends Component {
   constructor(props) {
     super(props);
