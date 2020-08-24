@@ -45,23 +45,23 @@ class Landing extends Component {
           </Nav>
           <Form inline>
             <MDBCol md="12">
-              <MDBFormInline className="md-form mr-auto mb-4">
-                <input
-                  className="form-control mr-sm-2"
-                  type="text"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <MDBBtn
-                  gradient="purple-gradient"
-                  rounded
-                  size="sm"
-                  type="submit"
-                  className="purple-gradient"
-                >
-                  Search
+              {/* <MDBFormInline className="md-form mr-auto mb-4"> */}
+              <input
+                className="form-control mr-sm-2"
+                type="text"
+                placeholder="Search"
+                aria-label="Search"
+              />
+              <MDBBtn
+                gradient="purple-gradient"
+                rounded
+                size="sm"
+                type="submit"
+                className="purple-gradient"
+              >
+                Search
                 </MDBBtn>
-              </MDBFormInline>
+              {/* </MDBFormInline> */}
             </MDBCol>
           </Form>
         </Navbar.Collapse>

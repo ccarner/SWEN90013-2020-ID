@@ -26,7 +26,7 @@ test('renders survey link', () => {
   expect(linkElement).toBeInTheDocument();
 });
 
-//Test example
+//Test example 1
 test('renders learn react link', () => {
   expect(1+1).toEqual(2);
 });
