@@ -1,71 +1,48 @@
-const axios = require('axios');
+const axios = require("axios");
 
+const API_URL = "http://8.210.28.169:9009";
 
-const SURVEY_URL = "http://8.210.28.169:9009";
-
-
-export async function getSurveyQuestions(surveyType) {
-
-    if (surveyType === "RELATIONSHIP") {
-        return await getRelationQuestions();
-    } else if (surveyType === "SAFETY") {
-        return await getSafetyQuestions();
-    } else if (surveyType === "PRIORITIS") {
-        return await getPriorityQuestions();
-    } else {
-        return "Nothing Fetched, error";
-    }
+export async function getSurveyById(surveyId) {
+  const endpoint = API_URL + `/survey/${surveyId}`;
+  try {
+    const dataFetched = await axios.get(endpoint).then((res) => res.data);
+    return JSON.parse(dataFetched["data"]["jsonStr"]);
+  } catch (e) {
+    return e;
+  }
 }
 
-export function getRelationQuestions() {
-    const endpoint = SURVEY_URL + `/survey/13`;
-    try {
-        const dataFetched = axios.get(endpoint).then(res => res.data);
-        return dataFetched;
-    } catch (e) {
-        return e;
-    }
+export async function getUserResults(userId) {
+  const endpoint = API_URL + `/answer/getResult/${userId}`;
+  try {
+    const dataFetched = axios.get(endpoint).then((res) => res.data);
+    return dataFetched;
+  } catch (e) {
+    return e;
+  }
 }
 
-
-export function getSafetyQuestions() {
-    const endpoint = SURVEY_URL + `/survey/22`;
-    try {
-        const dataFetched = axios.get(endpoint).then(res => res.data);
-        return dataFetched;
-    } catch (e) {
-        return e;
-    }
+export async function getAllSurveys() {
+  const endpoint = API_URL + "/survey/allSurveyId";
+  try {
+    const dataFetched = axios.get(endpoint).then((res) => res.data);
+    return dataFetched;
+  } catch (e) {
+    return e;
+  }
 }
-
-
-export function getPriorityQuestions() {
-    const endpoint = SURVEY_URL + `/survey/31`;
-    try {
-        const dataFetched = axios.get(endpoint).then(res => res.data);
-        return dataFetched;
-    } catch (e) {
-        return e;
-    }
-}
-
 
 export function postingSurvey(surveyIn) {
+  const endpoint = `http://8.210.28.169:9010/answer`;
 
-    const endpoint = `http://8.210.28.169:9010/answer`;
+  const dataPost = axios({
+    url: endpoint, // send a request to the library API
+    method: "POST", // HTTP POST method
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: JSON.stringify(surveyIn),
+  });
 
-    const dataPost = axios({
-        url: endpoint,  // send a request to the library API
-        method: "POST", // HTTP POST method
-        headers: {
-            "Content-Type": "application/json"
-        },
-        data: JSON.stringify(surveyIn)
-    });
-
-    return dataPost;
+  return dataPost;
 }
-
-
-
-
