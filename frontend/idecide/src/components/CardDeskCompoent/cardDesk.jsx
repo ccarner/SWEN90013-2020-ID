@@ -111,7 +111,7 @@ export default class CardDesk extends Component {
             </button>
             <button
               className="btn btn2"
-              onClick={() => this.handleResult(item, silderresult)}
+              onClick={() => this.handleResult(item, { weight: silderresult })}
             >
               CONFIRM?
             </button>

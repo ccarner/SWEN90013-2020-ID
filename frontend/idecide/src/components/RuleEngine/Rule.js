@@ -1,7 +1,6 @@
 export default [
   {
     condition: function (R) {
-      console.log(this.St);
       R.when(this.St === true);
     },
     consequence: function (R) {
