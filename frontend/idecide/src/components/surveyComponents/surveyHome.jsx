@@ -6,7 +6,11 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import CardDesk from "../CardDeskCompoent/cardDesk";
-import { getUserResults, getAllSurveys } from "../../API/surveyAPI";
+import {
+  getUserResults,
+  getAllSurveys,
+  getStaticImageUrlFromName,
+} from "../../API/surveyAPI";
 import SurveySelectionButton from "./surveySelectionButton";
 import SurveyResultsPage from "./surveyResultsPage";
 
@@ -110,6 +114,7 @@ export default class SurveyHome extends Component {
             {this.state.allSurveys.map((survey) => (
               <div key={survey.surveyId} className="surveyIcon">
                 <SurveySelectionButton
+                  icon={getStaticImageUrlFromName(survey.surveyImageName)}
                   completed="false"
                   handleClick={() => {
                     this.startSurvey(survey.surveyId);

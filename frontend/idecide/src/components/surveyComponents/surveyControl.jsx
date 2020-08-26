@@ -65,7 +65,7 @@ export default class SurveyControl extends Component {
   }
 
   /**
-   * Called when answer to a question is changed
+   * Called when user selects an answer to a question
    * @param {*} questionId
    * @param {*} responseValue
    */
