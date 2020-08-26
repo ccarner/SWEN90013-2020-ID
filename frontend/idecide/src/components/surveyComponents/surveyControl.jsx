@@ -85,7 +85,7 @@ export default class SurveyControl extends Component {
 
 
     var currentResults = this.state.results;
-    currentResults["questions"][questionId]["questionAnswer"] = responseValue;
+    currentResults["questions"][questionId]["questionAnswer"] = [responseValue];
     this.setState({
       results: currentResults,
     });
@@ -110,10 +110,10 @@ export default class SurveyControl extends Component {
   }
 
   submitHandler = async () => {
-    console.log("posted this data", this.state.results);
-
-    postingSurvey(this.state.results);
+    console.log(550, "posted this data", JSON.stringify(this.state.results));
+    const feedBack = await postingSurvey(this.state.results);
     this.props.completeHandler(this.state.results);
+    console.log(555, "received from the backend", feedBack);
   };
 
   handleStart = () => {

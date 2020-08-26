@@ -55,11 +55,7 @@ export default class CardDesk extends Component {
       return (
         <div className="questionContainer">
           <div className="composite-scale-container">
-            <div className="option-container"
-            // onChange={(e) =>
-            //   this.props.handleQuestion(1, 6)
-            // }
-            >
+            <div className="option-container">
               {item.selectionOptions.map((option, index) => (
                 <button
                   key={index}
