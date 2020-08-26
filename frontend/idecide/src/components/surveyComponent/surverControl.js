@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { getSurveyQuestions } from "../../API/surveyAPI";
 import SurveyQuestions from "./surveyQuestions";
-import { RuleEngine } from "../RuleEngine/ruleEngine";
 
 export default class SurveyControl extends Component {
   constructor(props) {

@@ -3,19 +3,24 @@ import { Slider } from "antd";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./cards.css";
 import "antd/dist/antd.css";
-import questions from "./testdata.js";
-import RuleEngine from "../RuleEngine/ruleEngine.js";
-
+import sectionInfo from "./testdata.js";
+import JsonRuleEngine from "../RuleEngine/jsonRule.js";
 export default class CardDesk extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      len: questions.length, // question lenght
-      questions: questions,
+      sectionInfo: sectionInfo,
+      len: sectionInfo[0]["questions"].length, // question lenght
+      questions: sectionInfo[0]["questions"],
+      algorithmRelated: sectionInfo[0]["algorithmRelated"],
+      enginRule: sectionInfo[0]["enginRule"],
+      feedback: sectionInfo[0]["feedback"],
+      CasResult: "",
       fadeAwayState: false,
       skiped: { name: "skpied", weight: "0" },
       result: [],
     };
+    console.log(this.state.algorithmRelated);
   }
   handleClick(item) {
     const _this = this;
@@ -46,10 +51,21 @@ export default class CardDesk extends Component {
     this.handleClick(item);
     //this.props.completeHandler(this.state.result);
     if (item.questionId == this.state.len) {
-      console.log(this.state.result);
-      RuleEngine(this.state.result);
+      //console.log(this.state.result);
+
+      JsonRuleEngine(
+        this.state.result,
+        this.state.algorithmRelated,
+        this.state.enginRule,
+        this.handleCASResult
+      );
     }
   }
+  handleCASResult = (casResult) => {
+    this.setState({
+      CasResult: casResult,
+    });
+  };
 
   questionTypeController(item) {
     if (item.questionType == "singleSelection") {
@@ -125,7 +141,6 @@ export default class CardDesk extends Component {
     const questionLen = this.state.len;
     const questions = this.state.questions;
     let fadeAwayState = this.state.fadeAwayState;
-
     const ItemList = (
       <TransitionGroup>
         {questions.map((item, index) => (
@@ -159,7 +174,7 @@ export default class CardDesk extends Component {
         <div className="cards-wrapper">
           <ul className="cards-list">
             {ItemList}
-            <div>Thanks for completing this exercise.</div>
+            <div>{this.state.CasResult}</div>
           </ul>
         </div>
       </div>
