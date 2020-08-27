@@ -1,4 +1,6 @@
 import React from "react";
+import { Card, Button } from "react-bootstrap";
+import { MDBBtn } from "mdbreact";
 
 /**
  * Simple component for displaying a survey option button
@@ -11,7 +13,18 @@ export default function SurveySelectionButton(props) {
     props.completed === true ? "./iconCompleted.png" : props.icon;
   return (
     <div>
-      <img src={imagelocation} alt="Survey_Icon" onClick={props.handleClick} />
+      {/* <img src={imagelocation} alt="Survey_Icon" onClick={props.handleClick} /> */}
+      <Card style={{ width: "12rem" }}>
+        <Card.Img variant="top" src={imagelocation} />
+        <Card.Body>
+          <Card.Title>{props.surveyTitle}</Card.Title>
+          <Card.Text>{props.shortSurveyDescription}</Card.Text>
+
+          <MDBBtn gradient="purple" onClick={props.handleClick}>
+            Take this Survey
+          </MDBBtn>
+        </Card.Body>
+      </Card>
     </div>
   );
 }

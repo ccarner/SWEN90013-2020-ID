@@ -116,6 +116,8 @@ export default class SurveyHome extends Component {
                 <SurveySelectionButton
                   icon={getStaticImageUrlFromName(survey.surveyImageName)}
                   completed="false"
+                  surveyTitle={survey.surveyTitle}
+                  shortSurveyDescription={survey.surveyIntroduction}
                   handleClick={() => {
                     this.startSurvey(survey.surveyId);
                   }}

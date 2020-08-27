@@ -8,11 +8,11 @@
   appearance: none;
   width: 50%;
   height: 25px;
-  background:white;
+  background: white;
   outline: none;
   opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
 }
 
 .slider:hover {
@@ -26,7 +26,12 @@
   box-shadow: 0 0 2px;
   width: 2.6rem;
   height: 1.6rem;
-  background: linear-gradient(90deg, white,rgb(167, 125, 167), rgb(174, 86, 182));;
+  background: linear-gradient(
+    90deg,
+    white,
+    rgb(167, 125, 167),
+    rgb(174, 86, 182)
+  );
   cursor: pointer;
 }
 
@@ -106,7 +111,6 @@
   padding-top: 5px;
   padding-bottom: 5px;
   size: 100px;
-  
 }
 
 .radio {
@@ -119,15 +123,20 @@
   margin: 0 10px 0 10px;
 }
 
-
-.surveyIcon{
+.surveyIcon {
   display: inline-block;
   margin: 2em 0.5em 2em 0.5em;
 }
 
-
-.surveyIcon:hover{
+.surveyIcon:hover {
   cursor: pointer;
   transition: 0.3s ease;
-  opacity: 0.6;
+  opacity: 0.9;
+}
+
+.surveyIntroCard {
+  position: relative;
+  top: 100px;
+  margin-left: auto;
+  margin-right: auto;
 }
