@@ -15,49 +15,53 @@ export default function JsonRuleEngine(
   casRule,
   handleCASResult
 ) {
-  console.log(algorithmRelated);
-  var result = {};
-  var i;
-  for (i = 0; i < algorithmRelated.length; i++) {
-    var name = algorithmRelated[i].name;
-    var threshold = algorithmRelated[i].rule.threshold;
-    var questions = algorithmRelated[i].rule.RelatedQuestions;
+  if (algorithmRelated == null || casRule == null) {
+    handleCASResult("Thanks you ");
+  } else {
+    console.log("work");
+    var result = {};
+    var i;
+    for (i = 0; i < algorithmRelated.length; i++) {
+      var name = algorithmRelated[i].name;
+      var threshold = algorithmRelated[i].rule.threshold;
+      var questions = algorithmRelated[i].rule.RelatedQuestions;
 
-    var sum = 0;
-    var j = 0;
-    for (j = 0; j < questions.length; j++) {
-      var id = questions[i].id;
-      var k = 0;
-      for (k = 0; k < SurveyResult.length; k++) {
-        if (SurveyResult[k].questionId == id) {
-          sum += Number(SurveyResult[k].answer.weight);
+      var sum = 0;
+      var j = 0;
+      for (j = 0; j < questions.length; j++) {
+        var id = questions[i].id;
+        var k = 0;
+        for (k = 0; k < SurveyResult.length; k++) {
+          if (SurveyResult[k].questionId == id) {
+            sum += Number(SurveyResult[k].answer.weight);
+          }
         }
       }
+      var isValid = sum > threshold ? true : false;
+
+      result[name] = isValid;
     }
-    var isValid = sum > threshold ? true : false;
 
-    result[name] = isValid;
+    /**
+     * Setup a new engine
+     *
+     */
+    let engine = new Engine();
+
+    casRule.map((ruleItme) => {
+      engine.addRule(ruleItme);
+    });
+
+    /**
+     * Define facts the engine will use to evaluate the conditions above.
+     * Facts may also be loaded asynchronously at runtime; see the advanced example below
+     */
+    let facts = result;
+
+    // Run the engine to evaluate
+    engine.run(facts).then((results) => {
+      // 'results' is an object containing successful events, and an Almanac instance containing facts
+      results.events.map((event) => handleCASResult(event.params.message));
+    });
   }
-
-  /**
-   * Setup a new engine
-   *
-   */
-  let engine = new Engine();
-
-  casRule.map((ruleItme) => {
-    engine.addRule(ruleItme);
-  });
-
-  /**
-   * Define facts the engine will use to evaluate the conditions above.
-   * Facts may also be loaded asynchronously at runtime; see the advanced example below
-   */
-  let facts = result;
-
-  // Run the engine to evaluate
-  engine.run(facts).then((results) => {
-    // 'results' is an object containing successful events, and an Almanac instance containing facts
-    results.events.map((event) => handleCASResult(event.params.message));
-  });
 }

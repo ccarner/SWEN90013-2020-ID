@@ -6,26 +6,33 @@ import "antd/dist/antd.css";
 import questions2 from "./testdata.js";
 import { getSurveyById, postingSurvey } from "../../API/surveyAPI";
 import { Spinner, Button } from "react-bootstrap";
+import JsonRuleEngine from "../RuleEngine/jsonRule.js";
 
 export default class CardDesk extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
       questions: null,
+      questionLen: null,
+      algorithmRelatedQuestion: null,
+      enginRule: null,
+      feedback: null,
       fadeAwayState: false,
       skiped: { name: "skpied" },
+      result: [],
+      CasResult: "",
     };
   }
 
-
   componentDidMount() {
-
     this.setState({
-      questions: this.props.section.questions
+      questions: this.props.section.questions,
+      questionLen: this.props.section.questions.length,
+      algorithmRelatedQuestion: this.props.section.algorithmRelatedQuestion,
+      enginRule: this.props.section.enginRule,
+      feedback: this.props.section.feedback,
     });
   }
-
 
   handleClick(item) {
     const _this = this;
@@ -46,9 +53,38 @@ export default class CardDesk extends Component {
     //here will handle the result !
     console.log(item.questionId, result, 889);
     this.props.handleQuestion(item.questionId, result);
+
+    var currentResults = this.state.result;
+    currentResults.push({
+      questionId: item.questionId,
+      answer: result,
+    });
+    this.setState({
+      result: currentResults,
+    });
+
     this.handleClick(item);
+    console.log(
+      parseInt(item.questionId) + " :" + parseInt(this.state.questionLen)
+    );
+    if (item.questionId == this.state.questionLen) {
+      console.log(this.state.result);
+
+      JsonRuleEngine(
+        this.state.result,
+        this.state.algorithmRelatedQuestion,
+        this.state.enginRule,
+        this.handleCASResult
+      );
+    }
     // this.props.handleNav(1);
   }
+
+  handleCASResult = (casResult) => {
+    this.setState({
+      CasResult: casResult,
+    });
+  };
 
   questionTypeController(item) {
     if (item.questionType == "singleSelection") {
@@ -63,15 +99,11 @@ export default class CardDesk extends Component {
                   className="composite-option-button"
                 >
                   <span className="composite-circle top"></span>
-                  <span className="composite-label bottom">{option}</span>
+                  <span className="composite-label bottom">{option.name}</span>
                 </button>
               ))}
             </div>
           </div>
-
-
-
-
 
           {/* <div className="button-container">
             <button
@@ -151,23 +183,22 @@ export default class CardDesk extends Component {
   }
 
   handleSections = async (direction) => {
-    console.log(772, this.props.section.questions)
+    console.log(772, this.props.section.questions);
     await this.props.handleNav(direction);
-    console.log(773, this.props.section.questions)
+    console.log(773, this.props.section.questions);
     this.setState({
-      questions: this.props.section.questions
+      questions: this.props.section.questions,
+      questionLen: this.props.section.questions.length,
+      algorithmRelatedQuestion: this.props.section.algorithmRelatedQuestion,
+      enginRule: this.props.section.enginRule,
+      feedback: this.props.section.feedback,
     });
-
-  }
-
-
-
+  };
 
   render() {
     // console.log(883, this.props.section)
     var questions = this.state.questions;
     // var questions = this.props.section.questions;
-
 
     let fadeAwayState = this.state.fadeAwayState;
     if (questions == null) {
@@ -201,10 +232,6 @@ export default class CardDesk extends Component {
               <h4 className="primary-card-text">{item.questionText}</h4>
               {/* {console.log(773, item)} */}
               {this.questionTypeController(item)}
-
-
-
-
             </div>
           </CSSTransition>
         ))}
@@ -216,7 +243,7 @@ export default class CardDesk extends Component {
         <div className="cards-wrapper">
           <ul className="cards-list">
             {ItemList}
-            <div>Thanks for completing this section.</div>
+            <div>{this.state.CasResult}</div>
             <div>
               <Button
                 className={"purple-gradient"}
