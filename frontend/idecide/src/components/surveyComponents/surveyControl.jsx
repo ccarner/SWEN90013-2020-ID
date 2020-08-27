@@ -4,7 +4,7 @@ import SurveySection from "./surveySection";
 import { Spinner, Button } from "react-bootstrap";
 import SurveyInformationPage from "./surveyInformationPage";
 import SurveyResultsPage from "./surveyResultsPage";
-
+import CardDesk from "../CardDeskCompoent/cardDesk";
 /**
  * This component is passed an ID for a survey, and then:
  * a) fetches survey data from server
@@ -20,6 +20,7 @@ export default class SurveyControl extends Component {
       isLoaded: false,
       actionPlan: null,
       surveyFile: {},
+      sectionQuestions: null,
       currentSurveyState: "introduction", // ["introduction", "started", "submitted"]
       currentSection: 0,
       results: {
@@ -37,12 +38,17 @@ export default class SurveyControl extends Component {
 
   async componentDidMount() {
     var surveyFile = await getSurveyById(this.props.surveyId);
-
     var newQuestions = this.setupResults(surveyFile);
+
     this.setState((prevState) => {
       var newResults = prevState.results;
       newResults.questions = newQuestions;
-      return { isLoaded: true, surveyFile: surveyFile, results: newResults };
+      return {
+        isLoaded: true,
+        surveyFile: surveyFile,
+        sectionQuestions: surveyFile.surveySections[0],
+        results: newResults
+      };
     });
   }
 
@@ -70,40 +76,44 @@ export default class SurveyControl extends Component {
    * @param {*} responseValue
    */
   questionHandler(questionId, responseValue) {
+    console.log(333, questionId, responseValue);
     const { currentSection } = this.state;
     const surveySections = this.state.surveyFile.surveySections;
 
     const currentQuestion =
       surveySections[currentSection].questions[questionId];
 
+
     var currentResults = this.state.results;
-    currentResults["questions"][questionId]["questionAnswer"] = responseValue;
+    currentResults["questions"][questionId]["questionAnswer"] = [responseValue];
     this.setState({
       results: currentResults,
     });
   }
 
   handleNavigateSections(lambdaSection) {
+    console.log(662, lambdaSection, this.state.sectionQuestions);
     const currentSection = this.state.currentSection;
     if (
       currentSection + lambdaSection >=
       this.state.surveyFile.surveySections.length
     ) {
+      console.log(553, "submitting")
       this.submitHandler();
     } else if (currentSection + lambdaSection >= 0) {
-      this.setState((prevState) => ({
-        currentSection: prevState.currentSection + lambdaSection,
-      }));
+      this.setState({
+        currentSection: currentSection + lambdaSection,
+        sectionQuestions: this.state.surveyFile.surveySections[currentSection + lambdaSection]
+      });
     }
     //else do nothing if somehow trying to go to invalid negative section
   }
 
   submitHandler = async () => {
-    console.log("posted this data", this.state.results);
-
-    // postingSurvey(this.state.results);
-    postingSurvey(this.state.results);
+    console.log(550, "posted this data", JSON.stringify(this.state.results));
+    const feedBack = await postingSurvey(this.state.results);
     this.props.completeHandler(this.state.results);
+    console.log(555, "received from the backend", feedBack);
   };
 
   handleStart = () => {
@@ -122,22 +132,30 @@ export default class SurveyControl extends Component {
       );
     } else if (this.state.currentSurveyState === "introduction") {
       return (
-        <SurveyInformationPage
-          survey={this.state.surveyFile}
-          startSurvey={this.handleStart}
-        />
+        <div>
+          <SurveyInformationPage
+            survey={this.state.surveyFile}
+            startSurvey={this.handleStart}
+          />
+        </div>
       );
     } else if (this.state.currentSurveyState === "started") {
       return (
         <React.Fragment>
-          <SurveySection
+          {/* <SurveySection
             handleQuestion={this.questionHandler}
             section={
               this.state.surveyFile.surveySections[this.state.currentSection]
             }
             results={this.state.results.questions}
+          /> */}
+          <CardDesk
+            handleQuestion={this.questionHandler}
+            handleNav={this.handleNavigateSections}
+            section={this.state.sectionQuestions}
+            results={this.state.results.questions}
           />
-          <Button
+          {/* <Button
             className={"purple-gradient"}
             onClick={(e) => {
               this.handleNavigateSections(-1);
@@ -152,7 +170,7 @@ export default class SurveyControl extends Component {
             }}
           >
             {"Next >"}
-          </Button>
+          </Button> */}
         </React.Fragment>
       );
     } else if (this.state.currentSurveyState === "completed") {

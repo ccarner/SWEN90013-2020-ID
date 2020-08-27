@@ -106,8 +106,10 @@ export default class SurveyHome extends Component {
           </h6>
 
           {/* ########## BELOW For demonstration purpose only ##########*/}
-          <button onClick={this.handleCardDesk}>Card desk(DEMO) </button>
-          {showCardDesk ? <CardDesk /> : null}
+          {/* <button onClick={this.handleCardDesk}>Card desk(DEMO) </button>
+          {showCardDesk ? <CardDesk
+            surveyId={this.state.currentSurveyId}
+          /> : null} */}
           {/* ########## ABOVE For demonstration purpose only ##########*/}
 
           <div>
