@@ -1,5 +1,6 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+
+import { MDBBtn } from "mdbreact";
 
 /**
  * The initial page displayed after selecting a survey, with info about the survey itself
@@ -7,10 +8,12 @@ import { Button } from "react-bootstrap";
  */
 export default function SurveyInformationPage(props) {
   return (
-    <div>
+    <div className="padding10">
       {props.survey.surveyTitle}
       {props.survey.surveyIntroduction}
-      {<Button onClick={props.startSurvey}> Start the Survey</Button>}
+
+      <MDBBtn gradient="purple" onClick={props.startSurvey}>Start</MDBBtn>
+
     </div>
   );
 }

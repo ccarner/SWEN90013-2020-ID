@@ -6,6 +6,7 @@ import "antd/dist/antd.css";
 import questions2 from "./testdata.js";
 import { getSurveyById, postingSurvey } from "../../API/surveyAPI";
 import { Spinner, Button } from "react-bootstrap";
+import { MDBBtn } from "mdbreact";
 
 export default class CardDesk extends Component {
   constructor(props) {
@@ -44,7 +45,7 @@ export default class CardDesk extends Component {
 
   handleResult(item, result) {
     //here will handle the result !
-    console.log(item.questionId, result, 889);
+
     this.props.handleQuestion(item.questionId, result);
     this.handleClick(item);
     // this.props.handleNav(1);
@@ -70,17 +71,6 @@ export default class CardDesk extends Component {
           </div>
 
 
-
-
-
-          {/* <div className="button-container">
-            <button
-              className="btn"
-              onClick={() => this.handleResult(item, this.state.skiped)}
-            >
-              i rather not anser
-            </button>
-          </div> */}
         </div>
       );
     } else if (item.questionType == "slider") {
@@ -110,18 +100,15 @@ export default class CardDesk extends Component {
 
           {/* Need to discuss about the button locations */}
           <div className="button-container">
-            <button
-              className="btn"
-              onClick={() => this.handleResult(item, this.state.skiped)}
-            >
-              I rather not answer
-            </button>
-            <button
-              className="btn btn2"
-              onClick={() => this.handleResult(item, silderresult)}
-            >
-              CONFIRM?
-            </button>
+
+            <MDBBtn
+              gradient="purple" onClick={() => this.handleResult(item, this.state.skiped)}>
+              rather not answer
+            </MDBBtn>
+            <MDBBtn
+              gradient="purple" onClick={() => this.handleResult(item, silderresult)}>
+              CONFIRM
+            </MDBBtn>
           </div>
         </div>
       );
@@ -151,9 +138,9 @@ export default class CardDesk extends Component {
   }
 
   handleSections = async (direction) => {
-    console.log(772, this.props.section.questions)
+
     await this.props.handleNav(direction);
-    console.log(773, this.props.section.questions)
+
     this.setState({
       questions: this.props.section.questions
     });
@@ -199,7 +186,7 @@ export default class CardDesk extends Component {
               </div>
 
               <h4 className="primary-card-text">{item.questionText}</h4>
-              {/* {console.log(773, item)} */}
+
               {this.questionTypeController(item)}
 
 
