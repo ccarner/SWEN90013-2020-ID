@@ -7,6 +7,7 @@ import questions2 from "./testdata.js";
 import { getSurveyById, postingSurvey } from "../../API/surveyAPI";
 import { Spinner, Button } from "react-bootstrap";
 import JsonRuleEngine from "../RuleEngine/jsonRule.js";
+import { MDBBtn } from "mdbreact";
 
 export default class CardDesk extends Component {
   constructor(props) {
@@ -51,7 +52,7 @@ export default class CardDesk extends Component {
 
   handleResult(item, result) {
     //here will handle the result !
-    console.log(item.questionId, result, 889);
+
     this.props.handleQuestion(item.questionId, result);
 
     var currentResults = this.state.result;
@@ -104,15 +105,6 @@ export default class CardDesk extends Component {
               ))}
             </div>
           </div>
-
-          {/* <div className="button-container">
-            <button
-              className="btn"
-              onClick={() => this.handleResult(item, this.state.skiped)}
-            >
-              i rather not anser
-            </button>
-          </div> */}
         </div>
       );
     } else if (item.questionType == "slider") {
@@ -142,18 +134,18 @@ export default class CardDesk extends Component {
 
           {/* Need to discuss about the button locations */}
           <div className="button-container">
-            <button
-              className="btn"
+            <MDBBtn
+              gradient="purple"
               onClick={() => this.handleResult(item, this.state.skiped)}
             >
-              I rather not answer
-            </button>
-            <button
-              className="btn btn2"
+              rather not answer
+            </MDBBtn>
+            <MDBBtn
+              gradient="purple"
               onClick={() => this.handleResult(item, silderresult)}
             >
-              CONFIRM?
-            </button>
+              CONFIRM
+            </MDBBtn>
           </div>
         </div>
       );
@@ -183,9 +175,8 @@ export default class CardDesk extends Component {
   }
 
   handleSections = async (direction) => {
-    console.log(772, this.props.section.questions);
     await this.props.handleNav(direction);
-    console.log(773, this.props.section.questions);
+
     this.setState({
       questions: this.props.section.questions,
       questionLen: this.props.section.questions.length,
@@ -230,7 +221,7 @@ export default class CardDesk extends Component {
               </div>
 
               <h4 className="primary-card-text">{item.questionText}</h4>
-              {/* {console.log(773, item)} */}
+
               {this.questionTypeController(item)}
             </div>
           </CSSTransition>

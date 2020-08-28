@@ -125,6 +125,9 @@
   margin: 2em 0.5em 2em 0.5em;
 }
 
+.padding10{
+  padding: 10em 0 0 0;
+}
 
 .surveyIcon:hover{
   cursor: pointer;

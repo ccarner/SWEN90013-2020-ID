@@ -18,7 +18,7 @@ export default class SurveyControl extends Component {
 
     this.state = {
       isLoaded: false,
-      actionPlan: null,
+
       surveyFile: {},
       sectionQuestions: null,
       currentSurveyState: "introduction", // ["introduction", "started", "submitted"]
@@ -76,13 +76,12 @@ export default class SurveyControl extends Component {
    * @param {*} responseValue
    */
   questionHandler(questionId, responseValue) {
-    console.log(333, questionId, responseValue);
+
     const { currentSection } = this.state;
     const surveySections = this.state.surveyFile.surveySections;
 
     const currentQuestion =
       surveySections[currentSection].questions[questionId];
-
 
     var currentResults = this.state.results;
     currentResults["questions"][questionId]["questionAnswer"] = [responseValue];
@@ -92,13 +91,13 @@ export default class SurveyControl extends Component {
   }
 
   handleNavigateSections(lambdaSection) {
-    console.log(662, lambdaSection, this.state.sectionQuestions);
+
     const currentSection = this.state.currentSection;
     if (
       currentSection + lambdaSection >=
       this.state.surveyFile.surveySections.length
     ) {
-      console.log(553, "submitting")
+
       this.submitHandler();
     } else if (currentSection + lambdaSection >= 0) {
       this.setState({
@@ -112,8 +111,9 @@ export default class SurveyControl extends Component {
   submitHandler = async () => {
     console.log(550, "posted this data", JSON.stringify(this.state.results));
     const feedBack = await postingSurvey(this.state.results);
-    this.props.completeHandler(this.state.results);
-    console.log(555, "received from the backend", feedBack);
+    this.props.completeHandler(this.state.results, feedBack.data.data);
+    console.log(555, "received from the backend", feedBack.data.data);
+
   };
 
   handleStart = () => {
@@ -123,7 +123,7 @@ export default class SurveyControl extends Component {
   };
 
   render() {
-    const { isLoaded, currentSection, actionPlan } = this.state;
+    const { isLoaded, currentSection } = this.state;
     if (!isLoaded) {
       return (
         <div>
@@ -142,6 +142,9 @@ export default class SurveyControl extends Component {
     } else if (this.state.currentSurveyState === "started") {
       return (
         <React.Fragment>
+
+          {/* As we have decided to use the Card Dekker, the <SurvetSection/>
+          Component can be ignored */}
           {/* <SurveySection
             handleQuestion={this.questionHandler}
             section={
@@ -155,26 +158,8 @@ export default class SurveyControl extends Component {
             section={this.state.sectionQuestions}
             results={this.state.results.questions}
           />
-          {/* <Button
-            className={"purple-gradient"}
-            onClick={(e) => {
-              this.handleNavigateSections(-1);
-            }}
-          >
-            {"< Previous"}
-          </Button>
-          <Button
-            className={"purple-gradient"}
-            onClick={(e) => {
-              this.handleNavigateSections(1);
-            }}
-          >
-            {"Next >"}
-          </Button> */}
         </React.Fragment>
       );
-    } else if (this.state.currentSurveyState === "completed") {
-      return <SurveyResultsPage />;
     }
   }
 }
