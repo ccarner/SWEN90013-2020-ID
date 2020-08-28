@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import SurveyControl from "./surveyControl";
 import "../../CSS/survey.css";
-import { MDBBtn } from "mdbreact";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
-import CardDesk from "../CardDeskCompoent/cardDesk";
-import { getUserResults, getAllSurveys } from "../../API/surveyAPI";
+import CardDesk from "../CardDeskCompoent/cardDeck";
+import LoadingSpinner from "../reusableComponents/loadingSpinner";
+import {
+  getUserResults,
+  getAllSurveys,
+  getStaticImageUrlFromName,
+} from "../../API/surveyAPI";
 import SurveySelectionButton from "./surveySelectionButton";
 import SurveyResultsPage from "./surveyResultsPage";
 
@@ -63,12 +67,10 @@ export default class SurveyHome extends Component {
 
   completeHandler = (surveyResults, actionPlan) => {
     this.setState((prevState) => ({
-      actionPlan: actionPlan,
-      currentState: "completion",
       currentResults: surveyResults,
       surveyCompletions: prevState.surveyCompletions.push(surveyResults),
     }));
-  }
+  };
 
   handleCardDesk = () => {
     this.setState({
@@ -98,17 +100,21 @@ export default class SurveyHome extends Component {
             <h6>
               but you must complete 'Safety' and 'Priorities' before you can
               continue.
-          </h6>
+            </h6>
             <h6>
               Click 'Next' in the bottom right corner when you are finished.
-          </h6>
-          </div><br />
+            </h6>
+          </div>
+          <br />
 
           <div>
             {this.state.allSurveys.map((survey) => (
               <div key={survey.surveyId} className="surveyIcon">
                 <SurveySelectionButton
+                  icon={getStaticImageUrlFromName(survey.surveyImageName)}
                   completed="false"
+                  surveyTitle={survey.surveyTitle}
+                  shortSurveyDescription={survey.surveyIntroduction}
                   handleClick={() => {
                     this.startSurvey(survey.surveyId);
                   }}
@@ -119,14 +125,10 @@ export default class SurveyHome extends Component {
         </div>
       );
     } else if (currentState === "completion") {
-      return (
-        <div>
-          <SurveyResultsPage />
-          Action plan received from the backend: {actionPlan}
-        </div>
-      );
+      //viewing a previous completion
+      return <SurveyResultsPage />;
     } else {
-      return (<div className="padding10">Loading...</div>);
+      return <LoadingSpinner />;
     }
   }
 }

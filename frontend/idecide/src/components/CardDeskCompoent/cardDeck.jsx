@@ -3,35 +3,26 @@ import { Slider } from "antd";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./cards.css";
 import "antd/dist/antd.css";
-import questions2 from "./testdata.js";
 import { getSurveyById, postingSurvey } from "../../API/surveyAPI";
 import { Spinner, Button } from "react-bootstrap";
-import { MDBBtn } from "mdbreact";
+import LoadingSpinner from "../reusableComponents/loadingSpinner";
 
-export default class CardDesk extends Component {
+export default class CardDeck extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
-      questions: null,
+      questions: this.props.section.questions,
+      //questions arrau will be filtered as questions are completed...
+      //...so it DOES need to be in state here
       fadeAwayState: false,
-      skiped: { name: "skpied" },
+      skipped: { name: "skipped" }, //not sure what this does currently
     };
   }
-
-
-  componentDidMount() {
-
-    this.setState({
-      questions: this.props.section.questions
-    });
-  }
-
 
   handleClick(item) {
     const _this = this;
     const questions = this.state.questions;
-    _this.setState({
+    this.setState({
       questions: questions.filter((ite) => ite.questionId !== item.questionId),
       fadeAwayState: true,
     });
@@ -44,15 +35,12 @@ export default class CardDesk extends Component {
   }
 
   handleResult(item, result) {
-    //here will handle the result !
-
-    this.props.handleQuestion(item.questionId, result);
+    this.props.handleAnswer(item.questionId, result);
     this.handleClick(item);
-    // this.props.handleNav(1);
   }
 
   questionTypeController(item) {
-    if (item.questionType == "singleSelection") {
+    if (item.questionType === "singleSelection") {
       return (
         <div className="questionContainer">
           <div className="composite-scale-container">
@@ -69,8 +57,6 @@ export default class CardDesk extends Component {
               ))}
             </div>
           </div>
-
-
         </div>
       );
     } else if (item.questionType == "slider") {
@@ -89,78 +75,40 @@ export default class CardDesk extends Component {
             }}
           />
 
-          {/* Need to discuss the format of the slider */}
-          {/* <div className="label-container">
-            {item.labellist.map((v, t) => (
-              <span className="label" key={v.index}>
-                {v.name}
-              </span>
-            ))}
-          </div> */}
-
           {/* Need to discuss about the button locations */}
           <div className="button-container">
-
-            <MDBBtn
-              gradient="purple" onClick={() => this.handleResult(item, this.state.skiped)}>
-              rather not answer
-            </MDBBtn>
-            <MDBBtn
-              gradient="purple" onClick={() => this.handleResult(item, silderresult)}>
+            <button
+              className="btn"
+              onClick={() => this.handleResult(item, this.state.skipped)}
+            >
+              I'd rather not answer
+            </button>
+            <button
+              className="btn btn2"
+              onClick={() => this.handleResult(item, silderresult)}
+            >
               CONFIRM
-            </MDBBtn>
+            </button>
           </div>
         </div>
       );
     } else {
       return (
         <div className="questionContainer">
-          Error! Question type not supported!!!
-          <Button
-            className={"purple-gradient"}
-            onClick={(e) => {
-              this.handleSections(-1);
-            }}
-          >
-            {"< Previous"}
-          </Button>
-          <Button
-            className={"purple-gradient"}
-            onClick={(e) => {
-              this.handleSections(1);
-            }}
-          >
-            {"Next Section>"}
-          </Button>
+          Error, question type not supported.
         </div>
       );
     }
   }
 
-  handleSections = async (direction) => {
-
-    await this.props.handleNav(direction);
-
-    this.setState({
-      questions: this.props.section.questions
-    });
-
-  }
-
-
-
-
   render() {
-    // console.log(883, this.props.section)
-    var questions = this.state.questions;
-    // var questions = this.props.section.questions;
-
+    const questions = this.state.questions;
 
     let fadeAwayState = this.state.fadeAwayState;
     if (questions == null) {
       return (
         <div className="cards-container cards-container-checkbox">
-          Loading...
+          <LoadingSpinner />
         </div>
       );
     }
@@ -188,10 +136,6 @@ export default class CardDesk extends Component {
               <h4 className="primary-card-text">{item.questionText}</h4>
 
               {this.questionTypeController(item)}
-
-
-
-
             </div>
           </CSSTransition>
         ))}
@@ -201,28 +145,10 @@ export default class CardDesk extends Component {
     return (
       <div className="cards-container cards-container-checkbox">
         <div className="cards-wrapper">
-          <ul className="cards-list">
+          <div className="cards-list">
             {ItemList}
             <div>Thanks for completing this section.</div>
-            <div>
-              <Button
-                className={"purple-gradient"}
-                onClick={(e) => {
-                  this.handleSections(-1);
-                }}
-              >
-                {"< Previous"}
-              </Button>
-              <Button
-                className={"purple-gradient"}
-                onClick={(e) => {
-                  this.handleSections(1);
-                }}
-              >
-                {"Next Section>"}
-              </Button>
-            </div>
-          </ul>
+          </div>
         </div>
       </div>
     );

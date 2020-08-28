@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import { getSurveyById, postingSurvey } from "../../API/surveyAPI";
 import SurveySection from "./surveySection";
-import { Spinner, Button } from "react-bootstrap";
+import { Spinner, Button, Container, Row, Col } from "react-bootstrap";
 import SurveyInformationPage from "./surveyInformationPage";
 import SurveyResultsPage from "./surveyResultsPage";
-import CardDesk from "../CardDeskCompoent/cardDesk";
+import ProgressBar from "../reusableComponents/progressBar";
+import LoadingSpinner from "../reusableComponents/loadingSpinner";
+import PrimaryButton from "../reusableComponents/PrimaryButton";
+
 /**
  * This component is passed an ID for a survey, and then:
  * a) fetches survey data from server
@@ -23,6 +26,7 @@ export default class SurveyControl extends Component {
       sectionQuestions: null,
       currentSurveyState: "introduction", // ["introduction", "started", "submitted"]
       currentSection: 0,
+      percentageCompleted: 0,
       results: {
         userId: props.userId,
         surveyId: props.surveyId,
@@ -47,7 +51,7 @@ export default class SurveyControl extends Component {
         isLoaded: true,
         surveyFile: surveyFile,
         sectionQuestions: surveyFile.surveySections[0],
-        results: newResults
+        results: newResults,
       };
     });
   }
@@ -71,12 +75,11 @@ export default class SurveyControl extends Component {
   }
 
   /**
-   * Called when answer to a question is changed
+   * Called when user selects an answer to a question
    * @param {*} questionId
    * @param {*} responseValue
    */
   questionHandler(questionId, responseValue) {
-
     const { currentSection } = this.state;
     const surveySections = this.state.surveyFile.surveySections;
 
@@ -91,29 +94,36 @@ export default class SurveyControl extends Component {
   }
 
   handleNavigateSections(lambdaSection) {
-
     const currentSection = this.state.currentSection;
     if (
       currentSection + lambdaSection >=
       this.state.surveyFile.surveySections.length
     ) {
-
+      console.log(553, "submitting");
       this.submitHandler();
+      this.setState({ percentageCompleted: 100 });
+      return;
     } else if (currentSection + lambdaSection >= 0) {
-      this.setState({
-        currentSection: currentSection + lambdaSection,
-        sectionQuestions: this.state.surveyFile.surveySections[currentSection + lambdaSection]
-      });
+      this.setState((prevState) => ({
+        currentSection: prevState.currentSection + lambdaSection,
+        sectionQuestions: this.state.surveyFile.surveySections[
+          currentSection + lambdaSection
+        ],
+        percentageCompleted:
+          (100 * (prevState.currentSection + lambdaSection)) /
+          prevState.surveyFile.surveySections.length,
+      }));
     }
     //else do nothing if somehow trying to go to invalid negative section
   }
 
   submitHandler = async () => {
+    this.setState({ isLoaded: false });
     console.log(550, "posted this data", JSON.stringify(this.state.results));
     const feedBack = await postingSurvey(this.state.results);
-    this.props.completeHandler(this.state.results, feedBack.data.data);
-    console.log(555, "received from the backend", feedBack.data.data);
-
+    this.props.completeHandler(this.state.results);
+    console.log(555, "received from the backend", feedBack);
+    this.setState({ isLoaded: true, currentSurveyState: "submitted" });
   };
 
   handleStart = () => {
@@ -123,43 +133,74 @@ export default class SurveyControl extends Component {
   };
 
   render() {
-    const { isLoaded, currentSection } = this.state;
-    if (!isLoaded) {
-      return (
-        <div>
-          <Spinner animation="border" />
-        </div>
-      );
-    } else if (this.state.currentSurveyState === "introduction") {
-      return (
-        <div>
-          <SurveyInformationPage
-            survey={this.state.surveyFile}
-            startSurvey={this.handleStart}
-          />
-        </div>
-      );
-    } else if (this.state.currentSurveyState === "started") {
-      return (
-        <React.Fragment>
+    const { isLoaded, currentSection, actionPlan } = this.state;
+    var renderArray = [];
 
-          {/* As we have decided to use the Card Dekker, the <SurvetSection/>
-          Component can be ignored */}
-          {/* <SurveySection
-            handleQuestion={this.questionHandler}
-            section={
-              this.state.surveyFile.surveySections[this.state.currentSection]
-            }
-            results={this.state.results.questions}
-          /> */}
-          <CardDesk
-            handleQuestion={this.questionHandler}
-            handleNav={this.handleNavigateSections}
-            section={this.state.sectionQuestions}
-            results={this.state.results.questions}
-          />
-        </React.Fragment>
+    renderArray.push(
+      <Container>
+        <Row className="align-items-center">
+          <Col>
+            <h3 style={{ color: "purple", margin: "20px" }}>
+              {this.state.surveyFile.surveyTitle}
+            </h3>
+          </Col>
+          <Col>
+            <ProgressBar value={this.state.percentageCompleted} />
+          </Col>
+        </Row>
+      </Container>
+    );
+
+    if (!isLoaded) {
+      renderArray.push(
+        <div>
+          <LoadingSpinner />
+        </div>
       );
+    } else {
+      //we have loaded
+      if (this.state.currentSurveyState === "introduction") {
+        renderArray.push(
+          <div>
+            <SurveyInformationPage
+              survey={this.state.surveyFile}
+              startSurvey={this.handleStart}
+            />
+          </div>
+        );
+      } else if (this.state.currentSurveyState === "started") {
+        renderArray.push(
+          <React.Fragment>
+            <SurveySection
+              questionHandler={this.questionHandler}
+              section={
+                this.state.surveyFile.surveySections[this.state.currentSection]
+              }
+              results={this.state.results.questions}
+            />
+            <PrimaryButton
+              onClick={(e) => {
+                this.handleNavigateSections(-1);
+              }}
+            >
+              {"< Previous"}
+            </PrimaryButton>
+            <PrimaryButton
+              onClick={(e) => {
+                this.handleNavigateSections(1);
+              }}
+            >
+              {"Next >"}
+            </PrimaryButton>
+          </React.Fragment>
+        );
+      } else if (this.state.currentSurveyState === "submitted") {
+        renderArray.push(
+          <SurveyResultsPage surveyResults={this.state.results.questions} />
+        );
+      }
     }
+
+    return renderArray;
   }
 }
