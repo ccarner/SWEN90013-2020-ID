@@ -28,6 +28,7 @@ export default class SurveyHome extends Component {
     super(props);
     this.state = {
       loaded: false,
+      actionPlan: "",
       currentState: "menu", // ["menu","survey","completion"]
       currentResults: undefined, // when in "completion" state, holds data of completion being viewed
       currentSurveyId: -1, // when in "survey" state, ID of current survey
@@ -36,7 +37,6 @@ export default class SurveyHome extends Component {
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.startSurvey = this.startSurvey.bind(this);
-    this.completeHandler = this.completeHandler.bind(this);
   }
 
   async componentDidMount() {
@@ -65,12 +65,12 @@ export default class SurveyHome extends Component {
     });
   }
 
-  completeHandler(surveyResults) {
+  completeHandler = (surveyResults, actionPlan) => {
     this.setState((prevState) => ({
       currentResults: surveyResults,
       surveyCompletions: prevState.surveyCompletions.push(surveyResults),
     }));
-  }
+  };
 
   handleCardDesk = () => {
     this.setState({
@@ -79,7 +79,7 @@ export default class SurveyHome extends Component {
   };
 
   render() {
-    const { currentState, showCardDesk } = this.state;
+    const { currentState, actionPlan, currentResults } = this.state;
 
     if (currentState === "survey") {
       return (
@@ -91,25 +91,21 @@ export default class SurveyHome extends Component {
       );
     } else if (currentState === "menu" && this.state.loaded) {
       return (
-        <div className="container" style={{ padding: "100px" }}>
-          <h2 style={{ color: "purple" }}>Help Me Decide</h2>
+        <div className="container" className="padding10">
+          <div>
+            <h2 style={{ color: "purple" }}>Help Me Decide</h2>
+            <br />
+            <h6>There are three modules below.</h6>
+            <h6>The 'My Relationship' module is optional,</h6>
+            <h6>
+              but you must complete 'Safety' and 'Priorities' before you can
+              continue.
+            </h6>
+            <h6>
+              Click 'Next' in the bottom right corner when you are finished.
+            </h6>
+          </div>
           <br />
-          <h6>There are three modules below.</h6>
-          <h6>The 'My Relationship' module is optional,</h6>
-          <h6>
-            but you must complete 'Safety' and 'Priorities' before you can
-            continue.
-          </h6>
-          <h6>
-            Click 'Next' in the bottom right corner when you are finished.
-          </h6>
-
-          {/* ########## BELOW For demonstration purpose only ##########*/}
-          {/* <button onClick={this.handleCardDesk}>Card desk(DEMO) </button>
-          {showCardDesk ? <CardDesk
-            surveyId={this.state.currentSurveyId}
-          /> : null} */}
-          {/* ########## ABOVE For demonstration purpose only ##########*/}
 
           <div>
             {this.state.allSurveys.map((survey) => (

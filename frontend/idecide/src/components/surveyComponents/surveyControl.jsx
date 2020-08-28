@@ -21,7 +21,7 @@ export default class SurveyControl extends Component {
 
     this.state = {
       isLoaded: false,
-      actionPlan: null,
+
       surveyFile: {},
       sectionQuestions: null,
       currentSurveyState: "introduction", // ["introduction", "started", "submitted"]
@@ -80,7 +80,6 @@ export default class SurveyControl extends Component {
    * @param {*} responseValue
    */
   questionHandler(questionId, responseValue) {
-    console.log(333, questionId, responseValue);
     const { currentSection } = this.state;
     const surveySections = this.state.surveyFile.surveySections;
 
@@ -95,7 +94,6 @@ export default class SurveyControl extends Component {
   }
 
   handleNavigateSections(lambdaSection) {
-    console.log(662, lambdaSection, this.state.sectionQuestions);
     const currentSection = this.state.currentSection;
     if (
       currentSection + lambdaSection >=

@@ -134,7 +134,7 @@ export default class CardDeck extends Component {
               </div>
 
               <h4 className="primary-card-text">{item.questionText}</h4>
-              {/* {console.log(773, item)} */}
+
               {this.questionTypeController(item)}
             </div>
           </CSSTransition>
