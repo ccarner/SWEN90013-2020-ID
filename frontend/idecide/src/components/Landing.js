@@ -1,11 +1,19 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import { Button } from "react-bootstrap";
-import { Fragment } from "react";
-import { MDBBtn } from "mdbreact";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
+import {
+  MDBJumbotron,
+  MDBBtn,
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBCardTitle,
+  MDBIcon,
+} from "mdbreact";
+import PrimaryButton from "./reusableComponents/PrimaryButton";
+
 class Landing extends Component {
   componentDidMount() {
     localStorage.clear();
@@ -13,23 +21,53 @@ class Landing extends Component {
 
   render() {
     return (
-      <div className="container" style={{ padding: "150px" }}>
-        <h1 style={{ color: "purple" }}>Women's Wellbeing Project</h1>
-        <br></br>
-        <h2>Do you worry about whether your relationship is healthy?</h2>
-        <h2>Do you sometimes wonder if you are safe?</h2>
-        <p>
-          This website is for women who feel unsafe or afraid of a current or
-          ex-partner.
-        </p>
+      <React.Fragment>
+        <div className="container" style={{ padding: "10%" }}>
+          <h1 style={{ color: "purple" }}>Women's Wellbeing Project</h1>
+          <br></br>
+          <h2>Do you worry about whether your relationship is healthy?</h2>
+          <h2>Do you sometimes wonder if you are safe?</h2>
+          <p>
+            This website is for women who feel unsafe or afraid of a current or
+            ex-partner.
+          </p>
+          <NavLink to="./surveyComponent/surveyHome">
+            <PrimaryButton>Anonymous</PrimaryButton>
+          </NavLink>
+          <NavLink to="./loginComponent/loginPage">
+            <PrimaryButton>Log in</PrimaryButton>
+          </NavLink>
+        </div>
 
-        <NavLink to="./surveyComponent/surveyHome">
-          <MDBBtn gradient="purple">Anonymous</MDBBtn>
-        </NavLink>
-        <NavLink to="./loginComponent/loginPage">
-          <MDBBtn gradient="purple">Log in</MDBBtn>
-        </NavLink>
-      </div>
+        <MDBJumbotron style={{ padding: 0 }}>
+          <div
+            className="text-white text-center py-5 px-4 my-5"
+            style={{
+              backgroundImage: `url(${require("../images/background.png")})`,
+            }}
+          >
+            <div className="py-5">
+              <MDBCardTitle
+                className="h1-responsive pt-3 m-5 font-bold"
+                style={{ color: "white" }}
+              >
+                About iDecide
+              </MDBCardTitle>
+              <p className="mx-5 mb-5">
+                iDecide has been developed by a team of researchers in general
+                practice, social work, women's health, nursing, and health
+                technology led by The University of Melbourne.
+                <br />
+                <br /> Many women in Australia feel unsafe, or worry that their
+                relationships with their partners are not healthy. iDecide helps
+                women to self-reflect on the health of their relationhips,
+                become more informed about options available, and plan for their
+                safety and well being.
+              </p>
+            </div>
+          </div>
+        </MDBJumbotron>
+      </React.Fragment>
     );
   }
 }

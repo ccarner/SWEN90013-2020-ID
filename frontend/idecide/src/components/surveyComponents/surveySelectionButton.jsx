@@ -1,4 +1,6 @@
 import React from "react";
+import { Card, Button } from "react-bootstrap";
+import PrimaryButton from "../reusableComponents/PrimaryButton";
 
 /**
  * Simple component for displaying a survey option button
@@ -8,16 +10,21 @@ export default function SurveySelectionButton(props) {
   //this needs to be updated to pull an image from the server... need to change
   //the DTO to include the URL for these images. currently just uses same images...
   var imagelocation =
-    props.completed === true
-      ? "./iconRelationshipSurvey.png"
-      : "./iconCompleted.png";
+    props.completed === true ? "./iconCompleted.png" : props.icon;
   return (
     <div>
-      <img
-        src={require("./iconRelationshipSurvey.png")}
-        alt="Relationship_Survey_Icon"
-        onClick={props.handleClick}
-      />
+      {/* <img src={imagelocation} alt="Survey_Icon" onClick={props.handleClick} /> */}
+      <Card style={{ width: "12rem" }}>
+        <Card.Img variant="top" src={imagelocation} />
+        <Card.Body>
+          <Card.Title>{props.surveyTitle}</Card.Title>
+          <Card.Text>{props.shortSurveyDescription}</Card.Text>
+
+          <PrimaryButton onClick={props.handleClick}>
+            Take this Survey
+          </PrimaryButton>
+        </Card.Body>
+      </Card>
     </div>
   );
 }

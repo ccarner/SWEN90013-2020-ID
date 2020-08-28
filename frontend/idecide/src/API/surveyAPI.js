@@ -1,6 +1,11 @@
 const axios = require("axios");
 
+const API_BASE = "http://8.210.28.169";
 const API_URL = "http://8.210.28.169:9009";
+
+export function getStaticImageUrlFromName(imageName) {
+  return API_BASE + `/images/${imageName}`;
+}
 
 export async function getSurveyById(surveyId) {
   const endpoint = API_URL + `/survey/${surveyId}`;
@@ -32,23 +37,17 @@ export async function getAllSurveys() {
   }
 }
 
-
-
 export async function postingSurvey(surveyIn) {
-
   const endpoint = `http://8.210.28.169:9010/answer`;
 
   const dataPost = await axios({
-    url: endpoint,  // send a request to the library API
+    url: endpoint, // send a request to the library API
     method: "POST", // HTTP POST method
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    data: JSON.stringify(surveyIn)
+    data: JSON.stringify(surveyIn),
   });
 
-
-
   return dataPost;
-
 }
