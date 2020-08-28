@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Landing from "./components/Landing";
@@ -22,7 +27,7 @@ class App extends Component {
         <div className="App">
           <Navbar />
 
-          <div className="container">
+          <div>
             <Route exact path="/" component={Landing} />
             <Route path="/1" component={NotFound} />
             <Route path="/survey/3.1" component={Questions} />
@@ -30,6 +35,11 @@ class App extends Component {
             <Route path="/survey/3.3" component={Framework} />
 
             <Switch>
+              <Redirect
+                exact
+                from="/surveyComponent/"
+                to="/surveyComponent/surveyHome"
+              />
               <Route
                 path="/surveyComponent/surveyHome"
                 component={SurveyHome}

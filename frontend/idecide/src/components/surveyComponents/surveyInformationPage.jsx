@@ -1,6 +1,6 @@
 import React from "react";
 import { Card } from "react-bootstrap";
-import { MDBBtn } from "mdbreact";
+import PrimaryButton from "../reusableComponents/PrimaryButton";
 
 /**
  * The initial page displayed after selecting a survey, with info about the survey itself
@@ -12,15 +12,15 @@ export default function SurveyInformationPage(props) {
       <Card className="surveyIntroCard" style={{ width: "80%" }}>
         {/* <Card.Img variant="top" src={imagelocation} /> */}
         <Card.Body>
-          <Card.Title>{props.survey.surveyTitle}</Card.Title>
+          <Card.Title>{"Introduction: " + props.survey.surveyTitle}</Card.Title>
           <Card.Text>{props.survey.surveyIntroduction}</Card.Text>
 
-          <MDBBtn gradient="purple" onClick={props.handleClick}>
+          <PrimaryButton onClick={props.handleClick}>
             Go back home
-          </MDBBtn>
-          <MDBBtn gradient="purple" onClick={props.startSurvey}>
+          </PrimaryButton>
+          <PrimaryButton onClick={props.startSurvey}>
             Start this Survey
-          </MDBBtn>
+          </PrimaryButton>
         </Card.Body>
       </Card>
     </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
-import { MDBBtn } from "mdbreact";
+import PrimaryButton from "../reusableComponents/PrimaryButton";
 
 /**
  * Simple component for displaying a survey option button
@@ -20,9 +20,9 @@ export default function SurveySelectionButton(props) {
           <Card.Title>{props.surveyTitle}</Card.Title>
           <Card.Text>{props.shortSurveyDescription}</Card.Text>
 
-          <MDBBtn gradient="purple" onClick={props.handleClick}>
+          <PrimaryButton onClick={props.handleClick}>
             Take this Survey
-          </MDBBtn>
+          </PrimaryButton>
         </Card.Body>
       </Card>
     </div>

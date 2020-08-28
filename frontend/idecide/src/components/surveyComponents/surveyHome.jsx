@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import SurveyControl from "./surveyControl";
 import "../../CSS/survey.css";
-import { MDBBtn } from "mdbreact";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
-import CardDesk from "../CardDeskCompoent/cardDesk";
+import CardDesk from "../CardDeskCompoent/cardDeck";
+import LoadingSpinner from "../reusableComponents/loadingSpinner";
 import {
   getUserResults,
   getAllSurveys,
@@ -67,7 +67,6 @@ export default class SurveyHome extends Component {
 
   completeHandler(surveyResults) {
     this.setState((prevState) => ({
-      currentState: "completion",
       currentResults: surveyResults,
       surveyCompletions: prevState.surveyCompletions.push(surveyResults),
     }));
@@ -130,9 +129,10 @@ export default class SurveyHome extends Component {
         </div>
       );
     } else if (currentState === "completion") {
+      //viewing a previous completion
       return <SurveyResultsPage />;
     } else {
-      return <div>Loading...</div>;
+      return <LoadingSpinner />;
     }
   }
 }

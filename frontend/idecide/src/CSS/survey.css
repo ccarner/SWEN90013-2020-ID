@@ -140,3 +140,7 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.progress-bar {
+  background-color: purple !important;
+}
