@@ -5,18 +5,34 @@ import "./cards.css";
 import "antd/dist/antd.css";
 import { getSurveyById, postingSurvey } from "../../API/surveyAPI";
 import { Spinner, Button } from "react-bootstrap";
+import JsonRuleEngine from "../RuleEngine/jsonRule.js";
+import { MDBBtn } from "mdbreact";
 import LoadingSpinner from "../reusableComponents/loadingSpinner";
 
 export default class CardDeck extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      questions: this.props.section.questions,
-      //questions arrau will be filtered as questions are completed...
-      //...so it DOES need to be in state here
+      questions: null,
+      questionLen: null,
+      algorithmRelatedQuestion: null,
+      enginRule: null,
+      feedback: null,
       fadeAwayState: false,
-      skipped: { name: "skipped" }, //not sure what this does currently
+      skiped: { name: "skpied" },
+      result: [],
+      CasResult: "",
     };
+  }
+
+  componentDidMount() {
+    this.setState({
+      questions: this.props.section.questions,
+      questionLen: this.props.section.questions.length,
+      algorithmRelatedQuestion: this.props.section.algorithmRelatedQuestion,
+      enginRule: this.props.section.enginRule,
+      feedback: this.props.section.feedback,
+    });
   }
 
   handleClick(item) {
@@ -35,9 +51,41 @@ export default class CardDeck extends Component {
   }
 
   handleResult(item, result) {
+    //here will handle the result !
+
     this.props.handleAnswer(item.questionId, result);
+
+    var currentResults = this.state.result;
+    currentResults.push({
+      questionId: item.questionId,
+      answer: result,
+    });
+    this.setState({
+      result: currentResults,
+    });
+
     this.handleClick(item);
+    console.log(
+      parseInt(item.questionId) + " :" + parseInt(this.state.questionLen)
+    );
+    if (item.questionId == this.state.questionLen) {
+      console.log(this.state.result);
+
+      JsonRuleEngine(
+        this.state.result,
+        this.state.algorithmRelatedQuestion,
+        this.state.enginRule,
+        this.handleCASResult
+      );
+    }
+    // this.props.handleNav(1);
   }
+
+  handleCASResult = (casResult) => {
+    this.setState({
+      CasResult: casResult,
+    });
+  };
 
   questionTypeController(item) {
     if (item.questionType === "singleSelection") {
@@ -52,7 +100,7 @@ export default class CardDeck extends Component {
                   className="composite-option-button"
                 >
                   <span className="composite-circle top"></span>
-                  <span className="composite-label bottom">{option}</span>
+                  <span className="composite-label bottom">{option.name}</span>
                 </button>
               ))}
             </div>
@@ -77,18 +125,18 @@ export default class CardDeck extends Component {
 
           {/* Need to discuss about the button locations */}
           <div className="button-container">
-            <button
-              className="btn"
-              onClick={() => this.handleResult(item, this.state.skipped)}
+            <MDBBtn
+              gradient="purple"
+              onClick={() => this.handleResult(item, this.state.skiped)}
             >
-              I'd rather not answer
-            </button>
-            <button
-              className="btn btn2"
+              rather not answer
+            </MDBBtn>
+            <MDBBtn
+              gradient="purple"
               onClick={() => this.handleResult(item, silderresult)}
             >
               CONFIRM
-            </button>
+            </MDBBtn>
           </div>
         </div>
       );
@@ -101,8 +149,22 @@ export default class CardDeck extends Component {
     }
   }
 
+  handleSections = async (direction) => {
+    await this.props.handleNav(direction);
+
+    this.setState({
+      questions: this.props.section.questions,
+      questionLen: this.props.section.questions.length,
+      algorithmRelatedQuestion: this.props.section.algorithmRelatedQuestion,
+      enginRule: this.props.section.enginRule,
+      feedback: this.props.section.feedback,
+    });
+  };
+
   render() {
-    const questions = this.state.questions;
+    // console.log(883, this.props.section)
+    var questions = this.state.questions;
+    // var questions = this.props.section.questions;
 
     let fadeAwayState = this.state.fadeAwayState;
     if (questions == null) {
@@ -147,7 +209,7 @@ export default class CardDeck extends Component {
         <div className="cards-wrapper">
           <div className="cards-list">
             {ItemList}
-            <div>Thanks for completing this section.</div>
+            <div>{this.state.CasResult}</div>
           </div>
         </div>
       </div>
