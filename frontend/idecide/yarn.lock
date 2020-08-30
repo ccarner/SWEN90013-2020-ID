@@ -2777,6 +2777,11 @@ bootstrap-css-only@4.4.1:
   resolved "https://registry.yarnpkg.com/bootstrap-css-only/-/bootstrap-css-only-4.4.1.tgz#08012477b1baab52fa1ca304eaba2e40f6ef0d2e"
   integrity sha512-iBgNli7RnedBFwn6sMTQoAZ8WgIwmX4kF1rckfj+pgro5q/Q0DbLtcpfH60XoFnCXzbEJU/khC/B2EQap89mCg==
 
+bootstrap-icons@^1.0.0-alpha5:
+  version "1.0.0"
+  resolved "https://r.cnpmjs.org/bootstrap-icons/download/bootstrap-icons-1.0.0.tgz#90ed08c9503cef95184972420fbea7b09780bd83"
+  integrity sha1-kO0IyVA875UYSXJCD76nsJeAvYM=
+
 bootstrap@^4.5.0:
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.5.2.tgz#a85c4eda59155f0d71186b6e6ad9b875813779ab"
@@ -3311,6 +3316,11 @@ clone-deep@^4.0.1:
     is-plain-object "^2.0.4"
     kind-of "^6.0.2"
     shallow-clone "^3.0.0"
+
+clone@^2.1.2:
+  version "2.1.2"
+  resolved "https://r.cnpmjs.org/clone/download/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
+  integrity sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18=
 
 clsx@^1.0.2:
   version "1.1.1"
@@ -3921,6 +3931,11 @@ csstype@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.2.tgz#ee5ff8f208c8cd613b389f7b222c9801ca62b3f7"
   integrity sha512-ofovWglpqoqbfLNOTBNZLSbMuGrblAf1efvvArGKOZMBrIoJeu5UsAipQolkijtyQx5MtAzT/J9IHj/CEY1mJw==
+
+curriable@^1.1.0:
+  version "1.3.0"
+  resolved "https://r.cnpmjs.org/curriable/download/curriable-1.3.0.tgz#cb054bc7bbc1f440cbc613527b8a05b57e19e1ab"
+  integrity sha1-ywVLx7vB9EDLxhNSe4oFtX4Z4as=
 
 cyclist@^1.0.1:
   version "1.0.1"
@@ -5519,6 +5534,13 @@ hash-base@^3.0.0:
     readable-stream "^3.6.0"
     safe-buffer "^5.2.0"
 
+hash-it@^4.0.4:
+  version "4.0.5"
+  resolved "https://r.cnpmjs.org/hash-it/download/hash-it-4.0.5.tgz#67aca6b970da09058b5ad0feb61661d9627f902a"
+  integrity sha1-Z6ymuXDaCQWLWtD+thZh2WJ/kCo=
+  dependencies:
+    curriable "^1.1.0"
+
 hash.js@^1.0.0, hash.js@^1.0.3:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/hash.js/-/hash.js-1.1.7.tgz#0babca538e8d4ee4a0f8988d68866537a003cf42"
@@ -6845,6 +6867,17 @@ json-parse-better-errors@^1.0.1, json-parse-better-errors@^1.0.2:
   resolved "https://registry.yarnpkg.com/json-parse-better-errors/-/json-parse-better-errors-1.0.2.tgz#bb867cfb3450e69107c131d1c514bab3dc8bcaa9"
   integrity sha512-mrqyZKfX5EhL7hvqcV6WG1yYjnjeuYDzDhhcAAUrq8Po85NBQBJP+ZDUT75qZQ98IkUoBqdkExkukOU7Ts2wrw==
 
+json-rules-engine@^5.0.3:
+  version "5.0.3"
+  resolved "https://r.cnpmjs.org/json-rules-engine/download/json-rules-engine-5.0.3.tgz#7abc8e56a77b6be02be23d5a0682429ca1de631e"
+  integrity sha1-eryOVqd7a+Ar4j1aBoJCnKHeYx4=
+  dependencies:
+    clone "^2.1.2"
+    events "^3.0.0"
+    hash-it "^4.0.4"
+    jsonpath-plus "^3.0.0"
+    lodash.isobjectlike "^4.0.0"
+
 json-schema-traverse@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz#69f6a87d9513ab8bb8fe63bdb0979c448e684660"
@@ -6909,6 +6942,11 @@ jsonify@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
   integrity sha1-LHS27kHZPKUbe1qu6PUDYx0lKnM=
+
+jsonpath-plus@^3.0.0:
+  version "3.0.0"
+  resolved "https://r.cnpmjs.org/jsonpath-plus/download/jsonpath-plus-3.0.0.tgz#194ab4792a5e9b4ed27bf442188c8eb7e697a04b"
+  integrity sha1-GUq0eSpem07Se/RCGIyOt+aXoEs=
 
 jsprim@^1.2.2:
   version "1.4.1"
@@ -7155,6 +7193,31 @@ lodash._reinterpolate@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
   integrity sha1-DM8tiRZq8Ds2Y8eWU4t1rG4RTZ0=
+
+lodash.clonedeep@^4.5.0:
+  version "4.5.0"
+  resolved "https://r.cnpmjs.org/lodash.clonedeep/download/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
+  integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
+
+lodash.filter@^4.6.0:
+  version "4.6.0"
+  resolved "https://r.cnpmjs.org/lodash.filter/download/lodash.filter-4.6.0.tgz#668b1d4981603ae1cc5a6fa760143e480b4c4ace"
+  integrity sha1-ZosdSYFgOuHMWm+nYBQ+SAtMSs4=
+
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://r.cnpmjs.org/lodash.isequal/download/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+  integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
+
+lodash.isobjectlike@^4.0.0:
+  version "4.0.0"
+  resolved "https://r.cnpmjs.org/lodash.isobjectlike/download/lodash.isobjectlike-4.0.0.tgz#742c5fc65add27924d3d24191681aa9a17b2b60d"
+  integrity sha1-dCxfxlrdJ5JNPSQZFoGqmheytg0=
+
+lodash.matches@^4.6.0:
+  version "4.6.0"
+  resolved "https://r.cnpmjs.org/lodash.matches/download/lodash.matches-4.6.0.tgz#ae1affba8047f02368905fe585376bd2c10aaf5e"
+  integrity sha1-rhr/uoBH8CNokF/lhTdr0sEKr14=
 
 lodash.memoize@^4.1.2:
   version "4.1.2"
@@ -7750,6 +7813,16 @@ node-releases@^1.1.52, node-releases@^1.1.60:
   version "1.1.60"
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.60.tgz#6948bdfce8286f0b5d0e5a88e8384e954dfe7084"
   integrity sha512-gsO4vjEdQaTusZAEebUWp2a5d7dF5DYoIpDG7WySnk7BuZDW+GPpHXoXXuYawRBr/9t5q54tirPz79kFIWg4dA==
+
+node-rules@^5.0.0:
+  version "5.0.0"
+  resolved "https://r.cnpmjs.org/node-rules/download/node-rules-5.0.0.tgz#b74315b5d4f8de84943bfbbc596bc0342d851d94"
+  integrity sha1-t0MVtdT43oSUO/u8WWvANC2FHZQ=
+  dependencies:
+    lodash.clonedeep "^4.5.0"
+    lodash.filter "^4.6.0"
+    lodash.isequal "^4.5.0"
+    lodash.matches "^4.6.0"
 
 normalize-package-data@^2.3.2:
   version "2.5.0"

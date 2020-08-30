@@ -240,37 +240,37 @@
 }
 .card-container .bottom {
   font-size: 14px;
-  color: rgb(221, 0, 103);
+  color: rgb(2, 126, 174);
 }
 .card-container .composite-option-button:nth-of-type(2) .top::before {
-  background-color: rgb(163, 34, 123);
-}
-.card-container .composite-option-button:nth-of-type(3) .top::before {
-  background-color: rgb(112, 62, 138);
-}
-.card-container .composite-option-button:nth-of-type(4) .top::before {
-  background-color: rgb(92, 74, 145);
-}
-.card-container .composite-option-button:nth-of-type(5) .top::before {
   background-color: rgb(41, 104, 162);
 }
+.card-container .composite-option-button:nth-of-type(3) .top::before {
+  background-color: rgb(92, 74, 145);
+}
+.card-container .composite-option-button:nth-of-type(4) .top::before {
+  background-color: rgb(112, 62, 138);
+}
+.card-container .composite-option-button:nth-of-type(5) .top::before {
+  background-color: rgb(163, 34, 123);
+}
 .card-container .composite-option-button:nth-of-type(6) .top::before {
-  background-color: rgb(2, 126, 174);
+  background-color: rgb(221, 0, 103);
 }
 .card-container .composite-option-button:nth-of-type(2) .bottom {
-  color: rgb(163, 34, 123);
-}
-.card-container .composite-option-button:nth-of-type(3) .bottom {
-  color: rgb(112, 62, 138);
-}
-.card-container .composite-option-button:nth-of-type(4) .bottom {
-  color: rgb(92, 74, 145);
-}
-.card-container .composite-option-button:nth-of-type(5) .bottom {
   color: rgb(41, 104, 162);
 }
+.card-container .composite-option-button:nth-of-type(3) .bottom {
+  color: rgb(92, 74, 145);
+}
+.card-container .composite-option-button:nth-of-type(4) .bottom {
+  color: rgb(112, 62, 138);
+}
+.card-container .composite-option-button:nth-of-type(5) .bottom {
+  color: rgb(163, 34, 123);
+}
 .card-container .composite-option-button:nth-of-type(6) .bottom {
-  color: rgb(2, 126, 174);
+  color: rgb(221, 0, 103);
 }
 
 .card-container .ranger-container-silder {
