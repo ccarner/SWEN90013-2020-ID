@@ -49,7 +49,11 @@ export function getAllAdmins() {
 
 export async function loginUser(userIn) {
   const { email, password } = userIn;
-  const endpoint = USER_URL + `/admin/login`;
+  var endpoint = USER_URL + `/user/login`;
+  if (userIn.email === "ccarner13@gmail.com") {
+    endpoint = USER_URL + `/admin/login`;
+  }
+
 
   // check if the email is present
 
