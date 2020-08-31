@@ -16,7 +16,7 @@ const NavbarID = ({ className, ...rest }) => {
 
 	return (
 		<div>
-			<Navbar bg="light" expand="lg">
+			<Navbar bg="light" expand="lg" style={{ marginBottom: 10 }}>
 				<Navbar.Brand href="/">
 					<img src={IconLogo} alt="IconLogo" style={{ height: 40, marginTop: 10 }} />
 				</Navbar.Brand>
@@ -64,7 +64,7 @@ const NavbarID = ({ className, ...rest }) => {
 							<NavDropdown.Item href="/survey/3.2">Action Plan</NavDropdown.Item>
 							<NavDropdown.Item href="/survey/3.3">Framework</NavDropdown.Item>
 							<NavDropdown.Divider />
-							<NavDropdown.Item href="/survey/3.4">Separated link</NavDropdown.Item>
+							<NavDropdown.Item href="/dashboard">dashboard</NavDropdown.Item>
 						</NavDropdown>
 					</Nav>
 					<Form inline>
