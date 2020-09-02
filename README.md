@@ -199,20 +199,20 @@ iDecide currently lacks a mobile-friendly site, and its overall design requires 
 │       │   │   ├── RuleEngine
 │       │   │   │   ├── algorithem.js
 │       │   │   │   └── jsonRule.js
-│       │   │   ├── dashBoard  //Admin Dashboard js file
-│   │   │   ├── DBLayout.js // Dashboard layout
-│   │   │   ├── DBSideBar.js
-│   │   │   ├── VerticalTab.js // side menu
-│   │   │   └── view 
-│   │   │       ├── researcher // user management
-│   │   │       │   └── ResearcherListView.js
-│   │   │       └── survey     // survey management file
-│   │   │           ├── NewSurvey.js
-│   │   │           ├── QuesitonComponent.js
-│   │   │           ├── QuestionDetails.js
-│   │   │           ├── SurveyCard.js
-│   │   │           ├── SurveyDetails.js
-│   │   │           └── SurveyLayout.js
+│       │   │   ├── dashBoard    //Admin Dashboard js file
+│       │   │   │   ├── DBLayout.js     // Dashboard layout
+│       │   │   │   ├── DBSideBar.js
+│       │   │   │   ├── VerticalTab.js      // side menu
+│       │   │   │   └── view
+│       │   │   │       ├── researcher      // user management
+│       │   │   │       │   └── ResearcherListView.js
+│       │   │   │       └── survey          // survey management file
+│       │   │   │           ├── NewSurvey.js
+│       │   │   │           ├── QuesitonComponent.js
+│       │   │   │           ├── QuestionDetails.js
+│       │   │   │           ├── SurveyCard.js
+│       │   │   │           ├── SurveyDetails.js
+│       │   │   │           └── SurveyLayout.js
 │       │   │   ├── loginComponent
 │       │   │   │   ├── adminInfo.js
 │       │   │   │   ├── loginPage.js
