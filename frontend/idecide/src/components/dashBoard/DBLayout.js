@@ -12,8 +12,8 @@ import {
 	Route,
   } from "react-router-dom";
 
-  import { getUserResults, getAllSurveys, getStaticImageUrlFromName } from '../../API/surveyAPI';
 import NewSurvey from './view/survey/NewSurvey';
+import SurveyDetails from './view/survey/SurveyDetails';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -45,6 +45,7 @@ export default function DBLayout() {
 			<Grid item xs={8}>
 				<Route path="/dashboard/survey" component={SurveyLayout} />
 				<Route path="/dashboard/newsurvey" component={NewSurvey} />
+				<Route path="/dashboard/surveyId=:surveyId" component={SurveyDetails} />
 			</Grid>
 		</Grid>
 	);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SurveyCard from './SurveyCard';
@@ -7,6 +7,7 @@ import { green } from '@material-ui/core/colors';
 import Icon from '@material-ui/core/Icon';
 
 import { getAllSurveys } from '../../../../API/surveyAPI';
+import NewSurvey from './NewSurvey';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -18,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
 		color: theme.palette.text.secondary
 	}
 }));
+
+export const CountContext = createContext();
+console.log(CountContext);
 
 export default function SurveyLayout() {
 	const classes = useStyles();
@@ -41,7 +45,7 @@ export default function SurveyLayout() {
 	console.log(isLoading);
 	console.log(data);
 	return (
-		<Grid container className={classes.root} direction="row" justify="flex-start" alignItems="flex-start">
+		<Grid className={classes.root} direction="row" justify="flex-start" alignItems="flex-start">
 			{isLoading ? (
 				<div>Loading ...</div>
 			) : (
@@ -50,15 +54,28 @@ export default function SurveyLayout() {
 						{console.log(data[0])}
 						{Array.from(data).map((item) => (
 							<Grid item lg={6} md={6} xs={12}>
-								<SurveyCard product={item} />
+								<SurveyCard
+									product={item}
+									onClick={() => {
+										window.location.pathname = '/dashboard/surveyId=' + item.surveyId;
+									}}
+								/>
+								<CountContext.Provider value={item.surveyId} >
+								</CountContext.Provider>
 							</Grid>
 						))}
-						
 					</Grid>
-
+					
 					<Grid container spacing={5}>
 						<Grid item xs={12}>
-							<Button variant="contained" color="secondary" fullWidth onClick={()=> {window.location.pathname = '/dashboard/newsurvey';}}>
+							<Button
+								variant="contained"
+								color="secondary"
+								fullWidth
+								onClick={() => {
+									window.location.pathname = '/dashboard/newsurvey';
+								}}
+							>
 								Add New Survey
 							</Button>
 						</Grid>

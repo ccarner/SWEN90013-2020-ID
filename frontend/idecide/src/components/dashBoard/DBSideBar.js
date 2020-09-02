@@ -97,6 +97,7 @@ export default function ClippedDrawer() {
 				<Router>
 					<Route path="/dashboard/user" component={ResearcherListView} />
 					<Route path="/dashboard/survey" component={SurveyList} />
+					
 					<Grid container />
 				</Router>
 			</main>

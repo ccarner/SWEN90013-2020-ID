@@ -1,10 +1,10 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, createContext } from 'react';
 import { Box, Button, Container, makeStyles } from '@material-ui/core';
 import QuestionCard from './QuesitonComponent';
-import { Card, CardContent, CardHeader, TextField, Divider } from '@material-ui/core';
+import { Card, CardContent, CardHeader, TextField, Divider, Typography } from '@material-ui/core';
 import { getSurveyById } from '../../../../API/surveyAPI';
 import { CountContext } from './SurveyLayout';
-import QuestionComponent from './QuesitonComponent';
+import QuestionDetails from './QuestionDetails';
 const axios = require('axios');
 
 const useStyles = makeStyles((theme) => ({
@@ -28,8 +28,9 @@ const blogInfo = {
 };
 
 export const t = 4;
+export const QuestionContext = createContext();
 
-const NewSurvey = (props) => {
+const SurveyDetails = (props) => {
 	const classes = useStyles();
 	const [ isLoading, setIsLoading ] = useState(false);
 	const [ count, setCount ] = React.useState(0);
@@ -43,6 +44,7 @@ const NewSurvey = (props) => {
 	const [ age, setAge, qN ] = React.useState('');
 
 	const [ data, setData ] = useState({ hits: [] });
+	const [ a, setA ] = useState({ hits: [] });
 
 	useEffect(() => {
 		/*	const fetchData = async () => {
@@ -60,16 +62,17 @@ const NewSurvey = (props) => {
 		const fetchData = async () => {
 			setIsLoading(true);
 			const result = await getSurveyById(surveyId);
-			//	console.log(result.surveySections[0]);
-			//	setData(result.surveySections[0].questions);
+			console.log(result);
+			setData(result);
 			setIsLoading(false);
 			console.log(data);
 			console.log(isLoading);
 		};
-
 		fetchData();
 	}, []);
 
+	console.log(data.surveyId);
+	//   setA(JSON.parse(data.surveySections));
 	const handleChange = (event) => {
 		setAge(event.target.value);
 		//   qN(event.target.value);
@@ -89,70 +92,35 @@ const NewSurvey = (props) => {
 								</Button>
 							}
 							//   subheader="Description"
-							title="Questionnaire"
+							title={data.surveyTitle}
 						/>
 						<Divider />
 						<CardContent>
 							<Box display="flex" p={1}>
-								<TextField
-									id="outlined-multiline-static"
-									label="Description"
-									multiline
-									rows={4}
-									fullWidth
-									defaultValue=""
-									variant="outlined"
-								/>
+								<Typography color="grey" variant="subtitle1" gutterBottom>
+									{data.surveyIntroduction}
+								</Typography>
 							</Box>
 						</CardContent>
 					</Card>
-					{newQuestion.map((nq) => {
-						console.log(nq);
-						return (
-							<div key={nq}>
-								<Box p={1} />
-								<CountContext.Provider value={nq}>
-									<QuestionComponent />
-								</CountContext.Provider>
-							</div>
-						);
-					})}
-
-					<Box my={2}>
-						<Button
-							variant="contained"
-							color="primary"
-							fullWidth
-							size="large"
-							onClick={() => {
-								setCount(count + 1);
-								addNew([ ...newQuestion, count ]);
-							}}
-						>
-							Add New Question
-						</Button>
+					<Box p={2}>
+						<QuestionContext.Provider value={data}>
+							<QuestionDetails data={data} />
+						</QuestionContext.Provider>
 					</Box>
-					<Card my={2}>
-						<Divider />
-						<CardContent>
-							{/*Array.from(data).map((item) => (
-						<div>
-							{item.questionId}------------------
-						</div>
-					))*/}
-							<Divider />
-							<Button variant="contained" color="secondary" size="large" onClick={() => {}}>
-								Save
-							</Button>
-							<Button variant="outlined" color="primary" size="large" onClick={() => {}}>
-								Publish
-							</Button>
-						</CardContent>
-					</Card>
+					<Box p={2}>
+						<QuestionDetails data={data} />
+					</Box>
+					<Box p={2}>
+						<QuestionDetails data={data} />
+					</Box>
+					<Box p={2}>
+						<QuestionDetails data={data} />
+					</Box>
 				</div>
 			)}
 		</Container>
 	);
 };
 
-export default NewSurvey;
+export default SurveyDetails;
