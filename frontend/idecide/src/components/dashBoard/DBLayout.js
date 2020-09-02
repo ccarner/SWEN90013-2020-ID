@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import VerticalTab from './VerticalTab';
-import Paper from '@material-ui/core/Paper';
-import Password from './view/survey/NewSurvey';
 import SurveyLayout from './view/survey/SurveyLayout';
-import { Button, Box } from '@material-ui/core';
 
 import {
 	BrowserRouter as Router,
@@ -13,7 +10,7 @@ import {
   } from "react-router-dom";
 
 import NewSurvey from './view/survey/NewSurvey';
-import SurveyDetails from './view/survey/SurveyDetails';
+import SurveySection from './view/survey/SurveySection';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -45,7 +42,7 @@ export default function DBLayout() {
 			<Grid item xs={8}>
 				<Route path="/dashboard/survey" component={SurveyLayout} />
 				<Route path="/dashboard/newsurvey" component={NewSurvey} />
-				<Route path="/dashboard/surveyId=:surveyId" component={SurveyDetails} />
+				<Route path="/dashboard/surveyId=:surveyId" component={SurveySection} />
 			</Grid>
 		</Grid>
 	);

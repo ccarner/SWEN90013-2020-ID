@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SurveyCard = ({ product, ...rest }) => {
-  const classes = useStyles();
 
   return (
     <Card
