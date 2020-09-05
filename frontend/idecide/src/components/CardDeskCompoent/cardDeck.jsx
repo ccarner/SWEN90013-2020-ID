@@ -140,6 +140,27 @@ export default class CardDeck extends Component {
           </div>
         </div>
       );
+    } else if (item.questionType == "YesorNo") {
+      return (
+        <div className="questionContainer">
+          <div className="button-container">
+            <MDBBtn
+              gradient="aqua"
+              style={{ border: "none", "border-radius": "15px" }}
+              onClick={() => this.handleResult(item, { name: "No" })}
+            >
+              No
+            </MDBBtn>
+            <MDBBtn
+              gradient="purple"
+              style={{ border: "none", "border-radius": "15px" }}
+              onClick={() => this.handleResult(item, { name: "Yes" })}
+            >
+              Yes
+            </MDBBtn>
+          </div>
+        </div>
+      );
     } else {
       return (
         <div className="questionContainer">

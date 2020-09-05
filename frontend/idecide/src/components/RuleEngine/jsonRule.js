@@ -18,7 +18,6 @@ export default function JsonRuleEngine(
   if (algorithmRelated == null || casRule == null) {
     handleCASResult("Thanks you ");
   } else {
-    console.log("work");
     var result = {};
     var i;
     for (i = 0; i < algorithmRelated.length; i++) {
