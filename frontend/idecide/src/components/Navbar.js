@@ -12,11 +12,11 @@ import IconLogo from '../images/idecide-logo.png';
 const NavbarID = ({ className, ...rest }) => {
 	const [ show, setShow ] = useState(false);
 	const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+	const handleShow = () => setShow(true);
 
 	return (
 		<div>
-			<Navbar bg="light" expand="lg">
+			<Navbar bg="light" expand="lg" style={{ marginBottom: 10 }}>
 				<Navbar.Brand href="/">
 					<img src={IconLogo} alt="IconLogo" style={{ height: 40, marginTop: 10 }} />
 				</Navbar.Brand>
@@ -64,7 +64,7 @@ const NavbarID = ({ className, ...rest }) => {
 							<NavDropdown.Item href="/survey/3.2">Action Plan</NavDropdown.Item>
 							<NavDropdown.Item href="/survey/3.3">Framework</NavDropdown.Item>
 							<NavDropdown.Divider />
-							<NavDropdown.Item href="/survey/3.4">Separated link</NavDropdown.Item>
+							<NavDropdown.Item href="/dashboard">dashboard</NavDropdown.Item>
 						</NavDropdown>
 					</Nav>
 					<Form inline>
@@ -94,23 +94,40 @@ const NavbarID = ({ className, ...rest }) => {
 				</Navbar.Collapse>
 			</Navbar>
 
-			<Modal show={show} onHide={handleClose} animation={false} size="lg"  dialogClassName="modal-90w">
+			<Modal show={show} onHide={handleClose} animation={false} size="lg" dialogClassName="modal-90w">
 				<Modal.Header closeButton>
 					<Modal.Title>
-						<h2 style={{ color: "purple" }}>If you’re looking for help, you can call:</h2>
+						<h2 style={{ color: 'purple' }}>If you’re looking for help, you can call:</h2>
 					</Modal.Title>
 				</Modal.Header>
-				<Modal.Body style={{ padding: "5%" }}>
-					<h5> > 1800 RESPECT -- <a href={`tel:1800 737 732`}>1800 737 732</a></h5>
-					<h5> > Lifeline -- 13 11 14</h5>
-					<h5> > Sexual Assault Crisis Line -- <a href={`tel:1800 737 732`}>1800 806 292</a></h5>
-					<h5> > QLife -- 1800 184 627</h5>
-					<h5> > InTouch Multicultural Centre Against Family Violence -- <a href={`tel:1800 737 732`}>1800 755 988</a></h5>
-					<h5> > Safer Community Program -- <a href={`tel:1800 737 732`}>61 3 9035 8675</a>
+				<Modal.Body style={{ padding: '5%' }}>
+					<h5>
+						{' '}
+						> 1800 RESPECT -- <a href={`tel:1800 737 732`}>1800 737 732</a>
+					</h5>
+					<h5>
+						{' '}
+						> Lifeline -- <a href={`tel:13 11 14`}>13 11 14</a>
+					</h5>
+					<h5>
+						{' '}
+						> Sexual Assault Crisis Line -- <a href={`tel:1800 737 732`}>1800 806 292</a>
+					</h5>
+					<h5>
+						{' '}
+						> QLife -- <a href={`tel:1800 184 627`}>1800 184 627</a>
+					</h5>
+					<h5>
+						{' '}
+						> InTouch Multicultural Centre Against Family Violence --{' '}
+						<a href={`tel:1800 737 732`}>1800 755 988</a>
+					</h5>
+					<h5>
+						{' '}
+						> Safer Community Program -- <a href={`tel:1800 737 732`}>61 3 9035 8675</a>
 						<Nav.Link href="https://safercommunity.unimelb.edu.au/">safercommunity.unimelb.edu.au</Nav.Link>
 					</h5>
 				</Modal.Body>
-				
 			</Modal>
 		</div>
 	);
