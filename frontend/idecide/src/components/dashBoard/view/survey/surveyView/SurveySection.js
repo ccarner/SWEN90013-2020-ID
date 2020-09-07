@@ -112,7 +112,7 @@ const  QuestionsDisplay = () =>{
 					<div>Loading</div>
 				) : (
 					surveySection.map((item) => (
-						<SectionQuestions data={item}/>
+						<SectionQuestions data={item} sections = {surveySection} surveyId={surveyId}/>
 
 						/*
 						<div key={index}>
@@ -187,6 +187,7 @@ const  QuestionsDisplay = () =>{
 					</Box>
 				</Collapse>
 			</Grid>
+			
 		</div>
 	);
 };

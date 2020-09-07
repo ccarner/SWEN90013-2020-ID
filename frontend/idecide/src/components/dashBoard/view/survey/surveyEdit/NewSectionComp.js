@@ -29,10 +29,10 @@ const SurveySection = (props) => {
 		descrpition: ''
 	});
 	let a = props.data.surveySections;
-	const [ myArray, setArray ] = useState(a);
-		
+
 	const surveyId = props.id;
-//	console.log(surveyId);
+	//	console.log(props);
+	//	console.log(a);
 
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
@@ -40,26 +40,30 @@ const SurveySection = (props) => {
 
 	const addNewSectionInComp = async () => {
 		let sectionId = 0;
-		const newSection = 
-			{
-				sectionId: sectionId,
-				sectionTitle: values.title,
-				sectionIntroduction: values.descrpition,
-				questions:[]
-			};
-		if(typeof a == 'undefined'){
-			a = [newSection];
-		}else{
-			sectionId = a.length+1;
+		//		console.log(a);
+		if (typeof a !== 'undefined') sectionId = a.length + 1;
+		console.log(sectionId);
+		const newSection = {
+			sectionId: sectionId,
+			sectionTitle: values.title,
+			sectionIntroduction: values.descrpition,
+			questions: []
+		};
+		if (typeof a == 'undefined') {
+			a = [ newSection ];
+		} else {
 			a.push(newSection);
 		}
-		
+		a.map((item, index) => {
+			item.sectionId = index;
+		});
+
 		var readyData = JSON.stringify({
 			surveyId: surveyId,
 			surveySections: a
 		});
 
-		console.log(readyData);
+		//	console.log(readyData);
 
 		const feedBack = await editSurvey(readyData)
 			.then(() => {
@@ -75,7 +79,7 @@ const SurveySection = (props) => {
 	};
 
 	return (
-		<Box p = {1}>
+		<Box p={1}>
 			<Card>
 				<CardHeader title="New Survey Section" />
 				<Divider />
