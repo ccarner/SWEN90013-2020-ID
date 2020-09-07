@@ -186,8 +186,8 @@ const SurveyCard = ({ product, ...rest }) => {
 				open={open}
 				onClose={handleClose}
 				aria-labelledby="max-width-dialog-title"
-				//	fullWidth="md"
-				maxWidth="md"
+				maxWidth="lg"
+				fullWidth
 			>
 				<DialogTitle id="form-dialog-title">Survey</DialogTitle>
 				<DialogContent>

@@ -39,7 +39,7 @@ const SurveySection = (props) => {
 	};
 
 	const addNewSectionInComp = async () => {
-		let sectionId = 0;
+		let sectionId = 1;
 		//		console.log(a);
 		if (typeof a !== 'undefined') sectionId = a.length + 1;
 		console.log(sectionId);
@@ -55,7 +55,7 @@ const SurveySection = (props) => {
 			a.push(newSection);
 		}
 		a.map((item, index) => {
-			item.sectionId = index;
+			item.sectionId = index+1;
 		});
 
 		var readyData = JSON.stringify({

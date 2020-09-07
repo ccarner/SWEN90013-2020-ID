@@ -104,7 +104,7 @@ const  QuestionsDisplay = () =>{
 						Edit
 					</Button>
 				</Grid>
-				{typeof surveySection.length == 'undefined' || surveySection.length == 0 ? surveySection.length == 0 ? (
+				{(typeof surveySection.length == 'undefined' || surveySection.length == 0) ? surveySection.length == 0 ? (
 					<div>
 						<NewSectionComp data={surveyId} id={surveyId}/>
 					</div>
