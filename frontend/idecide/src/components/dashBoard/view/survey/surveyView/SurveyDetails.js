@@ -1,8 +1,7 @@
 import React, { useContext, useState, useEffect, createContext } from 'react';
 import { Box, Button, Container, makeStyles } from '@material-ui/core';
 import { Card, CardContent, CardHeader, Divider, Typography } from '@material-ui/core';
-import { getSurveyById } from '../../../../API/surveyAPI';
-import { CountContext } from './SurveyLayout';
+import { getSurveyById } from '../../../../../API/surveyAPI';
 import QuestionDetails from './QuestionDetails';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,20 +30,19 @@ export const QuestionContext = createContext();
 const SurveyDetails = (props) => {
 	const [ isLoading, setIsLoading ] = useState(false);
 
-//	console.log(props.match.params.surveyId || 'Hello');
+	//	console.log(props.match.params.surveyId || 'Hello');
 	const surveyId = props.match.params.surveyId;
 
-
-    const [ data, setData ] = useState({ hits: [] });
-    const [ surveySection, setSurveySection ] = useState({ hits: [] });
+	const [ data, setData ] = useState({ hits: [] });
+	const [ surveySection, setSurveySection ] = useState({ hits: [] });
 
 	useEffect(() => {
 		const fetchData = async () => {
 			setIsLoading(true);
 			const result = await getSurveyById(surveyId);
 			console.log(result);
-            setData(result);
-            setSurveySection(result.surveySections);
+			setData(result);
+			setSurveySection(result.surveySections);
 			setIsLoading(false);
 			console.log(data);
 			console.log(isLoading);
@@ -52,15 +50,14 @@ const SurveyDetails = (props) => {
 		fetchData();
 	}, []);
 
-    console.log(data);
- //   data.map((item)=>{console.log(item)});
-	
+	console.log(data);
+	//   data.map((item)=>{console.log(item)});
+
 	return (
 		<Container maxWidth="lg">
 			{isLoading ? (
 				<div>Loading ...</div>
 			) : (
-                
 				<div>
 					<Card>
 						<CardHeader
@@ -75,7 +72,7 @@ const SurveyDetails = (props) => {
 						<Divider />
 						<CardContent>
 							<Box display="flex" p={1}>
-								<Typography  variant="subtitle1" gutterBottom>
+								<Typography variant="subtitle1" gutterBottom>
 									{data.surveyIntroduction}
 								</Typography>
 							</Box>
@@ -86,7 +83,6 @@ const SurveyDetails = (props) => {
 							<QuestionDetails data={surveySection} />
 						</QuestionContext.Provider>
 					</Box>
-					
 				</div>
 			)}
 		</Container>
