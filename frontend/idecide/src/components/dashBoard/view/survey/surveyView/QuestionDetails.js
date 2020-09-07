@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import EditIcon from '@material-ui/icons/Edit';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
 import {
 	Box,
@@ -9,27 +10,23 @@ import {
 	IconButton,
 	TextField,
 	CardContent,
-	CardHeader,
 	Divider,
 	Grid,
-	Typography,
+	Typography
 } from '@material-ui/core';
-
-
 
 const QuestionDetails = (props) => {
 	const [ isOpen, setOpen ] = React.useState(false);
 
 	console.log(props.data);
-//	console.log(props.index);
-//	console.log(props.index);
+	//	console.log(props.index);
+	//	console.log(props.index);
 	//   console.log(Object.keys(props.data).length);
 	//	console.log(props.data.length);
 	//   const mapData = JSON.stringify(props.data);
 	//   console.log(mapData);
 	//setQuestion(props.data);
 
-	
 	function SecondLine(q) {
 		return (
 			<Grid item xs={12} display="flex">
@@ -86,49 +83,44 @@ const QuestionDetails = (props) => {
 	}
 	return (
 		<div>
-			{typeof props.data == 'undefined' ? (
-				<div>Loading</div>
-			) : (
-				props.data.questions.map((q) =>
-				//	item.questions.map((q) => (
-						//    console.log(item.sectionTitle);
-						<Box p={2}>
-							<Card>
-								<CardHeader
-									action={
-										/*	<IconButton color="secondary" aria-label="add an alarm">
-						<KeyboardArrowDownIcon />
-					</IconButton>*/
-										<IconButton
-											color="secondary"
-											aria-label="add an alarm"
-											onClick={() => {
-												setOpen((prev) => !prev);
-											}}
-										>
-											<EditIcon color="primary" fontSize="large" />
-										</IconButton>
-									}
-									title={'Question ' + q.questionId}
-								/>
-								<Divider />
-								<Collapse in={isOpen}>
-									<CardContent>
-										<Grid container spacing={3}>
-											<Grid container item xs={12} spacing={2}>
-												<SecondLine questionText={q.questionText} />
-											</Grid>
-											<Grid container item xs={12} spacing={2}>
-												<ThirdLine />
-											</Grid>
-										</Grid>
-									</CardContent>
-								</Collapse>
-							</Card>
-						</Box>
-				//	))
-				)
-			)}
+			<Box p={1}>
+				<Card>
+					<CardContent>
+						<Grid xs={12} container direction="row" justify="flex-start" alignItems="center">
+							<Grid item xs={11}>
+								<Typography color="subtitle1" gutterBottom>
+									{'Q' + props.data.questionId + ' :  ' + props.data.questionText}
+								</Typography>
+							</Grid>
+							<Grid item xs={1}>
+								<IconButton
+									style={{ width: 50 }}
+									color="secondary"
+									aria-label="add an alarm"
+									onClick={() => {
+										setOpen((prev) => !prev);
+									}}
+								>
+									<KeyboardArrowDownIcon color="primary" />
+								</IconButton>
+							</Grid>
+						</Grid>
+					</CardContent>
+					<Divider />
+					<Collapse in={isOpen}>
+						<CardContent>
+							<Grid container spacing={3}>
+								<Grid container item xs={12} spacing={2}>
+									<SecondLine questionText={props.data.questionText} />
+								</Grid>
+								<Grid container item xs={12} spacing={2}>
+									<ThirdLine />
+								</Grid>
+							</Grid>
+						</CardContent>
+					</Collapse>
+				</Card>
+			</Box>
 		</div>
 	);
 };

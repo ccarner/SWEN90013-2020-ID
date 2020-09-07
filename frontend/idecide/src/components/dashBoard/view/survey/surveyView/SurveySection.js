@@ -5,6 +5,7 @@ import { getSurveyById, editSurvey } from '../../../../../API/surveyAPI';
 import EditIcon from '@material-ui/icons/Edit';
 import QuestionDetails from './QuestionDetails';
 import NewSectionComp from '../surveyEdit/NewSectionComp';
+import SectionQuestions from './SectionQuestions';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -82,10 +83,16 @@ const SurveySection = (props) => {
 	//	console.log("Survvey Section Log:");
 	//console.log(data);
 
-	function QuestionsDisplay() {
-	//	console.log(data);
-	//	console.log(surveySection[sectionIndex]);
-		if (typeof sectionIndex !== 'undefined') return <QuestionDetails data={surveySection[sectionIndex]} />;
+const  QuestionsDisplay = () =>{
+		console.log(data);
+		console.log(surveySection[sectionIndex]);
+		if (typeof sectionIndex !== 'undefined'){
+			if(surveySection[sectionIndex].questions.length > 0)
+				return <QuestionDetails data={surveySection[sectionIndex]} />;
+			else {
+				alert("There is no question in this section, do you want to create new quesitons now?");
+			}
+		} 
 		else return <div />;
 	}
 
@@ -104,7 +111,10 @@ const SurveySection = (props) => {
 				) : (
 					<div>Loading</div>
 				) : (
-					surveySection.map((item, index) => (
+					surveySection.map((item) => (
+						<SectionQuestions data={item}/>
+
+						/*
 						<div key={index}>
 							<Box p={2} >
 								<Card>
@@ -144,11 +154,12 @@ const SurveySection = (props) => {
 								</Card>
 								<Collapse in={isOpen}>
 									<Box>
-										<QuestionsDisplay />
+										{QuestionsDisplay}
 									</Box>
 								</Collapse>
 							</Box>
 						</div>
+					*/
 					))
 				)}
 				{newQuestion.map((nq) => {
