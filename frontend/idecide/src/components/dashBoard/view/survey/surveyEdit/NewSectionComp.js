@@ -39,7 +39,7 @@ const SurveySection = (props) => {
 	};
 
 	const addNewSectionInComp = async () => {
-		const sectionId = 0;
+		let sectionId = 0;
 		const newSection = 
 			{
 				sectionId: sectionId,
@@ -51,6 +51,7 @@ const SurveySection = (props) => {
 			a = [newSection];
 		}else{
 			sectionId = a.length+1;
+			a.push(newSection);
 		}
 		
 		var readyData = JSON.stringify({
