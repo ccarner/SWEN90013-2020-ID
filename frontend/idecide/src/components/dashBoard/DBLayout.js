@@ -3,14 +3,18 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import VerticalTab from './VerticalTab';
 import SurveyLayout from './view/survey/SurveyLayout';
+import DCLayout from './view/dataCollection/DCLayout';
+import APLayout from './view/actionPlan/APLayout';
+
 
 import {
 	BrowserRouter as Router,
 	Route,
   } from "react-router-dom";
 
-import NewSurvey from './view/survey/NewSurvey';
-import SurveySection from './view/survey/SurveySection';
+import NewSurvey from './view/survey/surveyEdit/NewSurveyS';
+import SurveySection from './view/survey/surveyView/SurveySection';
+import Dashboard from './view/dashboardview';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -40,9 +44,12 @@ export default function DBLayout() {
 				<VerticalTab />
 			</Grid>
 			<Grid item xs={8}>
+				<Route path="/dashboard/home" component={Dashboard} />
 				<Route path="/dashboard/survey" component={SurveyLayout} />
-				<Route path="/dashboard/newsurvey" component={NewSurvey} />
+				<Route path="/dashboard/datacollection" component={DCLayout} />
+				<Route path="/dashboard/actionplan" component={APLayout} />
 				<Route path="/dashboard/surveyId=:surveyId" component={SurveySection} />
+				<Route path="/dashboard/newsurvey" component={NewSurvey} />
 			</Grid>
 		</Grid>
 	);

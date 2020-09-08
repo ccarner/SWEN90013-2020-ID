@@ -1,9 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Box, Button, Container, makeStyles } from '@material-ui/core';
-import QuestionCard from './QuesitonComponent';
 import { Card, CardContent, CardHeader, TextField, Divider } from '@material-ui/core';
-import { getSurveyById } from '../../../../API/surveyAPI';
-import { CountContext } from './SurveyLayout';
+import { getSurveyById } from '../../../../../API/surveyAPI';
+import { CountContext } from '../SurveyLayout';
 import QuestionComponent from './QuesitonComponent';
 const axios = require('axios');
 
