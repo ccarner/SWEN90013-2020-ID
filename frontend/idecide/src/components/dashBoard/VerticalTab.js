@@ -60,10 +60,10 @@ export default function MenuListComposition() {
 				<MenuList>
 					<MenuItem
 						onClick={() => {
-							window.location.pathname = '/dashboard';
+							window.location.pathname = '/dashboard/home';
 						}}
 					>
-						<Typography color="textPrimary" gutterBottom variant="h5">
+						<Typography color="textPrimary" gutterBottom variant="h6">
 						DashBoard
 						</Typography>
 						
@@ -74,22 +74,28 @@ export default function MenuListComposition() {
 							window.location.pathname = '/dashboard/survey';
 						}}
 					>
-						<Typography color="textPrimary" gutterBottom variant="h5">
+						<Typography color="textPrimary" gutterBottom variant="h6">
 						Survey
 						</Typography>
-						
 					</MenuItem>
 					<MenuItem
 						onClick={() => {
-							window.location.pathname = '/dashboard/user';
+							window.location.pathname = '/dashboard/datacollection';
 						}}
 					>
-						<Typography color="textPrimary" gutterBottom variant="h5">
-						Researcher
+						<Typography color="textPrimary" gutterBottom variant="h6">
+						Data
 						</Typography>
-						
 					</MenuItem>
-                    
+					<MenuItem
+						onClick={() => {
+							window.location.pathname = '/dashboard/actionplan';
+						}}
+					>
+						<Typography color="textPrimary" gutterBottom variant="h6">
+						Action Plan
+						</Typography>
+					</MenuItem>
 				</MenuList>
 			</Paper>
 			<div />
