@@ -21,7 +21,7 @@ import AdminInfo from "./components/loginComponent/adminInfo";
 
 import SurveyHome from "./components/surveyComponents/surveyHome";
 
-import DashBoard from "./components/dashBoard/DBLayout";
+// import DashBoard from "./components/dashBoard/DBLayout";
 
 class App extends Component {
   render() {
