@@ -56,8 +56,6 @@ class App extends Component {
               />
               <Route path="/loginComponent/adminInfo" component={AdminInfo} />
 
-
-              <Route path="/dashboard" component={DashBoard} />
             </Switch>
           </div>
         </div>
