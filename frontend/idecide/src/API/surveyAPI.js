@@ -55,8 +55,7 @@ export async function postingSurvey(surveyIn) {
 
 export async function editSurvey(surveyInfo) {
   const endpoint = API_URL + `/survey`;
-  console.log(772, surveyInfo);
-  alert();
+
   const dataPost = await axios({
     url: endpoint, // send a request to the library API
     method: "PUT", // HTTP POST method

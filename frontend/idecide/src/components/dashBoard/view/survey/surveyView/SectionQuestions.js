@@ -142,10 +142,10 @@ const SectionQuestions = (props) => {
 			// console.log(questions);
 			if (type == 'slider') {
 				questions.push(newSliderQuestion);
-			} else if (type == 'singleSelection') {
-				questions.push(newMCQuestion);
-			} else {
+			} else if (type == 'yesorno') {
 				questions.push(newYNQuestion);
+			} else {
+				questions.push(newMCQuestion);
 			}
 			//	let sections = props.sections[props.data.sectionId - 1];
 			//	sections.questions = questions;
@@ -216,11 +216,11 @@ const SectionQuestions = (props) => {
 
 		// console.log(661, values);
 		let sections = props.sections;
-		console.log(666, JSON.stringify(sections));
+
 
 
 		sections.splice(props.data.sectionId - 1, 1);
-		console.log(668, JSON.stringify(sections))
+
 
 		var readyData = JSON.stringify({
 			surveyId: props.surveyId,
@@ -387,10 +387,11 @@ const SectionQuestions = (props) => {
 								id="demo-simple-select"
 								value={type}
 								onChange={handleTypeChange}
+
 							>
-								<MenuItem value={'slider'}>Slider</MenuItem>
+								<MenuItem value={'slider'} >Slider </MenuItem>
 								<MenuItem value={'singleSelection'}>MultiChoice</MenuItem>
-								<MenuItem value={'yesorno'}>Yes/No</MenuItem>
+								{/* <MenuItem value={'yesorno'}>Yes/No</MenuItem> */}
 							</Select>
 						</FormControl>
 					</Collapse>

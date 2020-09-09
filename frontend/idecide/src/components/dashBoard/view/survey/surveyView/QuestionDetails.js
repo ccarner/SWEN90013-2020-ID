@@ -2,14 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import EditIcon from '@material-ui/icons/Edit';
 import { editSurvey } from "../../../../../API/surveyAPI";
-
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import { Button, Box, Card, Collapse, IconButton, TextField, DialogContentText, CardContent, Divider, Grid, Typography } from '@material-ui/core';
 
 const QuestionDetails = (props) => {
 	const [isOpen, setOpen] = React.useState(false);
-	const [values, setValues] = React.useState({
-		questionText: ''
-	});
+
 
 	const UpdateQuesion = async (event) => {
 
@@ -24,7 +22,7 @@ const QuestionDetails = (props) => {
 
 		let sections = props.currentSection;
 		props.data.questionText = questionObject.updatedQuestion;
-		props.questions.splice(parseInt(props.data.questionId) - 1, props.data);
+		props.questions.splice(parseInt(props.data.questionId) - 1, 1, props.data);
 
 
 		var readyData = JSON.stringify({
@@ -37,7 +35,34 @@ const QuestionDetails = (props) => {
 				alert("Question description has been updated!");
 				window.location.reload();
 			});
+	}
 
+	const deleteQuestion = async (event) => {
+
+
+		// event.preventDefault();
+
+		// const dataIn = new FormData(event.target);
+		// var questionObject = {};
+		// dataIn.forEach((value, key) => {
+		// 	questionObject[key] = value;
+		// });
+
+		let sections = props.currentSection;
+		// props.data.questionText = questionObject.updatedQuestion;
+		props.questions.splice(parseInt(props.data.questionId) - 1, 1);
+
+
+		var readyData = JSON.stringify({
+			surveyId: props.surveyID,
+			surveySections: sections
+		});
+
+		await editSurvey(readyData)
+			.then((data) => {
+				alert("Question has been updated deleted!");
+				window.location.reload();
+			});
 	}
 
 
@@ -57,10 +82,13 @@ const QuestionDetails = (props) => {
 						label="Description"
 						variant="outlined"
 					/>
-
+					<IconButton color="secondary" aria-label="add an alarm" onClick={deleteQuestion}>
+						<DeleteForeverOutlinedIcon fontSize="large" />
+					</IconButton>
 					<Button type="submit" color="primary">
 						Confirm
 					</Button>
+
 				</form>
 			</div>
 		);
