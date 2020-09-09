@@ -21,6 +21,8 @@ import AdminInfo from "./components/loginComponent/adminInfo";
 
 import SurveyHome from "./components/surveyComponents/surveyHome";
 
+import DashBoard from "./components/dashBoard/DBLayout";
+
 class App extends Component {
   render() {
     return (
@@ -53,6 +55,9 @@ class App extends Component {
                 component={RegisterPage}
               />
               <Route path="/loginComponent/adminInfo" component={AdminInfo} />
+
+
+              <Route path="/dashboard" component={DashBoard} />
             </Switch>
           </div>
         </div>

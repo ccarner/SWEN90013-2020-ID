@@ -18,6 +18,7 @@ export default class LoginPage extends React.Component {
     this.state = {
       isLoggingPage: true,
       isLoggedIn: false,
+      isAdmin: false,
       email: null,
       password: null,
       showAdmin: false,
@@ -45,10 +46,14 @@ export default class LoginPage extends React.Component {
     const response = await loginUser(userObject);
 
     if (response.flag) {
+      var userAdmin = false;
+      if (userObject.email === "ccarner13@gmail.com") {
+        userAdmin = true;
+      }
       this.setState({
         isLoggedIn: true,
+        isAdmin: userAdmin
       });
-      alert("Log in Successful!");
     } else {
       alert("Log in Failed");
     }
@@ -67,9 +72,17 @@ export default class LoginPage extends React.Component {
       padding: "10px 10px 50px 10px",
     };
 
-    const { isLoggingPage, isLoggedIn } = this.state;
+    const { isLoggingPage, isLoggedIn, isAdmin } = this.state;
     if (isLoggedIn) {
-      return <AdminConsole />;
+      if (isAdmin) {
+        return <AdminConsole />;
+      } else {
+        return (
+          <div>
+            You are logged in!
+          </div>
+        );
+      }
     } else if (isLoggingPage) {
       return (
         <div>
