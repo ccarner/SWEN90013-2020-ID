@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect, createContext } from 'react';
 import {
 	Box,
@@ -12,9 +14,10 @@ import {
 	InputLabel,
 	MenuItem,
 	Select,
-	DialogActions
+	DialogActions, Card, CardContent, CardHeader, Divider, Typography, IconButton, Grid
 } from '@material-ui/core';
-import { Card, CardContent, CardHeader, Divider, Typography, IconButton, Grid } from '@material-ui/core';
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+
 import { getSurveyById, editSurvey } from '../../../../../API/surveyAPI';
 import EditIcon from '@material-ui/icons/Edit';
 import QuestionDetails from './QuestionDetails';
@@ -205,6 +208,36 @@ const SectionQuestions = (props) => {
 		return feedBack;
 	};
 
+
+	const deleteSection = async () => {
+		if (openGreen) {
+			window.location.href = './surveyId=' + props.surveyId;
+		}
+
+		// console.log(661, values);
+		let sections = props.sections;
+		console.log(666, JSON.stringify(sections));
+
+
+		sections.splice(props.data.sectionId - 1, 1);
+		console.log(668, JSON.stringify(sections))
+
+		var readyData = JSON.stringify({
+			surveyId: props.surveyId,
+			surveySections: sections
+		});
+		// console.log(readyData);
+		const feedBack = await editSurvey(readyData)
+			.then((data) => {
+				window.location.reload();
+			})
+			.catch((error) => {
+				setOpen(true);
+				setError(error + '');
+			});
+		return feedBack;
+	};
+
 	return (
 		<div>
 
@@ -298,10 +331,15 @@ const SectionQuestions = (props) => {
 						<Alert severity="error">{error}</Alert>
 					</Collapse>
 					<Collapse in={openGreen}>
-						<Alert severity="success">Update Section Successfully!</Alert>
+						<Alert severity="success">Update Section Successfully21!</Alert>
 					</Collapse>
 				</DialogContent>
 				<DialogActions>
+					<Collapse in={!openGreen}>
+						<IconButton color="secondary" aria-label="add an alarm" onClick={deleteSection}>
+							<DeleteForeverOutlinedIcon fontSize="large" />
+						</IconButton>
+					</Collapse>
 					<Collapse in={!openGreen}>
 						<Button onClick={handleClose} color="primary">
 							Cancel
@@ -356,7 +394,7 @@ const SectionQuestions = (props) => {
 						<Alert severity="error">{error}</Alert>
 					</Collapse>
 					<Collapse in={openGreen}>
-						<Alert severity="success">Update Section Successfully!</Alert>
+						<Alert severity="success">Update Section Successfully22!</Alert>
 					</Collapse>
 				</DialogContent>
 				<DialogActions>
