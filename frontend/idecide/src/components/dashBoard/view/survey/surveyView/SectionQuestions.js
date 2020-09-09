@@ -189,7 +189,7 @@ const SectionQuestions = (props) => {
 			sectionId: props.data.sectionId
 		};
 
-		sections.splice(props.data.sectionId - 1, 1, modifiedSection);
+		sections.splice(parseInt(props.data.sectionId) - 1, 1, modifiedSection);
 		console.log(663, JSON.stringify(sections))
 
 		var readyData = JSON.stringify({
@@ -286,10 +286,16 @@ const SectionQuestions = (props) => {
 					</CardContent>
 				</Card>
 				<Collapse in={isOpen}>
+
 					{typeof props.data.questions !== 'undefined' ? (
+
 						props.data.questions.map((question) => (
 							<Box>
-								<QuestionDetails data={question} />
+								<QuestionDetails
+									surveyID={props.surveyId}
+									data={question} currentSection={props.sections}
+									questions={props.sections[props.data.sectionId - 1].questions}
+								/>
 							</Box>
 						))
 					) : (
