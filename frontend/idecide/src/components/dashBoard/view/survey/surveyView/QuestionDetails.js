@@ -1,24 +1,96 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import EditIcon from '@material-ui/icons/Edit';
-
-import { Box, Card, Collapse, IconButton, TextField, CardContent, Divider, Grid, Typography } from '@material-ui/core';
+import { editSurvey } from "../../../../../API/surveyAPI";
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import { Button, Box, Card, Collapse, IconButton, TextField, DialogContentText, CardContent, Divider, Grid, Typography } from '@material-ui/core';
 
 const QuestionDetails = (props) => {
-	const [ isOpen, setOpen ] = React.useState(false);
+	const [isOpen, setOpen] = React.useState(false);
 
-//	console.log(props.data);
+
+	const UpdateQuesion = async (event) => {
+
+
+		event.preventDefault();
+
+		const dataIn = new FormData(event.target);
+		var questionObject = {};
+		dataIn.forEach((value, key) => {
+			questionObject[key] = value;
+		});
+
+		let sections = props.currentSection;
+		props.data.questionText = questionObject.updatedQuestion;
+		props.questions.splice(parseInt(props.data.questionId) - 1, 1, props.data);
+
+
+		var readyData = JSON.stringify({
+			surveyId: props.surveyID,
+			surveySections: sections
+		});
+
+		await editSurvey(readyData)
+			.then((data) => {
+				alert("Question description has been updated!");
+				window.location.reload();
+			});
+	}
+
+	const deleteQuestion = async (event) => {
+
+
+		// event.preventDefault();
+
+		// const dataIn = new FormData(event.target);
+		// var questionObject = {};
+		// dataIn.forEach((value, key) => {
+		// 	questionObject[key] = value;
+		// });
+
+		let sections = props.currentSection;
+		// props.data.questionText = questionObject.updatedQuestion;
+		props.questions.splice(parseInt(props.data.questionId) - 1, 1);
+
+
+		var readyData = JSON.stringify({
+			surveyId: props.surveyID,
+			surveySections: sections
+		});
+
+		await editSurvey(readyData)
+			.then((data) => {
+				alert("Question has been updated deleted!");
+				window.location.reload();
+			});
+	}
+
 
 	const QuestionDetail = () => {
 		return (
-			<Box p={1}>
-				<Grid container spacing={3}>
-					<Grid item xs={12} display="flex" />
-					<Grid item xs={4} display="flex">
-						Modifying module
-					</Grid>
-				</Grid>
-			</Box>
+			<div>
+				<form onSubmit={UpdateQuesion}>
+
+					<DialogContentText>113, Please input the description of the question.</DialogContentText>
+					<TextField
+						id="outlined-multiline-flexible"
+						name="updatedQuestion"
+						multiline
+						fullWidth
+						required
+						rows={3}
+						label="Description"
+						variant="outlined"
+					/>
+					<IconButton color="secondary" aria-label="add an alarm" onClick={deleteQuestion}>
+						<DeleteForeverOutlinedIcon fontSize="large" />
+					</IconButton>
+					<Button type="submit" color="primary">
+						Confirm
+					</Button>
+
+				</form>
+			</div>
 		);
 	};
 	return (

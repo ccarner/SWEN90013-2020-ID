@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect, createContext } from 'react';
 import {
 	Box,
@@ -12,9 +14,10 @@ import {
 	InputLabel,
 	MenuItem,
 	Select,
-	DialogActions
+	DialogActions, Card, CardContent, CardHeader, Divider, Typography, IconButton, Grid
 } from '@material-ui/core';
-import { Card, CardContent, CardHeader, Divider, Typography, IconButton, Grid } from '@material-ui/core';
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+
 import { getSurveyById, editSurvey } from '../../../../../API/surveyAPI';
 import EditIcon from '@material-ui/icons/Edit';
 import QuestionDetails from './QuestionDetails';
@@ -26,22 +29,22 @@ export const t = 4;
 export const QuestionContext = createContext();
 
 const SectionQuestions = (props) => {
-	const [ openAddQuestion, setOpenAddQuestion ] = useState(false);
-	const [ isOpen, setIsOpen ] = React.useState(false);
+	const [openAddQuestion, setOpenAddQuestion] = useState(false);
+	const [isOpen, setIsOpen] = React.useState(false);
 
-	console.log(props);
-	const [ open, setDMOpen ] = React.useState(false); //control of adding new survey
+	// console.log(props);
+	const [open, setDMOpen] = React.useState(false); //control of adding new survey
 	//const [ isOpen, setOpen ] = React.useState(false);
-	const [ openAlert, setOpen ] = React.useState(false);
-	const [ openGreen, setOpenGreen ] = React.useState(false);
-	const [ error, setError ] = React.useState();
-	const [ values, setValues ] = React.useState({
+	const [openAlert, setOpen] = React.useState(false);
+	const [openGreen, setOpenGreen] = React.useState(false);
+	const [error, setError] = React.useState();
+	const [values, setValues] = React.useState({
 		title: props.data.sectionTitle,
 		descrpition: props.data.sectionIntroduction,
 		question: ''
 	});
 
-	const [ type, setType ] = React.useState('');
+	const [type, setType] = React.useState('');
 
 	const handleTypeChange = (event) => {
 		setType(event.target.value);
@@ -75,8 +78,8 @@ const SectionQuestions = (props) => {
 		if (openGreen) {
 			window.location.href = './surveyId=' + props.surveyId;
 		} else {
-			console.log(props.data.sectionId);
-			console.log(type);
+			// console.log(props.data.sectionId);
+			// console.log(type);
 			//
 			let questions;
 			if (typeof props.sections[props.data.sectionId - 1].questions !== 'undefined')
@@ -136,13 +139,13 @@ const SectionQuestions = (props) => {
 					}
 				]
 			};
-			console.log(questions);
+			// console.log(questions);
 			if (type == 'slider') {
 				questions.push(newSliderQuestion);
-			} else if (type == 'singleSelection') {
-				questions.push(newMCQuestion);
-			} else {
+			} else if (type == 'yesorno') {
 				questions.push(newYNQuestion);
+			} else {
+				questions.push(newMCQuestion);
 			}
 			//	let sections = props.sections[props.data.sectionId - 1];
 			//	sections.questions = questions;
@@ -158,7 +161,7 @@ const SectionQuestions = (props) => {
 				surveySections: sections
 			});
 			JSON.parse(readyData);
-			console.log(JSON.parse(readyData));
+			// console.log(JSON.parse(readyData));
 
 			const feedBack = await editSurvey(readyData)
 				.then((data) => {
@@ -176,22 +179,24 @@ const SectionQuestions = (props) => {
 		if (openGreen) {
 			window.location.href = './surveyId=' + props.surveyId;
 		}
-		console.log(values.descrpition);
-		//	console.log(product);
+
+		// console.log(661, values);
 		let sections = props.sections;
+		// console.log(662, JSON.stringify(sections));
 		var modifiedSection = {
 			sectionTitle: values.title,
 			sectionIntroduction: values.descrpition,
 			sectionId: props.data.sectionId
 		};
 
-		sections.splice(props.data.sectionId, 1, modifiedSection);
+		sections.splice(parseInt(props.data.sectionId) - 1, 1, modifiedSection);
+		console.log(663, JSON.stringify(sections))
 
 		var readyData = JSON.stringify({
 			surveyId: props.surveyId,
 			surveySections: sections
 		});
-		console.log(readyData);
+		// console.log(readyData);
 		const feedBack = await editSurvey(readyData)
 			.then((data) => {
 				setOpenGreen(true);
@@ -203,8 +208,39 @@ const SectionQuestions = (props) => {
 		return feedBack;
 	};
 
+
+	const deleteSection = async () => {
+		if (openGreen) {
+			window.location.href = './surveyId=' + props.surveyId;
+		}
+
+		// console.log(661, values);
+		let sections = props.sections;
+
+
+
+		sections.splice(props.data.sectionId - 1, 1);
+
+
+		var readyData = JSON.stringify({
+			surveyId: props.surveyId,
+			surveySections: sections
+		});
+		// console.log(readyData);
+		const feedBack = await editSurvey(readyData)
+			.then((data) => {
+				window.location.reload();
+			})
+			.catch((error) => {
+				setOpen(true);
+				setError(error + '');
+			});
+		return feedBack;
+	};
+
 	return (
 		<div>
+
 			<Box p={2}>
 				<Card>
 					<CardHeader
@@ -250,15 +286,21 @@ const SectionQuestions = (props) => {
 					</CardContent>
 				</Card>
 				<Collapse in={isOpen}>
+
 					{typeof props.data.questions !== 'undefined' ? (
+
 						props.data.questions.map((question) => (
 							<Box>
-								<QuestionDetails data={question} />
+								<QuestionDetails
+									surveyID={props.surveyId}
+									data={question} currentSection={props.sections}
+									questions={props.sections[props.data.sectionId - 1].questions}
+								/>
 							</Box>
 						))
 					) : (
-						<div>No questions</div>
-					)}
+							<div>No questions</div>
+						)}
 				</Collapse>
 			</Box>
 			{/**  This window is used for updating section */}
@@ -266,7 +308,7 @@ const SectionQuestions = (props) => {
 				<DialogTitle id="form-dialog-title">Section</DialogTitle>
 				<DialogContent>
 					<Collapse in={!openGreen}>
-						<DialogContentText>Please input the title and description for the section.</DialogContentText>
+						<DialogContentText>112, Please input the title and description for the section.</DialogContentText>
 						<TextField
 							id="outlined-multiline-flexible"
 							required
@@ -295,10 +337,15 @@ const SectionQuestions = (props) => {
 						<Alert severity="error">{error}</Alert>
 					</Collapse>
 					<Collapse in={openGreen}>
-						<Alert severity="success">Update Section Successfully!</Alert>
+						<Alert severity="success">Update Section Successfully21!</Alert>
 					</Collapse>
 				</DialogContent>
 				<DialogActions>
+					<Collapse in={!openGreen}>
+						<IconButton color="secondary" aria-label="add an alarm" onClick={deleteSection}>
+							<DeleteForeverOutlinedIcon fontSize="large" />
+						</IconButton>
+					</Collapse>
 					<Collapse in={!openGreen}>
 						<Button onClick={handleClose} color="primary">
 							Cancel
@@ -340,10 +387,11 @@ const SectionQuestions = (props) => {
 								id="demo-simple-select"
 								value={type}
 								onChange={handleTypeChange}
+
 							>
-								<MenuItem value={'slider'}>Slider</MenuItem>
+								<MenuItem value={'slider'} >Slider </MenuItem>
 								<MenuItem value={'singleSelection'}>MultiChoice</MenuItem>
-								<MenuItem value={'yesorno'}>Yes/No</MenuItem>
+								{/* <MenuItem value={'yesorno'}>Yes/No</MenuItem> */}
 							</Select>
 						</FormControl>
 					</Collapse>
@@ -353,7 +401,7 @@ const SectionQuestions = (props) => {
 						<Alert severity="error">{error}</Alert>
 					</Collapse>
 					<Collapse in={openGreen}>
-						<Alert severity="success">Update Section Successfully!</Alert>
+						<Alert severity="success">Update Section Successfully22!</Alert>
 					</Collapse>
 				</DialogContent>
 				<DialogActions>
