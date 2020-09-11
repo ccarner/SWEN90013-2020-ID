@@ -214,20 +214,25 @@ const SectionQuestions = (props) => {
 			window.location.href = './surveyId=' + props.surveyId;
 		}
 
-		// console.log(661, values);
+
 		let sections = props.sections;
 
+		// props.data.sectionId.sectionIndex
 
 
-		sections.splice(props.data.sectionId - 1, 1);
-
+		console.log(661, props.data.sectionIndex);
+		sections.splice(props.data.sectionIndex, 1);
+		sections.map((item, index) => {
+			item.sectionIndex = index;
+		});
 
 		var readyData = JSON.stringify({
 			surveyId: props.surveyId,
 			surveySections: sections
 		});
-		// console.log(readyData);
-		const feedBack = await editSurvey(readyData)
+		console.log(662, readyData);
+		alert()
+		await editSurvey(readyData)
 			.then((data) => {
 				window.location.reload();
 			})
@@ -235,7 +240,7 @@ const SectionQuestions = (props) => {
 				setOpen(true);
 				setError(error + '');
 			});
-		return feedBack;
+
 	};
 
 	return (
