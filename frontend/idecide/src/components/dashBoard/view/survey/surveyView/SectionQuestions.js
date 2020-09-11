@@ -41,7 +41,12 @@ const SectionQuestions = (props) => {
 	const [values, setValues] = React.useState({
 		title: props.data.sectionTitle,
 		descrpition: props.data.sectionIntroduction,
-		question: ''
+		question: '',
+		option1: "NA",
+		option2: "NA",
+		option3: "NA",
+		option4: "NA",
+		option5: "NA"
 	});
 
 	const [type, setType] = React.useState('');
@@ -78,14 +83,12 @@ const SectionQuestions = (props) => {
 		if (openGreen) {
 			window.location.href = './surveyId=' + props.surveyId;
 		} else {
-			// console.log(props.data.sectionId);
-			// console.log(type);
-			//
-			let questions;
-			if (typeof props.sections[props.data.sectionId - 1].questions !== 'undefined')
-				questions = props.sections[props.data.sectionId - 1].questions;
+
+			let questions = props.data.questions;
+			let questionIndex = questions.length;
 			var newSliderQuestion = {
-				questionId: questions.length + 1 + '',
+				questionIndex: questionIndex,
+				questionId: values.questionId,
 				questionText: values.question,
 				questionType: type,
 				sliderDefaultValue: 5,
@@ -93,39 +96,10 @@ const SectionQuestions = (props) => {
 				sliderMinValue: 0
 			};
 
-			var newMCQuestion = {
-				questionId: questions.length + 1 + '',
-				questionText: values.question,
-				questionType: type,
-				selectionOptions: [
-					{
-						name: 'Never',
-						weight: '0'
-					},
-					{
-						name: 'Only Once',
-						weight: '0.2'
-					},
-					{
-						name: 'Several Times',
-						weight: '0.4'
-					},
-					{
-						name: 'Once a month',
-						weight: '0.6'
-					},
-					{
-						name: 'Once a Week',
-						weight: '0.8'
-					},
-					{
-						name: 'Daily',
-						weight: '1'
-					}
-				]
-			};
+
 			var newYNQuestion = {
-				questionId: questions.length + 1 + '',
+				questionIndex: questionIndex,
+				questionId: values.questionId,
 				questionText: values.question,
 				questionType: type,
 				selectionOptions: [
@@ -139,39 +113,64 @@ const SectionQuestions = (props) => {
 					}
 				]
 			};
-			// console.log(questions);
+
 			if (type == 'slider') {
 				questions.push(newSliderQuestion);
 			} else if (type == 'yesorno') {
 				questions.push(newYNQuestion);
 			} else {
+				var newMCQuestion = {
+					questionIndex: questionIndex,
+					questionId: values.questionId,
+					questionText: values.question,
+					questionType: type,
+					selectionOptions: [
+						{
+							name: values.option1,
+							weight: '0'
+						},
+						{
+							name: values.option2,
+							weight: '0.2'
+						},
+						{
+							name: values.option3,
+							weight: '0.4'
+						},
+						{
+							name: values.option4,
+							weight: '0.6'
+						},
+						{
+							name: values.option5,
+							weight: '0.8'
+						},
+						{
+							name: 'Daily',
+							weight: '1'
+						}
+					]
+				};
 				questions.push(newMCQuestion);
 			}
-			//	let sections = props.sections[props.data.sectionId - 1];
-			//	sections.questions = questions;
-			//	console.log(sections);
+
 
 			let sections = props.sections;
-			//	console.log(sections1);
-
-			//	Array.from([sections]).splice(props.data.sectionId-1, 1, sections);
 
 			var readyData = JSON.stringify({
 				surveyId: props.surveyId,
 				surveySections: sections
 			});
 			JSON.parse(readyData);
-			// console.log(JSON.parse(readyData));
 
-			const feedBack = await editSurvey(readyData)
+			await editSurvey(readyData)
 				.then((data) => {
 					setOpenGreen(true);
 				})
-				.catch((error) => {
+				.catch(() => {
 					setOpen(true);
 					setError(error + '');
 				});
-			return feedBack;
 		}
 	};
 
@@ -180,9 +179,9 @@ const SectionQuestions = (props) => {
 			window.location.href = './surveyId=' + props.surveyId;
 		}
 
-		// console.log(661, values);
+
 		let sections = props.sections;
-		// console.log(662, JSON.stringify(sections));
+
 		var modifiedSection = {
 			sectionTitle: values.title,
 			sectionIntroduction: values.descrpition,
@@ -216,11 +215,6 @@ const SectionQuestions = (props) => {
 
 
 		let sections = props.sections;
-
-		// props.data.sectionId.sectionIndex
-
-
-		console.log(661, props.data.sectionIndex);
 		sections.splice(props.data.sectionIndex, 1);
 		sections.map((item, index) => {
 			item.sectionIndex = index;
@@ -230,13 +224,12 @@ const SectionQuestions = (props) => {
 			surveyId: props.surveyId,
 			surveySections: sections
 		});
-		console.log(662, readyData);
-		alert()
+
 		await editSurvey(readyData)
 			.then((data) => {
 				window.location.reload();
 			})
-			.catch((error) => {
+			.catch(() => {
 				setOpen(true);
 				setError(error + '');
 			});
@@ -299,7 +292,7 @@ const SectionQuestions = (props) => {
 								<QuestionDetails
 									surveyID={props.surveyId}
 									data={question} currentSection={props.sections}
-									questions={props.sections[props.data.sectionId - 1].questions}
+									questions={props.data.questions}
 								/>
 							</Box>
 						))
@@ -314,6 +307,7 @@ const SectionQuestions = (props) => {
 				<DialogContent>
 					<Collapse in={!openGreen}>
 						<DialogContentText>112, Please input the title and description for the section.</DialogContentText>
+
 						<TextField
 							id="outlined-multiline-flexible"
 							required
@@ -378,13 +372,21 @@ const SectionQuestions = (props) => {
 						<TextField
 							id="outlined-multiline-flexible"
 							required
+							value={values.questionId}
+							onChange={handleChange('questionId')}
+							label="questionId"
+							variant="outlined"
+						/>
+						<TextField
+							id="outlined-multiline-flexible"
+							required
 							fullWidth
 							value={values.question}
 							onChange={handleChange('question')}
-							label="Question"
+							label="Question Description"
 							variant="outlined"
 						/>
-						<DialogContentText>value={values.question}</DialogContentText>
+						{/* <DialogContentText>value={values.question}</DialogContentText> */}
 						<FormControl fullWidth>
 							<InputLabel id="demo-simple-select-label">Type</InputLabel>
 							<Select
@@ -399,6 +401,32 @@ const SectionQuestions = (props) => {
 								{/* <MenuItem value={'yesorno'}>Yes/No</MenuItem> */}
 							</Select>
 						</FormControl>
+						<div>
+							{type === "singleSelection" ?
+								<div>
+									<TextField
+										label="option1" id="outlined-multiline-flexible" variant="outlined"
+										value={values.option1} onChange={handleChange('option1')}
+									/>
+									<TextField
+										label="option2" id="outlined-multiline-flexible" variant="outlined"
+										value={values.option2} onChange={handleChange('option2')}
+									/>
+									<TextField
+										label="option3" id="outlined-multiline-flexible" variant="outlined"
+										value={values.option3} onChange={handleChange('option3')}
+									/>
+									<TextField
+										label="option4" id="outlined-multiline-flexible" variant="outlined"
+										value={values.option4} onChange={handleChange('option4')}
+									/>
+									<TextField
+										label="option5" id="outlined-multiline-flexible" variant="outlined"
+										value={values.option5} onChange={handleChange('option5')}
+									/>
+								</div>
+								: null}
+						</div>
 					</Collapse>
 				</DialogContent>
 				<DialogContent>

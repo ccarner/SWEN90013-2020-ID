@@ -39,7 +39,7 @@ const SurveySection = (props) => {
 	};
 
 	const addNewSectionInComp = async () => {
-		let sectionIndex = 1;
+		let sectionIndex = 0;
 		// console.log(887, currentSections.length);
 		if ((typeof currentSections) !== 'undefined') { sectionIndex = currentSections.length; }
 		console.log(888, sectionIndex);
@@ -65,7 +65,7 @@ const SurveySection = (props) => {
 		});
 
 		console.log(889, readyData);
-		alert();
+
 
 		await editSurvey(readyData)
 			.then(() => {
