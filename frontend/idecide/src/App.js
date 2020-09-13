@@ -55,6 +55,7 @@ class App extends Component {
                 component={RegisterPage}
               />
               <Route path="/loginComponent/adminInfo" component={AdminInfo} />
+
             </Switch>
           </div>
         </div>

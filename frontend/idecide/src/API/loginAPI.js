@@ -1,6 +1,8 @@
 const axios = require("axios");
 
-const USER_URL = "http://34.64.134.143:9008";
+// const USER_URL = "http://34.64.134.143:9008";
+const USER_URL = "https://www.idecide.icu:9012";
+// https://www.idecide.icu:9012/user/
 
 export async function registerUser(userIn) {
   const {
