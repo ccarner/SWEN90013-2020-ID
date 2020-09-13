@@ -69,7 +69,7 @@ export default class CardDeck extends Component {
       parseInt(item.questionId) + " :" + parseInt(this.state.questionLen)
     );
     if (item.questionId == this.state.questionLen) {
-      console.log(this.state.result);
+
 
       JsonRuleEngine(
         this.state.result,
@@ -162,9 +162,9 @@ export default class CardDeck extends Component {
   };
 
   render() {
-    // console.log(883, this.props.section)
+
     var questions = this.state.questions;
-    // var questions = this.props.section.questions;
+
 
     let fadeAwayState = this.state.fadeAwayState;
     if (questions == null) {

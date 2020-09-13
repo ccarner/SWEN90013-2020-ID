@@ -53,9 +53,9 @@ export async function postingSurvey(surveyIn) {
   return dataPost;
 }
 
-export async function editSurvey(surveyInfo){
-  const endpoint = API_URL+`/survey`;
-  console.log(surveyInfo);
+export async function editSurvey(surveyInfo) {
+  const endpoint = API_URL + `/survey`;
+
   const dataPost = await axios({
     url: endpoint, // send a request to the library API
     method: "PUT", // HTTP POST method
@@ -64,16 +64,16 @@ export async function editSurvey(surveyInfo){
     },
 
     data: surveyInfo
-    
-   //  data: JSON.stringify(JSON.parse(surveyInfo)),
-  //   data: JSON.stringify(surveyInfo),
+
+    //  data: JSON.stringify(JSON.parse(surveyInfo)),
+    //   data: JSON.stringify(surveyInfo),
   });
 
   return dataPost;
 }
 
-export async function AddNewSurvey(surveyInfo){
-  const endpoint = API_URL+`/survey`;
+export async function AddNewSurvey(surveyInfo) {
+  const endpoint = API_URL + `/survey`;
   console.log(surveyInfo);
   const dataPost = await axios({
     url: endpoint, // send a request to the library API
@@ -89,8 +89,8 @@ export async function AddNewSurvey(surveyInfo){
 
 
 
-export async function DeleteSurvey(surveyId){
-  const endpoint = API_URL+`/survey/`+surveyId;
+export async function DeleteSurvey(surveyId) {
+  const endpoint = API_URL + `/survey/` + surveyId;
   console.log(surveyId);
   const dataPost = await axios({
     url: endpoint, // send a request to the library API

@@ -24,7 +24,7 @@ const blogInfo = {
 };
 
 const SurveySection = (props) => {
-	const [ values, setValues ] = React.useState({
+	const [values, setValues] = React.useState({
 		title: '',
 		descrpition: ''
 	});
@@ -50,12 +50,12 @@ const SurveySection = (props) => {
 			questions: []
 		};
 		if (typeof a == 'undefined') {
-			a = [ newSection ];
+			a = [newSection];
 		} else {
 			a.push(newSection);
 		}
 		a.map((item, index) => {
-			item.sectionId = index+1;
+			item.sectionId = index + 1;
 		});
 
 		var readyData = JSON.stringify({
@@ -67,7 +67,6 @@ const SurveySection = (props) => {
 
 		const feedBack = await editSurvey(readyData)
 			.then(() => {
-				//	alert("aaaaaa");
 				window.location.href = './surveyId=' + surveyId;
 				//	setOpenGreen(true);
 			})
@@ -110,7 +109,7 @@ const SurveySection = (props) => {
 				<Divider />
 				<CardContent>
 					<Grid container direction="row" justify="space-evenly" alignItems="center">
-						<Button variant="contained" color="secondary" onClick={() => {}}>
+						<Button variant="contained" color="secondary" onClick={() => { }}>
 							Cancel
 						</Button>
 						<Button variant="contained" color="primary" onClick={addNewSectionInComp}>

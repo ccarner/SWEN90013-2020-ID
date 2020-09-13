@@ -57,16 +57,16 @@ const useStyles = makeStyles((theme) => ({
 
 const SurveyCard = ({ product, ...rest }) => {
 	const classes = useStyles();
-	const [ openAlert, setOpen ] = React.useState(false);
-	const [ openGreen, setOpenGreen ] = React.useState(false);
-	const [ error, setError ] = React.useState();
-	const [ open, setDMOpen ] = React.useState(false); //control of adding new survey
-	const [ values, setValues ] = React.useState({
+	const [openAlert, setOpen] = React.useState(false);
+	const [openGreen, setOpenGreen] = React.useState(false);
+	const [error, setError] = React.useState();
+	const [open, setDMOpen] = React.useState(false); //control of adding new survey
+	const [values, setValues] = React.useState({
 		title: product.surveyTitle,
 		descrpition: product.surveyIntroduction
 	});
 
-	const [ deleteMD, setDeleteMD ] = React.useState(true);
+	const [deleteMD, setDeleteMD] = React.useState(true);
 
 	const handleOpen = () => {
 		setDMOpen(true);
@@ -81,23 +81,23 @@ const SurveyCard = ({ product, ...rest }) => {
 	};
 
 	const handleDelete = async () => {
-		alert('Are you sure you want to delete this survey?')
-			//
-			console.log(values.descrpition);
-			console.log(product);
+		alert('Are you sure you want to delete this survey?');
+		//
+		// console.log(values.descrpition);
+		// console.log(product);
 
-			const feedBack = await DeleteSurvey(product.surveyId)
-				.then(() => {
-					//	setOpenGreen(true);
-					window.location.href = './survey';
-				})
-				.catch((error) => {
-					setOpen(true);
-					setError(error + '');
-					//			alert('Error from processDataAsycn() with async( When promise gets rejected ): ' + error);
-				});
-			return feedBack;
-		
+		const feedBack = await DeleteSurvey(product.surveyId)
+			.then(() => {
+				//	setOpenGreen(true);
+				window.location.href = './survey';
+			})
+			.catch((error) => {
+				setOpen(true);
+				setError(error + '');
+				//			alert('Error from processDataAsycn() with async( When promise gets rejected ): ' + error);
+			});
+		return feedBack;
+
 	};
 
 	const UpdateSurvey = async () => {
@@ -155,7 +155,7 @@ const SurveyCard = ({ product, ...rest }) => {
 					<Box
 						display="flex"
 						justifyContent="center"
-						//  mb={3}
+					//  mb={3}
 					/>
 					<Typography align="center" color="textPrimary" gutterBottom variant="h4">
 						{product.surveyTitle}

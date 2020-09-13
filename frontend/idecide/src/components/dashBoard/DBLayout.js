@@ -10,11 +10,11 @@ import APLayout from './view/actionPlan/APLayout';
 import {
 	BrowserRouter as Router,
 	Route,
-  } from "react-router-dom";
+} from "react-router-dom";
 
 import NewSurvey from './view/survey/surveyEdit/NewSurveyS';
 import SurveySection from './view/survey/surveyView/SurveySection';
-import Dashboard from './view/dashboardview';
+// import Dashboard from './view/dashboardview';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 export default function DBLayout() {
 	const classes = useStyles();
 
-	
+
 	return (
 		<Grid
 			container
@@ -44,7 +44,7 @@ export default function DBLayout() {
 				<VerticalTab />
 			</Grid>
 			<Grid item xs={8}>
-				<Route path="/dashboard/home" component={Dashboard} />
+				{/* <Route path="/dashboard/home" component={Dashboard} /> */}
 				<Route path="/dashboard/survey" component={SurveyLayout} />
 				<Route path="/dashboard/datacollection" component={DCLayout} />
 				<Route path="/dashboard/actionplan" component={APLayout} />
