@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import EditIcon from '@material-ui/icons/Edit';
+import clsx from 'clsx';
 import {
 	Dialog,
 	DialogTitle,
@@ -34,7 +35,8 @@ import { getStaticImageUrlFromName, editSurvey, DeleteSurvey } from '../../../..
 const useStyles = makeStyles((theme) => ({
 	root: {
 		display: 'flex',
-		flexDirection: 'column'
+		flexDirection: 'column',
+		height: '100%'
 	},
 	large: {
 		width: theme.spacing(3),
@@ -128,7 +130,7 @@ const SurveyCard = ({ product, ...rest }) => {
 	};
 
 	return (
-		<div>
+		<div >
 			<Card>
 				<CardHeader
 					action={
