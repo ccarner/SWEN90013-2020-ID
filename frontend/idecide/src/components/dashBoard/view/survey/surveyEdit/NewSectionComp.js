@@ -31,8 +31,6 @@ const SurveySection = (props) => {
 	let currentSections = props.data.surveySections;
 
 	const surveyId = props.id;
-	//	console.log(props);
-	//	console.log(a);
 
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
@@ -40,9 +38,8 @@ const SurveySection = (props) => {
 
 	const addNewSectionInComp = async () => {
 		let sectionIndex = 0;
-		// console.log(887, currentSections.length);
 		if ((typeof currentSections) !== 'undefined') { sectionIndex = currentSections.length; }
-		console.log(888, sectionIndex);
+
 		const newSection = {
 			sectionIndex: sectionIndex,
 			sectionId: values.sectionId,
@@ -63,8 +60,6 @@ const SurveySection = (props) => {
 			surveyId: surveyId,
 			surveySections: currentSections
 		});
-
-		console.log(889, readyData);
 
 
 		await editSurvey(readyData)
@@ -87,12 +82,11 @@ const SurveySection = (props) => {
 				<CardContent>
 					<TextField
 						id="outlined-multiline-flexible"
-						// multiline
 						 fullWidth
 						required
+						type="number" min="0" step="1"
 						value={values.sectionId}
 						onChange={handleChange('sectionId')}
-						// rows={4}
 						label="sectionId"
 						variant="outlined"
 					/>

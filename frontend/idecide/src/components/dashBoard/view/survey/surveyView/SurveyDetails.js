@@ -30,25 +30,25 @@ export const t = 4;
 export const QuestionContext = createContext();
 
 const SurveySection = (props) => {
-	const [ isLoading, setIsLoading ] = useState(false);
-	const [ isOpen, setOpen ] = React.useState(false);
-	const [ values, setValues ] = React.useState({
+	const [isLoading, setIsLoading] = useState(false);
+	const [isOpen, setOpen] = React.useState(false);
+	const [values, setValues] = React.useState({
 		title: '',
 		descrpition: ''
 	});
 
-	const [ count, setCount ] = React.useState(0);
-	const [ newQuestion, addNew ] = React.useState([]);
+	const [count, setCount] = React.useState(0);
+	const [newQuestion, addNew] = React.useState([]);
 
-	const [ isShow, setShow ] = useState(false);
+	const [isShow, setShow] = useState(false);
 
 	//	console.log(props);
 	const surveyId = props.match.params.surveyId;
 
-	const [ sectionIndex, setSectionIndex ] = React.useState();
+	const [sectionIndex, setSectionIndex] = React.useState();
 
-	const [ data, setData ] = useState({ hits: [] });
-	const [ surveySection, setSurveySection ] = useState({ hits: [] });
+	const [data, setData] = useState({ hits: [] });
+	const [surveySection, setSurveySection] = useState({ hits: [] });
 
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
@@ -82,16 +82,16 @@ const SurveySection = (props) => {
 	//	console.log("Survvey Section Log:");
 	//console.log(data);
 
-const  QuestionsDisplay = () =>{
+	const QuestionsDisplay = () => {
 		console.log(data);
 		console.log(surveySection[sectionIndex]);
-		if (typeof sectionIndex !== 'undefined'){
-			if(surveySection[sectionIndex].questions.length > 0)
+		if (typeof sectionIndex !== 'undefined') {
+			if (surveySection[sectionIndex].questions.length > 0)
 				return <QuestionDetails data={surveySection[sectionIndex]} />;
 			else {
 				alert("There is no question in this section, do you want to create new quesitons now?");
 			}
-		} 
+		}
 		else return <div />;
 	}
 
@@ -105,64 +105,64 @@ const  QuestionsDisplay = () =>{
 				</Grid>
 				{typeof surveySection.length == 'undefined' || surveySection.length == 0 ? surveySection.length == 0 ? (
 					<div>
-						<NewSectionComp data={surveyId} id={surveyId}/>
+						<NewSectionComp data={surveyId} id={surveyId} />
 					</div>
 				) : (
-					<div>Loading</div>
-				) : (
-					surveySection.map((item, index) => (
-						<div key={index}>
-							<Box p={2} >
-								<Card>
-									<CardHeader
-										action={
-											<div>
-												<IconButton
-													color="secondary"
-													aria-label="add an alarm"
-													onClick={() => {
-														alert("Switch to Edit Board");
-													}}
-												>
-													<EditIcon color="primary" fontSize="large" />
-												</IconButton>
+						<div>Loading</div>
+					) : (
+						surveySection.map((item, index) => (
+							<div key={index}>
+								<Box p={2} >
+									<Card>
+										<CardHeader
+											action={
+												<div>
+													<IconButton
+														color="secondary"
+														aria-label="add an alarm"
+														onClick={() => {
+															alert("Switch to Edit Board");
+														}}
+													>
+														<EditIcon color="primary" fontSize="large" />
+													</IconButton>
 
-												<Button
-													color="secondary"
-													variant="contained"
-													onClick={(e) => handleView(e, { index })}
-												>
-													View
+													<Button
+														color="secondary"
+														variant="contained"
+														onClick={(e) => handleView(e, { index })}
+													>
+														View
 												</Button>
-											</div>
-										}
-										//   subheader="Description"
-										title={item.sectionTitle}
-									/>
-									<Divider />
-									<CardContent>
-										<Box display="flex" p={1}>
-											<Typography variant="subtitle1" gutterBottom>
-												{item.sectionIntroduction}
-											</Typography>
+												</div>
+											}
+											//   subheader="Description"
+											title={item.sectionTitle}
+										/>
+										<Divider />
+										<CardContent>
+											<Box display="flex" p={1}>
+												<Typography variant="subtitle1" gutterBottom>
+													{item.sectionIntroduction}
+												</Typography>
+											</Box>
+										</CardContent>
+									</Card>
+									<Collapse in={isOpen}>
+										<Box>
+											{QuestionsDisplay}
 										</Box>
-									</CardContent>
-								</Card>
-								<Collapse in={isOpen}>
-									<Box>
-										{QuestionsDisplay}
-									</Box>
-								</Collapse>
-							</Box>
-						</div>
-					))
-				)}
+									</Collapse>
+								</Box>
+							</div>
+						))
+					)}
 				{newQuestion.map((nq) => {
 					console.log(nq);
 					return (
 						<div key={nq}>
 							<Box p={1} />
-							<NewSectionComp data={data} id={surveyId}/>
+							<NewSectionComp data={data} id={surveyId} />
 						</div>
 					);
 				})}
@@ -174,10 +174,10 @@ const  QuestionsDisplay = () =>{
 							variant="contained"
 							onClick={() => {
 								setCount(count + 1);
-								addNew([ ...newQuestion, count ]);
+								addNew([...newQuestion, count]);
 							}}
 						>
-							Add New Section
+							Add New Section22
 						</Button>
 					</Box>
 				</Collapse>

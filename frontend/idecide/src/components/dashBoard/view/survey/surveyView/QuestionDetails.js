@@ -22,7 +22,7 @@ const QuestionDetails = (props) => {
 
 		let sections = props.currentSection;
 		props.data.questionText = questionObject.updatedQuestion;
-		props.questions.splice(parseInt(props.data.questionId) - 1, 1, props.data);
+		props.questions.splice(parseInt(props.data.questionIndex), 1, props.data);
 
 
 		var readyData = JSON.stringify({
@@ -68,7 +68,6 @@ const QuestionDetails = (props) => {
 		return (
 			<div>
 				<form onSubmit={UpdateQuesion}>
-
 					<DialogContentText>113, Please input the description of the question.</DialogContentText>
 					<TextField
 						id="outlined-multiline-flexible"
@@ -86,7 +85,6 @@ const QuestionDetails = (props) => {
 					<Button type="submit" color="primary">
 						Confirm
 					</Button>
-
 				</form>
 			</div>
 		);

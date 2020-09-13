@@ -109,15 +109,33 @@ const SectionQuestions = (props) => {
 				questionType: type,
 				selectionOptions: [
 					{
-						name: 'No',
+						name: values.option1,
 						weight: '0'
 					},
 					{
-						name: 'Yes',
+						name: values.option2,
+						weight: '0.2'
+					},
+					{
+						name: values.option3,
+						weight: '0.4'
+					},
+					{
+						name: values.option4,
+						weight: '0.6'
+					},
+					{
+						name: values.option5,
+						weight: '0.8'
+					},
+					{
+						name: 'Daily',
 						weight: '1'
 					}
 				]
 			};
+			questions.push(newMCQuestion);
+		}
 
 			if (type == 'slider') {
 				questions.push(newSliderQuestion);
@@ -161,31 +179,31 @@ const SectionQuestions = (props) => {
 
 			let sections = props.sections;
 
-			var readyData = JSON.stringify({
-				surveyId: props.surveyId,
-				surveySections: sections
+		await editSurvey(readyData)
+			.then(() => {
+				setOpenAddQuestion(false)
+			})
+			.catch(() => {
+				setOpen(true);
+				setError(error + '');
 			});
-			JSON.parse(readyData);
 
-			await editSurvey(readyData)
-				.then((data) => {
-					setOpenGreen(true);
-				})
-				.catch(() => {
-					setOpen(true);
-					setError(error + '');
-				});
-		}
 	};
 
-	const UpdateSection = async () => {
-		if (openGreen) {
-			window.location.href = './surveyId=' + props.surveyId;
-		}
+	const UpdateSection = async (event) => {
+
+		event.preventDefault();
+
+		const formIn = new FormData(event.target);
+		var formObject = {};
+		formIn.forEach((value, key) => {
+			formObject[key] = value;
+		});
 
 		let sections = props.sections;
 
 		var modifiedSection = {
+
 			sectionTitle: values.title,
 			sectionIntroduction: values.descrpition,
 			sectionId: props.data.sectionId,
@@ -196,20 +214,22 @@ const SectionQuestions = (props) => {
 		sections.splice(parseInt(props.data.sectionIndex), 1, modifiedSection);
 		console.log(sections);
 
+
 		var readyData = JSON.stringify({
 			surveyId: props.surveyId,
 			surveySections: sections
 		});
-		// console.log(readyData);
-		const feedBack = await editSurvey(readyData)
+
+		await editSurvey(readyData)
 			.then((data) => {
-				setOpenGreen(true);
+				setDMOpen(false);
+				props.handleShow();
+
 			})
-			.catch((error) => {
+			.catch(() => {
 				setOpen(true);
 				setError(error + '');
 			});
-		return feedBack;
 	};
 
 	const deleteSection = async () => {
@@ -349,11 +369,12 @@ const SectionQuestions = (props) => {
 						<Button onClick={handleClose} color="primary">
 							Cancel
 						</Button>
-					</Collapse>
-					<Button onClick={UpdateSection} color="primary">
-						Confirm
-					</Button>
-				</DialogActions>
+						</Collapse>
+						<Button type="submit" color="primary">
+							Confirm
+						</Button>
+					</DialogActions>
+				</form>
 			</Dialog>
 
 			{/**  This window is used for adding new question */}
@@ -373,6 +394,7 @@ const SectionQuestions = (props) => {
 							id="outlined-multiline-flexible"
 							required
 							value={values.questionId}
+							type="number" min="0" step="1"
 							onChange={handleChange('questionId')}
 							label="questionId"
 							variant="outlined"
@@ -465,11 +487,11 @@ const SectionQuestions = (props) => {
 				<DialogActions>
 					<Collapse in={!openGreen}>
 						<Button onClick={handleQClose} color="primary">
-							Cancel
+							Cancel22
 						</Button>
 					</Collapse>
 					<Button onClick={AddQuestion} color="primary">
-						Confirm
+						Confirm22
 					</Button>
 				</DialogActions>
 			</Dialog>
