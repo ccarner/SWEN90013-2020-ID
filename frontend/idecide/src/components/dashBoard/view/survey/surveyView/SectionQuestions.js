@@ -2,18 +2,8 @@
 
 import React, { useState, useEffect, createContext } from 'react';
 import {
-	Box,
-	Button,
-	Collapse,
-	Dialog,
-	DialogTitle,
-	DialogContent,
-	DialogContentText,
-	TextField,
-	FormControl,
-	InputLabel,
-	MenuItem,
-	Select,
+	Box, Button, Collapse, Dialog, DialogTitle, DialogContent, DialogContentText, TextField,
+	FormControl, InputLabel, MenuItem, Select,
 	DialogActions, Card, CardContent, CardHeader, Divider, Typography, IconButton, Grid
 } from '@material-ui/core';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
@@ -80,131 +70,134 @@ const SectionQuestions = (props) => {
 	};
 
 	const AddQuestion = async () => {
-		if (openGreen) {
-			window.location.href = './surveyId=' + props.surveyId;
+
+		let questions = props.data.questions;
+		let questionIndex = questions.length;
+		var newSliderQuestion = {
+			questionIndex: questionIndex,
+			questionId: values.questionId,
+			questionText: values.question,
+			questionType: type,
+			sliderDefaultValue: 5,
+			sliderMaxValue: 10,
+			sliderMinValue: 0
+		};
+
+
+		var newYNQuestion = {
+			questionIndex: questionIndex,
+			questionId: values.questionId,
+			questionText: values.question,
+			questionType: type,
+			selectionOptions: [
+				{
+					name: 'No',
+					weight: '0'
+				},
+				{
+					name: 'Yes',
+					weight: '1'
+				}
+			]
+		};
+
+		if (type == 'slider') {
+			questions.push(newSliderQuestion);
+		} else if (type == 'yesorno') {
+			questions.push(newYNQuestion);
 		} else {
-
-			let questions = props.data.questions;
-			let questionIndex = questions.length;
-			var newSliderQuestion = {
-				questionIndex: questionIndex,
-				questionId: values.questionId,
-				questionText: values.question,
-				questionType: type,
-				sliderDefaultValue: 5,
-				sliderMaxValue: 10,
-				sliderMinValue: 0
-			};
-
-
-			var newYNQuestion = {
+			var newMCQuestion = {
 				questionIndex: questionIndex,
 				questionId: values.questionId,
 				questionText: values.question,
 				questionType: type,
 				selectionOptions: [
 					{
-						name: 'No',
+						name: values.option1,
 						weight: '0'
 					},
 					{
-						name: 'Yes',
+						name: values.option2,
+						weight: '0.2'
+					},
+					{
+						name: values.option3,
+						weight: '0.4'
+					},
+					{
+						name: values.option4,
+						weight: '0.6'
+					},
+					{
+						name: values.option5,
+						weight: '0.8'
+					},
+					{
+						name: 'Daily',
 						weight: '1'
 					}
 				]
 			};
-
-			if (type == 'slider') {
-				questions.push(newSliderQuestion);
-			} else if (type == 'yesorno') {
-				questions.push(newYNQuestion);
-			} else {
-				var newMCQuestion = {
-					questionIndex: questionIndex,
-					questionId: values.questionId,
-					questionText: values.question,
-					questionType: type,
-					selectionOptions: [
-						{
-							name: values.option1,
-							weight: '0'
-						},
-						{
-							name: values.option2,
-							weight: '0.2'
-						},
-						{
-							name: values.option3,
-							weight: '0.4'
-						},
-						{
-							name: values.option4,
-							weight: '0.6'
-						},
-						{
-							name: values.option5,
-							weight: '0.8'
-						},
-						{
-							name: 'Daily',
-							weight: '1'
-						}
-					]
-				};
-				questions.push(newMCQuestion);
-			}
-
-
-			let sections = props.sections;
-
-			var readyData = JSON.stringify({
-				surveyId: props.surveyId,
-				surveySections: sections
-			});
-			JSON.parse(readyData);
-
-			await editSurvey(readyData)
-				.then((data) => {
-					setOpenGreen(true);
-				})
-				.catch(() => {
-					setOpen(true);
-					setError(error + '');
-				});
-		}
-	};
-
-	const UpdateSection = async () => {
-		if (openGreen) {
-			window.location.href = './surveyId=' + props.surveyId;
+			questions.push(newMCQuestion);
 		}
 
 
 		let sections = props.sections;
 
+		var readyData = JSON.stringify({
+			surveyId: props.surveyId,
+			surveySections: sections
+		});
+		JSON.parse(readyData);
+
+		await editSurvey(readyData)
+			.then(() => {
+				setOpenAddQuestion(false)
+			})
+			.catch(() => {
+				setOpen(true);
+				setError(error + '');
+			});
+
+	};
+
+	const UpdateSection = async (event) => {
+
+		event.preventDefault();
+
+		const formIn = new FormData(event.target);
+		var formObject = {};
+		formIn.forEach((value, key) => {
+			formObject[key] = value;
+		});
+
+
+		let sections = props.sections;
+
 		var modifiedSection = {
-			sectionTitle: values.title,
-			sectionIntroduction: values.descrpition,
+			sectionTitle: formObject.sectionTitle,
+			sectionIntroduction: formObject.sectionIntroduction,
 			sectionId: props.data.sectionId
 		};
 
-		sections.splice(parseInt(props.data.sectionId) - 1, 1, modifiedSection);
-		console.log(663, JSON.stringify(sections))
+		sections.splice(parseInt(props.data.sectionIndex), 1, modifiedSection);
+
 
 		var readyData = JSON.stringify({
 			surveyId: props.surveyId,
 			surveySections: sections
 		});
-		// console.log(readyData);
-		const feedBack = await editSurvey(readyData)
+
+		await editSurvey(readyData)
 			.then((data) => {
-				setOpenGreen(true);
+				setDMOpen(false);
+				props.handleShow();
+
 			})
-			.catch((error) => {
+			.catch(() => {
 				setOpen(true);
 				setError(error + '');
 			});
-		return feedBack;
 	};
 
 
@@ -238,7 +231,6 @@ const SectionQuestions = (props) => {
 
 	return (
 		<div>
-
 			<Box p={2}>
 				<Card>
 					<CardHeader
@@ -303,57 +295,57 @@ const SectionQuestions = (props) => {
 			</Box>
 			{/**  This window is used for updating section */}
 			<Dialog open={open} onClose={handleClose} aria-labelledby="max-width-dialog-title" maxWidth="lg" fullWidth>
-				<DialogTitle id="form-dialog-title">Section</DialogTitle>
-				<DialogContent>
-					<Collapse in={!openGreen}>
-						<DialogContentText>112, Please input the title and description for the section.</DialogContentText>
+				<form onSubmit={UpdateSection}>
+					<DialogTitle id="form-dialog-title">Section</DialogTitle>
+					<DialogContent>
+						<Collapse in={!openGreen}>
+							<DialogContentText>112, Please input the title and description for the section.</DialogContentText>
+							<TextField
+								id="outlined-multiline-flexible"
+								name="sectionTitle"
+								required
+								fullWidth
+								label="New Title"
+								variant="outlined"
+							/>
+							{/* <DialogContentText>value={values.title}</DialogContentText> */}
+							<TextField
+								id="outlined-multiline-flexible"
+								name="sectionIntroduction"
+								multiline
+								fullWidth
+								required
+								rows={4}
+								label="New Description"
+								variant="outlined"
+							/>
+						</Collapse>
+					</DialogContent>
 
-						<TextField
-							id="outlined-multiline-flexible"
-							required
-							fullWidth
-							value={values.title}
-							onChange={handleChange('title')}
-							label="Title"
-							variant="outlined"
-						/>
-						<DialogContentText>value={values.title}</DialogContentText>
-						<TextField
-							id="outlined-multiline-flexible"
-							multiline
-							fullWidth
-							required
-							value={values.descrpition}
-							onChange={handleChange('descrpition')}
-							rows={4}
-							label="Description"
-							variant="outlined"
-						/>
-					</Collapse>
-				</DialogContent>
-				<DialogContent>
-					<Collapse in={openAlert}>
-						<Alert severity="error">{error}</Alert>
-					</Collapse>
-					<Collapse in={openGreen}>
-						<Alert severity="success">Update Section Successfully21!</Alert>
-					</Collapse>
-				</DialogContent>
-				<DialogActions>
-					<Collapse in={!openGreen}>
-						<IconButton color="secondary" aria-label="add an alarm" onClick={deleteSection}>
-							<DeleteForeverOutlinedIcon fontSize="large" />
-						</IconButton>
-					</Collapse>
-					<Collapse in={!openGreen}>
-						<Button onClick={handleClose} color="primary">
-							Cancel
+					<DialogContent>
+						<Collapse in={openAlert}>
+							<Alert severity="error">{error}</Alert>
+						</Collapse>
+						<Collapse in={openGreen}>
+							<Alert severity="success">Update Section Successfully21!</Alert>
+						</Collapse>
+					</DialogContent>
+					<DialogActions>
+						<Collapse in={!openGreen}>
+							<IconButton color="secondary" aria-label="add an alarm" onClick={deleteSection}>
+								<DeleteForeverOutlinedIcon fontSize="large" />
+							</IconButton>
+						</Collapse>
+						<Collapse in={!openGreen}>
+							<Button onClick={handleClose} color="primary">
+								Cancel
 						</Button>
-					</Collapse>
-					<Button onClick={UpdateSection} color="primary">
-						Confirm
-					</Button>
-				</DialogActions>
+						</Collapse>
+						<Button type="submit" color="primary">
+							Confirm
+						</Button>
+					</DialogActions>
+				</form>
 			</Dialog>
 
 			{/**  This window is used for adding new question */}
@@ -373,6 +365,7 @@ const SectionQuestions = (props) => {
 							id="outlined-multiline-flexible"
 							required
 							value={values.questionId}
+							type="number" min="0" step="1"
 							onChange={handleChange('questionId')}
 							label="questionId"
 							variant="outlined"
@@ -440,11 +433,11 @@ const SectionQuestions = (props) => {
 				<DialogActions>
 					<Collapse in={!openGreen}>
 						<Button onClick={handleQClose} color="primary">
-							Cancel
+							Cancel22
 						</Button>
 					</Collapse>
 					<Button onClick={AddQuestion} color="primary">
-						Confirm
+						Confirm22
 					</Button>
 				</DialogActions>
 			</Dialog>
