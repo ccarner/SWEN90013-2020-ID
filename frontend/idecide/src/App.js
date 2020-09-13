@@ -13,6 +13,7 @@ import NotFound from "./components/NotFound";
 import Questions from "./components/Questions";
 import ActionPlan from "./components/ActionPlan";
 import Framework from "./components/Framework";
+import DashBoard from "./components/dashBoard/DBLayout";
 
 import LoginPage from "./components/loginComponent/loginPage";
 import RegisterPage from "./components/loginComponent/registerPage";
@@ -20,7 +21,7 @@ import AdminInfo from "./components/loginComponent/adminInfo";
 
 import SurveyHome from "./components/surveyComponents/surveyHome";
 
-import DashBoard from "./components/dashBoard/DBLayout";
+// import DashBoard from "./components/dashBoard/DBLayout";
 
 class App extends Component {
   render() {
@@ -35,6 +36,7 @@ class App extends Component {
             <Route path="/survey/3.1" component={Questions} />
             <Route path="/survey/3.2" component={ActionPlan} />
             <Route path="/survey/3.3" component={Framework} />
+            <Route path="/dashboard" component={DashBoard} />
 
             <Switch>
               <Redirect
@@ -54,8 +56,6 @@ class App extends Component {
               />
               <Route path="/loginComponent/adminInfo" component={AdminInfo} />
 
-
-              <Route path="/dashboard" component={DashBoard} />
             </Switch>
           </div>
         </div>
