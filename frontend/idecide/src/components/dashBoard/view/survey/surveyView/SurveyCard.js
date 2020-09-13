@@ -111,10 +111,6 @@ const SurveyCard = ({ product,editable, ...rest }) => {
 			surveyTitle: values.title,
 			surveyIntroduction: values.descrpition,
 			surveyVersion: product.surveyVersion,
-			surveySections: []
-			//	surveySections:product.surveySections,
-			//	jsonStr:null,
-			//	surveyImageName: product.surveyImageName,
 		});
 		const feedBack = await editSurvey(readyData)
 			.then((data) => {

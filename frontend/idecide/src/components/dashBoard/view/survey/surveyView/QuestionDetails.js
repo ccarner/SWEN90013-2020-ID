@@ -99,7 +99,7 @@ const QuestionDetails = (props) => {
 						<Grid xs={12} container direction="row" justify="flex-start" alignItems="center">
 							<Grid item xs={10}>
 								<Typography color="subtitle1" gutterBottom>
-									{'Q' + props.data.questionId + ' :  ' + props.data.questionText}
+									{'Q' + (props.data.questionIndex+1) + ' :  ' + props.data.questionText}
 								</Typography>
 							</Grid>
 							<Grid item xs={1}>
