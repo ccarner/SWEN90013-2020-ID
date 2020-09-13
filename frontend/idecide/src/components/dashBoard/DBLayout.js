@@ -14,7 +14,7 @@ import {
 
 import NewSurvey from './view/survey/surveyEdit/NewSurveyS';
 import SurveySection from './view/survey/surveyView/SurveySection';
-// import Dashboard from './view/dashboardview';
+import Dashboard from './view/dashboardview';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -44,7 +44,7 @@ export default function DBLayout() {
 				<VerticalTab />
 			</Grid>
 			<Grid item xs={8}>
-				{/* <Route path="/dashboard/home" component={Dashboard} /> */}
+				<Route path="/dashboard/home" component={Dashboard} /> 
 				<Route path="/dashboard/survey" component={SurveyLayout} />
 				<Route path="/dashboard/datacollection" component={DCLayout} />
 				<Route path="/dashboard/actionplan" component={APLayout} />
