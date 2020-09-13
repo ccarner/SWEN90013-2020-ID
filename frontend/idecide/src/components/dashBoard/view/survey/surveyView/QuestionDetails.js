@@ -40,17 +40,15 @@ const QuestionDetails = (props) => {
 	const deleteQuestion = async (event) => {
 
 
-		// event.preventDefault();
 
-		// const dataIn = new FormData(event.target);
-		// var questionObject = {};
-		// dataIn.forEach((value, key) => {
-		// 	questionObject[key] = value;
-		// });
+
 
 		let sections = props.currentSection;
-		// props.data.questionText = questionObject.updatedQuestion;
-		props.questions.splice(parseInt(props.data.questionId) - 1, 1);
+
+		props.questions.splice(parseInt(props.data.questionIndex), 1);
+		props.questions.map((item, index) => {
+			item.questionIndex = index;
+		});
 
 
 		var readyData = JSON.stringify({

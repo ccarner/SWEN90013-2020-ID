@@ -28,7 +28,7 @@ const SurveySection = (props) => {
 		title: '',
 		descrpition: ''
 	});
-	let a = props.data.surveySections;
+	let currentSections = props.data.surveySections;
 
 	const surveyId = props.id;
 	//	console.log(props);
@@ -39,33 +39,35 @@ const SurveySection = (props) => {
 	};
 
 	const addNewSectionInComp = async () => {
-		let sectionId = 1;
-		//		console.log(a);
-		if (typeof a !== 'undefined') sectionId = a.length + 1;
-		console.log(sectionId);
+		let sectionIndex = 0;
+		// console.log(887, currentSections.length);
+		if ((typeof currentSections) !== 'undefined') { sectionIndex = currentSections.length; }
+		console.log(888, sectionIndex);
 		const newSection = {
-			sectionId: sectionId,
+			sectionIndex: sectionIndex,
+			sectionId: values.sectionId,
 			sectionTitle: values.title,
 			sectionIntroduction: values.descrpition,
 			questions: []
 		};
-		if (typeof a == 'undefined') {
-			a = [newSection];
+		if (typeof currentSections == 'undefined') {
+			currentSections = [newSection];
 		} else {
-			a.push(newSection);
+			currentSections.push(newSection);
 		}
-		a.map((item, index) => {
-			item.sectionId = index + 1;
+		currentSections.map((item, index) => {
+			item.sectionIndex = index;
 		});
 
 		var readyData = JSON.stringify({
 			surveyId: surveyId,
-			surveySections: a
+			surveySections: currentSections
 		});
 
-		//	console.log(readyData);
+		console.log(889, readyData);
 
-		const feedBack = await editSurvey(readyData)
+
+		await editSurvey(readyData)
 			.then(() => {
 				window.location.href = './surveyId=' + surveyId;
 				//	setOpenGreen(true);
@@ -80,8 +82,21 @@ const SurveySection = (props) => {
 	return (
 		<Box p={1}>
 			<Card>
-				<CardHeader title="New Survey Section" />
+				<CardHeader title="223,New Survey Section" />
 				<Divider />
+				<CardContent>
+					<TextField
+						id="outlined-multiline-flexible"
+						// multiline
+						// fullWidth
+						required
+						value={values.sectionId}
+						onChange={handleChange('sectionId')}
+						// rows={4}
+						label="sectionId"
+						variant="outlined"
+					/>
+				</CardContent>
 				<CardContent>
 					<TextField
 						id="outlined-multiline-flexible"
@@ -93,6 +108,7 @@ const SurveySection = (props) => {
 						variant="outlined"
 					/>
 				</CardContent>
+
 				<CardContent>
 					<TextField
 						id="outlined-multiline-flexible"
@@ -106,6 +122,7 @@ const SurveySection = (props) => {
 						variant="outlined"
 					/>
 				</CardContent>
+
 				<Divider />
 				<CardContent>
 					<Grid container direction="row" justify="space-evenly" alignItems="center">
