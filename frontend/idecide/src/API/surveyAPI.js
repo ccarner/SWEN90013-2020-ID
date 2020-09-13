@@ -18,6 +18,8 @@ export async function getSurveyById(surveyId) {
   }
 }
 
+
+
 export async function getUserResults(userId) {
   const endpoint = API_URL + `/answer/getResult/${userId}`;
   try {

@@ -148,6 +148,7 @@ const SurveyCard = ({ product,editable, ...rest }) => {
 			<Card {...rest} align="center">
 				<CardHeader title={product.surveyTitle} />
 				<Divider />
+				<Box p={1}/>
 				<CardMedia
 					className={classes.media}
 					image={getStaticImageUrlFromName(product.surveyImageName)}
@@ -159,7 +160,7 @@ const SurveyCard = ({ product,editable, ...rest }) => {
 				/>
 				<CardContent
 					style={{
-						height: '42%'
+						height: '40%'
 					}}
 				>
 					<Typography align="center" color="textPrimary" variant="body2">

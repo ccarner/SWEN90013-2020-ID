@@ -140,9 +140,11 @@ export default function SurveyLayout() {
 							))}
 						</Editable.Provider>
 						<Grid item xs={12}>
-							<Button variant="contained" color="secondary" fullWidth onClick={handleOpen}>
-								Add New Survey
-							</Button>
+							<Collapse in={editable}>
+								<Button variant="contained" color="secondary" fullWidth onClick={handleOpen}>
+									Add New Survey
+								</Button>
+							</Collapse>
 						</Grid>
 					</Grid>
 
