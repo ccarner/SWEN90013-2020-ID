@@ -179,7 +179,6 @@ const SectionQuestions = (props) => {
 			window.location.href = './surveyId=' + props.surveyId;
 		}
 
-
 		let sections = props.sections;
 
 		var modifiedSection = {
@@ -188,15 +187,15 @@ const SectionQuestions = (props) => {
 			sectionId: props.data.sectionId
 		};
 
-		sections.splice(parseInt(props.data.sectionId) - 1, 1, modifiedSection);
-		console.log(663, JSON.stringify(sections))
+		sections.splice(parseInt(props.data.sectionId), 1, modifiedSection);
+		console.log(sections);
 
 		var readyData = JSON.stringify({
 			surveyId: props.surveyId,
 			surveySections: sections
 		});
 		// console.log(readyData);
-		const feedBack = await editSurvey(readyData)
+	/*	const feedBack = await editSurvey(readyData)
 			.then((data) => {
 				setOpenGreen(true);
 			})
@@ -204,7 +203,7 @@ const SectionQuestions = (props) => {
 				setOpen(true);
 				setError(error + '');
 			});
-		return feedBack;
+		return feedBack;*/
 	};
 
 
@@ -336,7 +335,7 @@ const SectionQuestions = (props) => {
 						<Alert severity="error">{error}</Alert>
 					</Collapse>
 					<Collapse in={openGreen}>
-						<Alert severity="success">Update Section Successfully21!</Alert>
+						<Alert severity="success">Update Section Successfully!</Alert>
 					</Collapse>
 				</DialogContent>
 				<DialogActions>
