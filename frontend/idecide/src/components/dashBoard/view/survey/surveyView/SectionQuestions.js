@@ -1,25 +1,10 @@
+
+
 import React, { useState, useEffect, createContext } from 'react';
 import {
-	Box,
-	Button,
-	Collapse,
-	Dialog,
-	DialogTitle,
-	DialogContent,
-	DialogContentText,
-	TextField,
-	FormControl,
-	InputLabel,
-	MenuItem,
-	Select,
-	DialogActions,
-	Card,
-	CardContent,
-	CardHeader,
-	Divider,
-	Typography,
-	IconButton,
-	Grid
+	Box, Button, Collapse, Dialog, DialogTitle, DialogContent, DialogContentText, TextField,
+	FormControl, InputLabel, MenuItem, Select,
+	DialogActions, Card, CardContent, CardHeader, Divider, Typography, IconButton, Grid
 } from '@material-ui/core';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
@@ -34,28 +19,27 @@ export const t = 4;
 export const QuestionContext = createContext();
 
 const SectionQuestions = (props) => {
-	const [ openAddQuestion, setOpenAddQuestion ] = useState(false);
-	const [ isOpen, setIsOpen ] = React.useState(false);
+	const [openAddQuestion, setOpenAddQuestion] = useState(false);
+	const [isOpen, setIsOpen] = React.useState(false);
 
 	// console.log(props);
-	const [ open, setDMOpen ] = React.useState(false); //control of adding new survey
+	const [open, setDMOpen] = React.useState(false); //control of adding new survey
 	//const [ isOpen, setOpen ] = React.useState(false);
-	const [ openAlert, setOpen ] = React.useState(false);
-	const [ openGreen, setOpenGreen ] = React.useState(false);
-	const [ error, setError ] = React.useState();
-	const [ values, setValues ] = React.useState({
+	const [openAlert, setOpen] = React.useState(false);
+	const [openGreen, setOpenGreen] = React.useState(false);
+	const [error, setError] = React.useState();
+	const [values, setValues] = React.useState({
 		title: props.data.sectionTitle,
 		descrpition: props.data.sectionIntroduction,
 		question: '',
-		option1: 'Never',
-		option2: 'Once',
-		option3: 'Several Times',
-		option4: 'Once A Month',
-		option5: 'Once A Week',
-		option6: 'Daily'
+		option1: "NA",
+		option2: "NA",
+		option3: "NA",
+		option4: "NA",
+		option5: "NA"
 	});
 
-	const [ type, setType ] = React.useState('');
+	const [type, setType] = React.useState('');
 
 	const handleTypeChange = (event) => {
 		setType(event.target.value);
@@ -86,23 +70,43 @@ const SectionQuestions = (props) => {
 	};
 
 	const AddQuestion = async () => {
-		if (openGreen) {
-			window.location.href = './surveyId=' + props.surveyId;
-		} else {
-			let questions = props.data.questions;
-			let questionIndex = 0;
-			if (typeof questions.length !== 'undefined') questionIndex = questions.length;
-			var newSliderQuestion = {
-				questionIndex: questionIndex,
-				questionId: values.questionId,
-				questionText: values.question,
-				questionType: type,
-				sliderDefaultValue: 5,
-				sliderMaxValue: 10,
-				sliderMinValue: 0
-			};
 
-			var newYNQuestion = {
+		let questions = props.data.questions;
+		let questionIndex = questions.length;
+		var newSliderQuestion = {
+			questionIndex: questionIndex,
+			questionId: values.questionId,
+			questionText: values.question,
+			questionType: type,
+			sliderDefaultValue: 5,
+			sliderMaxValue: 10,
+			sliderMinValue: 0
+		};
+
+
+		var newYNQuestion = {
+			questionIndex: questionIndex,
+			questionId: values.questionId,
+			questionText: values.question,
+			questionType: type,
+			selectionOptions: [
+				{
+					name: 'No',
+					weight: '0'
+				},
+				{
+					name: 'Yes',
+					weight: '1'
+				}
+			]
+		};
+
+		if (type == 'slider') {
+			questions.push(newSliderQuestion);
+		} else if (type == 'yesorno') {
+			questions.push(newYNQuestion);
+		} else {
+			var newMCQuestion = {
 				questionIndex: questionIndex,
 				questionId: values.questionId,
 				questionText: values.question,
@@ -137,47 +141,14 @@ const SectionQuestions = (props) => {
 			questions.push(newMCQuestion);
 		}
 
-			if (type == 'slider') {
-				questions.push(newSliderQuestion);
-			} else if (type == 'yesorno') {
-				questions.push(newYNQuestion);
-			} else {
-				var newMCQuestion = {
-					questionIndex: questionIndex,
-					questionId: values.questionId,
-					questionText: values.question,
-					questionType: type,
-					selectionOptions: [
-						{
-							name: values.option1,
-							weight: '0'
-						},
-						{
-							name: values.option2,
-							weight: '0.2'
-						},
-						{
-							name: values.option3,
-							weight: '0.4'
-						},
-						{
-							name: values.option4,
-							weight: '0.6'
-						},
-						{
-							name: values.option5,
-							weight: '0.8'
-						},
-						{
-							name: values.option6,
-							weight: '1'
-						}
-					]
-				};
-				questions.push(newMCQuestion);
-			}
 
-			let sections = props.sections;
+		let sections = props.sections;
+
+		var readyData = JSON.stringify({
+			surveyId: props.surveyId,
+			surveySections: sections
+		});
+		JSON.parse(readyData);
 
 		await editSurvey(readyData)
 			.then(() => {
@@ -200,19 +171,16 @@ const SectionQuestions = (props) => {
 			formObject[key] = value;
 		});
 
+
 		let sections = props.sections;
 
 		var modifiedSection = {
-
-			sectionTitle: values.title,
-			sectionIntroduction: values.descrpition,
-			sectionId: props.data.sectionId,
-			sectionIndex: props.data.sectionIndex,
-			questions: props.data.questions
+			sectionTitle: formObject.sectionTitle,
+			sectionIntroduction: formObject.sectionIntroduction,
+			sectionId: props.data.sectionId
 		};
 
 		sections.splice(parseInt(props.data.sectionIndex), 1, modifiedSection);
-		console.log(sections);
 
 
 		var readyData = JSON.stringify({
@@ -232,10 +200,12 @@ const SectionQuestions = (props) => {
 			});
 	};
 
+
 	const deleteSection = async () => {
 		if (openGreen) {
 			window.location.href = './surveyId=' + props.surveyId;
 		}
+
 
 		let sections = props.sections;
 		sections.splice(props.data.sectionIndex, 1);
@@ -256,6 +226,7 @@ const SectionQuestions = (props) => {
 				setOpen(true);
 				setError(error + '');
 			});
+
 	};
 
 	return (
@@ -305,69 +276,69 @@ const SectionQuestions = (props) => {
 					</CardContent>
 				</Card>
 				<Collapse in={isOpen}>
+
 					{typeof props.data.questions !== 'undefined' ? (
+
 						props.data.questions.map((question) => (
 							<Box>
 								<QuestionDetails
 									surveyID={props.surveyId}
-									data={question}
-									currentSection={props.sections}
+									data={question} currentSection={props.sections}
 									questions={props.data.questions}
 								/>
 							</Box>
 						))
 					) : (
-						<div>No questions</div>
-					)}
+							<div>No questions</div>
+						)}
 				</Collapse>
 			</Box>
 			{/**  This window is used for updating section */}
 			<Dialog open={open} onClose={handleClose} aria-labelledby="max-width-dialog-title" maxWidth="lg" fullWidth>
-				<DialogTitle id="form-dialog-title">Section</DialogTitle>
-				<DialogContent>
-					<Collapse in={!openGreen}>
-						<DialogContentText>Please input the title and description for the section.</DialogContentText>
+				<form onSubmit={UpdateSection}>
+					<DialogTitle id="form-dialog-title">Section</DialogTitle>
+					<DialogContent>
+						<Collapse in={!openGreen}>
+							<DialogContentText>112, Please input the title and description for the section.</DialogContentText>
+							<TextField
+								id="outlined-multiline-flexible"
+								name="sectionTitle"
+								required
+								fullWidth
+								label="New Title"
+								variant="outlined"
+							/>
+							{/* <DialogContentText>value={values.title}</DialogContentText> */}
+							<TextField
+								id="outlined-multiline-flexible"
+								name="sectionIntroduction"
+								multiline
+								fullWidth
+								required
+								rows={4}
+								label="New Description"
+								variant="outlined"
+							/>
+						</Collapse>
+					</DialogContent>
 
-						<TextField
-							id="outlined-multiline-flexible"
-							required
-							fullWidth
-							value={values.title}
-							onChange={handleChange('title')}
-							label="Title"
-							variant="outlined"
-						/>
-						<DialogContentText>value={values.title}</DialogContentText>
-						<TextField
-							id="outlined-multiline-flexible"
-							multiline
-							fullWidth
-							required
-							value={values.descrpition}
-							onChange={handleChange('descrpition')}
-							rows={4}
-							label="Description"
-							variant="outlined"
-						/>
-					</Collapse>
-				</DialogContent>
-				<DialogContent>
-					<Collapse in={openAlert}>
-						<Alert severity="error">{error}</Alert>
-					</Collapse>
-					<Collapse in={openGreen}>
-						<Alert severity="success">Update Section Successfully!</Alert>
-					</Collapse>
-				</DialogContent>
-				<DialogActions>
-					<Collapse in={!openGreen}>
-						<IconButton color="secondary" aria-label="add an alarm" onClick={deleteSection}>
-							<DeleteForeverOutlinedIcon fontSize="large" />
-						</IconButton>
-					</Collapse>
-					<Collapse in={!openGreen}>
-						<Button onClick={handleClose} color="primary">
-							Cancel
+					<DialogContent>
+						<Collapse in={openAlert}>
+							<Alert severity="error">{error}</Alert>
+						</Collapse>
+						<Collapse in={openGreen}>
+							<Alert severity="success">Update Section Successfully21!</Alert>
+						</Collapse>
+					</DialogContent>
+					<DialogActions>
+						<Collapse in={!openGreen}>
+							<IconButton color="secondary" aria-label="add an alarm" onClick={deleteSection}>
+								<DeleteForeverOutlinedIcon fontSize="large" />
+							</IconButton>
+						</Collapse>
+						<Collapse in={!openGreen}>
+							<Button onClick={handleClose} color="primary">
+								Cancel
 						</Button>
 						</Collapse>
 						<Button type="submit" color="primary">
@@ -399,7 +370,6 @@ const SectionQuestions = (props) => {
 							label="questionId"
 							variant="outlined"
 						/>
-						<Box p={1} />
 						<TextField
 							id="outlined-multiline-flexible"
 							required
@@ -409,7 +379,6 @@ const SectionQuestions = (props) => {
 							label="Question Description"
 							variant="outlined"
 						/>
-						<Box p={1} />
 						{/* <DialogContentText>value={values.question}</DialogContentText> */}
 						<FormControl fullWidth>
 							<InputLabel id="demo-simple-select-label">Type</InputLabel>
@@ -418,62 +387,39 @@ const SectionQuestions = (props) => {
 								id="demo-simple-select"
 								value={type}
 								onChange={handleTypeChange}
+
 							>
-								<MenuItem value={'slider'}>Slider </MenuItem>
+								<MenuItem value={'slider'} >Slider </MenuItem>
 								<MenuItem value={'singleSelection'}>MultiChoice</MenuItem>
 								{/* <MenuItem value={'yesorno'}>Yes/No</MenuItem> */}
 							</Select>
 						</FormControl>
-						<Box p={1}>
-							<div>
-								{type === 'singleSelection' ? (
-									<div>
-										<TextField
-											label="option1"
-											id="outlined-multiline-flexible"
-											variant="outlined"
-											value={values.option1}
-											onChange={handleChange('option1')}
-										/>
-										<TextField
-											label="option2"
-											id="outlined-multiline-flexible"
-											variant="outlined"
-											value={values.option2}
-											onChange={handleChange('option2')}
-										/>
-										<TextField
-											label="option3"
-											id="outlined-multiline-flexible"
-											variant="outlined"
-											value={values.option3}
-											onChange={handleChange('option3')}
-										/>
-										<TextField
-											label="option4"
-											id="outlined-multiline-flexible"
-											variant="outlined"
-											value={values.option4}
-											onChange={handleChange('option4')}
-										/>
-										<TextField
-											label="option5"
-											id="outlined-multiline-flexible"
-											variant="outlined"
-											value={values.option5}
-											onChange={handleChange('option5')}
-										/>
-										<TextField
-											label="option6"
-											id="outlined-multiline-flexible"
-											variant="outlined"
-											value={values.option6}
-											onChange={handleChange('option6')}
-										/>
-									</div>
-								) : null}
-							</div>
-						</Box>
+						<div>
+							{type === "singleSelection" ?
+								<div>
+									<TextField
+										label="option1" id="outlined-multiline-flexible" variant="outlined"
+										value={values.option1} onChange={handleChange('option1')}
+									/>
+									<TextField
+										label="option2" id="outlined-multiline-flexible" variant="outlined"
+										value={values.option2} onChange={handleChange('option2')}
+									/>
+									<TextField
+										label="option3" id="outlined-multiline-flexible" variant="outlined"
+										value={values.option3} onChange={handleChange('option3')}
+									/>
+									<TextField
+										label="option4" id="outlined-multiline-flexible" variant="outlined"
+										value={values.option4} onChange={handleChange('option4')}
+									/>
+									<TextField
+										label="option5" id="outlined-multiline-flexible" variant="outlined"
+										value={values.option5} onChange={handleChange('option5')}
+									/>
+								</div>
+								: null}
+						</div>
 					</Collapse>
 				</DialogContent>
 				<DialogContent>
@@ -481,7 +427,7 @@ const SectionQuestions = (props) => {
 						<Alert severity="error">{error}</Alert>
 					</Collapse>
 					<Collapse in={openGreen}>
-						<Alert severity="success">Update Section Successfully!</Alert>
+						<Alert severity="success">Update Section Successfully22!</Alert>
 					</Collapse>
 				</DialogContent>
 				<DialogActions>

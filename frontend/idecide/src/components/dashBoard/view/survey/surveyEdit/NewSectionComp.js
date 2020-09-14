@@ -77,16 +77,11 @@ const SurveySection = (props) => {
 	return (
 		<Box p={1}>
 			<Card>
-				<CardHeader title="New Survey Section" />
+				<CardHeader title="223,New Survey Section" />
 				<Divider />
 				<CardContent>
 					<TextField
 						id="outlined-multiline-flexible"
-<<<<<<< HEAD
-						fullWidth
-=======
-						 fullWidth
->>>>>>> cfd6700a397024d3f635e643308aea58cb114339
 						required
 						type="number" min="0" step="1"
 						value={values.sectionId}
