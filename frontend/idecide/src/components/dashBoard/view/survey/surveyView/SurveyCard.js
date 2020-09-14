@@ -1,7 +1,7 @@
-import React from 'react';
+import React,{ useContext} from 'react';
 import PropTypes from 'prop-types';
 import EditIcon from '@material-ui/icons/Edit';
-import clsx from 'clsx';
+import Editable from './../SurveyLayout';
 import {
 	Dialog,
 	DialogTitle,
@@ -43,8 +43,7 @@ const useStyles = makeStyles((theme) => ({
 		height: theme.spacing(3)
 	},
 	media: {
-		height: 0,
-		paddingTop: '100%' // 16:9
+		height: '100%'
 	},
 	statsItem: {
 		alignItems: 'center',
@@ -55,19 +54,20 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const SurveyCard = ({ product, ...rest }) => {
+const SurveyCard = ({ product,editable, ...rest }) => {
 	const classes = useStyles();
-	const [openAlert, setOpen] = React.useState(false);
-	const [openGreen, setOpenGreen] = React.useState(false);
-	const [error, setError] = React.useState();
-	const [open, setDMOpen] = React.useState(false); //control of adding new survey
-	const [values, setValues] = React.useState({
+	const [ openAlert, setOpen ] = React.useState(false);
+	const [ openGreen, setOpenGreen ] = React.useState(false);
+	const [ error, setError ] = React.useState();
+	const [ open, setDMOpen ] = React.useState(false); //control of adding new survey
+	const [ values, setValues ] = React.useState({
 		title: product.surveyTitle,
 		descrpition: product.surveyIntroduction
 	});
 
-	const [deleteMD, setDeleteMD] = React.useState(true);
-
+//	const [ deleteMD, setDeleteMD ] = React.useState(true);
+//	const editable = useContext(Editable);
+	console.log(editable);
 	const handleOpen = () => {
 		setDMOpen(true);
 	};
@@ -97,7 +97,6 @@ const SurveyCard = ({ product, ...rest }) => {
 				//			alert('Error from processDataAsycn() with async( When promise gets rejected ): ' + error);
 			});
 		return feedBack;
-
 	};
 
 	const UpdateSurvey = async () => {
@@ -112,10 +111,6 @@ const SurveyCard = ({ product, ...rest }) => {
 			surveyTitle: values.title,
 			surveyIntroduction: values.descrpition,
 			surveyVersion: product.surveyVersion,
-			surveySections: []
-			//	surveySections:product.surveySections,
-			//	jsonStr:null,
-			//	surveyImageName: product.surveyImageName,
 		});
 		const feedBack = await editSurvey(readyData)
 			.then((data) => {
@@ -130,43 +125,46 @@ const SurveyCard = ({ product, ...rest }) => {
 	};
 
 	return (
-		<div >
-			<Card>
-				<CardHeader
-					action={
-						<div>
-							<IconButton color="secondary" aria-label="add an alarm" onClick={handleDelete}>
-								<DeleteForeverOutlinedIcon fontSize="large" />
-							</IconButton>
-							<IconButton color="secondary" aria-label="add an alarm" onClick={handleOpen}>
-								<EditIcon color="primary" fontSize="large" />
-							</IconButton>
-						</div>
-					}
-				/>
-			</Card>
-			<Card {...rest}>
+		<div>
+			<Collapse in={editable}>
+				<Grid container direction="row" justify="flex-end" alignItems="center">
+					<IconButton
+						color="secondary"
+						aria-label="add an alarm"
+						style={{ width: 50 }}
+						onClick={handleDelete}
+					>
+						<DeleteForeverOutlinedIcon fontSize="middle" />
+					</IconButton>
+					<IconButton color="secondary" aria-label="add an alarm" style={{ width: 50 }} onClick={handleOpen}>
+						<EditIcon color="primary" fontSize="middle" />
+					</IconButton>
+				</Grid>
+			</Collapse>
+			<Card {...rest} align="center">
+				<CardHeader title={product.surveyTitle} />
+				<Divider />
+				<Box p={1}/>
 				<CardMedia
 					className={classes.media}
 					image={getStaticImageUrlFromName(product.surveyImageName)}
 					title="Contemplative Reptile"
+					style={{
+						width: '30%',
+						height: '30%'
+					}}
 				/>
-				<CardContent>
-					<Box
-						display="flex"
-						justifyContent="center"
-					//  mb={3}
-					/>
-					<Typography align="center" color="textPrimary" gutterBottom variant="h4">
-						{product.surveyTitle}
-					</Typography>
-					<Typography align="center" color="textPrimary" variant="body1">
+				<CardContent
+					style={{
+						height: '40%'
+					}}
+				>
+					<Typography align="center" color="textPrimary" variant="body2">
 						{product.surveyIntroduction}
 					</Typography>
 				</CardContent>
-				<Box flexGrow={1} />
 				<Divider />
-				<Box p={2}>
+				<Box p={1}>
 					<Grid container justify="space-between" spacing={2}>
 						<Grid item>
 							<AccessTimeIcon color="action" />
@@ -184,13 +182,7 @@ const SurveyCard = ({ product, ...rest }) => {
 					</Grid>
 				</Box>
 			</Card>
-			<Dialog
-				open={open}
-				onClose={handleClose}
-				aria-labelledby="max-width-dialog-title"
-				maxWidth="lg"
-				fullWidth
-			>
+			<Dialog open={open} onClose={handleClose} aria-labelledby="max-width-dialog-title" maxWidth="lg" fullWidth>
 				<DialogTitle id="form-dialog-title">Survey</DialogTitle>
 				<DialogContent>
 					<Collapse in={!openGreen}>

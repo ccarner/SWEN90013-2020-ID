@@ -11,7 +11,7 @@ import {
 	DialogContentText,
 	DialogActions,
 	Collapse,
-	IconButton
+	Box
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import CloseIcon from '@material-ui/icons/Close';
@@ -30,21 +30,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const CountContext = createContext();
-console.log(CountContext);
+export const Editable = createContext();
+console.log(Editable);
 
 export default function SurveyLayout() {
 	const classes = useStyles();
-	const [isLoading, setIsLoading] = useState(false);
-	const [data, setData] = useState({ hits: [] });
-	const [open, setDMOpen] = React.useState(false); //control of adding new survey
+	const [ editable, setEditable ] = useState(false);
+	const [ isLoading, setIsLoading ] = useState(false);
+	const [ data, setData ] = useState({ hits: [] });
+	const [ open, setDMOpen ] = React.useState(false); //control of adding new survey
 	//const [ isOpen, setOpen ] = React.useState(false);
-	const [openAlert, setOpen] = React.useState(false);
-	const [openGreen, setOpenGreen] = React.useState(false);
-	const [error, setError] = React.useState();
-	const [values, setValues] = React.useState({
+	const [ openAlert, setOpen ] = React.useState(false);
+	const [ openGreen, setOpenGreen ] = React.useState(false);
+	const [ error, setError ] = React.useState();
+	const [ values, setValues ] = React.useState({
 		title: '',
 		descrpition: ''
 	});
+	console.log(editable);
 
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
@@ -56,6 +59,10 @@ export default function SurveyLayout() {
 
 	const handleClose = () => {
 		setDMOpen(false);
+	};
+
+	const handleEdit = () => {
+		setEditable((pre) => !pre);
 	};
 
 	const AddNewSurveys = async () => {
@@ -102,7 +109,6 @@ export default function SurveyLayout() {
 		fetchData();
 	}, []);
 
-
 	console.log(Array.from(data).length);
 
 	return (
@@ -110,85 +116,95 @@ export default function SurveyLayout() {
 			{isLoading ? (
 				<div>Loading ...</div>
 			) : (
-					<Grid>
-						<Grid container spacing={10}>
+				<Box>
+					<Grid container spacing={2}>
+						<Grid item xs={12} alignContent="flex-end">
+							<Button variant="contained" color="primary" onClick={handleEdit}>
+								Edit
+							</Button>
+						</Grid>
+						<Editable.Provider value={editable}>
 							{Array.from(data).map((item) => (
 								<Grid item lg={4} md={6} xs={12} key={item.surveyId}>
 									<SurveyCard
+										style={{ height: 400 }}
 										key={item.surveyId}
 										product={item}
+										editable={editable}
 										useStyles
 										onClick={() => {
 											window.location.pathname = '/dashboard/surveyId=' + item.surveyId;
 										}}
 									/>
-									<CountContext.Provider value={item.surveyId} />
 								</Grid>
 							))}
-							<Grid item xs={12}>
+						</Editable.Provider>
+						<Grid item xs={12}>
+							<Collapse in={editable}>
 								<Button variant="contained" color="secondary" fullWidth onClick={handleOpen}>
 									Add New Survey
-							</Button>
-							</Grid>
-						</Grid>
-
-						<Dialog
-							open={open}
-							onClose={handleClose}
-							aria-labelledby="max-width-dialog-title"
-							//	fullWidth="md"
-							maxWidth="md"
-						>
-							<DialogTitle id="form-dialog-title">Survey</DialogTitle>
-							<DialogContent>
-								<Collapse in={!openGreen}>
-									<DialogContentText>
-										Please input the title and description for the new Survey.
-								</DialogContentText>
-									<TextField
-										id="outlined-multiline-flexible"
-										required
-										fullWidth
-										value={values.title}
-										onChange={handleChange('title')}
-										label="Title"
-										variant="outlined"
-									/>
-									<DialogContentText>value={values.title}</DialogContentText>
-									<TextField
-										id="outlined-multiline-flexible"
-										multiline
-										fullWidth
-										required
-										value={values.descrpition}
-										onChange={handleChange('descrpition')}
-										rows={4}
-										label="Description"
-										variant="outlined"
-									/>
-								</Collapse>
-							</DialogContent>
-							<DialogContent>
-								<Collapse in={openAlert}>
-									<Alert severity="error">{error}</Alert>
-								</Collapse>
-								<Collapse in={openGreen}>
-									<Alert severity="success">Update Survey Successfully!</Alert>
-								</Collapse>
-							</DialogContent>
-							<DialogActions>
-								<Collapse in={!openGreen}>
-									<Button onClick={handleClose} color="primary">
-										Cancel
 								</Button>
-								</Collapse>
-								<Button onClick={AddNewSurveys} color="primary">
-									Confirm
-							</Button>
-							</DialogActions>
-						</Dialog>
+							</Collapse>
+						</Grid>
 					</Grid>
-				)}
+
+					<Dialog
+						open={open}
+						onClose={handleClose}
+						aria-labelledby="max-width-dialog-title"
+						//	fullWidth="md"
+						maxWidth="md"
+					>
+						<DialogTitle id="form-dialog-title">Survey</DialogTitle>
+						<DialogContent>
+							<Collapse in={!openGreen}>
+								<DialogContentText>
+									Please input the title and description for the new Survey.
+								</DialogContentText>
+								<TextField
+									id="outlined-multiline-flexible"
+									required
+									fullWidth
+									value={values.title}
+									onChange={handleChange('title')}
+									label="Title"
+									variant="outlined"
+								/>
+								<DialogContentText>value={values.title}</DialogContentText>
+								<TextField
+									id="outlined-multiline-flexible"
+									multiline
+									fullWidth
+									required
+									value={values.descrpition}
+									onChange={handleChange('descrpition')}
+									rows={4}
+									label="Description"
+									variant="outlined"
+								/>
+							</Collapse>
+						</DialogContent>
+						<DialogContent>
+							<Collapse in={openAlert}>
+								<Alert severity="error">{error}</Alert>
+							</Collapse>
+							<Collapse in={openGreen}>
+								<Alert severity="success">Update Survey Successfully!</Alert>
+							</Collapse>
+						</DialogContent>
+						<DialogActions>
+							<Collapse in={!openGreen}>
+								<Button onClick={handleClose} color="primary">
+									Cancel
+								</Button>
+							</Collapse>
+							<Button onClick={AddNewSurveys} color="primary">
+								Confirm
+							</Button>
+						</DialogActions>
+					</Dialog>
+				</Box>
+			)}
 		</div>
 	);
 }

@@ -11,3 +11,13 @@ export async function getCsvDownloadLink() {
     return e;
   }
 }
+
+export async function getResults() {
+  const endpoint = `https://www.idecide.icu:9012/survey/getResult`;
+  try {
+    const dataFetched = axios.get(endpoint).then((res) => res.data);
+    return dataFetched;
+  } catch (e) {
+    return e;
+  }
+}

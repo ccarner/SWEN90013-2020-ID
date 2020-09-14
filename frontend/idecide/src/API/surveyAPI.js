@@ -18,6 +18,8 @@ export async function getSurveyById(surveyId) {
   }
 }
 
+
+
 export async function getUserResults(userId) {
   const endpoint = API_URL + `/answer/getResult/${userId}`;
   try {
@@ -62,7 +64,6 @@ export async function editSurvey(surveyInfo) {
     headers: {
       "Content-Type": "application/json",
     },
-
     data: surveyInfo
 
     //  data: JSON.stringify(JSON.parse(surveyInfo)),
