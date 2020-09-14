@@ -56,8 +56,10 @@ const SurveySection = (props) => {
 	};
 
 	const handleShow = () => {
+
 		setShow((prev) => !prev);
 	};
+
 
 	function handleView(e, index) {
 		console.log(e.target, index.index);
@@ -113,58 +115,7 @@ const SurveySection = (props) => {
 					) : (
 						surveySection.map((item, index) => (
 							<div>
-								<SectionQuestions data={item} sections={surveySection} surveyId={surveyId} />
-
-
-								{
-									/* <div key={index}>
-										<Box p={2} >
-											<Card>
-												<CardHeader
-													action={
-														<div>
-															<IconButton
-																color="secondary"
-																aria-label="add an alarm"
-																onClick={() => {
-																	alert("Switch to Edit Board");
-																}}
-															>
-																<EditIcon color="primary" fontSize="large" />
-															</IconButton>
-	
-															<Button
-																color="secondary"
-																variant="contained"
-																onClick={(e) => handleView(e, { index })}
-															>
-																View
-															</Button>
-														</div>
-													}
-													//   subheader="Description"
-													title={item.sectionTitle}
-												/>
-												<Divider />
-												<CardContent>
-													<Box display="flex" p={1}>
-														<Typography variant="subtitle1" gutterBottom>
-															{item.sectionIntroduction}
-														</Typography>
-													</Box>
-												</CardContent>
-											</Card>
-											<Collapse in={isOpen}>
-												<Box>
-													{QuestionsDisplay}
-												</Box>
-											</Collapse>
-										</Box>
-									</div> */
-								}
-
-
-
+								<SectionQuestions data={item} sections={surveySection} surveyId={surveyId} handleShow={handleShow} />
 							</div>
 
 						))
@@ -189,7 +140,7 @@ const SurveySection = (props) => {
 								addNew([...newQuestion, count]);
 							}}
 						>
-							Add New Section
+							Add New Section21
 						</Button>
 					</Box>
 				</Collapse>
