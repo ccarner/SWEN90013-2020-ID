@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 const API_BASE = "http://8.210.28.169";
-const API_URL = "http://8.210.28.169:9009";
+const API_URL = "https://www.idecide.icu:9012";
 
 
 export function getStaticImageUrlFromName(imageName) {

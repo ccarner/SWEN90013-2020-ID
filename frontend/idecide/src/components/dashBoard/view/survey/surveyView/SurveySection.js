@@ -43,7 +43,7 @@ const SurveySection = (props) => {
 
 	const [isShow, setShow] = useState(false);
 
-	//	console.log(props);
+//	console.log(props);
 	const surveyId = props.match.params.surveyId;
 
 	const [sectionIndex, setSectionIndex] = React.useState();
@@ -83,7 +83,7 @@ const SurveySection = (props) => {
 	}, []);
 
 	//	console.log("Survvey Section Log:");
-	//console.log(data);
+	console.log(data);
 
 	const QuestionsDisplay = () => {
 		console.log(data);
@@ -113,7 +113,7 @@ const SurveySection = (props) => {
 				) : (
 						<div>Loading</div>
 					) : (
-						surveySection.map((item, index) => (
+						surveySection.map((item) => (
 							<div>
 								<SectionQuestions data={item} sections={surveySection} surveyId={surveyId} handleShow={handleShow} />
 							</div>

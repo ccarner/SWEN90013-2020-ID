@@ -82,11 +82,7 @@ const SurveySection = (props) => {
 				<CardContent>
 					<TextField
 						id="outlined-multiline-flexible"
-<<<<<<< HEAD
 						fullWidth
-=======
-						 fullWidth
->>>>>>> cfd6700a397024d3f635e643308aea58cb114339
 						required
 						type="number" min="0" step="1"
 						value={values.sectionId}

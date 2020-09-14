@@ -67,7 +67,7 @@ const SurveyCard = ({ product,editable, ...rest }) => {
 
 //	const [ deleteMD, setDeleteMD ] = React.useState(true);
 //	const editable = useContext(Editable);
-	console.log(editable);
+//	console.log(editable);
 	const handleOpen = () => {
 		setDMOpen(true);
 	};
@@ -134,14 +134,14 @@ const SurveyCard = ({ product,editable, ...rest }) => {
 						style={{ width: 50 }}
 						onClick={handleDelete}
 					>
-						<DeleteForeverOutlinedIcon fontSize="middle" />
+						<DeleteForeverOutlinedIcon fontSize="small" />
 					</IconButton>
 					<IconButton color="secondary" aria-label="add an alarm" style={{ width: 50 }} onClick={handleOpen}>
-						<EditIcon color="primary" fontSize="middle" />
+						<EditIcon color="primary" fontSize="small" />
 					</IconButton>
 				</Grid>
 			</Collapse>
-			<Card {...rest} align="center">
+			<Card {...rest} className={useStyles.root}>
 				<CardHeader title={product.surveyTitle} />
 				<Divider />
 				<Box p={1}/>

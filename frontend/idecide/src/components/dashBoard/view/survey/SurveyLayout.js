@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const CountContext = createContext();
 export const Editable = createContext();
-console.log(Editable);
+//console.log(Editable);
 
 export default function SurveyLayout() {
 	const classes = useStyles();
@@ -47,7 +47,7 @@ export default function SurveyLayout() {
 		title: '',
 		descrpition: ''
 	});
-	console.log(editable);
+//	console.log(editable);
 
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
@@ -99,7 +99,6 @@ export default function SurveyLayout() {
 		const fetchData = async () => {
 			setIsLoading(true);
 			const result = await getAllSurveys();
-
 			setData(result.data);
 			setIsLoading(false);
 			//		console.log(data);
@@ -109,8 +108,6 @@ export default function SurveyLayout() {
 		fetchData();
 	}, []);
 
-	console.log(Array.from(data).length);
-
 	return (
 		<div>
 			{isLoading ? (
@@ -118,7 +115,7 @@ export default function SurveyLayout() {
 			) : (
 				<Box>
 					<Grid container spacing={2}>
-						<Grid item xs={12} alignContent="flex-end">
+						<Grid item xs={12} >
 							<Button variant="contained" color="primary" onClick={handleEdit}>
 								Edit
 							</Button>
