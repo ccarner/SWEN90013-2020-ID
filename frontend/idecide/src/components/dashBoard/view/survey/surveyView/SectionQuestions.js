@@ -190,7 +190,7 @@ const SectionQuestions = (props) => {
 			sectionIntroduction: values.descrpition,
 			sectionId: props.data.sectionId,
 			sectionIndex: props.data.sectionIndex,
-			questions: []
+			questions: props.data.questions
 		};
 
 		sections.splice(parseInt(props.data.sectionIndex), 1, modifiedSection);

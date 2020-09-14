@@ -64,7 +64,6 @@ export async function editSurvey(surveyInfo) {
     headers: {
       "Content-Type": "application/json",
     },
-
     data: surveyInfo
 
     //  data: JSON.stringify(JSON.parse(surveyInfo)),

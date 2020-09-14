@@ -87,12 +87,10 @@ const SurveySection = (props) => {
 				<CardContent>
 					<TextField
 						id="outlined-multiline-flexible"
-						// multiline
-						 fullWidth
+						fullWidth
 						required
 						value={values.sectionId}
 						onChange={handleChange('sectionId')}
-						// rows={4}
 						label="sectionId"
 						variant="outlined"
 					/>
