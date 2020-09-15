@@ -1,4 +1,4 @@
-import React,{ useContext} from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import EditIcon from '@material-ui/icons/Edit';
 import Editable from './../SurveyLayout';
@@ -54,19 +54,19 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const SurveyCard = ({ product,editable, ...rest }) => {
+const SurveyCard = ({ product, editable, ...rest }) => {
 	const classes = useStyles();
-	const [ openAlert, setOpen ] = React.useState(false);
-	const [ openGreen, setOpenGreen ] = React.useState(false);
-	const [ error, setError ] = React.useState();
-	const [ open, setDMOpen ] = React.useState(false); //control of adding new survey
-	const [ values, setValues ] = React.useState({
+	const [openAlert, setOpen] = React.useState(false);
+	const [openGreen, setOpenGreen] = React.useState(false);
+	const [error, setError] = React.useState();
+	const [open, setDMOpen] = React.useState(false); //control of adding new survey
+	const [values, setValues] = React.useState({
 		title: product.surveyTitle,
 		descrpition: product.surveyIntroduction
 	});
 
-//	const [ deleteMD, setDeleteMD ] = React.useState(true);
-//	const editable = useContext(Editable);
+	//	const [ deleteMD, setDeleteMD ] = React.useState(true);
+	//	const editable = useContext(Editable);
 	console.log(editable);
 	const handleOpen = () => {
 		setDMOpen(true);
@@ -89,7 +89,9 @@ const SurveyCard = ({ product,editable, ...rest }) => {
 		const feedBack = await DeleteSurvey(product.surveyId)
 			.then(() => {
 				//	setOpenGreen(true);
-				window.location.href = './survey';
+				// window.location.replace('./survey');
+
+				window.location.href = '/dashboard/survey';
 			})
 			.catch((error) => {
 				setOpen(true);
@@ -101,7 +103,9 @@ const SurveyCard = ({ product,editable, ...rest }) => {
 
 	const UpdateSurvey = async () => {
 		if (openGreen) {
-			window.location.href = './survey';
+			window.location.href = '/dashboard/survey';
+			// window.location.replace('./survey');
+
 		}
 		//
 		console.log(values.descrpition);
@@ -144,7 +148,7 @@ const SurveyCard = ({ product,editable, ...rest }) => {
 			<Card {...rest} align="center">
 				<CardHeader title={product.surveyTitle} />
 				<Divider />
-				<Box p={1}/>
+				<Box p={1} />
 				<CardMedia
 					className={classes.media}
 					image={getStaticImageUrlFromName(product.surveyImageName)}

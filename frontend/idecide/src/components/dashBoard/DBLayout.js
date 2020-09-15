@@ -7,6 +7,7 @@ import DCLayout from './view/dataCollection/DCLayout';
 import APLayout from './view/actionPlan/APLayout';
 
 
+
 import {
 	BrowserRouter as Router,
 	Route,
@@ -44,7 +45,7 @@ export default function DBLayout() {
 				<VerticalTab />
 			</Grid>
 			<Grid item xs={9} >
-				<Route path="/dashboard/home" component={Dashboard} /> 
+				<Route path="/dashboard/home" component={Dashboard} />
 				<Route path="/dashboard/survey" component={SurveyLayout} />
 				<Route path="/dashboard/datacollection" component={DCLayout} />
 				<Route path="/dashboard/actionplan" component={APLayout} />

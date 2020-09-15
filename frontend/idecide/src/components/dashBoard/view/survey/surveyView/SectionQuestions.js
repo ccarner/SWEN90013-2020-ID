@@ -203,7 +203,8 @@ const SectionQuestions = (props) => {
 
 	const deleteSection = async () => {
 		if (openGreen) {
-			window.location.href = './surveyId=' + props.surveyId;
+			// window.location.replace('./surveyId=' + props.surveyId);
+			window.location.href = '/dashboard/surveyId=' + props.surveyId;
 		}
 
 

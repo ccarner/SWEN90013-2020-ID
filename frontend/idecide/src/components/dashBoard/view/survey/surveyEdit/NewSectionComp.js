@@ -64,7 +64,8 @@ const SurveySection = (props) => {
 
 		await editSurvey(readyData)
 			.then(() => {
-				window.location.href = './surveyId=' + surveyId;
+				// window.location.replace('./surveyId=' + surveyId);
+				window.location.href = '/dashboard/surveyId=' + surveyId;
 				//	setOpenGreen(true);
 			})
 			.catch((error) => {
