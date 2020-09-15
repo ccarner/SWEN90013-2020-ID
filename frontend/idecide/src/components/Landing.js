@@ -23,7 +23,7 @@ class Landing extends Component {
     return (
       <React.Fragment>
         <div className="container" style={{ padding: "10%" }}>
-          <h1 style={{ color: "purple" }}>Women's Wellbeing Project</h1>
+          <h1 style={{ color: "purple" }}>Women's Wellbeing</h1>
           <br></br>
           <h2>Do you worry about whether your relationship is healthy?</h2>
           <h2>Do you sometimes wonder if you are safe?</h2>
@@ -41,12 +41,11 @@ class Landing extends Component {
 
         <MDBJumbotron style={{ padding: 0 }}>
           <div
-            className="text-white text-center py-5 px-4 my-5"
             style={{
               backgroundImage: `url(${require("../images/background.png")})`,
             }}
           >
-            <div className="py-5">
+            <div className="py-5" >
               <MDBCardTitle
                 className="h1-responsive pt-3 m-5 font-bold"
                 style={{ color: "white" }}

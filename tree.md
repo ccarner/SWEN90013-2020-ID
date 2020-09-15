@@ -1,17 +1,3 @@
-# SWEN90013-2020-ID
-
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors-)
-![GitHub](https://img.shields.io/github/license/ccarner/SWEN90013-2020-ID)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-## Introduction
-```
-'iDecide About My Relationship' is a healthy relationship tool and safety decision aid for women who have experienced domestic violence. Women can access this tool on the web to get insights into their partner's behaviours, possible risks to their safety, and information on resources available to them.
-iDecide currently lacks a mobile-friendly site, and its overall design requires modernisation. Furthermore, since the codebase was developed by/is owned by an external party, changing the current site will require a reimplementation of the tool.
-```
-
-## Repository Structure
-```
 .
 ├── LICENSE
 ├── README.md
@@ -199,14 +185,14 @@ iDecide currently lacks a mobile-friendly site, and its overall design requires 
 │       │   │   ├── RuleEngine
 │       │   │   │   ├── algorithem.js
 │       │   │   │   └── jsonRule.js
-│       │   │   ├── dashBoard    //Admin Dashboard js file
-│       │   │   │   ├── DBLayout.js     // Dashboard layout
+│       │   │   ├── dashBoard
+│       │   │   │   ├── DBLayout.js
 │       │   │   │   ├── DBSideBar.js
-│       │   │   │   ├── VerticalTab.js      // side menu
+│       │   │   │   ├── VerticalTab.js
 │       │   │   │   └── view
-│       │   │   │       ├── researcher      // user management
+│       │   │   │       ├── researcher
 │       │   │   │       │   └── ResearcherListView.js
-│       │   │   │       └── survey          // survey management file
+│       │   │   │       └── survey
 │       │   │   │           ├── NewSurvey.js
 │       │   │   │           ├── QuesitonComponent.js
 │       │   │   │           ├── QuestionDetails.js
@@ -251,16 +237,5 @@ iDecide currently lacks a mobile-friendly site, and its overall design requires 
 │       │   └── setupTests.js
 │       └── yarn.lock
 └── tree.md
-```
 
-## Licence:
-```
-Frontend: MIT Lisence
-Backend: Apache 2.0  
-```
-## Deployment
-```
-1. Frontend Deployment:
-
-2. Backend Deployment:
-```
+99 directories, 139 files
