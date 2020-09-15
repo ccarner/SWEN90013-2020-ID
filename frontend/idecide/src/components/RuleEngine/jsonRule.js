@@ -50,7 +50,6 @@ export default function JsonRuleEngine(
     casRule.map((ruleItme) => {
       engine.addRule(ruleItme);
     });
-
     /**
      * Define facts the engine will use to evaluate the conditions above.
      * Facts may also be loaded asynchronously at runtime; see the advanced example below
