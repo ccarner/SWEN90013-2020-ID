@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Slider } from "antd";
-import testquestion from "./testdata";
+//import testquestion from "./testdata";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./cards.css";
 import "antd/dist/antd.css";
@@ -202,6 +202,7 @@ export default class CardDeck extends Component {
 
   render() {
     var questions = this.state.questions;
+
     let fadeAwayState = this.state.fadeAwayState;
     if (questions == null) {
       return (

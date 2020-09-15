@@ -5,7 +5,10 @@ export default [
         questionId: "1",
         questionType: "single-choice-vertical",
         questionText: "Told me that I wasn't good enough",
-        selectionOptions: [{ name: "male" }, { name: "Female" }],
+        selectionOptions: [
+          { name: "i intend to stay in the relationship" },
+          { name: "i intend to leave in the relationship" },
+        ],
       },
       {
         questionId: "2",
@@ -16,8 +19,6 @@ export default [
           { name: "Only Once", weight: "0.2" },
           { name: "Several Times", weight: "0.4" },
           { name: "Once a month", weight: "0.6" },
-          { name: "Once a Week", weight: "0.8" },
-          { name: "Daily", weight: "1" },
         ],
       },
       {
