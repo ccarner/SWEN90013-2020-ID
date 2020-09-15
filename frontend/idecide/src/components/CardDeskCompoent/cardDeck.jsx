@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Slider } from "antd";
+//import testquestion from "./testdata";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./cards.css";
 import "antd/dist/antd.css";
@@ -69,8 +70,6 @@ export default class CardDeck extends Component {
       parseInt(item.questionId) + " :" + parseInt(this.state.questionLen)
     );
     if (item.questionId == this.state.questionLen) {
-
-
       JsonRuleEngine(
         this.state.result,
         this.state.algorithmRelatedQuestion,
@@ -140,6 +139,46 @@ export default class CardDeck extends Component {
           </div>
         </div>
       );
+    } else if (item.questionType == "YesorNo") {
+      return (
+        <div className="questionContainer">
+          <div className="button-container">
+            <MDBBtn
+              gradient="aqua"
+              style={{ border: "none", "border-radius": "15px" }}
+              onClick={() => this.handleResult(item, { name: "No" })}
+            >
+              No
+            </MDBBtn>
+            <MDBBtn
+              gradient="purple"
+              style={{ border: "none", "border-radius": "15px" }}
+              onClick={() => this.handleResult(item, { name: "Yes" })}
+            >
+              Yes
+            </MDBBtn>
+          </div>
+        </div>
+      );
+    } else if (item.questionType == "single-choice-vertical") {
+      return (
+        <div className="questionContainer">
+          <div className="composite-scale-container">
+            <div className="option-container-vertical">
+              {item.selectionOptions.map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => this.handleResult(item, option)}
+                  className="composite-option-button"
+                >
+                  <span className="composite-circle top"></span>
+                  <span className="composite-label bottom">{option.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
     } else {
       return (
         <div className="questionContainer">
@@ -162,9 +201,7 @@ export default class CardDeck extends Component {
   };
 
   render() {
-
     var questions = this.state.questions;
-
 
     let fadeAwayState = this.state.fadeAwayState;
     if (questions == null) {

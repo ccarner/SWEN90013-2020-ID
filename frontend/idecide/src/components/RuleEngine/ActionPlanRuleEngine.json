@@ -1,0 +1,73 @@
+[
+  {
+    "conditions": {
+      "any": [{ "fact": "St", "operator": "equal", "value": true }]
+    },
+    "event": {
+      "type": "SC",
+      "params": {
+        "message": "You seem to have experienced serious abusive behaviours from your partner.It is not acceptable for these things to happen in relationships. It isprobably affecting your mental and physical health. A bit later, this website will suggest some things you could try to help you look after yourself during this stressful time and to keep you safe.  The next section will ask you more specifically about physical violence using a calendar and survey. Although emotional abuse can be just as harmful as physical abuse, this section can help women reflect on their danger."
+      }
+    },
+    "name": "SC Rule"
+  },
+  {
+    "conditions": {
+      "all": [
+        { "fact": "St", "operator": "equal", "value": false },
+        { "fact": "Pt", "operator": "equal", "value": true },
+        { "fact": "Et", "operator": "equal", "value": false },
+        { "fact": "Ht", "operator": "equal", "value": false }
+      ]
+    },
+    "event": {
+      "type": "PO",
+      "params": {
+        "message": "You seem to have experienced physical actions from your partner that are abusive. It is not acceptable for this to happen in relationships. A bit later, this website will suggest some things you could try to help you look after yourself during this stressful time and to keep you safe.The next section will ask you more specifically about physical violence using a calendar and survey. Although emotional abuse can be just as harmful as physical abuse, this section can help women reflect on their danger."
+      }
+    },
+    "name": "PO Rule"
+  },
+  {
+    "conditions": {
+      "all": [
+        { "fact": "St", "operator": "equal", "value": false },
+        { "fact": "Pt", "operator": "equal", "value": true },
+        {
+          "any": [
+            { "fact": "Et", "operator": "equal", "value": true },
+            { "fact": "Ht", "operator": "equal", "value": true }
+          ]
+        }
+      ]
+    },
+    "event": {
+      "type": "PE",
+      "params": {
+        "message": "You seem to have experienced a combination of physical and emotional behaviours from your partner that are abusive. It is not acceptable for these things to happen in relationships. It is likely to be affecting your mental and physical health. A bit later, this website will suggest some things you could try to help you look after yourself during this stressful time and to keep you safe.The next section will ask you more specifically about physical violence using a calendar and survey. Although emotional abuse can be just as harmful as physical abuse, this section can help women reflect on their danger."
+      }
+    },
+    "name": "PE Rule"
+  },
+  {
+    "conditions": {
+      "all": [
+        { "fact": "St", "operator": "equal", "value": false },
+        { "fact": "Pt", "operator": "equal", "value": false },
+        {
+          "any": [
+            { "fact": "Et", "operator": "equal", "value": true },
+            { "fact": "Ht", "operator": "equal", "value": true }
+          ]
+        }
+      ]
+    },
+    "event": {
+      "type": "EO",
+      "params": {
+        "message": "You seem to have experienced emotional actions from your partner that are abusive. It is not acceptable for this to happen in relationships. A bit later, this website will suggest some things you could try to help you look after yourself during this stressful time.The next section will ask you more specifically about physical violence using a calendar and survey. Although emotional abuse can be just as harmful as physical abuse, this section can help women reflect on their danger."
+      }
+    },
+    "name": "EO Rule"
+  }
+]
