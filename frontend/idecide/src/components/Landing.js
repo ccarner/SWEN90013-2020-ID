@@ -11,6 +11,7 @@ import {
   MDBCol,
   MDBCardTitle,
   MDBIcon,
+  MDBFooter
 } from "mdbreact";
 import PrimaryButton from "./reusableComponents/PrimaryButton";
 
@@ -39,33 +40,57 @@ class Landing extends Component {
           </NavLink>
         </div>
 
-        <MDBJumbotron style={{ padding: 0 }}>
+        <MDBFooter className = "font-small pt-4 mt-4" style={{ padding: 0 }}>
           <div
             style={{
               backgroundImage: `url(${require("../images/background.png")})`,
             }}
           >
-            <div className="py-5" >
-              <MDBCardTitle
-                className="h1-responsive pt-3 m-5 font-bold"
-                style={{ color: "white" }}
-              >
-                About iDecide
-              </MDBCardTitle>
-              <p className="mx-5 mb-5">
-                iDecide has been developed by a team of researchers in general
-                practice, social work, women's health, nursing, and health
+            <MDBContainer fluid className="text-center text-md-left">
+        <MDBRow>
+          <MDBCol md="6">
+            <h5 className="title">About IDecide</h5>
+            <p className="mx-5 mb-5">
+                iDecide has been developed by a team of researchers 
+                in general practice, social work,
+                women's health, nursing, and health
                 technology led by The University of Melbourne.
                 <br />
-                <br /> Many women in Australia feel unsafe, or worry that their
-                relationships with their partners are not healthy. iDecide helps
+                <br /> Many women in Australia feel unsafe, 
+                or worry that their relationships with their partners 
+                are not healthy. iDecide helps
                 women to self-reflect on the health of their relationhips,
                 become more informed about options available, and plan for their
                 safety and well being.
-              </p>
-            </div>
+            </p>
+          </MDBCol>
+          <MDBCol md="6">
+            <h5 className="title">More Information</h5>
+            <ul>
+              <li className="list-unstyled">
+                <a href="/survey/3.2">Resource</a>
+              </li>
+              <li className="list-unstyled">
+                <a href="https://www.respect.gov.au/">Related Website</a>
+              </li>
+              <li className="list-unstyled">
+                <a href="#!">Get Help</a>
+              </li>
+              <li className="list-unstyled">
+                <a href="#!">Contact Us</a>
+              </li>
+            </ul>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+      <div className="footer-copyright text-center py-3">
+        <MDBContainer fluid>
+          &copy; {new Date().getFullYear()} Copyright: IDecide Development Group
+        </MDBContainer>
+      </div>
+            
           </div>
-        </MDBJumbotron>
+        </MDBFooter>
       </React.Fragment>
     );
   }

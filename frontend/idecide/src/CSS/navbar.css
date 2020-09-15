@@ -15,7 +15,7 @@
     border-radius: 5px;
     display: inline-block;
     width: 100px;
-    height: 40px;
+    height: 43px;
     text-decoration:none;
     text-align: center; 
     position: relative;
@@ -27,7 +27,7 @@
     border-radius: 5px;
     display: inline-block;
     width: 100px;
-    height: 40px;
+    height: 43px;
     text-decoration:none;
     text-align: center; 
     position: relative;
@@ -38,14 +38,15 @@
 .dropdown{
     border-radius: 5px;
     width: 100px;
-    height: 40px;
+    height: 43px;
     text-decoration:none;
     position: relative;
     left: 10px; 
     min-width: 100px;
     float: none;
     text-align:center;
-    display:inline-block；
+    display:inline-block;
+    line-height: 11px !important
 }
 
 /*.page-link{
@@ -57,31 +58,34 @@
     border-radius: 5px;
 } */
 
-/*.page-link a{
-    color: purple;
+.home:hover{
+    background-color:  #cfa2d6;
 }
 
-.mr-auto a:hover{
-    color:  #a365ac;
+.contact:hover{
+    background-color:  #e1c6e6;
 }
 
-.page-link .active{
-    background : rgb(141, 27, 141);   
-}*/
-
-/*.mr-auto .move {
-    height: 4px;
-    width: 110px;
-    border-top: 4px solid  #0ab2d2;
-    position: absolute;
-    left: 0;
-    top: 52px;
-    transition: left .2s ease-in-out 0s;
-    -webkit-transition: left .2s ease-in-out 0s;
-    -moz-transition: left .2s ease-in-out 0s;
-    -o-transition: left .2s ease-in-out 0s;
+.dropdown:hover{
+    background-color:  #f0e0f3;
 }
 
+.dropitem{
+    padding: 14px 20px;
+    width: 100%;
+    color: #fff;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+    float: left;
+    clear: both;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+
+/*
 li:nth-child(1):hover~ .move{
     left: 0px;
 }
