@@ -1,7 +1,8 @@
-import React,{ useContext} from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import EditIcon from '@material-ui/icons/Edit';
 import Editable from './../SurveyLayout';
+import { DropzoneDialogBase } from 'material-ui-dropzone';
 import {
 	Dialog,
 	DialogTitle,
@@ -15,6 +16,7 @@ import {
 	CardContent,
 	Divider,
 	Grid,
+	CardActions,
 	CardMedia,
 	Typography,
 	makeStyles,
@@ -30,7 +32,7 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import IconLogo from '../../../../../images/idecide-logo.png';
 import IconLogo1 from '../../../../../images/iconPrioritiesSurvey.png';
-import { getStaticImageUrlFromName, editSurvey, DeleteSurvey } from '../../../../../API/surveyAPI';
+import { getStaticImageUrlFromName, editSurvey, DeleteSurvey, addImageForSurvey } from '../../../../../API/surveyAPI';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -54,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const SurveyCard = ({ product,editable, ...rest }) => {
+const SurveyCard = ({ product, editable, ...rest }) => {
 	const classes = useStyles();
 	const [ openAlert, setOpen ] = React.useState(false);
 	const [ openGreen, setOpenGreen ] = React.useState(false);
@@ -64,10 +66,12 @@ const SurveyCard = ({ product,editable, ...rest }) => {
 		title: product.surveyTitle,
 		descrpition: product.surveyIntroduction
 	});
+	const [ files, setFiles ] = React.useState([]);
+	const form = useRef(null);
 
-//	const [ deleteMD, setDeleteMD ] = React.useState(true);
-//	const editable = useContext(Editable);
-//	console.log(editable);
+	//	const [ deleteMD, setDeleteMD ] = React.useState(true);
+	//	const editable = useContext(Editable);
+	//	console.log(editable);
 	const handleOpen = () => {
 		setDMOpen(true);
 	};
@@ -79,22 +83,37 @@ const SurveyCard = ({ product,editable, ...rest }) => {
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
 	};
+	const submit = (e) => {
+		e.preventDefault();
+		const data = new FormData(form.current);
+		fetch('https://www.idecide.icu:9012/survey/uploadImg', { method: 'POST', body: data })
+			.then((res) => res.json())
+			.then((json) => console.log(json));
+	};
+
+	const handleUploadImg = async () => {
+		console.log(files);
+		let formData = new FormData();
+		formData.set('img', files);
+		formData.set('surveyId', product.surveyId);
+		console.log(formData);
+		await addImageForSurvey(formData);
+	};
+
+	const ImgChange = (event) => {
+		setFiles(event.target.files[0]);
+	};
 
 	const handleDelete = async () => {
 		alert('Are you sure you want to delete this survey?');
-		//
-		// console.log(values.descrpition);
-		// console.log(product);
 
 		const feedBack = await DeleteSurvey(product.surveyId)
 			.then(() => {
-				//	setOpenGreen(true);
 				window.location.href = './survey';
 			})
 			.catch((error) => {
 				setOpen(true);
 				setError(error + '');
-				//			alert('Error from processDataAsycn() with async( When promise gets rejected ): ' + error);
 			});
 		return feedBack;
 	};
@@ -104,13 +123,11 @@ const SurveyCard = ({ product,editable, ...rest }) => {
 			window.location.href = './survey';
 		}
 		//
-		console.log(values.descrpition);
-		console.log(product);
 		var readyData = JSON.stringify({
 			surveyId: product.surveyId,
 			surveyTitle: values.title,
 			surveyIntroduction: values.descrpition,
-			surveyVersion: product.surveyVersion,
+			surveyVersion: product.surveyVersion
 		});
 		const feedBack = await editSurvey(readyData)
 			.then((data) => {
@@ -141,10 +158,10 @@ const SurveyCard = ({ product,editable, ...rest }) => {
 					</IconButton>
 				</Grid>
 			</Collapse>
-			<Card {...rest} className={useStyles.root}>
+			<Card {...rest} className={useStyles.root} align="center">
 				<CardHeader title={product.surveyTitle} />
 				<Divider />
-				<Box p={1}/>
+				<Box p={1} />
 				<CardMedia
 					className={classes.media}
 					image={getStaticImageUrlFromName(product.surveyImageName)}
@@ -182,54 +199,64 @@ const SurveyCard = ({ product,editable, ...rest }) => {
 					</Grid>
 				</Box>
 			</Card>
+
 			<Dialog open={open} onClose={handleClose} aria-labelledby="max-width-dialog-title" maxWidth="lg" fullWidth>
 				<DialogTitle id="form-dialog-title">Survey</DialogTitle>
-				<DialogContent>
-					<Collapse in={!openGreen}>
-						<DialogContentText>
-							Please input the title and description for the new Survey.
-						</DialogContentText>
-						<TextField
-							id="outlined-multiline-flexible"
-							required
-							fullWidth
-							value={values.title}
-							onChange={handleChange('title')}
-							label="Title"
-							variant="outlined"
-						/>
-						<DialogContentText>value={values.title}</DialogContentText>
-						<TextField
-							id="outlined-multiline-flexible"
-							multiline
-							fullWidth
-							required
-							value={values.descrpition}
-							onChange={handleChange('descrpition')}
-							rows={4}
-							label="Description"
-							variant="outlined"
-						/>
-					</Collapse>
-				</DialogContent>
-				<DialogContent>
-					<Collapse in={openAlert}>
-						<Alert severity="error">{error}</Alert>
-					</Collapse>
-					<Collapse in={openGreen}>
-						<Alert severity="success">Update Survey Successfully!</Alert>
-					</Collapse>
-				</DialogContent>
-				<DialogActions>
-					<Collapse in={!openGreen}>
-						<Button onClick={handleClose} color="primary">
-							Cancel
+				<form enctype="multipart/form-data" ref={form} onSubmit={submit}>
+					<DialogContent>
+						<Collapse in={!openGreen}>
+							<DialogContentText>
+								Please input the title and description for the new Survey.
+							</DialogContentText>
+							<TextField
+								id="outlined-multiline-flexible"
+								required
+								fullWidth
+								value={values.title}
+								onChange={handleChange('title')}
+								label="Title"
+								variant="outlined"
+							/>
+							<DialogContentText>
+								<Box p={1} />
+								<input type="file" name="img" multiple="multiple" onChange={ImgChange} />
+								<input name="surveyId" multiple="multiple" value={product.surveyId} />
+							</DialogContentText>
+							<CardActions>
+								<div />
+							</CardActions>
+							<TextField
+								id="outlined-multiline-flexible"
+								multiline
+								fullWidth
+								required
+								value={values.descrpition}
+								onChange={handleChange('descrpition')}
+								rows={4}
+								label="Description"
+								variant="outlined"
+							/>
+						</Collapse>
+					</DialogContent>
+					<DialogContent>
+						<Collapse in={openAlert}>
+							<Alert severity="error">{error}</Alert>
+						</Collapse>
+						<Collapse in={openGreen}>
+							<Alert severity="success">Update Survey Successfully!</Alert>
+						</Collapse>
+					</DialogContent>
+					<DialogActions>
+						<Collapse in={!openGreen}>
+							<Button onClick={handleClose} color="primary">
+								Cancel
+							</Button>
+						</Collapse>
+						<Button onClick={UpdateSurvey} color="primary" type="submit">
+							Confirm
 						</Button>
-					</Collapse>
-					<Button onClick={UpdateSurvey} color="primary">
-						Confirm
-					</Button>
-				</DialogActions>
+					</DialogActions>
+				</form>
 			</Dialog>
 		</div>
 	);
