@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext,createContext } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { Button, FormControl, Select, InputLabel, MenuItem, Input, Checkbox, ListItemText } from '@material-ui/core';
-
-import { Typography, Card, TextField, CardContent, makeStyles, Grid, CardHeader, Divider } from '@material-ui/core';
+import { CountContext,SectionSearch } from './DCLayout';
+import { Collapse, Card, TextField, CardContent, makeStyles, Grid, CardHeader, Divider } from '@material-ui/core';
+import { getSectionBySurveyId } from '../../../../API/surveyAPI';
 
 const useStyles = makeStyles({
 	root: {},
@@ -13,34 +14,47 @@ const useStyles = makeStyles({
 	}
 });
 
-const Tools = ({ className, ...rest }) => {
+
+
+const Tools = ({ className, ...rest },ref) => {
 	const classes = useStyles();
-	const [ value, setValue ] = React.useState('');
-	console.log(value);
+	const [ survey, setSurvey ] = React.useState('');
+	const [ section, setSection ] = React.useState('');
+	const [ sectionIndex, setSectionIndex ] = React.useState(0);
 
-	const handleEditTitle = (event) => {
-		console.log(event.target.value);
-		setValue(event.target.value);
+//	const [ sectionSearch, setSectionSearch ] = React.useState();
+	const [ openSection, setOpenSection ] = React.useState(false);
+	const [ sections, setSections ] = React.useState([]);
+	let surveys = useContext(CountContext);
+	let  {sectionSearch, setSectionSearch}  = useContext(SectionSearch);
+
+	const handleSecChange = (event) => {
+		console.log(event.target);
+		setSection(event.target.value);
+		setSectionIndex(event.target.value);
+		setSectionSearch(sections[event.target.value]);
 	};
-
-	const names = [
-		'Oliver Hansen',
-		'Van Henry',
-		'April Tucker',
-		'Ralph Hubbard',
-		'Omar Alexander',
-		'Carlos Abbott',
-		'Miriam Wagner',
-		'Bradley Wilkerson',
-		'Virginia Andrews',
-		'Kelly Snyder'
-	];
-
-	const [ personName, setPersonName ] = React.useState([]);
+	console.log(sectionSearch);
+//	useContext(SectionSearch);
 
 	const handleChange = (event) => {
-		setPersonName(event.target.value);
+		setSurvey(event.target.value);
+		fetchData(event.target.value);
 	};
+
+	const fetchData = async (id) => {
+		const result = await getSectionBySurveyId(id);
+		console.log(result.surveySections);
+		setSections(result.surveySections);
+		setOpenSection(true);
+	};
+
+	
+
+	const handleSearch = () => {
+	//	console.log("result.surveySections");
+
+	}
 
 	return (
 		<form className={clsx(classes.root, className)} {...rest}>
@@ -51,7 +65,7 @@ const Tools = ({ className, ...rest }) => {
 							Export
 						</Button>
 					}
-					title={'Data'}
+					title={'Data Collection'}
 				/>
 				<Divider />
 				<CardContent>
@@ -60,47 +74,42 @@ const Tools = ({ className, ...rest }) => {
 							<FormControl className={classes.formControl} fullWidth>
 								<InputLabel id="demo-mutiple-checkbox-label">Survey</InputLabel>
 								<Select
-									labelId="demo-mutiple-checkbox-label"
-									id="demo-mutiple-checkbox"
-									multiple
-									value={personName}
+									labelId="demo-simple-select-helper-label"
+									id="demo-simple-select-helper"
+									value={survey}
 									onChange={handleChange}
-									input={<Input />}
-									renderValue={(selected) => selected.join(', ')}
 								>
-									{names.map((name) => (
-										<MenuItem key={name} value={name}>
-											<Checkbox checked={personName.indexOf(name) > -1} />
-											<ListItemText primary={name} />
-										</MenuItem>
-									))}
-								</Select>
-							</FormControl>
-						</Grid>
-                        <Grid item xs={4}>
-							<FormControl className={classes.formControl} fullWidth>
-								<InputLabel id="demo-mutiple-checkbox-label">Section</InputLabel>
-								<Select
-									labelId="demo-mutiple-checkbox-label"
-									id="demo-mutiple-checkbox"
-									multiple
-									value={personName}
-									onChange={handleChange}
-									input={<Input />}
-									renderValue={(selected) => selected.join(', ')}
-								>
-									{names.map((name) => (
-										<MenuItem key={name} value={name}>
-											<Checkbox checked={personName.indexOf(name) > -1} />
-											<ListItemText primary={name} />
+									{Array.from(surveys).map((survey) => (
+										<MenuItem key={survey.surveyId} value={survey.surveyId}>
+											<ListItemText primary={survey.surveyTitle} />
 										</MenuItem>
 									))}
 								</Select>
 							</FormControl>
 						</Grid>
 						<Grid item xs={4}>
-							<Button variant="contained" color="default" size="small">
-								Confirm
+							<Collapse in={openSection}>
+								<FormControl className={classes.formControl} fullWidth>
+									<InputLabel id="demo-mutiple-checkbox-label">Section</InputLabel>
+									<Select
+										labelId="demo-simple-select-helper-label"
+										id="demo-simple-select-helper"
+										value={section}
+										onChange={handleSecChange}
+									>
+										{Array.from(sections).map((section,index) => (
+											<MenuItem key={section.sectionId} value={index} name={index}>
+												<ListItemText primary={section.sectionTitle} />
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
+							</Collapse>
+						</Grid>
+
+						<Grid item xs={4}>
+							<Button variant="contained" color="default" size="small" onClick={handleSearch}>
+								Search
 							</Button>
 						</Grid>
 					</Grid>

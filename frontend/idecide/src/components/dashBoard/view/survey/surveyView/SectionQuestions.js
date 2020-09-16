@@ -37,7 +37,6 @@ const SectionQuestions = (props) => {
 	const [ openAddQuestion, setOpenAddQuestion ] = useState(false);
 	const [ isOpen, setIsOpen ] = React.useState(false);
 
-    console.log(props);
 	const [ open, setDMOpen ] = React.useState(false); //control of adding new survey
 	//const [ isOpen, setOpen ] = React.useState(false);
 	const [ openAlert, setOpen ] = React.useState(false);
@@ -92,7 +91,7 @@ const SectionQuestions = (props) => {
 			let questions = props.data.questions;
 			let questionIndex = 0;
 			console.log(questions);
-			if(questions == 'undefined') questions = [];
+			if (questions == 'undefined') questions = [];
 
 			if (typeof questions.length !== 'undefined') questionIndex = questions.length;
 			var newSliderQuestion = {
@@ -137,8 +136,7 @@ const SectionQuestions = (props) => {
 					}
 				]
 			};
-		//	questions.push(newMCQuestion);
-		
+			//	questions.push(newMCQuestion);
 
 			if (type == 'slider') {
 				questions.push(newSliderQuestion);
@@ -191,31 +189,29 @@ const SectionQuestions = (props) => {
 				surveySections: sections
 			};
 			console.log(readyData);
-		await editSurvey(readyData)
-			.then(() => {
-				setOpenAddQuestion(false)
-			})
-			.catch(() => {
-				setOpen(true);
-				setError(error + '');
-			});
+			await editSurvey(readyData)
+				.then(() => {
+					setOpenAddQuestion(false);
+				})
+				.catch(() => {
+					setOpen(true);
+					setError(error + '');
+				});
 		}
 	};
 
 	const UpdateSection = async (event) => {
+		//		event.preventDefault();
 
-//		event.preventDefault();
-
-//		const formIn = new FormData(event.target);
-//		var formObject = {};
-//		formIn.forEach((value, key) => {
-//			formObject[key] = value;
-//		});
+		//		const formIn = new FormData(event.target);
+		//		var formObject = {};
+		//		formIn.forEach((value, key) => {
+		//			formObject[key] = value;
+		//		});
 
 		let sections = props.sections;
 
 		var modifiedSection = {
-
 			sectionTitle: values.title,
 			sectionIntroduction: values.descrpition,
 			sectionId: props.data.sectionId,
@@ -224,8 +220,6 @@ const SectionQuestions = (props) => {
 		};
 
 		sections.splice(parseInt(props.data.sectionIndex), 1, modifiedSection);
-		console.log(sections);
-
 
 		var readyData = JSON.stringify({
 			surveyId: props.surveyId,
@@ -236,7 +230,6 @@ const SectionQuestions = (props) => {
 			.then((data) => {
 				setDMOpen(false);
 				props.handleShow();
-
 			})
 			.catch(() => {
 				setOpen(true);
@@ -317,20 +310,22 @@ const SectionQuestions = (props) => {
 					</CardContent>
 				</Card>
 				<Collapse in={isOpen}>
-					{typeof props.data.questions !== 'undefined' ? (
-						props.data.questions.map((question) => (
-							<Box>
-								<QuestionDetails
-									surveyID={props.surveyId}
-									data={question}
-									currentSection={props.sections}
-									questions={props.data.questions}
-								/>
-							</Box>
-						))
-					) : (
-						<div>No questions</div>
-					)}
+					<div>
+						{typeof props.data.questions !== 'undefined' ? (
+							props.data.questions.map((question, index) => (
+								<Box key={index}>
+									<QuestionDetails
+										surveyID={props.surveyId}
+										data={question}
+										currentSection={props.sections}
+										questions={props.data.questions}
+									/>
+								</Box>
+							))
+						) : (
+							<div>No questions</div>
+						)}
+					</div>
 				</Collapse>
 			</Box>
 			{/**  This window is used for updating section */}
@@ -381,11 +376,11 @@ const SectionQuestions = (props) => {
 						<Button onClick={handleClose} color="primary">
 							Cancel
 						</Button>
-						</Collapse>
-						<Button type="submit" color="primary" onClick={UpdateSection}>
-							Confirm
-						</Button>
-					</DialogActions>
+					</Collapse>
+					<Button type="submit" color="primary" onClick={UpdateSection}>
+						Confirm
+					</Button>
+				</DialogActions>
 			</Dialog>
 
 			{/**  This window is used for adding new question */}
@@ -405,7 +400,9 @@ const SectionQuestions = (props) => {
 							id="outlined-multiline-flexible"
 							required
 							value={values.questionId}
-							type="number" min="0" step="1"
+							type="number"
+							min="0"
+							step="1"
 							onChange={handleChange('questionId')}
 							label="questionId"
 							variant="outlined"

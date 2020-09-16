@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const CountContext = createContext();
-console.log(CountContext);
 
 export default function APLayout() {
 	const classes = useStyles();
