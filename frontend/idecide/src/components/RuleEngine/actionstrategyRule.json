@@ -1,0 +1,502 @@
+[
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "STAY" },
+        { "fact": "HaveChildren", "operator": "equal", "value": true },
+        { "fact": "Priority", "operator": "equal", "value": "Children" }
+      ]
+    },
+    "event": {
+      "type": "Stay_HaveChildren_Children",
+      "params": ["TALK_CHILD_VIOL", "PLAN_CHILD_SAFE"]
+    },
+    "name": "Stay_HavaChildren_Children"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "STAY" },
+        { "fact": "HaveChildren", "operator": "equal", "value": true },
+        { "fact": "Priority", "operator": "equal", "value": "Partner" }
+      ]
+    },
+    "event": {
+      "type": "Stay_haveChildren_Partner",
+      "params": ["TALK_PARTNER_HELP", "TALK_PARTNER_COUNSELING"]
+    },
+    "name": "Stay_HaveChildren_Partner"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "STAY" },
+        { "fact": "HaveChildren", "operator": "equal", "value": false },
+        { "fact": "Priority", "operator": "equal", "value": "Partner" }
+      ]
+    },
+    "event": {
+      "type": "Stay_NoChildren_Partner",
+      "params": ["TALK_PARTNER_HELP"]
+    },
+    "name": "Stay_NoChildren_Partner"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "STAY" },
+        { "fact": "HaveChildren", "operator": "equal", "value": true },
+        { "fact": "Priority", "operator": "equal", "value": "Resource" }
+      ]
+    },
+    "event": {
+      "type": "Stay_HaveChildren_Resource",
+      "params": ["HELP_WORK", "PROTECT_FINANCES", "TRANING_EDU"]
+    },
+    "name": "Stay_HaveChildren_Resource"
+  },
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "STAY" },
+        { "fact": "HaveChildren", "operator": "equal", "value": false },
+        { "fact": "Priority", "operator": "equal", "value": "Resource" }
+      ]
+    },
+    "event": {
+      "type": "Stay_NoChildren_Resource",
+      "params": ["HELP_WORK", "PROTECT_FINANCES", "TRANING_EDU"]
+    },
+    "name": "Stay_NoChildren_Resource"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "STAY" },
+        { "fact": "HaveChildren", "operator": "equal", "value": true },
+        { "fact": "Priority", "operator": "equal", "value": "Safety" }
+      ]
+    },
+    "event": {
+      "type": "Stay_HaveChildren_Safety",
+      "params": [
+        "PROTECT_WORK",
+        "PROTECT_PHONE",
+        "PROTECT_HOME",
+        "KEEP_PETS_SAFE",
+        "APPLY_PROTORDER",
+        "PART_LEAVE"
+      ]
+    },
+    "name": "Stay_HaveChildren_Safety"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "STAY" },
+        { "fact": "HaveChildren", "operator": "equal", "value": false },
+        { "fact": "Priority", "operator": "equal", "value": "Safety" }
+      ]
+    },
+    "event": {
+      "type": "Stay_NoChildren_Safety",
+      "params": [
+        "PROTECT_WORK",
+        "PROTECT_PHONE",
+        "PROTECT_HOME",
+        "KEEP_PETS_SAFE",
+        "APPLY_PROTORDER",
+        "PART_LEAVE"
+      ]
+    },
+    "name": "Stay_NoChildren_Safety"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "STAY" },
+        { "fact": "HaveChildren", "operator": "equal", "value": true },
+        { "fact": "Priority", "operator": "equal", "value": "Health" }
+      ]
+    },
+    "event": {
+      "type": "Stay_HaveChildren_Health",
+      "params": [
+        "TALK_FRIENDFAMILY",
+        "CONF_SERV",
+        "MANAGE_ANXIETY",
+        "TALK_WOMEN",
+        "MEDICAL_HELP",
+        "HELP_DRUGALC_USE",
+        "MANAGE_PAIN",
+        "SUIC_HELPLINE",
+        "SUPPORT_FAITH"
+      ]
+    },
+    "name": "Stay_HaveChildren_Health"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "STAY" },
+        { "fact": "HaveChildren", "operator": "equal", "value": false },
+        { "fact": "Priority", "operator": "equal", "value": "Health" }
+      ]
+    },
+    "event": {
+      "type": "Stay_NoChildren_Health",
+      "params": [
+        "TALK_FRIENDFAMILY",
+        "CONF_SERV",
+        "MANAGE_ANXIETY",
+        "TALK_WOMEN",
+        "MEDICAL_HELP",
+        "HELP_DRUGALC_USE",
+        "MANAGE_PAIN",
+        "SUIC_HELPLINE",
+        "SUPPORT_FAITH"
+      ]
+    },
+    "name": "Stay_NoChildren_Health"
+  },
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "LEAVE" },
+        { "fact": "HaveChildren", "operator": "equal", "value": true },
+        { "fact": "Priority", "operator": "equal", "value": "Children" }
+      ]
+    },
+    "event": {
+      "type": "Leave_HaveChildren_Children",
+      "params": [
+        "TALK_CHILD_VIOL",
+        "PLAN_CHILD_SAFE",
+        "PLAN_SAFE_CONTACT",
+        "Learn_CUSTODY"
+      ]
+    },
+    "name": "Leave_HaveChildren_Children"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "LEAVE" },
+        { "fact": "HaveChildren", "operator": "equal", "value": true },
+        { "fact": "Priority", "operator": "equal", "value": "Partner" }
+      ]
+    },
+    "event": {
+      "type": "Leave_HaveChildren_Partner",
+      "params": ["TALK_PARTNER_HELP"]
+    },
+    "name": "Leave_HaveChildren_Partner"
+  },
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "LEAVE" },
+        { "fact": "HaveChildren", "operator": "equal", "value": true },
+        { "fact": "Priority", "operator": "equal", "value": "Resource" }
+      ]
+    },
+    "event": {
+      "type": "Leave_HaveChildren_Resource",
+      "params": ["HELP_WORK", "PROTECT_FINANCES", "TRANING_EDU", "FIND_HOUSING"]
+    },
+    "name": "Leave_HaveChildren_Resource"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "LEAVE" },
+        { "fact": "HaveChildren", "operator": "equal", "value": false },
+        { "fact": "Priority", "operator": "equal", "value": "Partner" }
+      ]
+    },
+    "event": {
+      "type": "Leave_NoChildren_Partner",
+      "params": ["HELP_WORK", "PROTECT_FINANCES", "TRANING_EDU", "FIND_HOUSING"]
+    },
+    "name": "Leave_NoChildren_Partner"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "LEAVE" },
+        { "fact": "HaveChildren", "operator": "equal", "value": true },
+        { "fact": "Priority", "operator": "equal", "value": "Safety" }
+      ]
+    },
+    "event": {
+      "type": "Leave_HaveChildren_Safety",
+      "params": [
+        "PROTECT_WORK",
+        "PROTECT_PHONE",
+        "PROTECT_HOME",
+        "KEEP_PETS_SAFE",
+        "APPLY_PROTORDER",
+        "PART_LEAVE",
+        "STALK_TIPS",
+        "CHANGE_LOCKS_SECURITY",
+        "WHERETOSTAY_LEAVEPARTNER"
+      ]
+    },
+    "name": "Leave_HaveChildren_Safety"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "LEAVE" },
+        { "fact": "HaveChildren", "operator": "equal", "value": true },
+        { "fact": "Priority", "operator": "equal", "value": "Safety" }
+      ]
+    },
+    "event": {
+      "type": "Leave_NoChildren_Safety",
+      "params": [
+        "PROTECT_WORK",
+        "PROTECT_PHONE",
+        "PROTECT_HOME",
+        "KEEP_PETS_SAFE",
+        "APPLY_PROTORDER",
+        "PART_LEAVE",
+        "STALK_TIPS",
+        "CHANGE_LOCKS_SECURITY",
+        "WHERETOSTAY_LEAVEPARTNER"
+      ]
+    },
+    "name": "Leave_NoChildren_Safety"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "LEAVE" },
+        { "fact": "HaveChildren", "operator": "equal", "value": true },
+        { "fact": "Priority", "operator": "equal", "value": "Health" }
+      ]
+    },
+    "event": {
+      "type": "Leave_HaveChildren_Health",
+      "params": [
+        "TALK_FRIENDFAMILY",
+        "CONF_SERV",
+        "MANAGE_ANXIETY",
+        "TALK_WOMEN",
+        "MEDICAL_HELP",
+        "HELP_DRUGALC_USE",
+        "MANAGE_PAIN",
+        "SUIC_HELPLINE",
+        "SUPPORT_FAITH"
+      ]
+    },
+    "name": "Leave_HaveChildren_Health"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "LEAVE" },
+        { "fact": "HaveChildren", "operator": "equal", "value": false },
+        { "fact": "Priority", "operator": "equal", "value": "Health" }
+      ]
+    },
+    "event": {
+      "type": "Leave_NoChildren_Health",
+      "params": [
+        "TALK_FRIENDFAMILY",
+        "CONF_SERV",
+        "MANAGE_ANXIETY",
+        "TALK_WOMEN",
+        "MEDICAL_HELP",
+        "HELP_DRUGALC_USE",
+        "MANAGE_PAIN",
+        "SUIC_HELPLINE",
+        "SUPPORT_FAITH"
+      ]
+    },
+    "name": "Leave_NoChildren_Health"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "Left" },
+        { "fact": "HaveChildren", "operator": "equal", "value": true },
+        { "fact": "Priority", "operator": "equal", "value": "Children" }
+      ]
+    },
+    "event": {
+      "type": "Left_HaveChildren_Children",
+      "params": ["PLAN_CHILD_SAFE", "Learn_CUSTODY"]
+    },
+    "name": "Left_HaveChildren_Children"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "Left" },
+        { "fact": "HaveChildren", "operator": "equal", "value": true },
+        { "fact": "Priority", "operator": "equal", "value": "Partner" }
+      ]
+    },
+    "event": {
+      "type": "Left_HaveChildren_Partner",
+      "params": ["TALK_PARTNER_HELP"]
+    },
+    "name": "Left_HaveChildren_Partner"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "Left" },
+        { "fact": "HaveChildren", "operator": "equal", "value": false },
+        { "fact": "Priority", "operator": "equal", "value": "Partner" }
+      ]
+    },
+    "event": {
+      "type": "Left_NoChildren_Partner",
+      "params": ["TALK_PARTNER_HELP"]
+    },
+    "name": "Left_NoChildren_Partner"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "Left" },
+        { "fact": "HaveChildren", "operator": "equal", "value": true },
+        { "fact": "Priority", "operator": "equal", "value": "Resource" }
+      ]
+    },
+    "event": {
+      "type": "Left_HaveChildren_Partner",
+      "params": ["HELP_WORK", "PROTECT_FINANCES", "TRANING_EDU", "FIND_HOUSING"]
+    },
+    "name": "Left_HaveChildren_Partner"
+  },
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "Left" },
+        { "fact": "HaveChildren", "operator": "equal", "value": false },
+        { "fact": "Priority", "operator": "equal", "value": "Resource" }
+      ]
+    },
+    "event": {
+      "type": "Left_NoChildren_Partner",
+      "params": ["HELP_WORK", "PROTECT_FINANCES", "TRANING_EDU", "FIND_HOUSING"]
+    },
+    "name": "Left_NoChildren_Partner"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "Left" },
+        { "fact": "HaveChildren", "operator": "equal", "value": true },
+        { "fact": "Priority", "operator": "equal", "value": "Safety" }
+      ]
+    },
+    "event": {
+      "type": "Left_HaveChildren_Safety",
+      "params": [
+        "PROTECT_WORK",
+        "PROTECT_PHONE",
+        "PROTECT_HOME",
+        "APPLY_PROTORDER",
+        "STALK_TIPS",
+        "CHANGE_LOCKS_SECURITY",
+        "WHERETOSTAY_LEAVEPARTNER",
+        "PART_LEAVE"
+      ]
+    },
+    "name": "Left_HaveChildren_Safety"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "Left" },
+        { "fact": "HaveChildren", "operator": "equal", "value": false },
+        { "fact": "Priority", "operator": "equal", "value": "Safety" }
+      ]
+    },
+    "event": {
+      "type": "Left_NoChildren_Safety",
+      "params": [
+        "PROTECT_WORK",
+        "PROTECT_PHONE",
+        "PROTECT_HOME",
+        "APPLY_PROTORDER",
+        "STALK_TIPS",
+        "CHANGE_LOCKS_SECURITY",
+        "WHERETOSTAY_LEAVEPARTNER",
+        "PART_LEAVE"
+      ]
+    },
+    "name": "Left_NoChildren_Safety"
+  },
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "Left" },
+        { "fact": "HaveChildren", "operator": "equal", "value": true },
+        { "fact": "Priority", "operator": "equal", "value": "Health" }
+      ]
+    },
+    "event": {
+      "type": "Left_HaveChildren_Health",
+      "params": [
+        "TALK_FRIENDFAMILY",
+        "CONF_SERV",
+        "MANAGE_ANXIETY",
+        "TALK_WOMEN",
+        "MEDICAL_HELP",
+        "HELP_DRUGALC_USE",
+        "MANAGE_PAIN",
+        "SUIC_HELPLINE",
+        "SUPPORT_FAITH"
+      ]
+    },
+    "name": "Left_HaveChildren_Health"
+  },
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "Left" },
+        { "fact": "HaveChildren", "operator": "equal", "value": false },
+        { "fact": "Priority", "operator": "equal", "value": "Health" }
+      ]
+    },
+    "event": {
+      "type": "Left_NoChildren_Health",
+      "params": [
+        "TALK_FRIENDFAMILY",
+        "CONF_SERV",
+        "MANAGE_ANXIETY",
+        "TALK_WOMEN",
+        "MEDICAL_HELP",
+        "HELP_DRUGALC_USE",
+        "MANAGE_PAIN",
+        "SUIC_HELPLINE",
+        "SUPPORT_FAITH"
+      ]
+    },
+    "name": "Left_NoChildren_Health"
+  }
+]

@@ -4,7 +4,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -12,14 +12,14 @@ const useStyles = makeStyles((theme) => ({
 	},
 	paper: {
 		marginRight: theme.spacing(2),
-        height: 500,
-        width:200,
+		height: 500,
+		width: 200,
 	}
 }));
 
 export default function MenuListComposition() {
 	const classes = useStyles();
-	const [ open, setOpen ] = React.useState(false);
+	const [open, setOpen] = React.useState(false);
 	const anchorRef = React.useRef(null);
 
 	const handleToggle = () => {
@@ -51,51 +51,30 @@ export default function MenuListComposition() {
 
 			prevOpen.current = open;
 		},
-		[ open ]
+		[open]
 	);
 
 	return (
 		<div className={classes.root}>
 			<Paper className={classes.paper}>
 				<MenuList>
-					<MenuItem
-						onClick={() => {
-							window.location.pathname = '/dashboard/home';
-						}}
-					>
+					<NavLink to="/dashboard/home"><MenuItem>
 						<Typography color="textPrimary" gutterBottom variant="h6">
-						DashBoard
-						</Typography>
-						
-					</MenuItem>
-					
-					<MenuItem
-						onClick={() => {
-							window.location.pathname = '/dashboard/survey';
-						}}
-					>
+							DashBoard
+          			</Typography></MenuItem></NavLink>
+					<NavLink to='/dashboard/survey'><MenuItem>
 						<Typography color="textPrimary" gutterBottom variant="h6">
-						Survey
-						</Typography>
-					</MenuItem>
-					<MenuItem
-						onClick={() => {
-							window.location.pathname = '/dashboard/datacollection';
-						}}
-					>
+							Survey
+          			</Typography></MenuItem></NavLink>
+					<NavLink to='/dashboard/datacollection'><MenuItem>
 						<Typography color="textPrimary" gutterBottom variant="h6">
-						Data
-						</Typography>
-					</MenuItem>
-					<MenuItem
-						onClick={() => {
-							window.location.pathname = '/dashboard/actionplan';
-						}}
-					>
+							Data
+          			</Typography></MenuItem></NavLink>
+					<NavLink to='/dashboard/actionplan'><MenuItem>
 						<Typography color="textPrimary" gutterBottom variant="h6">
-						Action Plan
-						</Typography>
-					</MenuItem>
+							Action Plan
+          			</Typography></MenuItem></NavLink>
+
 				</MenuList>
 			</Paper>
 			<div />

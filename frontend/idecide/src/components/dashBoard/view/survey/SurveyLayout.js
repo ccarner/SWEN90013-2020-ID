@@ -11,11 +11,11 @@ import {
 	DialogContentText,
 	DialogActions,
 	Collapse,
-	IconButton
+	Box
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import CloseIcon from '@material-ui/icons/Close';
-
+import { NavLink } from "react-router-dom";
 import { getAllSurveys, AddNewSurvey } from '../../../../API/surveyAPI';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,10 +30,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const CountContext = createContext();
-console.log(CountContext);
+export const Editable = createContext();
+console.log(Editable);
 
 export default function SurveyLayout() {
 	const classes = useStyles();
+	const [editable, setEditable] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [data, setData] = useState({ hits: [] });
 	const [open, setDMOpen] = React.useState(false); //control of adding new survey
@@ -45,6 +47,7 @@ export default function SurveyLayout() {
 		title: '',
 		descrpition: ''
 	});
+	console.log(editable);
 
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
@@ -58,13 +61,16 @@ export default function SurveyLayout() {
 		setDMOpen(false);
 	};
 
+	const handleEdit = () => {
+		setEditable((pre) => !pre);
+	};
+
 	const AddNewSurveys = async () => {
 		if (openGreen) {
-			window.location.href = './survey';
+			// window.location.replace('./survey');
+			window.location.href = '/dashboard/survey';
 		} else {
-			//
-			console.log(values.descrpition);
-			//	console.log();
+
 			var readyData = JSON.stringify({
 				surveyId: Array.from(data).length + 1,
 				surveyTitle: values.title,
@@ -102,7 +108,6 @@ export default function SurveyLayout() {
 		fetchData();
 	}, []);
 
-
 	console.log(Array.from(data).length);
 
 	return (
@@ -110,25 +115,37 @@ export default function SurveyLayout() {
 			{isLoading ? (
 				<div>Loading ...</div>
 			) : (
-					<Grid>
-						<Grid container spacing={10}>
-							{Array.from(data).map((item) => (
-								<Grid item lg={4} md={6} xs={12} key={item.surveyId}>
-									<SurveyCard
-										key={item.surveyId}
-										product={item}
-										useStyles
-										onClick={() => {
-											window.location.pathname = '/dashboard/surveyId=' + item.surveyId;
-										}}
-									/>
-									<CountContext.Provider value={item.surveyId} />
-								</Grid>
-							))}
-							<Grid item xs={12}>
-								<Button variant="contained" color="secondary" fullWidth onClick={handleOpen}>
-									Add New Survey
+					<Box>
+						<Grid container spacing={2}>
+							<Grid item xs={12} alignContent="flex-end">
+								<Button variant="contained" color="primary" onClick={handleEdit}>
+									Edit
 							</Button>
+							</Grid>
+							<Editable.Provider value={editable}>
+								{Array.from(data).map((item) => (
+									<Grid item lg={4} md={6} xs={12} key={item.surveyId}>
+										<SurveyCard
+											style={{ height: 400 }}
+											key={item.surveyId}
+											product={item}
+											editable={editable}
+											useStyles
+											onClick={() => {
+
+												// window.location.replace('/dashboard/surveyId=' + item.surveyId);
+												window.location.href = '/dashboard/surveyId=' + item.surveyId;
+											}}
+										/>
+									</Grid>
+								))}
+							</Editable.Provider>
+							<Grid item xs={12}>
+								<Collapse in={editable}>
+									<Button variant="contained" color="secondary" fullWidth onClick={handleOpen}>
+										Add New Survey
+								</Button>
+								</Collapse>
 							</Grid>
 						</Grid>
 
@@ -187,7 +204,7 @@ export default function SurveyLayout() {
 							</Button>
 							</DialogActions>
 						</Dialog>
-					</Grid>
+					</Box>
 				)}
 		</div>
 	);

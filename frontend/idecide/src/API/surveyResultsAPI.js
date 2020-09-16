@@ -12,8 +12,13 @@ export async function getCsvDownloadLink() {
   }
 }
 
+<<<<<<< HEAD
 export async function getActionPlanStrategy() {
   const endpoint = SURVEY_RESULT_URL + `/actionplan/actionStrategyRule`;
+=======
+export async function getResults() {
+  const endpoint = `https://www.idecide.icu:9012/survey/getResult`;
+>>>>>>> master
   try {
     const dataFetched = axios.get(endpoint).then((res) => res.data);
     return dataFetched;

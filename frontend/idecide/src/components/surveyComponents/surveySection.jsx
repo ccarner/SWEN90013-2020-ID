@@ -4,7 +4,6 @@ import SingleChoice from "./questionComponents/questionSingleChoice";
 import QuestionYesOrNo from "./questionComponents/questionYesOrNo";
 import { MDBBtn, MDBInput, MDBContainer } from "mdbreact";
 import CardDeck from "../CardDeskCompoent/cardDeck";
-
 /**
  * This component handles the DISPLAY of a section in a survey. State is contained
  * in the parent component (SurveyControl)

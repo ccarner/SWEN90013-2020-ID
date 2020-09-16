@@ -1,11 +1,10 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import { Button } from '@material-ui/core';
-import { green } from '@material-ui/core/colors';
-import Icon from '@material-ui/core/Icon';
+import Tools from './Tools';
+import DataDisplay from './DataDisplay';
 
-import { getAllSurveys } from '../../../../API/surveyAPI';
+import { getResults } from '../../../../API/surveyResultsAPI';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -29,7 +28,7 @@ export default function DCLayout() {
 	useEffect(() => {
 		const fetchData = async () => {
 			setIsLoading(true);
-			const result = await getAllSurveys();
+			const result = await getResults();
 
 			setData(result.data);
 			setIsLoading(false);
@@ -47,15 +46,22 @@ export default function DCLayout() {
 			{isLoading ? (
 				<div>Loading ...</div>
 			) : (
-				<Grid item xs={8}>
-					<Grid container spacing={2}>
-						{console.log(data[0])}
-						{Array.from(data).map((item) => (
-							<Grid item lg={6} md={6} xs={12}>
-								Hello from data collection layout.
-							</Grid>
-						))}
+				<Grid container spacing={2}>
+					<Grid item xs={12} alignContent="flex-end">
+						<Tools />
 					</Grid>
+					{data !== null ? (
+						Array.from(data).map((item) => (
+							<Grid item lg={6} md={6} xs={12}>
+								<DataDisplay />
+							</Grid>
+						))
+					) : (
+						<Grid item xs={12}>
+							<div>No Data</div>
+							<DataDisplay />
+						</Grid>
+					)}
 				</Grid>
 			)}
 		</Grid>
