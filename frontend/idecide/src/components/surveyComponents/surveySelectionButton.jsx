@@ -20,8 +20,13 @@ export default function SurveySelectionButton(props) {
           <Card.Title>{props.surveyTitle}</Card.Title>
           <Card.Text>{props.shortSurveyDescription}</Card.Text>
 
-          <PrimaryButton onClick={props.handleClick}>
-            Take this Survey
+          <PrimaryButton
+            disabled={props.notAvailable}
+            onClick={props.handleClick}
+          >
+            {props.notAvailable
+              ? "Please complete other surveys first"
+              : "Take this Survey"}
           </PrimaryButton>
         </Card.Body>
       </Card>

@@ -27,9 +27,14 @@ export default class SurveyHome extends Component {
   constructor(props) {
     super(props);
 
+    //load in previous completions from localStorage
     let previousCompletions = localStorage.getItem("prevCompletions");
+    let previousNextSurvey = localStorage.getItem("nextSurvey");
+
+    this.surveyOrder = ["My Situation", "My Safety", "My Relationship"]; // order that surveys need to be completed in
 
     this.state = {
+      nextSurvey: previousCompletions === null ? 0 : previousNextSurvey, // index of next survey to complete, from the surveyOrder array
       loaded: false,
       actionPlan: "",
       currentState: "menu", // ["menu","survey","completion"]
@@ -82,7 +87,10 @@ export default class SurveyHome extends Component {
         "prevCompletions",
         JSON.stringify(newSurveyCompletions)
       );
+      localStorage.setItem("nextSurvey", prevState.nextSurvey + 1);
+
       return {
+        nextSurvey: prevState.nextSurvey + 1,
         currentResults: surveyResults,
         surveyCompletions: newSurveyCompletions,
       };
@@ -128,6 +136,11 @@ export default class SurveyHome extends Component {
             {this.state.allSurveys.map((survey) => (
               <div key={survey.surveyId} className="surveyIcon">
                 <SurveySelectionButton
+                  notAvailable={
+                    false && // currently commenting out so can test surveys
+                    survey.surveyTitle !==
+                      this.surveyOrder[this.state.nextSurvey]
+                  }
                   icon={getStaticImageUrlFromName(survey.surveyImageName)}
                   completed="false"
                   surveyTitle={survey.surveyTitle}

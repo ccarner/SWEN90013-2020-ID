@@ -160,7 +160,7 @@ export default class CardDeck extends Component {
           </div>
         </div>
       );
-    } else if (item.questionType == "singleSelectionVertical") {
+    } else if (item.questionType === "singleSelectionVertical") {
       return (
         <div className="questionContainer">
           <div className="composite-scale-container">
