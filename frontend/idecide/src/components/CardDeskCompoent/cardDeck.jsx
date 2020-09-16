@@ -172,7 +172,7 @@ export default class CardDeck extends Component {
                   className="composite-option-button"
                 >
                   <span className="composite-circle top"></span>
-                  <span className="composite-label bottom">{option.name}</span>
+                  <span className="composite-label bottom">{option}</span>
                 </button>
               ))}
             </div>
