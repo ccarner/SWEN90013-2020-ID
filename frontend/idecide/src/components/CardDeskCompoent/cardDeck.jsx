@@ -4,6 +4,9 @@ import { Slider } from "antd";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./cards.css";
 import "antd/dist/antd.css";
+import testdata from "./testdata";
+import question from "./testdata";
+import DragableList from "../RankingComponent/DragableList";
 import { getSurveyById, postingSurvey } from "../../API/surveyAPI";
 import { Spinner, Button } from "react-bootstrap";
 import JsonRuleEngine from "../RuleEngine/jsonRule.js";
@@ -179,6 +182,8 @@ export default class CardDeck extends Component {
           </div>
         </div>
       );
+    } else if (item.questionType == "ranking") {
+      return <DragableList question={item} />;
     } else {
       return (
         <div className="questionContainer">
@@ -249,6 +254,7 @@ export default class CardDeck extends Component {
             <div>{this.state.CasResult}</div>
           </div>
         </div>
+        <DragableList question={question.questions[0]} />
       </div>
     );
   }
