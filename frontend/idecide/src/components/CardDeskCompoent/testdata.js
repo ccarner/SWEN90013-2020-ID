@@ -3,11 +3,11 @@ export default [
     questions: [
       {
         questionId: "1",
-        questionType: "single-choice-vertical",
+        questionType: "singleSelectionVertical",
         questionText: "Told me that I wasn't good enough",
         selectionOptions: [
-          { name: "i intend to stay in the relationship" },
-          { name: "i intend to leave in the relationship" },
+          "i intend to stay in the relationship",
+          "i intend to leave in the relationship",
         ],
       },
       {
