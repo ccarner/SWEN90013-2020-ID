@@ -29,7 +29,7 @@ const blogInfo = {
 export const t = 4;
 export const QuestionContext = createContext();
 
-const SurveySection = (props) => {
+const SurveyDetails = (props) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isOpen, setOpen] = React.useState(false);
 	const [values, setValues] = React.useState({
@@ -186,4 +186,4 @@ const SurveySection = (props) => {
 	);
 };
 
-export default SurveyQuestions;
+export default SurveyDetails;

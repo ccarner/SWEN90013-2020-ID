@@ -15,10 +15,15 @@ export default function surveyResultsPage(props) {
       <Card className="surveyIntroCard" style={{ width: "80%" }}>
         <Card.Body>
           <Card.Title>
-            Survey Completed your answers + feedback will be given here on this
-            page (previous completions will open to this page)
+            Feedback and Results: <b>{props.feedbackCategory}</b>
           </Card.Title>
+          <img src={props.feedbackImage} alt="" width="30%" />
+          <Card.Text>{props.feedbackText}</Card.Text>
+
+          <Card.Title>Your answers</Card.Title>
           <Card.Text>
+            {props.feedbackText}
+
             <ol>
               {props.surveyResults.map((question) => (
                 <li>

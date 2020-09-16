@@ -26,6 +26,9 @@ import SurveyResultsPage from "./surveyResultsPage";
 export default class SurveyHome extends Component {
   constructor(props) {
     super(props);
+
+    let previousCompletions = localStorage.getItem("prevCompletions");
+
     this.state = {
       loaded: false,
       actionPlan: "",
@@ -33,7 +36,8 @@ export default class SurveyHome extends Component {
       currentResults: undefined, // when in "completion" state, holds data of completion being viewed
       currentSurveyId: -1, // when in "survey" state, ID of current survey
       allSurveys: {}, // pulled from the API, list of surveys available
-      surveyCompletions: [], // pulled from the API, all previous completions
+      surveyCompletions:
+        previousCompletions === null ? [] : JSON.parse(previousCompletions), // pulled from localStorage, all previous completions
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.startSurvey = this.startSurvey.bind(this);
@@ -65,11 +69,24 @@ export default class SurveyHome extends Component {
     });
   }
 
-  completeHandler = (surveyResults, actionPlan) => {
-    this.setState((prevState) => ({
-      currentResults: surveyResults,
-      surveyCompletions: prevState.surveyCompletions.push(surveyResults),
-    }));
+  completeHandler = (surveyResults) => {
+    console.log("here inside of complete handler", surveyResults);
+    this.setState((prevState) => {
+      console.log("old survey completions is", prevState.surveyCompletions);
+      var newSurveyCompletions = [
+        ...prevState.surveyCompletions,
+        surveyResults,
+      ];
+      console.log("new survey completions is", newSurveyCompletions);
+      localStorage.setItem(
+        "prevCompletions",
+        JSON.stringify(newSurveyCompletions)
+      );
+      return {
+        currentResults: surveyResults,
+        surveyCompletions: newSurveyCompletions,
+      };
+    });
   };
 
   handleCardDesk = () => {

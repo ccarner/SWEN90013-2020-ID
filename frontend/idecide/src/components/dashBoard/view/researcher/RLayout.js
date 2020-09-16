@@ -2,8 +2,9 @@ import React, { useState, useEffect, createContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
-import { getAllSurveys } from '../../../../API/surveyAPI';
-import ActionDisplay from './ActionDisplay';
+import { getAllUsers } from '../../../../API/loginAPI';
+
+import RDisplay from './RDisplay';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const SurveyContext = createContext();
 
-export default function APLayout() {
+export default function RLayout() {
 	const classes = useStyles();
 	const [ isLoading, setIsLoading ] = useState(false);
 	const [ data, setData ] = useState({ hits: [] });
@@ -26,7 +27,7 @@ export default function APLayout() {
 	useEffect(() => {
 		const fetchData = async () => {
 			setIsLoading(true);
-			const result = await getAllSurveys();
+			const result = await getAllUsers();
 			setData(result.data);
 			setIsLoading(false);
 		//	console.log(data);
@@ -46,7 +47,7 @@ export default function APLayout() {
 				<Grid container spacing={5}>
 					<Grid item xs={12}>
 						<SurveyContext.Provider value={data}>
-							<ActionDisplay />
+							<RDisplay />
 						</SurveyContext.Provider>
 					</Grid>
 				</Grid>
