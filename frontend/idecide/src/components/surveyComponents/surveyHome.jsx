@@ -37,7 +37,7 @@ export default class SurveyHome extends Component {
       currentSurveyId: -1, // when in "survey" state, ID of current survey
       allSurveys: {}, // pulled from the API, list of surveys available
       surveyCompletions:
-        previousCompletions === null ? [] : JSON.parse(previousCompletions), // pulled from the API, all previous completions
+        previousCompletions === null ? [] : JSON.parse(previousCompletions), // pulled from localStorage, all previous completions
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.startSurvey = this.startSurvey.bind(this);
