@@ -1,5 +1,9 @@
 import React, { Component } from "react";
-import { getSurveyById, postingSurvey } from "../../API/surveyAPI";
+import {
+  getSurveyById,
+  postingSurvey,
+  getActionPlanRuleEngineStrategy,
+} from "../../API/surveyAPI";
 import SurveySection from "./surveySection";
 import { Spinner, Button, Container, Row, Col } from "react-bootstrap";
 import SurveyInformationPage from "./surveyInformationPage";
@@ -7,6 +11,9 @@ import SurveyResultsPage from "./surveyResultsPage";
 import ProgressBar from "../reusableComponents/progressBar";
 import LoadingSpinner from "../reusableComponents/loadingSpinner";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
+import evaluateRule from "../RuleEngine/evaluateFeedback";
+
+var ruleEngineDetails = require("../RuleEngine/safetySurveyFeedback.json");
 
 /**
  * This component is passed an ID for a survey, and then:
@@ -71,6 +78,7 @@ export default class SurveyControl extends Component {
         questionResults[parseInt(question.questionId)] = questionResult;
       });
     });
+    console.log("QuestionResults is", questionResults);
     return questionResults;
   }
 
@@ -124,7 +132,24 @@ export default class SurveyControl extends Component {
     this.props.completeHandler(this.state.results);
     console.log(555, "received from the backend", feedBack);
     this.setState({ isLoaded: true, currentSurveyState: "submitted" });
+    this.calculateFeedback();
   };
+
+  calculateFeedback() {
+    evaluateRule(ruleEngineDetails.rules, [
+      {
+        factName: "surveyAnswers",
+        fact: this.state.results.questions,
+      },
+    ]).then((results) => {
+      console.log(results.events);
+      this.setState({
+        feedbackText: results.events[0].params.responseString,
+        feedbackImage: results.events[0].params.imageLink,
+        feedbackCategory: results.events[0].params.categoryName,
+      });
+    });
+  }
 
   handleStart = () => {
     this.setState({
@@ -196,7 +221,12 @@ export default class SurveyControl extends Component {
         );
       } else if (this.state.currentSurveyState === "submitted") {
         renderArray.push(
-          <SurveyResultsPage surveyResults={this.state.results.questions} />
+          <SurveyResultsPage
+            surveyResults={this.state.results.questions}
+            feedbackText={this.state.feedbackText}
+            feedbackImage={this.state.feedbackImage}
+            feedbackCategory={this.state.feedbackCategory}
+          />
         );
       }
     }

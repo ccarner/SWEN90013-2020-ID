@@ -1,0 +1,49 @@
+{
+  "surveyTitle": "My Situation",
+  "surveyVersion": "1.0",
+  "surveyIntroduction": "In order for us to provide you with relevant help and information, we need to ask a couple of questions about you",
+  "surveySections": [
+    {
+      "sectionId": "1",
+      "sectionTitle": "You and Your Family",
+      "sectionIntroduction": "These questions are about your current situation and your family",
+      "questions": [
+        {
+          "questionId": "1",
+          "questionText": "Do you have any dependent children or step-children under the age of 18?",
+          "questionType": "yesorno"
+        },
+        {
+          "questionId": "2",
+          "questionText": "What is the gender of the partner who made you feel unsafe or afraid?",
+          "questionType": "singleSelection",
+          "selectionOptions": [
+            "Male",
+            "Female",
+            "Transgender Male (F2M)",
+            "Transgender Male (M2F)",
+            "Another Gender"
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "2",
+      "sectionTitle": "My Intentions",
+      "sectionIntroduction": "In this section we will ask about your intentions with your relationship with your partner or ex-partner. We understand that your feelings about what you would like to do may change, and that you might feel confused. It is best to answer about how you are feeling right now, even if this might be different in the future",
+      "questions": [
+        {
+          "questionId": "3",
+          "questionText": "What are your intentions regarding your relationship?",
+          "questionType": "singleSelection",
+          "selectionOptions": [
+            "I indend to stay in the relationship",
+            "I intend to leave the relationship",
+            "I have already left the relationship"
+          ]
+        }
+      ]
+    }
+  ],
+  "resultAlgorithm": "null"
+}

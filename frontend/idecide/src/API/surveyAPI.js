@@ -1,8 +1,7 @@
 const axios = require("axios");
 
 const API_BASE = "http://8.210.28.169";
-const API_URL = "http://8.210.28.169:9009";
-
+const API_URL = "https://www.idecide.icu:9012";
 
 export function getStaticImageUrlFromName(imageName) {
   return API_BASE + `/images/${imageName}`;
@@ -39,7 +38,7 @@ export async function getAllSurveys() {
 }
 
 export async function postingSurvey(surveyIn) {
-  const endpoint = `http://8.210.28.169:9010/answer`;
+  const endpoint = API_URL + `/answer`;
 
   const dataPost = await axios({
     url: endpoint, // send a request to the library API
@@ -63,7 +62,7 @@ export async function editSurvey(surveyInfo) {
       "Content-Type": "application/json",
     },
 
-    data: surveyInfo
+    data: surveyInfo,
 
     //  data: JSON.stringify(JSON.parse(surveyInfo)),
     //   data: JSON.stringify(surveyInfo),
@@ -81,13 +80,11 @@ export async function AddNewSurvey(surveyInfo) {
     headers: {
       "Content-Type": "application/json",
     },
-    data: JSON.stringify((JSON.parse(surveyInfo))),
+    data: JSON.stringify(JSON.parse(surveyInfo)),
   });
 
   return dataPost;
 }
-
-
 
 export async function DeleteSurvey(surveyId) {
   const endpoint = API_URL + `/survey/` + surveyId;
