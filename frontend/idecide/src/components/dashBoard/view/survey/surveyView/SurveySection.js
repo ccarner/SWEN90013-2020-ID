@@ -43,7 +43,7 @@ const SurveySection = (props) => {
 
 	const [isShow, setShow] = useState(false);
 
-	//	console.log(props);
+//	console.log(props);
 	const surveyId = props.match.params.surveyId;
 
 	const [sectionIndex, setSectionIndex] = React.useState();
@@ -62,17 +62,14 @@ const SurveySection = (props) => {
 
 
 	function handleView(e, index) {
-		console.log(e.target, index.index);
 		setOpen((prev) => !prev);
 		setSectionIndex(index.index);
-		//	QuestionsDisplay(index.index);
 	}
 
 	useEffect(() => {
 		const fetchData = async () => {
 			setIsLoading(true);
 			const result = await getSurveyById(surveyId);
-			console.log(result);
 			setData(result);
 			setSurveySection(result.surveySections);
 			setIsLoading(false);
@@ -82,8 +79,6 @@ const SurveySection = (props) => {
 		fetchData();
 	}, []);
 
-	//	console.log("Survvey Section Log:");
-	//console.log(data);
 
 	const QuestionsDisplay = () => {
 		console.log(data);
@@ -113,8 +108,8 @@ const SurveySection = (props) => {
 				) : (
 						<div>Loading</div>
 					) : (
-						surveySection.map((item, index) => (
-							<div>
+						surveySection.map((item,index) => (
+							<div key={index}>
 								<SectionQuestions data={item} sections={surveySection} surveyId={surveyId} handleShow={handleShow} />
 							</div>
 

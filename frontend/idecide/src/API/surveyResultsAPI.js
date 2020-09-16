@@ -23,7 +23,7 @@ export async function getActionPlanStrategy() {
 }
 
 export async function getResults() {
-  const endpoint = `https://www.idecide.icu:9012/survey/getResult`;
+  const endpoint = `https://www.idecide.icu:9012/answer/getResult`;
   try {
     const dataFetched = axios.get(endpoint).then((res) => res.data);
     return dataFetched;
