@@ -140,6 +140,7 @@ export default class CardDeck extends Component {
         </div>
       );
     } else if (item.questionType === "yesOrNo") {
+
       return (
         <div className="questionContainer">
           <div className="button-container">
@@ -172,7 +173,7 @@ export default class CardDeck extends Component {
                   className="composite-option-button"
                 >
                   <span className="composite-circle top"></span>
-                  <span className="composite-label bottom">{option.name}</span>
+                  <span className="composite-label bottom">{option}</span>
                 </button>
               ))}
             </div>
