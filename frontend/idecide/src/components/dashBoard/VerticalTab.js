@@ -96,6 +96,15 @@ export default function MenuListComposition() {
 						Action Plan
 						</Typography>
 					</MenuItem>
+					<MenuItem
+						onClick={() => {
+							window.location.pathname = '/dashboard/user';
+						}}
+					>
+						<Typography color="textPrimary" gutterBottom variant="h6">
+						Researcher
+						</Typography>
+					</MenuItem>
 				</MenuList>
 			</Paper>
 			<div />
