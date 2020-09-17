@@ -1,0 +1,103 @@
+{
+  "surveySections": [
+    {
+      "sectionTitle": "Priorities",
+      "sectionIntroduction": "There are 10 comparisons below. Slide the circle towards the priority that is most important in that pair.",
+      "sectionId": "1",
+      "sectionIndex": 0,
+      "questions": [
+        {
+          "questionIndex": 0,
+          "questionId": "1",
+          "questionText": "Which of these two factors is more important to YOU?",
+          "questionType": "singleSelection",
+          "selectionOptions": [
+            { "name": "Having resources", "weight": "0" },
+            { "name": "My concern for safety", "weight": "0.2" },
+            { "name": "", "weight": "0.4" },
+            { "name": "", "weight": "0.6" },
+            { "name": "", "weight": "0.8" },
+            { "name": "", "weight": "1" }
+          ]
+        },
+        {
+          "questionIndex": 1,
+          "questionId": "2",
+          "questionText": "Which of these two factors is more important to YOU?",
+          "questionType": "singleSelection",
+          "selectionOptions": [
+            { "name": "Having resources", "weight": "0" },
+            { "name": "My concern for safety", "weight": "0.2" },
+            { "name": "", "weight": "0.4" },
+            { "name": "", "weight": "0.6" },
+            { "name": "", "weight": "0.8" },
+            { "name": "", "weight": "1" }
+          ]
+        },
+        {
+          "questionIndex": 2,
+          "questionId": "3",
+          "questionText": "Which of these two factors is more important to YOU?",
+          "questionType": "slider",
+          "sliderDefaultValue": 5,
+          "sliderMaxValue": 10,
+          "sliderMinValue": 0
+        },
+        {
+          "questionIndex": 3,
+          "questionId": "3",
+          "questionText": "Which of these two factors is more important to YOU?",
+          "questionType": "slider",
+          "sliderDefaultValue": 5,
+          "sliderMaxValue": 10,
+          "sliderMinValue": 0
+        },
+        {
+          "questionIndex": 4,
+          "questionId": "3",
+          "questionText": "Which of these two factors is more important to YOU?",
+          "questionType": "slider",
+          "sliderDefaultValue": 5,
+          "sliderMaxValue": 10,
+          "sliderMinValue": 0
+        },
+        {
+          "questionIndex": 5,
+          "questionId": "5",
+          "questionText": "Which of these two factors is more important to YOU?",
+          "questionType": "slider",
+          "sliderDefaultValue": 5,
+          "sliderMaxValue": 10,
+          "sliderMinValue": 0
+        },
+        {
+          "questionIndex": 6,
+          "questionId": "7",
+          "questionText": "Which of these two factors is more important to YOU?",
+          "questionType": "slider",
+          "sliderDefaultValue": 5,
+          "sliderMaxValue": 10,
+          "sliderMinValue": 0
+        },
+        {
+          "questionIndex": 7,
+          "questionId": "8",
+          "questionText": "Which of these two factors is more important to YOU?",
+          "questionType": "slider",
+          "sliderDefaultValue": 5,
+          "sliderMaxValue": 10,
+          "sliderMinValue": 0
+        },
+        {
+          "questionIndex": 8,
+          "questionId": "9",
+          "questionText": "Which of these two factors is more important to YOU?",
+          "questionType": "slider",
+          "sliderDefaultValue": 5,
+          "sliderMaxValue": 10,
+          "sliderMinValue": 0
+        }
+      ]
+    }
+  ]
+}

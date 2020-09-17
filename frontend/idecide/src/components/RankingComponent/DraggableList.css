@@ -1,0 +1,38 @@
+.button-container {
+  z-index: 10;
+  display: flex;
+  opacity: 1;
+  position: relative;
+  left: auto;
+  transform: none;
+  transition: all 240ms ease 100ms;
+  margin: 24px auto 0px;
+}
+
+.button-container .btn {
+  outline: none;
+  color: white;
+  text-align: center;
+  font-weight: 500;
+  opacity: 1;
+  position: static;
+  height: 36px;
+  width: 76px;
+  font-family: "Azo Sans", Arial, sans-serif;
+  line-height: 116%;
+  font-size: 11px;
+  box-shadow: none;
+  background: rgb(59, 16, 177);
+  border: 1px solid rgb(59, 16, 177);
+  border-radius: 5px;
+  padding: 0px;
+  transition: all 240ms ease 100ms;
+  margin: 0px;
+}
+
+@media (min-width: 768px) {
+  .button-container .btn {
+    height: 44px;
+    width: 120px;
+  }
+}

@@ -4,6 +4,9 @@ import { Slider } from "antd";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./cards.css";
 import "antd/dist/antd.css";
+import testdata from "./testdata";
+import question from "./testdata";
+import DragableList from "../RankingComponent/DragableList";
 import { getSurveyById, postingSurvey } from "../../API/surveyAPI";
 import { Spinner, Button } from "react-bootstrap";
 import JsonRuleEngine from "../RuleEngine/jsonRule.js";
@@ -99,7 +102,7 @@ export default class CardDeck extends Component {
                   className="composite-option-button"
                 >
                   <span className="composite-circle top"></span>
-                  <span className="composite-label bottom">{option.name}</span>
+                  <span className="composite-label bottom">{option}</span>
                 </button>
               ))}
             </div>
