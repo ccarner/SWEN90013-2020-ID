@@ -54,7 +54,7 @@ const NewSurveyS = (props) => {
 					<div>
 						<Box p={2}>
 							<Card>
-								<CardHeader title="222,New Survey Section" />
+								<CardHeader title="New Survey Section" />
 								<Divider />
 								<CardContent>
 									<TextField

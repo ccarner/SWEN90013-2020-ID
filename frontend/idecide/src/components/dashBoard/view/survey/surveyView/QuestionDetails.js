@@ -94,9 +94,9 @@ const QuestionDetails = (props) => {
 			<Box p={1}>
 				<Card>
 					<CardContent style={{ height: 70 }}>
-						<Grid xs={12} container direction="row" justify="flex-start" alignItems="center">
+						<Grid container direction="row" justify="flex-start" alignItems="center">
 							<Grid item xs={10}>
-								<Typography color="subtitle1" gutterBottom>
+								<Typography color="primary" gutterBottom>
 									{'Q' + (props.data.questionIndex+1) + ' :  ' + props.data.questionText}
 								</Typography>
 							</Grid>

@@ -20,12 +20,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import { getAllSurveys, getSurveyById } from '../../../../API/surveyAPI';
-import { SectionSearch } from './DCLayout';
+import { SurveyContext } from './RLayout';
 
-function createData(name, type, never, onlyOnce, severalTimes, onceAMonth, onceAWeek, daily) {
-	return { name, type, never, onlyOnce, severalTimes, onceAMonth, onceAWeek, daily };
-}
 
 function descendingComparator(a, b, orderBy) {
 	if (b[orderBy] < a[orderBy]) {
@@ -53,40 +49,15 @@ function stableSort(array, comparator) {
 	return stabilizedThis.map((el) => el[0]);
 }
 
-const headCells = [
-	{ id: 'question', numeric: false, disablePadding: true, label: 'Questions' },
-	{ id: 'type', numeric: false, disablePadding: false, label: 'Type' },
-	/*	{ id: 'yes', numeric: true, disablePadding: false, label: 'Yes' },
-	{ id: 'no', numeric: true, disablePadding: false, label: 'No' },*/
-	{ id: 'never', numeric: true, disablePadding: false, label: 'Never' },
-	{ id: 'onlyOnce', numeric: true, disablePadding: false, label: 'Only Once' },
-	{ id: 'sveralTimes', numeric: true, disablePadding: false, label: 'Several Times' },
-	{ id: 'onceAMonth', numeric: true, disablePadding: false, label: 'Once A Month' },
-	{ id: 'onceAWeek', numeric: true, disablePadding: false, label: 'Once A Week' },
-	{ id: 'daily', numeric: true, disablePadding: false, label: 'Daily' }
-	/*  { id: 's1', numeric: true, disablePadding: false, label: '1' },
-  { id: 's2', numeric: true, disablePadding: false, label: '2' },
-  { id: 's3', numeric: true, disablePadding: false, label: '3' },
-  { id: 's4', numeric: true, disablePadding: false, label: '4' },
-  { id: 's5', numeric: true, disablePadding: false, label: '5' },
-  { id: 's6', numeric: true, disablePadding: false, label: '6' },
-  { id: 's7', numeric: true, disablePadding: false, label: '7' },
-  { id: 's8', numeric: true, disablePadding: false, label: '8' },
-  { id: 's9', numeric: true, disablePadding: false, label: '9' },
-  { id: 's10', numeric: true, disablePadding: false, label: '10' },*/
-];
 
-const headCells1 = [
-	{ id: 'question', numeric: false, disablePadding: true, label: 'Questions' },
-	{ id: 'type', numeric: false, disablePadding: false, label: 'Type' },
-	/*	{ id: 'yes', numeric: true, disablePadding: false, label: 'Yes' },
-	{ id: 'no', numeric: true, disablePadding: false, label: 'No' },*/
-	{ id: 'never', numeric: true, disablePadding: false, label: 'Never' },
-	{ id: 'onlyOnce', numeric: true, disablePadding: false, label: 'Only Once' },
-	{ id: 'sveralTimes', numeric: true, disablePadding: false, label: 'Several Times' },
-	{ id: 'onceAMonth', numeric: true, disablePadding: false, label: 'Once A Month' },
-	{ id: 'onceAWeek', numeric: true, disablePadding: false, label: 'Once A Week' },
-	{ id: 'daily', numeric: true, disablePadding: false, label: 'Daily' }
+const headCells = [
+    { id: 'num', numeric: false, disablePadding: true, label: 'NO.' },
+    { id: 'title', numeric: true, disablePadding: false, label: ' Id' },
+    { id: 'title', numeric: true, disablePadding: true, label: ' UserName' },
+    { id: 'title', numeric: true, disablePadding: true, label: ' Email' },
+	{ id: 'version', numeric: true, disablePadding: true, label: 'Gender' },
+    { id: 'sections', numeric: true, disablePadding: false, label: 'Partner Gender' },
+    { id: 'st', numeric: false, disablePadding: false, label: 'Post Code' },
 ];
 
 function EnhancedTableHead(props) {
@@ -180,7 +151,7 @@ const EnhancedTableToolbar = (props) => {
 				</Typography>
 			) : (
 				<Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-					{sectionTitle}
+					Results
 				</Typography>
 			)}
 
@@ -229,7 +200,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-export default function DataDisplay() {
+export default function RDisplay() {
 	const classes = useStyles();
 	const [ order, setOrder ] = React.useState('asc');
 	const [ orderBy, setOrderBy ] = React.useState('daily');
@@ -239,46 +210,10 @@ export default function DataDisplay() {
 	const [ rowsPerPage, setRowsPerPage ] = React.useState(5);
 	const [ isLoading, setIsLoading ] = useState(false);
 	const [ data, setData ] = useState({ hits: [] });
-	const [ surveySection, setSurveySection ] = useState({ hits: [] });
-	let {sectionSearch }= useContext(SectionSearch);
-	console.log(sectionSearch);
+	let  surveys = useContext(SurveyContext);
+	console.log(surveys);
 
-	useEffect(() => {
-		const fetchData = async () => {
-			setIsLoading(true);
-			const result1 = await getAllSurveys();
-			//    console.log(result1);
-			const result = await getSurveyById(result1.data[2].surveyId);
-			setData(result.surveySections[1]);
-			setSurveySection(result.surveySections);
-			setIsLoading(false);
-			//			console.log(data);
-			//			console.log(isLoading);
-		};
-		fetchData();
-	}, []);
-	//	console.log(data.questions);
-	const rows = [
-		typeof data.questions !== 'undefined'
-			? createData(data.questions[0].questionText, data.questions[0].questionType, 1, 10, 7, 44, 63, 40)
-			: '',
-		typeof data.questions !== 'undefined'
-			? createData(data.questions[1].questionText, data.questions[1].questionType, 5, 15, 4, 20, 33, 60)
-			: ''
-		/*  createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Donut', 452, 25.0, 51, 4.9),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-    createData('Honeycomb', 408, 3.2, 87, 6.5),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Jelly Bean', 375, 0.0, 94, 0.0),
-    createData('KitKat', 518, 26.0, 65, 7.0),
-    createData('Lollipop', 392, 0.2, 98, 0.0),
-    createData('Marshmallow', 318, 0, 81, 2.0),
-    createData('Nougat', 360, 19.0, 9, 37.0),
-    createData('Oreo', 437, 18.0, 63, 4.0)*/
-	];
+	const rows = Array.from(surveys);
 
 	const handleRequestSort = (event, property) => {
 		const isAsc = orderBy === property && order === 'asc';
@@ -375,15 +310,14 @@ export default function DataDisplay() {
 												/>
 											</TableCell>
 											<TableCell component="th" id={labelId} scope="row" padding="none">
-												{row.name}
+												{index}
 											</TableCell>
-											<TableCell align="right">{row.type}</TableCell>
-											<TableCell align="right">{row.never}</TableCell>
-											<TableCell align="right">{row.onlyOnce}</TableCell>
-											<TableCell align="right">{row.severalTimes}</TableCell>
-											<TableCell align="right">{row.onceAMonth}</TableCell>
-											<TableCell align="right">{row.onceAWeek}</TableCell>
-											<TableCell align="right">{row.daily}</TableCell>
+                                            <TableCell align="right">{row.userId}</TableCell>
+											<TableCell align="right">{row.username}</TableCell>
+                                            <TableCell align="right">{row.email}</TableCell>
+											<TableCell align="right">{row.gender}</TableCell>
+											<TableCell align="right">{row.partnerGender}</TableCell>
+											<TableCell align="right">{row.postcode}</TableCell>
 										</TableRow>
 									);
 								})}
