@@ -11,7 +11,10 @@ export async function getSurveyById(surveyId) {
   const endpoint = API_URL + `/survey/${surveyId}`;
   try {
     const dataFetched = await axios.get(endpoint).then((res) => res.data);
-    return JSON.parse(dataFetched["data"]["jsonStr"]);
+    var survey = JSON.parse(dataFetched["data"]["jsonStr"]);
+    Object.assign(survey, dataFetched["data"]);
+    delete survey.jsonStr;
+    return survey;
   } catch (e) {
     return e;
   }

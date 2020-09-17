@@ -146,14 +146,14 @@ export default class CardDeck extends Component {
             <MDBBtn
               gradient="aqua"
               style={{ border: "none", "border-radius": "15px" }}
-              onClick={() => this.handleResult(item, { name: "No" })}
+              onClick={() => this.handleResult(item, "No")}
             >
               No
             </MDBBtn>
             <MDBBtn
               gradient="purple"
               style={{ border: "none", "border-radius": "15px" }}
-              onClick={() => this.handleResult(item, { name: "Yes" })}
+              onClick={() => this.handleResult(item, "Yes")}
             >
               Yes
             </MDBBtn>

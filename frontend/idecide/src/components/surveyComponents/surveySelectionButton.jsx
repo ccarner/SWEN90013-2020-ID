@@ -14,7 +14,7 @@ export default function SurveySelectionButton(props) {
   return (
     <div>
       {/* <img src={imagelocation} alt="Survey_Icon" onClick={props.handleClick} /> */}
-      <Card style={{ width: "12rem" }}>
+      <Card style={{ width: "16rem" }}>
         <Card.Img variant="top" src={imagelocation} />
         <Card.Body>
           <Card.Title>{props.surveyTitle}</Card.Title>
@@ -24,9 +24,7 @@ export default function SurveySelectionButton(props) {
             disabled={props.notAvailable}
             onClick={props.handleClick}
           >
-            {props.notAvailable
-              ? "Please complete other surveys first"
-              : "Take this Survey"}
+            {props.notAvailable ? "Locked" : "Complete this Section >>"}
           </PrimaryButton>
         </Card.Body>
       </Card>

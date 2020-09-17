@@ -4,7 +4,6 @@ import "../../CSS/survey.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
-import CardDesk from "../CardDeskCompoent/cardDeck";
 import LoadingSpinner from "../reusableComponents/loadingSpinner";
 import {
   getUserResults,
@@ -13,6 +12,9 @@ import {
 } from "../../API/surveyAPI";
 import SurveySelectionButton from "./surveySelectionButton";
 import SurveyResultsPage from "./surveyResultsPage";
+import ActionPlans from "./actionPlans";
+import { Card, Button } from "react-bootstrap";
+import PrimaryButton from "../reusableComponents/PrimaryButton";
 
 /**
  * The parent component of all survey pages. This component:
@@ -30,14 +32,15 @@ export default class SurveyHome extends Component {
     //load in previous completions from localStorage
     let previousCompletions = localStorage.getItem("prevCompletions");
     let previousNextSurvey = localStorage.getItem("nextSurvey");
-
-    this.surveyOrder = ["My Situation", "My Safety", "My Relationship"]; // order that surveys need to be completed in
+    //this.surveyOrder = ["My Situation", "My Safety", "Action Plan"];
+    this.surveyOrder = ["My Situation", "Action Plan"]; // order that surveys need to be completed in
 
     this.state = {
-      nextSurvey: previousCompletions === null ? 0 : previousNextSurvey, // index of next survey to complete, from the surveyOrder array
+      nextSurvey:
+        previousCompletions === null ? 0 : parseInt(previousNextSurvey), // index of next survey to complete, from the surveyOrder array
       loaded: false,
       actionPlan: "",
-      currentState: "menu", // ["menu","survey","completion"]
+      currentState: "menu", // ["menu","survey","completion", "actionPlan"]
       currentResults: undefined, // when in "completion" state, holds data of completion being viewed
       currentSurveyId: -1, // when in "survey" state, ID of current survey
       allSurveys: {}, // pulled from the API, list of surveys available
@@ -104,10 +107,11 @@ export default class SurveyHome extends Component {
   };
 
   render() {
+    var renderElements = []; // array of elements to be returned from render()
     const { currentState, actionPlan, currentResults } = this.state;
 
     if (currentState === "survey") {
-      return (
+      renderElements.push(
         <SurveyControl
           surveyId={this.state.currentSurveyId}
           userId={this.state.userId}
@@ -115,7 +119,7 @@ export default class SurveyHome extends Component {
         />
       );
     } else if (currentState === "menu" && this.state.loaded) {
-      return (
+      renderElements.push(
         <div className="container" className="padding10">
           <div>
             <h2 style={{ color: "purple" }}>Help Me Decide</h2>
@@ -137,7 +141,7 @@ export default class SurveyHome extends Component {
               <div key={survey.surveyId} className="surveyIcon">
                 <SurveySelectionButton
                   notAvailable={
-                    false && // currently commenting out so can test surveys
+                    false && // commenting out so can test surveys
                     survey.surveyTitle !==
                       this.surveyOrder[this.state.nextSurvey]
                   }
@@ -156,9 +160,38 @@ export default class SurveyHome extends Component {
       );
     } else if (currentState === "completion") {
       //viewing a previous completion
-      return <SurveyResultsPage />;
+      renderElements.push(<SurveyResultsPage />);
+    } else if (currentState === "actionPlan") {
+      renderElements.push(<ActionPlans />);
     } else {
-      return <LoadingSpinner />;
+      renderElements.push(<LoadingSpinner />);
     }
+    if (
+      this.surveyOrder[this.state.nextSurvey] !== "Action Plan" &&
+      this.state.currentState === "menu"
+    ) {
+      renderElements.push(
+        <Card>
+          <Card.Body>
+            Please complete the required sections before we generate an action
+            plan
+          </Card.Body>
+        </Card>
+      );
+    } else if (this.state.currentState === "menu") {
+      renderElements.push(
+        <Card>
+          <Card.Body>
+            <PrimaryButton
+              onClick={() => this.setState({ currentState: "actionPlan" })}
+              style={{ width: "70%", borderRadius: "10em" }}
+            >
+              Generate your Action Plan >>
+            </PrimaryButton>
+          </Card.Body>
+        </Card>
+      );
+    }
+    return renderElements;
   }
 }
