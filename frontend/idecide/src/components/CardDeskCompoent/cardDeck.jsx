@@ -141,10 +141,6 @@ export default class CardDeck extends Component {
         </div>
       );
     } else if (item.questionType === "yesOrNo") {
-<<<<<<< HEAD
-=======
-
->>>>>>> frontend
       return (
         <div className="questionContainer">
           <div className="button-container">
