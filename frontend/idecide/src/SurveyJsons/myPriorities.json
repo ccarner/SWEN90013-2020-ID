@@ -2,5 +2,28 @@
   "surveyTitle": "Priorities",
   "surveyVersion": "1.0",
   "surveyIntroduction": "There are many things to consider in deciding what to do about safety in your relationship. Thinking about what is most important in your life can help you decide what is best for you. What is most important to one woman may not be important at all to another. On the next page we will ask you to weigh up which of the factors below might be most important to you.",
-  "surveyImageName": "1305421023604248576.png"
+  "surveyImageName": "1305421023604248576.png",
+  "surveySections": [
+    {
+      "sectionId": "1",
+      "sectionTitle": "Priorities",
+      "sectionIntroduction": "Please rank the following from most important to you at the top to least important at the bottom",
+      "sectionIndex": 0,
+      "sectionType": "ranking",
+      "questions": [
+        {
+          "questionIndex": 0,
+          "questionId": "1",
+          "questionText": "rank your priority ",
+          "selectionOptions": [
+            "Having resources",
+            "My concern for safety",
+            "Feeling for my partner",
+            "My health and wellbeing",
+            "Children"
+          ]
+        }
+      ]
+    }
+  ]
 }
