@@ -33,7 +33,12 @@ export default class SurveyHome extends Component {
     let previousCompletions = localStorage.getItem("prevCompletions");
     let previousNextSurvey = localStorage.getItem("nextSurvey");
     //this.surveyOrder = ["My Situation", "My Safety", "Action Plan"];
-    this.surveyOrder = ["My Situation", "Action Plan"]; // order that surveys need to be completed in
+    this.surveyOrder = [
+      "My Situation",
+      "My Safety",
+      "My Priorities",
+      "Action Plan",
+    ]; // order that surveys need to be completed in
 
     this.state = {
       nextSurvey:
@@ -100,6 +105,10 @@ export default class SurveyHome extends Component {
     });
   };
 
+  returnHomeCallback = () => {
+    this.setState({ currentState: "menu" });
+  };
+
   handleCardDesk = () => {
     this.setState({
       showCardDesk: !this.state.showCardDesk,
@@ -113,6 +122,7 @@ export default class SurveyHome extends Component {
     if (currentState === "survey") {
       renderElements.push(
         <SurveyControl
+          returnHome={this.returnHomeCallback}
           surveyId={this.state.currentSurveyId}
           userId={this.state.userId}
           completeHandler={this.completeHandler}
@@ -121,18 +131,15 @@ export default class SurveyHome extends Component {
     } else if (currentState === "menu" && this.state.loaded) {
       renderElements.push(
         <div className="container" className="padding10">
-          <div>
+          <div style={{ padding: "30px" }}>
             <h2 style={{ color: "purple" }}>Help Me Decide</h2>
             <br />
-            <h6>There are three modules below.</h6>
-            <h6>The 'My Relationship' module is optional,</h6>
-            <h6>
-              but you must complete 'Safety' and 'Priorities' before you can
-              continue.
-            </h6>
-            <h6>
-              Click 'Next' in the bottom right corner when you are finished.
-            </h6>
+            <h5>
+              Completing the modules below will help us better understand your
+              situation
+            </h5>
+            <h5>so we can generate a personalised action plan for you.</h5>
+            <br />
           </div>
           <br />
 
@@ -141,9 +148,9 @@ export default class SurveyHome extends Component {
               <div key={survey.surveyId} className="surveyIcon">
                 <SurveySelectionButton
                   notAvailable={
-                    false && // commenting out so can test surveys
+                    // commenting out so can test surveys
                     survey.surveyTitle !==
-                      this.surveyOrder[this.state.nextSurvey]
+                    this.surveyOrder[this.state.nextSurvey]
                   }
                   icon={getStaticImageUrlFromName(survey.surveyImageName)}
                   completed="false"
@@ -159,8 +166,11 @@ export default class SurveyHome extends Component {
         </div>
       );
     } else if (currentState === "completion") {
-      //viewing a previous completion
-      renderElements.push(<SurveyResultsPage />);
+      //viewing a previous attempt
+      //different from when we JUST completed a survey, which is rendered in the surveyControl component
+      renderElements.push(
+        <SurveyResultsPage returnHome={this.returnHomeCallback} />
+      );
     } else if (currentState === "actionPlan") {
       renderElements.push(<ActionPlans />);
     } else {

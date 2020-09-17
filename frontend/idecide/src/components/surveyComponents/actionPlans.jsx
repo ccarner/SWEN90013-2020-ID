@@ -3,6 +3,7 @@ import { Card } from "react-bootstrap";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 import evaluateFeedback from "../RuleEngine/evaluateFeedback";
 import { Link } from "react-router-dom";
+import { Table, Button } from "react-bootstrap";
 var rules = require("../../SurveyJsons/actionPlanAlgorithm.json");
 
 export default class ActionPlans extends Component {
@@ -33,10 +34,10 @@ export default class ActionPlans extends Component {
             question.questionAnswer.length !== 0
           ) {
             switch (question.questionAnswer[0]) {
-              case "I indend to stay in the relationship":
+              case "I intend to stay in the relationship":
                 facts.Intention = "STAY";
                 break;
-              case "I indend to leave the relationship":
+              case "I intend to leave the relationship":
                 facts.Intention = "LEAVE";
                 break;
               case "I have already left the relationship":
@@ -53,8 +54,18 @@ export default class ActionPlans extends Component {
           ) {
             facts.HaveChildren = question.questionAnswer[0];
           }
+          if (
+            question.questionText ===
+              "Please rank the following from most important to you at the top to least important at the bottom" &&
+            question.questionAnswer.length !== 0
+          ) {
+            facts.Priority = question.questionAnswer[0];
+          }
         }
       }
+    }
+    if (facts.HaveChildren === "Yes" && facts.Priority === "Children") {
+      facts.Priority = "Safety";
     }
     localStorage.setItem("actionPlanFacts", JSON.stringify(facts));
     console.log("straight facts", facts);
@@ -79,18 +90,35 @@ export default class ActionPlans extends Component {
         <div>
           <Card className="surveyIntroCard" style={{ width: "80%" }}>
             <Card.Body>
-              <Card.Title>Your Action Plan</Card.Title>
-
-              <Card.Text>
-                {this.state.plan && (
-                  <ul>
-                    {this.state.plan.map((plan) => (
-                      <li>{plan}</li>
+              <h1 className="text-center" style={{ color: "#9572A4" }}>
+                Action Plan
+              </h1>
+              <p>
+                Based on your responses, we have recommended strategies to help
+                you deal with your situation. There is additional help,
+                resources and recommendations in the "More Strategies" section.
+              </p>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Action Plan</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.plan &&
+                    this.state.plan.map((plan, index) => (
+                      <tr>
+                        <td>{index}</td>
+                        <td>{plan}</td>
+                        <td>
+                          <Button variant="outline-success">View</Button>
+                        </td>
+                      </tr>
                     ))}
-                  </ul>
-                )}
-              </Card.Text>
-
+                </tbody>
+              </Table>
               <Link to="/surveyComponent">
                 <PrimaryButton>Go back home</PrimaryButton>
               </Link>

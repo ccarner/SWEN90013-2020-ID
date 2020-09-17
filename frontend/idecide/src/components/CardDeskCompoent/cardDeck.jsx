@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { Slider } from "antd";
-//import testquestion from "./testdata";
+
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./cards.css";
 import "antd/dist/antd.css";
-import testdata from "./testdata";
-import question from "./testdata";
 import DragableList from "../RankingComponent/DragableList";
 import { getSurveyById, postingSurvey } from "../../API/surveyAPI";
 import { Spinner, Button } from "react-bootstrap";

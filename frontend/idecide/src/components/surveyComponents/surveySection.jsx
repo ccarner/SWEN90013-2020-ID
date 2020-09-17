@@ -3,7 +3,6 @@ import QuestionSlider from "./questionComponents/questionSlider";
 import SingleChoice from "./questionComponents/questionSingleChoice";
 import QuestionYesOrNo from "./questionComponents/questionYesOrNo";
 import DragableList from "../RankingComponent/DragableList";
-import testsection from "../CardDeskCompoent/testdata";
 import { MDBBtn, MDBInput, MDBContainer } from "mdbreact";
 import CardDeck from "../CardDeskCompoent/cardDeck";
 /**
@@ -70,7 +69,7 @@ export default class SurveySection extends React.Component {
   // }
 
   handleSectionType = (section) => {
-    if (section.sectionType == undefined) {
+    if (section.sectionType === undefined) {
       return (
         <CardDeck
           key={section.sectionId}
@@ -78,7 +77,8 @@ export default class SurveySection extends React.Component {
           section={section}
         />
       );
-    } else if (section.sectionType == "ranking") {
+    } else if (section.sectionType === "ranking") {
+      console.log("HERE ITS A DRAGGABLE LIST", section);
       return (
         <DragableList handleAnswer={this.handleInputChange} section={section} />
       );
@@ -91,7 +91,7 @@ export default class SurveySection extends React.Component {
         <div className="container" style={{ padding: "50px" }}>
           <h3 style={{ color: "purple" }}>{this.props.section.sectionTitle}</h3>
         </div>
-        {this.handleSectionType(testsection.surveySections[0])}
+        {this.handleSectionType(this.props.section)}
         {/* <CardDeck
           key={this.props.section.sectionId}
           handleAnswer={this.handleInputChange}

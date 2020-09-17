@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { MDBBtn } from "mdbreact";
 //import "@atlaskit/css-reset";
 import "./DraggableList.css";
-//import section from "../CardDeskCompoent/testdata";
+
 import Column from "./Column";
 import { DragDropContext } from "react-beautiful-dnd";
 class DragableList extends Component {

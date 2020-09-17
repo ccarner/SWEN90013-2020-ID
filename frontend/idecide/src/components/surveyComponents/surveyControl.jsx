@@ -13,8 +13,6 @@ import LoadingSpinner from "../reusableComponents/loadingSpinner";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 import evaluateRule from "../RuleEngine/evaluateFeedback";
 
-var ruleEngineDetails = require("../RuleEngine/safetySurveyFeedback.json");
-
 /**
  * This component is passed an ID for a survey, and then:
  * a) fetches survey data from server
@@ -28,7 +26,9 @@ export default class SurveyControl extends Component {
 
     this.state = {
       isLoaded: false,
-
+      feedbackText: null,
+      feedbackImage: null,
+      feedbackCategory: null,
       surveyFile: {},
       sectionQuestions: null,
       currentSurveyState: "introduction", // ["introduction", "started", "submitted"]
@@ -136,7 +136,11 @@ export default class SurveyControl extends Component {
   };
 
   calculateFeedback() {
-    evaluateRule(ruleEngineDetails.rules, [
+    //skip surveys that have no algorithm (have null for their alg)
+    if (!this.state.surveyFile.resultAlgorithm) {
+      return null;
+    }
+    evaluateRule(this.state.surveyFile.resultAlgorithm.rules, [
       {
         factName: "surveyAnswers",
         fact: this.state.results.questions,
@@ -188,6 +192,7 @@ export default class SurveyControl extends Component {
         renderArray.push(
           <div>
             <SurveyInformationPage
+              returnHome={this.props.returnHome}
               survey={this.state.surveyFile}
               startSurvey={this.handleStart}
             />
@@ -222,6 +227,7 @@ export default class SurveyControl extends Component {
       } else if (this.state.currentSurveyState === "submitted") {
         renderArray.push(
           <SurveyResultsPage
+            returnHome={this.props.returnHome}
             surveyResults={this.state.results.questions}
             feedbackText={this.state.feedbackText}
             feedbackImage={this.state.feedbackImage}

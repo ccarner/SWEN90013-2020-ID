@@ -35,13 +35,14 @@ export default function evaluateFeedback(rules, factContainers) {
               totalPoints += value;
             }
           } else if (
-            question.questionType === "singleChoice" &&
-            question.questionAnswer === "yes"
+            question.questionType === "yesOrNo" &&
+            question.questionAnswer[0] === "Yes"
           ) {
             totalPoints += 1;
           }
         }
       }
+      console.log("total points is", totalPoints);
       return totalPoints;
     });
   };

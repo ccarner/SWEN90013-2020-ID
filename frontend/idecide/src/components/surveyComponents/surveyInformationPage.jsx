@@ -13,14 +13,12 @@ export default function SurveyInformationPage(props) {
         {/* <Card.Img variant="top" src={imagelocation} /> */}
         <Card.Body>
           <Card.Title>{"Introduction: " + props.survey.surveyTitle}</Card.Title>
-          <Card.Text>{props.survey.surveyIntroduction}</Card.Text>
+          <Card.Text style={{ fontSize: "18px" }}>
+            {props.survey.surveyIntroduction}
+          </Card.Text>
 
-          <PrimaryButton onClick={props.handleClick}>
-            Go back home
-          </PrimaryButton>
-          <PrimaryButton onClick={props.startSurvey}>
-            Start this Survey
-          </PrimaryButton>
+          <PrimaryButton onClick={props.returnHome}>Go back home</PrimaryButton>
+          <PrimaryButton onClick={props.startSurvey}>Begin >></PrimaryButton>
         </Card.Body>
       </Card>
     </div>
