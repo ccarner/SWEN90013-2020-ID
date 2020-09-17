@@ -27,7 +27,7 @@ class DragableList extends Component {
   }
 
   loadRankList = () => {
-    var question = this.props.question;
+    var question = this.props.section.questions[0];
     // console.log(question.selectionOptions);
     var newtasks = {};
     var newcolumns = {
@@ -46,6 +46,13 @@ class DragableList extends Component {
       tasks: newtasks,
       columns: newcolumns,
     });
+  };
+
+  handleResult = (item, result) => {
+    //here will handle the result !
+
+    this.props.handleAnswer(item.questionId, result);
+    console.log(this.state.columns["column-1"].taskIds);
   };
 
   onDragEnd = (result) => {
@@ -81,10 +88,6 @@ class DragableList extends Component {
     };
     this.setState(newState);
   };
-  //how we hanlde the result.
-  handleConfirm = () => {
-    console.log(this.state.columns["column-1"].taskIds);
-  };
 
   render() {
     return (
@@ -108,7 +111,15 @@ class DragableList extends Component {
           })}
         </DragDropContext>
         <div className="button-container">
-          <MDBBtn gradient="purple" onClick={() => this.handleConfirm()}>
+          <MDBBtn
+            gradient="purple"
+            onClick={() =>
+              this.handleResult(
+                this.props.section.questions[0],
+                this.state.columns["column-1"].taskIds
+              )
+            }
+          >
             CONFIRM
           </MDBBtn>
         </div>

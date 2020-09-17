@@ -22,7 +22,6 @@ export default class RegisterPage extends React.Component {
   }
 
   async handleSubmit(event) {
-
     // the following call will stop the form from submitting
     event.preventDefault();
 
@@ -35,9 +34,9 @@ export default class RegisterPage extends React.Component {
 
     const response = await registerUser(userObject);
     if (response.flag) {
-      alert("Sign up Successful!")
+      alert("Sign up Successful!");
     } else {
-      alert("Sign up Failed")
+      alert("Sign up Failed");
     }
     window.location.replace("/");
   }
@@ -65,7 +64,7 @@ export default class RegisterPage extends React.Component {
                 </div>
                 <br />
                 <div>
-                  <label htmlFor="partnerGender">Last Name: </label>
+                  <label htmlFor="partnerGender">Gender: </label>
                   <input
                     type="text"
                     name="partnerGender"
@@ -95,10 +94,13 @@ export default class RegisterPage extends React.Component {
             </div>
             <br />
             <div className="footer">
-              <MDBBtn type="submit" gradient="purple">Register</MDBBtn>
+              <MDBBtn type="submit" gradient="purple">
+                Register
+              </MDBBtn>
 
-              <MDBBtn gradient="purple" onClick={this.props.registerToggle}>Login here</MDBBtn>
-
+              <MDBBtn gradient="purple" onClick={this.props.registerToggle}>
+                Login here
+              </MDBBtn>
             </div>
           </div>
         </form>
