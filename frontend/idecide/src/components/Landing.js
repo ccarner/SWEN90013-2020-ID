@@ -40,15 +40,10 @@ class Landing extends Component {
           </NavLink>
         </div>
 
-        <MDBFooter
-          className="font-small pt-4 mt-4"
-          style={{ position: "fixed", bottom: 0, padding: 0, width: "100%" }}
-        >
+        <MDBFooter className="font-small pt-4 mt-4" style={{ padding: 0 }}>
           <div
             style={{
-              backgroundImage: `url(${require("../images/background.png")})`,
-              backgroundSize: "100%",
-              padding: "20px",
+              backgroundImage: `url(${require("../images/background.png")})`
             }}
           >
             <MDBContainer fluid className="text-center text-md-left">

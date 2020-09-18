@@ -6,7 +6,7 @@
   min-height: 100%;
 }
 
-.backgroundImage {
+/* .backgroundImage {
   background-image: url("./images/homeBackground.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -21,7 +21,7 @@
   width: 100%;
   height: 100%;
   opacity: 70%;
-}
+} */
 
 button:hover {
   background-color: rgb(192, 113, 192);
@@ -42,6 +42,11 @@ button {
 }
 
 body {
+  background-image: url("./images/homeBackground.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
   height: 100%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
