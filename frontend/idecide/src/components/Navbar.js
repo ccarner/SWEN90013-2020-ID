@@ -17,7 +17,7 @@ const NavbarID = ({ className, ...rest }) => {
 
   return (
     <div>
-      <Navbar bg="light" expand="lg" style={{ marginBottom: 10 }}>
+      <Navbar bg="light" expand="lg">
         <Navbar.Brand href="/">
           <img
             src={IconLogo}
@@ -52,7 +52,7 @@ const NavbarID = ({ className, ...rest }) => {
               </svg>
               Home
             </Nav.Link>
-            <Nav.Link className="navbar navbar-dark contact" href="/1">
+            {/* <Nav.Link className="navbar navbar-dark contact" href="/1">
               <svg
                 width="1em"
                 height="1em"
@@ -67,10 +67,10 @@ const NavbarID = ({ className, ...rest }) => {
                 />
               </svg>
               Contact
-            </Nav.Link>
+            </Nav.Link> */}
             <NavDropdown
               className="navbar navbar-dark dropdown"
-              title="Survey"
+              title="Menu"
               id="basic-nav-dropdown"
             >
               <div className="dropitem">

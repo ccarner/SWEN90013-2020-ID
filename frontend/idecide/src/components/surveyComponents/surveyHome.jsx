@@ -183,7 +183,7 @@ export default class SurveyHome extends Component {
       this.state.currentState === "menu"
     ) {
       renderElements.push(
-        <Card>
+        <Card style={{ position: "fixed", bottom: 0, width: "100%" }}>
           <Card.Body>
             Please complete the required sections before we generate an action
             plan
@@ -192,7 +192,7 @@ export default class SurveyHome extends Component {
       );
     } else if (this.state.currentState === "menu") {
       renderElements.push(
-        <Card>
+        <Card style={{ position: "fixed", bottom: 0, width: "100%" }}>
           <Card.Body>
             <PrimaryButton
               onClick={() => this.setState({ currentState: "actionPlan" })}

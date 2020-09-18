@@ -70,18 +70,18 @@ class Landing extends Component {
                 <MDBCol md="4">
                   <h5 className="title">More Information</h5>
                   <ul>
-                    <li className="list-unstyled">
+                    {/* <li className="list-unstyled">
                       <a href="/survey/3.2">Resources</a>
-                    </li>
+                    </li> */}
                     <li className="list-unstyled">
                       <a href="https://www.respect.gov.au/">Related Website</a>
                     </li>
-                    <li className="list-unstyled">
+                    {/* <li className="list-unstyled">
                       <a href="#!">Get Help</a>
-                    </li>
-                    <li className="list-unstyled">
+                    </li> */}
+                    {/* <li className="list-unstyled">
                       <a href="#!">Contact Us</a>
-                    </li>
+                    </li> */}
                   </ul>
                 </MDBCol>
               </MDBRow>

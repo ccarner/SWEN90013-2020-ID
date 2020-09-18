@@ -3,8 +3,9 @@ import { Card } from "react-bootstrap";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 import evaluateFeedback from "../RuleEngine/evaluateFeedback";
 import { Link } from "react-router-dom";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Accordion } from "react-bootstrap";
 var rules = require("../../SurveyJsons/actionPlanAlgorithm.json");
+var planHtmls = require("../../SurveyJsons/actionPlanHtml.json");
 
 export default class ActionPlans extends Component {
   constructor(props) {
@@ -86,18 +87,49 @@ export default class ActionPlans extends Component {
 
   render() {
     return (
-      <div>
-        <div>
-          <Card className="surveyIntroCard" style={{ width: "80%" }}>
-            <Card.Body>
-              <h1 className="text-center" style={{ color: "#9572A4" }}>
-                Action Plan
-              </h1>
-              <p>
-                Based on your responses, we have recommended strategies to help
-                you deal with your situation. There is additional help,
-                resources and recommendations in the "More Strategies" section.
-              </p>
+      <Card className="surveyIntroCard" style={{ width: "80%" }}>
+        <Card.Body>
+          <h1 className="text-center" style={{ color: "#9572A4" }}>
+            Action Plan
+          </h1>
+          <p>
+            Based on your responses, we have recommended strategies to help you
+            deal with your situation. There is additional help, resources and
+            recommendations in the "More Strategies" section.
+          </p>
+          <Accordion>
+            {this.state.plan &&
+              this.state.plan.map((plan, index) => {
+                var html = { __html: planHtmls[plan].strategyHtml };
+
+                return (
+                  <Card key={index}>
+                    <Accordion.Toggle
+                      as={Card.Header}
+                      eventKey={index + 1} // doesn't work with index of 0 for some reason?
+                    >
+                      {planHtmls[plan].description}
+                    </Accordion.Toggle>
+
+                    <Accordion.Collapse eventKey={index + 1}>
+                      <Card.Body>
+                        <div dangerouslySetInnerHTML={html} />
+                      </Card.Body>
+                    </Accordion.Collapse>
+                  </Card>
+                );
+              })}
+          </Accordion>
+          <Link to="/surveyComponent">
+            <PrimaryButton>Go back home</PrimaryButton>
+          </Link>
+        </Card.Body>
+      </Card>
+    );
+  }
+}
+/* <div>
+          
               <Table striped bordered hover>
                 <thead>
                   <tr>
@@ -119,13 +151,7 @@ export default class ActionPlans extends Component {
                     ))}
                 </tbody>
               </Table>
-              <Link to="/surveyComponent">
-                <PrimaryButton>Go back home</PrimaryButton>
-              </Link>
+              
             </Card.Body>
-          </Card>
-        </div>
-      </div>
-    );
-  }
-}
+          
+        </div> */
