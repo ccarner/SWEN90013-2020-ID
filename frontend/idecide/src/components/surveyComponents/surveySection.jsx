@@ -89,7 +89,9 @@ export default class SurveySection extends React.Component {
     return (
       <React.Fragment>
         <div className="container" style={{ padding: "50px" }}>
-          <h3 style={{ color: "purple" }}>{this.props.section.sectionTitle}</h3>
+          <h3 style={{ color: "#9572A4" }}>
+            {this.props.section.sectionTitle}
+          </h3>
         </div>
         {this.handleSectionType(this.props.section)}
         {/* <CardDeck

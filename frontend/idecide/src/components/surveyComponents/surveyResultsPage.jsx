@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Card } from "react-bootstrap";
+import { Card, Accordion } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 
@@ -27,21 +27,28 @@ export default function surveyResultsPage(props) {
     <div>
       <Card className="surveyIntroCard" style={{ width: "80%" }}>
         <Card.Body>
-          <Card.Title>Thank you for completing this section</Card.Title>
+          <h1 className="text-center" style={{ color: "#9572A4" }}>
+            Thank you for completing this section
+          </h1>
+
           {feedback}
           <PrimaryButton onClick={props.returnHome}>Go back home</PrimaryButton>
-          <Card.Title style={{ padding: "10px" }}>
-            Your answers are below:
-          </Card.Title>
-          <Card.Text>
-            <ol>
-              {props.surveyResults.map((question) => (
-                <li>
-                  {question.questionText} : {question.questionAnswer.join()}
-                </li>
-              ))}
-            </ol>
-          </Card.Text>
+          <Accordion>
+            <Accordion.Toggle as={PrimaryButton} variant="link" eventKey="0">
+              View Answers
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey="0">
+              <Card.Text>
+                <ol>
+                  {props.surveyResults.map((question) => (
+                    <li>
+                      {question.questionText} : {question.questionAnswer.join()}
+                    </li>
+                  ))}
+                </ol>
+              </Card.Text>
+            </Accordion.Collapse>
+          </Accordion>
         </Card.Body>
       </Card>
     </div>

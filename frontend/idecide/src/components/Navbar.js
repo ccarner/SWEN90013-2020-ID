@@ -172,6 +172,7 @@ const NavbarID = ({ className, ...rest }) => {
                 rounded
                 className="purple-gradient"
                 onClick={() => {
+                  localStorage.clear();
                   window.location.href = "https://www.weather.com.au/";
                 }}
               >

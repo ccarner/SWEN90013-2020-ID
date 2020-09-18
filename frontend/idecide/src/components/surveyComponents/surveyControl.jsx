@@ -169,7 +169,7 @@ export default class SurveyControl extends Component {
       <Container>
         <Row className="align-items-center">
           <Col>
-            <h3 style={{ color: "purple", margin: "20px" }}>
+            <h3 style={{ color: "#9572A4", margin: "20px" }}>
               {this.state.surveyFile.surveyTitle}
             </h3>
           </Col>

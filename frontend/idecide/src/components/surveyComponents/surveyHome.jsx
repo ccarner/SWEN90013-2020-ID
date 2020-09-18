@@ -132,7 +132,9 @@ export default class SurveyHome extends Component {
       renderElements.push(
         <div className="container" className="padding10">
           <div style={{ padding: "30px" }}>
-            <h2 style={{ color: "purple" }}>Help Me Decide</h2>
+            <h1 className="text-center" style={{ color: "#9572A4" }}>
+              Help Me Decide
+            </h1>
             <br />
             <h5>
               Completing the modules below will help us better understand your

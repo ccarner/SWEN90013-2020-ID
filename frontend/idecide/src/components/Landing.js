@@ -20,7 +20,9 @@ class Landing extends Component {
     return (
       <React.Fragment>
         <div className="container" style={{ padding: "10%" }}>
-          <h1 style={{ color: "purple" }}>Women's Wellbeing Tool</h1>
+          <h1 className="text-center" style={{ color: "#9572A4" }}>
+            Women's Wellbeing Tool
+          </h1>
           <br></br>
           <h2>Do you worry about whether your relationship is healthy?</h2>
           <h2>Do you sometimes wonder if you are safe?</h2>

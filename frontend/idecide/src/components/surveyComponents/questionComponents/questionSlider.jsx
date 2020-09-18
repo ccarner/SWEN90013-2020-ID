@@ -22,7 +22,7 @@ export default class QuestionSlider extends Component {
 
     return (
       <React.Fragment>
-        <div style={{ color: "purple" }}>{question.questionText}</div>
+        <div style={{ color: "#9572A4" }}>{question.questionText}</div>
 
         <div className="sliderContainer">
           <span className="sliderLabel">{question.sliderMinValue}</span>
