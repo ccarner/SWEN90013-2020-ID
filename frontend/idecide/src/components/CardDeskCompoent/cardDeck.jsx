@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Slider } from "antd";
-//import testquestion from "./testdata";
+
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./cards.css";
 import "antd/dist/antd.css";
+import DragableList from "../RankingComponent/DragableList";
 import { getSurveyById, postingSurvey } from "../../API/surveyAPI";
 import { Spinner, Button } from "react-bootstrap";
 import JsonRuleEngine from "../RuleEngine/jsonRule.js";
@@ -99,7 +100,7 @@ export default class CardDeck extends Component {
                   className="composite-option-button"
                 >
                   <span className="composite-circle top"></span>
-                  <span className="composite-label bottom">{option.name}</span>
+                  <span className="composite-label bottom">{option}</span>
                 </button>
               ))}
             </div>
@@ -140,28 +141,27 @@ export default class CardDeck extends Component {
         </div>
       );
     } else if (item.questionType === "yesOrNo") {
-
       return (
         <div className="questionContainer">
           <div className="button-container">
             <MDBBtn
               gradient="aqua"
               style={{ border: "none", "border-radius": "15px" }}
-              onClick={() => this.handleResult(item, { name: "No" })}
+              onClick={() => this.handleResult(item, "No")}
             >
               No
             </MDBBtn>
             <MDBBtn
               gradient="purple"
               style={{ border: "none", "border-radius": "15px" }}
-              onClick={() => this.handleResult(item, { name: "Yes" })}
+              onClick={() => this.handleResult(item, "Yes")}
             >
               Yes
             </MDBBtn>
           </div>
         </div>
       );
-    } else if (item.questionType == "singleSelectionVertical") {
+    } else if (item.questionType === "singleSelectionVertical") {
       return (
         <div className="questionContainer">
           <div className="composite-scale-container">

@@ -1,0 +1,81 @@
+{
+  "surveyTitle": "My Relationship",
+  "surveyImageName": "1305799574060929024.png",
+  "surveyVersion": "1.0",
+  "surveyIntroduction": "This section of I-DECIDE walks you through some questions and activities to help you think about the health of your relationship with the partner or ex-partner who has made you feel afraid or unsafe.",
+  "surveySections": [
+    {
+      "sectionTitle": "Your relationship with the current or ex-partner",
+      "sectionIntroduction": "Relationship Survey, section 1",
+      "sectionIndex": 0,
+      "questions": [
+        {
+          "questionIndex": 0,
+          "questionId": "2",
+          "questionText": "How unhealthy do you think your relationship is with your partner or ex-partner? (10 is very unhealthy and 0 is not at all unhealthy)",
+          "questionType": "singleSelection",
+          "selectionOptions": [
+            { "name": "one", "weight": "0" },
+            { "name": "two", "weight": "0.2" },
+            { "name": "three", "weight": "0.4" },
+            { "name": "four", "weight": "0.6" },
+            { "name": "five", "weight": "0.8" },
+            { "name": "Daily", "weight": "1" }
+          ]
+        },
+        {
+          "questionIndex": 1,
+          "questionId": "5",
+          "questionText": "Are you afraid of having an unhealthy relationship? (10 is very afraid and 0 is not at all afraid)",
+          "questionType": "slider",
+          "sliderDefaultValue": 5,
+          "sliderMaxValue": 10,
+          "sliderMinValue": 0
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Partner Behaviours",
+      "sectionIntroduction": "Relationship Survey Section 2",
+      "sectionId": "1",
+      "sectionIndex": 1,
+      "questions": [
+        {
+          "questionIndex": 0,
+          "questionId": "1",
+          "questionText": "My partner blames me",
+          "questionType": "singleSelection",
+          "selectionOptions": [
+            { "name": "Never", "weight": "0" },
+            { "name": "Once", "weight": "0.2" },
+            { "name": "Several Times", "weight": "0.4" },
+            { "name": "Once A Month", "weight": "0.6" },
+            { "name": "Once A Week", "weight": "0.8" },
+            { "name": "Daily", "weight": "1" }
+          ]
+        },
+        {
+          "questionIndex": 1,
+          "questionId": "2",
+          "questionText": "Mt partner controls my freedom",
+          "questionType": "singleSelection",
+          "selectionOptions": [
+            { "name": "Never", "weight": "0" },
+            { "name": "Once", "weight": "0.2" },
+            { "name": "Several Times", "weight": "0.4" },
+            { "name": "Once A Month", "weight": "0.6" },
+            { "name": "Once A Week", "weight": "0.8" },
+            { "name": "Daily", "weight": "1" }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionIndex": 2,
+      "sectionTitle": "Test -Ash",
+      "sectionIntroduction": "2",
+      "questions": []
+    }
+  ],
+  "_class": "com.uom.idecide.pojo.Survey"
+}

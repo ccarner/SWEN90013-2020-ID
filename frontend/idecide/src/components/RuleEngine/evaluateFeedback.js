@@ -1,4 +1,4 @@
-export default function runTheEngine(rules, factContainers) {
+export default function evaluateFeedback(rules, factContainers) {
   let RuleEngine = require("json-rules-engine");
   let engine = new RuleEngine.Engine();
 
@@ -13,7 +13,7 @@ export default function runTheEngine(rules, factContainers) {
   // OR they are simple key,value pairs of data
   // all facts passed in should be an object with a factName and a fact
   // which evaluates to some data
-  //fact container is just an onject with {factName, fact}
+  //fact container is just an object with {factName, fact}
   for (const fact of factContainers) {
     engine.addFact(fact.factName, fact.fact);
   }
@@ -35,13 +35,14 @@ export default function runTheEngine(rules, factContainers) {
               totalPoints += value;
             }
           } else if (
-            question.questionType === "singleChoice" &&
-            question.questionAnswer === "yes"
+            question.questionType === "yesOrNo" &&
+            question.questionAnswer[0] === "Yes"
           ) {
             totalPoints += 1;
           }
         }
       }
+      console.log("total points is", totalPoints);
       return totalPoints;
     });
   };
@@ -69,10 +70,10 @@ export default function runTheEngine(rules, factContainers) {
   });
 
   var results = engine.run().then((result) => {
-    // console.log(
-    //   "all rules executed; the following events were triggered: ",
-    //   result.events
-    // );
+    console.log(
+      "all rules executed; the following events were triggered: ",
+      result.events
+    );
     return result;
   });
   return results;

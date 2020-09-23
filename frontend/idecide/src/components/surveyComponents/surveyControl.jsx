@@ -5,15 +5,13 @@ import {
   getActionPlanRuleEngineStrategy,
 } from "../../API/surveyAPI";
 import SurveySection from "./surveySection";
-import { Spinner, Button, Container, Row, Col } from "react-bootstrap";
+import { Spinner, Button, Container, Row, Col, Card } from "react-bootstrap";
 import SurveyInformationPage from "./surveyInformationPage";
 import SurveyResultsPage from "./surveyResultsPage";
 import ProgressBar from "../reusableComponents/progressBar";
 import LoadingSpinner from "../reusableComponents/loadingSpinner";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 import evaluateRule from "../RuleEngine/evaluateFeedback";
-
-var ruleEngineDetails = require("../RuleEngine/safetySurveyFeedback.json");
 
 /**
  * This component is passed an ID for a survey, and then:
@@ -28,7 +26,9 @@ export default class SurveyControl extends Component {
 
     this.state = {
       isLoaded: false,
-
+      feedbackText: null,
+      feedbackImage: null,
+      feedbackCategory: null,
       surveyFile: {},
       sectionQuestions: null,
       currentSurveyState: "introduction", // ["introduction", "started", "submitted"]
@@ -136,7 +136,11 @@ export default class SurveyControl extends Component {
   };
 
   calculateFeedback() {
-    evaluateRule(ruleEngineDetails.rules, [
+    //skip surveys that have no algorithm (have null for their alg)
+    if (!this.state.surveyFile.resultAlgorithm) {
+      return null;
+    }
+    evaluateRule(this.state.surveyFile.resultAlgorithm.rules, [
       {
         factName: "surveyAnswers",
         fact: this.state.results.questions,
@@ -162,18 +166,24 @@ export default class SurveyControl extends Component {
     var renderArray = [];
 
     renderArray.push(
-      <Container>
-        <Row className="align-items-center">
-          <Col>
-            <h3 style={{ color: "purple", margin: "20px" }}>
-              {this.state.surveyFile.surveyTitle}
-            </h3>
-          </Col>
-          <Col>
-            <ProgressBar value={this.state.percentageCompleted} />
-          </Col>
-        </Row>
-      </Container>
+      <Card style={{ zIndex: -1 }}>
+        <Container>
+          <Row className="align-items-center">
+            <Col>
+              <h3 style={{ color: "#9572A4", margin: "20px" }}>
+                {this.state.surveyFile.surveyTitle}
+              </h3>
+            </Col>
+            <Col>
+              <ProgressBar
+                showLabel={false}
+                value={this.state.percentageCompleted}
+              />
+            </Col>
+            <Col>{this.state.percentageCompleted}% Completed</Col>
+          </Row>
+        </Container>
+      </Card>
     );
 
     if (!isLoaded) {
@@ -188,6 +198,7 @@ export default class SurveyControl extends Component {
         renderArray.push(
           <div>
             <SurveyInformationPage
+              returnHome={this.props.returnHome}
               survey={this.state.surveyFile}
               startSurvey={this.handleStart}
             />
@@ -203,25 +214,43 @@ export default class SurveyControl extends Component {
               }
               results={this.state.results.questions}
             />
-            <PrimaryButton
-              onClick={(e) => {
-                this.handleNavigateSections(-1);
+
+            <Card
+              style={{
+                position: "fixed",
+                bottom: 0,
+                width: "100%",
               }}
             >
-              {"< Previous"}
-            </PrimaryButton>
-            <PrimaryButton
-              onClick={(e) => {
-                this.handleNavigateSections(1);
-              }}
-            >
-              {"Next >"}
-            </PrimaryButton>
+              <Container>
+                <Row className="align-items-center">
+                  <Col>
+                    <PrimaryButton
+                      onClick={(e) => {
+                        this.handleNavigateSections(-1);
+                      }}
+                    >
+                      {"< Previous"}
+                    </PrimaryButton>
+                  </Col>
+                  <Col>
+                    <PrimaryButton
+                      onClick={(e) => {
+                        this.handleNavigateSections(1);
+                      }}
+                    >
+                      {"Next >"}
+                    </PrimaryButton>
+                  </Col>
+                </Row>
+              </Container>
+            </Card>
           </React.Fragment>
         );
       } else if (this.state.currentSurveyState === "submitted") {
         renderArray.push(
           <SurveyResultsPage
+            returnHome={this.props.returnHome}
             surveyResults={this.state.results.questions}
             feedbackText={this.state.feedbackText}
             feedbackImage={this.state.feedbackImage}

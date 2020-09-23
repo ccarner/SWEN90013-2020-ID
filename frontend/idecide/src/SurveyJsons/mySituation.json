@@ -1,7 +1,8 @@
 {
   "surveyTitle": "My Situation",
   "surveyVersion": "1.0",
-  "surveyIntroduction": "In order for us to provide you with relevant help and information, we need to ask a couple of questions about you",
+  "surveyIntroduction": "In order for us to provide you with relevant help and information, we need to ask a couple of questions about your current situation",
+  "surveyImageName": "1306390114573881344.jpg",
   "surveySections": [
     {
       "sectionId": "1",
@@ -37,7 +38,7 @@
           "questionText": "What are your intentions regarding your relationship?",
           "questionType": "singleSelectionVertical",
           "selectionOptions": [
-            "I indend to stay in the relationship",
+            "I intend to stay in the relationship",
             "I intend to leave the relationship",
             "I have already left the relationship"
           ]
@@ -45,5 +46,5 @@
       ]
     }
   ],
-  "resultAlgorithm": "null"
+  "resultAlgorithm": null
 }
