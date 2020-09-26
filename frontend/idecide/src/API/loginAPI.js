@@ -52,7 +52,7 @@ export function getAllAdmins() {
 export async function loginUser(userIn) {
   const { email, password } = userIn;
   var endpoint = USER_URL + `/user/login`;
-  if (userIn.email === "ccarner13@gmail.com") {
+  if (userIn.email === "ccarner13@gmail.com"||userIn.email === "haobei98@gmail.com") {
     endpoint = USER_URL + `/admin/login`;
   }
 
