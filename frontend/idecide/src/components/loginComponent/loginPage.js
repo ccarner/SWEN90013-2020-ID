@@ -52,7 +52,7 @@ export default class LoginPage extends React.Component {
       }
       this.setState({
         isLoggedIn: true,
-        isAdmin: userAdmin
+        isAdmin: userAdmin,
       });
     } else {
       alert("Log in Failed");
@@ -77,18 +77,14 @@ export default class LoginPage extends React.Component {
       if (isAdmin) {
         return <AdminConsole />;
       } else {
-        return (
-          <div>
-            You are logged in!
-          </div>
-        );
+        return <div>You are logged in!</div>;
       }
     } else if (isLoggingPage) {
       return (
         <div>
           <Card className="surveyIntroCard" style={{ width: "80%" }}>
             <Card.Body>
-              <Card.Title>{"Log in to iDecide "}</Card.Title>
+              <Card.Title>{"Log in to I-Decide "}</Card.Title>
               <Card.Text></Card.Text>
               <form onSubmit={this.handleSubmit}>
                 <div className="font-of-input-box">

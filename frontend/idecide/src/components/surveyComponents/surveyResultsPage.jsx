@@ -1,36 +1,54 @@
 import React from "react";
 
-import { Button, Card } from "react-bootstrap";
+import { Card, Accordion } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { MDBBtn } from "mdbreact";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 
 /**
  * This component will show a) the 'feedback' from the survey and b) the answers
  * filled in by the user.
  */
+
 export default function surveyResultsPage(props) {
+  var feedback =
+    props.feedbackCategory === null ? (
+      ""
+    ) : (
+      <React.Fragment>
+        <Card.Title>
+          Feedback and Results: <b>{props.feedbackCategory}</b>
+        </Card.Title>
+        <img src={props.feedbackImage} alt="" width="30%" />
+        <Card.Text style={{ fontSize: "18px" }}>{props.feedbackText}</Card.Text>
+      </React.Fragment>
+    );
+
   return (
     <div>
       <Card className="surveyIntroCard" style={{ width: "80%" }}>
         <Card.Body>
-          <Card.Title>
-            Survey Completed your answers + feedback will be given here on this
-            page (previous completions will open to this page)
-          </Card.Title>
-          <Card.Text>
-            <ol>
-              {props.surveyResults.map((question) => (
-                <li>
-                  {question.questionText} : {question.questionAnswer.join()}
-                </li>
-              ))}
-            </ol>
-          </Card.Text>
+          <h1 className="text-center" style={{ color: "#9572A4" }}>
+            Thank you for completing this section
+          </h1>
 
-          <Link to="/surveyComponent">
-            <PrimaryButton>Go back home</PrimaryButton>
-          </Link>
+          {feedback}
+          <PrimaryButton onClick={props.returnHome}>Go back home</PrimaryButton>
+          <Accordion>
+            <Accordion.Toggle as={PrimaryButton} variant="link" eventKey="0">
+              View Answers
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey="0">
+              <Card.Text>
+                <ol>
+                  {props.surveyResults.map((question) => (
+                    <li>
+                      {question.questionText} : {question.questionAnswer.join()}
+                    </li>
+                  ))}
+                </ol>
+              </Card.Text>
+            </Accordion.Collapse>
+          </Accordion>
         </Card.Body>
       </Card>
     </div>

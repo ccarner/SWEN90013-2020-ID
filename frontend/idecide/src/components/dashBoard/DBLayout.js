@@ -16,6 +16,7 @@ import {
 import NewSurvey from './view/survey/surveyEdit/NewSurveyS';
 import SurveySection from './view/survey/surveyView/SurveySection';
 import Dashboard from './view/dashboardview';
+import Researcher from './view/researcher/RLayout';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -51,6 +52,7 @@ export default function DBLayout() {
 				<Route path="/dashboard/actionplan" component={APLayout} />
 				<Route path="/dashboard/surveyId=:surveyId" component={SurveySection} />
 				<Route path="/dashboard/newsurvey" component={NewSurvey} />
+				<Route path="/dashboard/user" component={Researcher} />
 			</Grid>
 		</Grid>
 	);

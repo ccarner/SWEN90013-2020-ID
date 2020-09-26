@@ -49,14 +49,25 @@ export function getAllAdmins() {
   }
 }
 
+export function getAllUsers() {
+  const endpoint = `https://www.idecide.icu:9012/user/userList`;
+  try {
+    return axios.get(endpoint).then((res) => res.data);
+  } catch (e) {
+    return e;
+  }
+}
+
+
 export async function loginUser(userIn) {
   const { email, password } = userIn;
   var endpoint = USER_URL + `/user/login`;
   if (userIn.email === "ccarner13@gmail.com"||userIn.email === "haobei98@gmail.com") {
     endpoint = USER_URL + `/admin/login`;
   }
+  
 
-
+  
   // check if the email is present
 
   if (!email) {

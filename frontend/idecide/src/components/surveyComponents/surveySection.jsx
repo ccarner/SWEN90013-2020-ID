@@ -2,6 +2,7 @@ import React from "react";
 import QuestionSlider from "./questionComponents/questionSlider";
 import SingleChoice from "./questionComponents/questionSingleChoice";
 import QuestionYesOrNo from "./questionComponents/questionYesOrNo";
+import DragableList from "../RankingComponent/DragableList";
 import { MDBBtn, MDBInput, MDBContainer } from "mdbreact";
 import CardDeck from "../CardDeskCompoent/cardDeck";
 /**
@@ -67,18 +68,37 @@ export default class SurveySection extends React.Component {
   //   });
   // }
 
+  handleSectionType = (section) => {
+    if (section.sectionType === undefined) {
+      return (
+        <CardDeck
+          key={section.sectionId}
+          handleAnswer={this.handleInputChange}
+          section={section}
+        />
+      );
+    } else if (section.sectionType === "ranking") {
+      console.log("HERE ITS A DRAGGABLE LIST", section);
+      return (
+        <DragableList handleAnswer={this.handleInputChange} section={section} />
+      );
+    }
+  };
+
   render() {
     return (
       <React.Fragment>
         <div className="container" style={{ padding: "50px" }}>
-          <h3 style={{ color: "purple" }}>{this.props.section.sectionTitle}</h3>
+          <h3 style={{ color: "#9572A4" }}>
+            {this.props.section.sectionTitle}
+          </h3>
         </div>
-
-        <CardDeck
+        {this.handleSectionType(this.props.section)}
+        {/* <CardDeck
           key={this.props.section.sectionId}
           handleAnswer={this.handleInputChange}
           section={this.props.section}
-        />
+        /> */}
       </React.Fragment>
     );
   }

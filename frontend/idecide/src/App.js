@@ -28,26 +28,35 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
+          <div className="backgroundImage"></div>
           <Navbar />
 
           <div>
             <Switch>
-
               <Route path="/survey/3.1" component={Questions} />
               <Route path="/survey/3.2" component={ActionPlan} />
               <Route path="/survey/3.3" component={Framework} />
               <Route path="/dashboard" component={DashBoard} />
               {/* <Redirect exact from="/dashboard" to="/dashboard/home" /> */}
 
-              <Redirect exact from="/surveyComponent/" to="/surveyComponent/surveyHome" />
-              <Route path="/surveyComponent/surveyHome" component={SurveyHome} />
+              <Redirect
+                exact
+                from="/surveyComponent/"
+                to="/surveyComponent/surveyHome"
+              />
+              <Route
+                path="/surveyComponent/surveyHome"
+                component={SurveyHome}
+              />
               <Route path="/loginComponent/loginPage" component={LoginPage} />
-              <Route path="/loginComponent/registerPage" component={RegisterPage} />
+              <Route
+                path="/loginComponent/registerPage"
+                component={RegisterPage}
+              />
               <Route path="/loginComponent/adminInfo" component={AdminInfo} />
 
               <Route path="/" component={Landing} />
               <Route path="/1" component={NotFound} />
-
             </Switch>
           </div>
         </div>
