@@ -3,14 +3,16 @@ import { Card } from "react-bootstrap";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 import evaluateFeedback from "../RuleEngine/evaluateFeedback";
 import { Link } from "react-router-dom";
-import { Table, Button, Accordion } from "react-bootstrap";
+import { Table, Button, Accordion, CardDeck, Modal } from "react-bootstrap";
+import Grid from "antd/lib/card/Grid";
+import "../../CSS/Modal.css";
 var rules = require("../../SurveyJsons/actionPlanAlgorithm.json");
 var planHtmls = require("../../SurveyJsons/actionPlanHtml.json");
 
 export default class ActionPlans extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { ModalShow: false, ModalBody: undefined };
     this.addResultsToFacts();
     this.determineActionPlans();
     this.determineActionPlans = this.determineActionPlans.bind(this);
@@ -82,49 +84,106 @@ export default class ActionPlans extends Component {
 
     evaluateFeedback(rules, factsContainer).then((result) => {
       this.setState({ plan: result.events[0].params });
+      console.log(result.events[0]);
     });
   }
+  handleModalShow = () => {
+    this.setState({ ModalShow: !this.state.ModalShow });
+  };
 
   render() {
     return (
-      <Card className="surveyIntroCard" style={{ width: "80%" }}>
-        <Card.Body>
+      <div>
+        <Modal
+          show={this.state.ModalShow}
+          onHide={() => this.handleModalShow()}
+          dialogClassName="main-modal"
+          aria-labelledby="example-custom-modal-styling-title"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="example-custom-modal-styling-title">
+              Custom Modal Styling
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div dangerouslySetInnerHTML={this.state.ModalBody}></div>
+          </Modal.Body>
+        </Modal>
+        <div className="surveyIntroCard" style={{ width: "80%" }}>
           <h1 className="text-center" style={{ color: "#9572A4" }}>
             Action Plan
           </h1>
-          <p>
+          <p style={{ fontSize: "20px" }}>
             Based on your responses, we have recommended strategies to help you
             deal with your situation. There is additional help, resources and
             recommendations in the "More Strategies" section.
           </p>
           <Accordion>
-            {this.state.plan &&
-              this.state.plan.map((plan, index) => {
-                var html = { __html: planHtmls[plan].strategyHtml };
+            <Card
+              key={1}
+              style={{
+                background: "rgba(54, 25, 25, 0.00004)",
+                border: "0",
+                boxShadow: "none",
+              }}
+            >
+              <Accordion.Toggle
+                as={Card.Header}
+                eventKey={1 + 1} // doesn't work with index of 0 for some reason?
+                style={{
+                  background: "linear-gradient(40deg, #ff6ec4, #7873f5)",
+                  color: "white",
+                  "font-size": "25px",
+                }}
+              >
+                {/* {planHtmls[plan].description} */}
+                Safety
+              </Accordion.Toggle>
 
-                return (
-                  <Card key={index}>
-                    <Accordion.Toggle
-                      as={Card.Header}
-                      eventKey={index + 1} // doesn't work with index of 0 for some reason?
-                    >
-                      {planHtmls[plan].description}
-                    </Accordion.Toggle>
+              <Accordion.Collapse eventKey={1 + 1}>
+                <CardDeck>
+                  <div
+                    style={{
+                      display: "grid",
+                      "grid-template-columns": "repeat(3,1fr)",
+                      gap: "45px",
+                      margin: "20px",
+                    }}
+                  >
+                    {this.state.plan &&
+                      this.state.plan.map((plan, index) => {
+                        var html = { __html: planHtmls[plan].strategyHtml };
 
-                    <Accordion.Collapse eventKey={index + 1}>
-                      <Card.Body>
-                        <div dangerouslySetInnerHTML={html} />
-                      </Card.Body>
-                    </Accordion.Collapse>
-                  </Card>
-                );
-              })}
+                        return (
+                          <Card>
+                            <Card.Body>{planHtmls[plan].description}</Card.Body>
+
+                            <Card.Footer>
+                              <PrimaryButton
+                                gradient="purple-gradient"
+                                rounded
+                                className="purple-gradient"
+                                onClick={() => {
+                                  this.handleModalShow();
+                                  this.setState({ ModalBody: html });
+                                }}
+                              >
+                                view more
+                              </PrimaryButton>
+                            </Card.Footer>
+                          </Card>
+                        );
+                      })}
+                  </div>
+                </CardDeck>
+              </Accordion.Collapse>
+            </Card>
           </Accordion>
           <Link to="/surveyComponent">
             <PrimaryButton>Go back home</PrimaryButton>
           </Link>
-        </Card.Body>
-      </Card>
+        </div>
+      </div>
     );
   }
 }
