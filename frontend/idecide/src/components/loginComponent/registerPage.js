@@ -4,17 +4,15 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import { registerUser } from "../../API/loginAPI";
+import { Alert, AlertTitle } from "@material-ui/lab";
+import PrimaryButton from "../reusableComponents/PrimaryButton";
+
+
+
+
 
 
 // import { NavLink, BrowserRouter } from "react-router-dom";
-
-
-const txtFieldState = {
-  value: "",
-  valid: true,
-  typeMismatch: false,
-  errMsg: "You should add the ashwaq" //this is where our error message gets across
-};
 
 
 export default class RegisterPage extends React.Component {
@@ -24,11 +22,12 @@ export default class RegisterPage extends React.Component {
       formData: {
         username: '',
         password: '',
-        email: { ...txtFieldState, fieldName: "Email", required: true, requiredTxt: "Email is required", formatErrorTxt: "Incorrect email format" },
+        email: '',
         phonenumber: '',
         postcode: '',
 
       },
+
 
 
     };
@@ -57,22 +56,27 @@ export default class RegisterPage extends React.Component {
     });
 
     const response = await registerUser(userObject);
+
     if (response.flag) {
       alert("Sign up Successful!");
+
+
     } else {
       alert("Sign up Failed");
+
     }
     window.location.replace("/");
   }
 
 
   render() {
+
     const { formData, submitted } = this.state;
     return (
 
       <div>
 
-        <form onSubmit={this.handleSubmit} >
+        <form onSubmit={this.handleSubmit}   >
           <div className="font-of-input-box">
             <div className="padding-1">Register</div>
             <div className="content">
@@ -130,13 +134,24 @@ export default class RegisterPage extends React.Component {
             </div>
             <br />
             <div className="footer">
-              <MDBBtn type="submit" gradient="purple">
-                Register
-              </MDBBtn>
 
-              <MDBBtn gradient="purple" onClick={this.props.registerToggle}>
+              <PrimaryButton
+                type="submit"
+                gradient="purple"
+                onClick={this.registerToggle}
+              >
+                Register
+                 </PrimaryButton>
+
+
+              <PrimaryButton
+
+                gradient="purple"
+                onClick={this.props.registerToggle}>
+
                 Login here
-              </MDBBtn>
+                 </PrimaryButton>
+
             </div>
           </div>
         </form>
