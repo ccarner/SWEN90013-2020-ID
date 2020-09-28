@@ -83,8 +83,8 @@ export default class LoginPage extends React.Component {
       return (
         <div>
           <Card className="surveyIntroCard" style={{ width: "80%" }}>
-            <Card.Body>
-              <Card.Title>{"Log in to I-Decide "}</Card.Title>
+            <Card.Body className="container" style={{ padding: "10%" }}>
+              <Card.Title className="text-center" style={{ color: "#9572A4" }}>{"Log in to I-Decide "}</Card.Title>
               <Card.Text></Card.Text>
               <form onSubmit={this.handleSubmit}>
                 <div className="font-of-input-box">
@@ -134,7 +134,7 @@ export default class LoginPage extends React.Component {
               </form>
             </Card.Body>
           </Card>
-        </div>
+        </div >
       );
     } else {
       return (
