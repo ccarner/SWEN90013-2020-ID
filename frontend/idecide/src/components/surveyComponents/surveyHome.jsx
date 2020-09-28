@@ -27,7 +27,7 @@ import PrimaryButton from "../reusableComponents/PrimaryButton";
  */
 export default class SurveyHome extends Component {
   constructor(props) {
-    super(props);
+    super();
 
     //load in previous completions from localStorage
     let previousCompletions = localStorage.getItem("prevCompletions");
@@ -41,24 +41,25 @@ export default class SurveyHome extends Component {
     ]; // order that surveys need to be completed in
 
     this.state = {
-      nextSurvey:
-        previousCompletions === null ? 0 : parseInt(previousNextSurvey), // index of next survey to complete, from the surveyOrder array
+      userId: localStorage.getItem("token"),
+      nextSurvey: previousCompletions === null ? 0 : parseInt(previousNextSurvey), // index of next survey to complete, from the surveyOrder array
       loaded: false,
       actionPlan: "",
       currentState: "menu", // ["menu","survey","completion", "actionPlan"]
       currentResults: undefined, // when in "completion" state, holds data of completion being viewed
       currentSurveyId: -1, // when in "survey" state, ID of current survey
       allSurveys: {}, // pulled from the API, list of surveys available
-      surveyCompletions:
-        previousCompletions === null ? [] : JSON.parse(previousCompletions), // pulled from localStorage, all previous completions
+      surveyCompletions: previousCompletions === null ? [] : JSON.parse(previousCompletions), // pulled from localStorage, all previous completions
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.startSurvey = this.startSurvey.bind(this);
   }
 
   async componentDidMount() {
-    var userId = this.props.userId;
-    if (userId === undefined) {
+    var userId = this.state.userId;
+    console.log(331, userId)
+    console.log(332, localStorage.getItem("token"))
+    if (userId === null) {
       console.log(
         "no user ID passed in as prop to surveyHome... using Id =92138918723"
       );

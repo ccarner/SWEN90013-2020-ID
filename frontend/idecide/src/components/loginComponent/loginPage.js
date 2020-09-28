@@ -12,9 +12,10 @@ import RegisterPage from "./registerPage";
 import { Button, Card } from "react-bootstrap";
 import AdminConsole from "../AdminComponents/adminConsole";
 
+
 export default class LoginPage extends React.Component {
   constructor(props) {
-    super(props);
+    super();
     this.state = {
       isLoggingPage: true,
       isLoggedIn: false,
@@ -47,8 +48,10 @@ export default class LoginPage extends React.Component {
 
     if (response.flag) {
       var userAdmin = false;
-      if (userObject.email === "ccarner13@gmail.com") {
+      if (localStorage.getItem("userType") === "admin") {
         userAdmin = true;
+      } else {
+        window.location.replace("/loginComponent/userInfo");
       }
       this.setState({
         isLoggedIn: true,
@@ -77,7 +80,11 @@ export default class LoginPage extends React.Component {
       if (isAdmin) {
         return <AdminConsole />;
       } else {
-        return <div>You are logged in!</div>;
+        return (
+          <div>
+            <h1>Welcome!</h1>
+          </div>
+        );
       }
     } else if (isLoggingPage) {
       return (

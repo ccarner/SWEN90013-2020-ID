@@ -27,6 +27,7 @@ const NavbarID = ({ className, ...rest }) => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
+
           <Nav className="mr-auto">
             <Nav.Link
               className="navbar navbar-dark home"
@@ -156,6 +157,7 @@ const NavbarID = ({ className, ...rest }) => {
               </div>
             </NavDropdown>
           </Nav>
+          <h6>{localStorage.getItem("userType")}</h6>
           <Form inline>
             <MDBCol md="12">
               {/* <MDBFormInline className="md-form mr-auto mb-4"> */}
@@ -182,6 +184,7 @@ const NavbarID = ({ className, ...rest }) => {
             </MDBCol>
           </Form>
         </Navbar.Collapse>
+
       </Navbar>
 
       <Modal

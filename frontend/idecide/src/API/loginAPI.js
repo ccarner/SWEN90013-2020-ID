@@ -65,9 +65,6 @@ export async function loginUser(userIn) {
   if (userIn.email === "ccarner13@gmail.com") {
     endpoint = USER_URL + `/admin/login`;
   }
-  
-
-  
   // check if the email is present
 
   if (!email) {
@@ -86,6 +83,13 @@ export async function loginUser(userIn) {
       password,
     }),
   });
-
+  console.log(222, result)
+  console.log(223, result.data.data)
+  localStorage.setItem("token", result.data.data.token);
+  localStorage.setItem("userType", result.data.data.roles);
+  localStorage.setItem("userId", result.data.data.id);
   return result.data;
 }
+
+
+

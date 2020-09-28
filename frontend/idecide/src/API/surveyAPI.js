@@ -54,13 +54,16 @@ export async function getAllSurveys() {
 }
 
 export async function postingSurvey(surveyIn) {
-  const endpoint = API_URL + `/answer`;
 
+  const endpoint = API_URL + `/answer`;
+  const token = localStorage.getItem("token");
+  alert(665);
   const dataPost = await axios({
     url: endpoint, // send a request to the library API
     method: "POST", // HTTP POST method
     headers: {
       "Content-Type": "application/json",
+      "Authorization": token
     },
     data: JSON.stringify(surveyIn),
   });
@@ -76,6 +79,7 @@ export async function editSurvey(surveyInfo) {
     method: "PUT", // HTTP POST method
     headers: {
       "Content-Type": "application/json",
+      "Authorization": localStorage.getItem("token")
     },
 
     data: surveyInfo,
