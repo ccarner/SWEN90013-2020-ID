@@ -67,7 +67,7 @@ export default class RegisterPage extends React.Component {
 <div  className="row"  style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '50vh'}}>
           <Alert severity="success">
           <AlertTitle>Success</AlertTitle>
-          This is a success alert — <strong>check it out!</strong>
+          Your details have been saved Successfully<strong> ! </strong>
           </Alert>
           &nbsp;&nbsp;
           <div  className="row" style={{display: 'flex', justifyContent: 'center'}}>
