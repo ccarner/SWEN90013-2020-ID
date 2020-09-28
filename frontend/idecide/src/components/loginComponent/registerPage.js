@@ -64,13 +64,14 @@ export default class RegisterPage extends React.Component {
     if (isWarning) {
       return (
         
-<div  className="row"  style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '50vh'}}>
+<div  style={{display: 'inline-block', padding: '50px',
+ justifyContent:'center', alignItems:'center' }}>
           <Alert severity="success">
           <AlertTitle>Success</AlertTitle>
           Your details have been saved Successfully<strong> ! </strong>
           </Alert>
           &nbsp;&nbsp;
-          <div  className="row" style={{display: 'flex', justifyContent: 'center'}}>
+          <div  className="row" style={{display: 'flex',justifyContent:'center', alignItems:'center'}}>
       
           <PrimaryButton
                   gradient="purple"
