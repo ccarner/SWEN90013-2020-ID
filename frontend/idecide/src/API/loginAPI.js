@@ -16,11 +16,6 @@ export async function registerUser(userIn) {
 
   const endpoint = USER_URL + `/user`;
 
-  if (!email) {
-    alert("must include a valid email address");
-    return false;
-  }
-
   const result = await axios({
     url: endpoint, // send a request to the library API
     method: "POST", // HTTP POST method
@@ -29,9 +24,9 @@ export async function registerUser(userIn) {
       "Authorization": localStorage.getItem("token")
     },
     data: JSON.stringify({
-      // partnerGender,
-      // phoneNumber,
-      // postcode,
+      partnerGender,
+      phoneNumber,
+      postcode,
       username,
       password,
       email,
@@ -52,8 +47,6 @@ export async function getAllAdmins() {
         "Authorization": localStorage.getItem("token")
       }
     });
-    console.log(552, endpoint)
-    console.log(553, result.data)
     return result.data;
   } catch (e) {
     return e;
@@ -84,7 +77,6 @@ export async function loginUser(userIn) {
     alert("must include a valid email address");
     return false;
   }
-
   const result = await axios({
     url: endpoint, // send a request to the library API
     method: "POST", // HTTP POST method
@@ -98,9 +90,11 @@ export async function loginUser(userIn) {
   });
   console.log(222, result);
   console.log(223, result.data.data);
-  localStorage.setItem("token", result.data.data.token);
-  localStorage.setItem("userType", result.data.data.roles);
-  localStorage.setItem("userId", result.data.data.id);
+  if (result.data.flag) {
+    localStorage.setItem("token", result.data.data.token);
+    localStorage.setItem("userType", result.data.data.roles);
+    localStorage.setItem("userId", result.data.data.id);
+  }
   return result.data;
 }
 

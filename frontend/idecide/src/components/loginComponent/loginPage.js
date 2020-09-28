@@ -38,9 +38,7 @@ export default class LoginPage extends React.Component {
     const response = await loginUser(userObject);
 
     if (response.flag) {
-
       window.location.replace("/loginComponent/userInfo");
-
     } else {
       alert("Log in Failed");
     }

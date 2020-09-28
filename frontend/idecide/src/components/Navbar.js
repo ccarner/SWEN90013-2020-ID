@@ -15,15 +15,11 @@ const NavbarID = ({ className, ...rest }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const handleReturnHome = () => {
-    window.location.replace("/");
-  };
+
 
   return (
     <div>
       <Navbar bg="light" expand="lg">
-        {/* <Navbar.Brand href="/"> */}
-        {/* <Navbar.Brand onClick={handleReturnHome}> */}
         <NavLink to="/">
           <Navbar.Brand>
             <img
@@ -37,11 +33,7 @@ const NavbarID = ({ className, ...rest }) => {
         <Navbar.Collapse id="basic-navbar-nav">
 
           <Nav className="mr-auto">
-            <Nav.Link
-              className="navbar navbar-dark home"
-              // activeClassName="active"
-              href="/"
-            >
+            <NavLink className="navbar navbar-dark home" to="/">
               <svg
                 width="1em"
                 height="1em"
@@ -60,7 +52,7 @@ const NavbarID = ({ className, ...rest }) => {
                 />
               </svg>
               Home
-            </Nav.Link>
+            </NavLink>
             {/* <Nav.Link className="navbar navbar-dark contact" href="/1">
               <svg
                 width="1em"

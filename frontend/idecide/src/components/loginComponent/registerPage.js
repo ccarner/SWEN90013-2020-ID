@@ -65,21 +65,23 @@ export default class RegisterPage extends React.Component {
     if (isWarning) {
       return (
 
-    <div  style={{display: 'inline-block', padding: '50px',
-        justifyContent:'center', alignItems:'center' }}>
+        <div style={{
+          display: 'inline-block', padding: '50px',
+          justifyContent: 'center', alignItems: 'center'
+        }}>
           <Alert severity="success">
-          <AlertTitle>Success</AlertTitle>
+            <AlertTitle>Success</AlertTitle>
           Your details have been saved Successfully<strong> ! </strong>
           </Alert>
           &nbsp;&nbsp;
-          <div  className="row" style={{display: 'flex',justifyContent:'center', alignItems:'center'}}>
+          <div className="row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 
-          <PrimaryButton
-                  gradient="purple"
-                  onClick={this.handleCloseWarning}>
-                   close
+            <PrimaryButton
+              gradient="purple"
+              onClick={this.handleCloseWarning}>
+              close
                </PrimaryButton>
-               </div>
+          </div>
         </div>
       );
     } else {
@@ -89,102 +91,102 @@ export default class RegisterPage extends React.Component {
           paddingTop: '20px',
           boxSizing: 'content-box',
         }}>
-        <Card  className="container card-body" style={{ width: "60%" , padding: "5%;" }}>
+          <Card className="container card-body" style={{ width: "60%", padding: "5%;" }}>
 
-        <div className="card-body">
-          <form onSubmit={this.handleSubmit}>
-            <div className="font-of-input-box">
+            <div className="card-body">
+              <form onSubmit={this.handleSubmit}>
+                <div className="font-of-input-box">
 
-              <div className="padding-1">Register</div>
-              <br />
-              <br />
-              <div className="content">
-                <div className="form">
-                  <div>
-                    <label htmlFor="username">Username: </label>
-                    <input type="text" name="username" placeholder="username" required pattern="[a-z0-9]+"
-                      title="Username should only contain lowercase letters. e.g. john" className="input:invalid"
-                    />
-                  </div>
+                  <div className="padding-1">Register</div>
                   <br />
-                  <div>
-                    <label htmlFor="password">Password: </label>
+                  <br />
+                  <div className="content">
+                    <div className="form">
+                      <div>
+                        <label htmlFor="username">Username: </label>
+                        <input type="text" name="username" placeholder="username" required pattern="[a-zA-Z0-9]+"
+                          title="Username should only contain lowercase letters. e.g. john" className="input:invalid"
+                        />
+                      </div>
+                      <br />
+                      <div>
+                        <label htmlFor="password">Password: </label>
                     &nbsp;&nbsp;
                     <input
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
-                      title="Password must contain at least 6 characters, including UPPER/lowercase and numbers."
-                      required
-                    />
-                  </div>
-                  <br />
-                  <div>
-                    <label htmlFor="partnerGender">Gender: </label>
+                          type="password"
+                          name="password"
+                          placeholder="Password"
+                          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+                          title="Password must contain at least 6 characters, including UPPER/lowercase and numbers."
+                          required
+                        />
+                      </div>
+                      <br />
+                      <div>
+                        <label htmlFor="partnerGender">Gender: </label>
                     &nbsp;&nbsp; &nbsp;
                     <input type="radio" value="Male" name="gender" /> Male  &nbsp;
         <input type="radio" value="Female" name="gender" /> Female  &nbsp;
         <input type="radio" value="Other" name="gender" /> Other  &nbsp;
                   </div>
-                  <br />
-                  <div>
-                    <label htmlFor="email">Email Address: </label>
+                      <br />
+                      <div>
+                        <label htmlFor="email">Email Address: </label>
                     &nbsp;&nbsp;
                     <input type="email" id="email" name="email" placeholder="Email Address" required
-                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                      title="Contact's email (format: xxx@xxx.xxx)"
-                    />
-                  </div>
-                  <br />
-                  <div>
-                    <label htmlFor="phoneNumber">Phone Number: </label>
+                          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                          title="Contact's email (format: xxx@xxx.xxx)"
+                        />
+                      </div>
+                      <br />
+                      <div>
+                        <label htmlFor="phoneNumber">Phone Number: </label>
                     &nbsp;&nbsp;
                     <input
-                      type="text"
-                      name="phoneNumber"
-                      placeholder="phoneNumber"
-                      pattern="^[0-9]{10}$"
-                      title="Enter Valid phone Number with 10 digits"
-                      required
-                    />
-                  </div>
-                  <br />
-                  <div>
-                    <label htmlFor="postcode">Post Code:</label>
+                          type="text"
+                          name="phoneNumber"
+                          placeholder="phoneNumber"
+                          pattern="^[0-9]{10}$"
+                          title="Enter Valid phone Number with 10 digits"
+                          required
+                        />
+                      </div>
+                      <br />
+                      <div>
+                        <label htmlFor="postcode">Post Code:</label>
                     &nbsp;&nbsp;
                     <input type="text" name="postcode" placeholder="postcode" required
-                      pattern="[0-9]{4}$" title="Three letter country code"
-                      title="please enter 4 digits number"
-                    />
+                          pattern="[0-9]{4}$" title="Three letter country code"
+                          title="please enter 4 digits number"
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <br />
-              <div className="footer" >
-                <PrimaryButton
-                  type="submit"
-                  gradient="purple"
-                  onClick={this.registerToggle}
+                  <br />
+                  <div className="footer" >
+                    <PrimaryButton
+                      type="submit"
+                      gradient="purple"
+                      onClick={this.registerToggle}
 
-                >
-                  Register
+                    >
+                      Register
 
                  </PrimaryButton>
 
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <PrimaryButton
-                  gradient="purple"
-                  onClick={this.props.registerToggle}>
-                  Login here
+                      gradient="purple"
+                      onClick={this.props.registerToggle}>
+                      Login here
                </PrimaryButton>
 
-              </div>
+                  </div>
+                </div>
+              </form>
             </div>
-          </form>
-        </div>
 
-        </Card>
+          </Card>
         </div>
       );
     }
