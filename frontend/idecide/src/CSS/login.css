@@ -66,3 +66,13 @@
   padding-bottom: 5px;
   size: 100px;
 }
+
+.input:invalid {
+  border-color: red;
+}
+
+
+.input,
+input:valid {
+  border-color: #ccc;
+}
