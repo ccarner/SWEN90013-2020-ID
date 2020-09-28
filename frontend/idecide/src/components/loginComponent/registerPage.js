@@ -5,6 +5,7 @@ import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import { registerUser } from "../../API/loginAPI";
 import { Alert, AlertTitle } from '@material-ui/lab';
+import { Container, Row, Col } from 'reactstrap';
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 
 
@@ -41,7 +42,7 @@ export default class RegisterPage extends React.Component {
     const response = await registerUser(userObject);
     if (response.flag) {
       this.setState({
-        isWarning: true,
+        isWarning: false,
         warningType: "success"
       });
 
@@ -62,19 +63,22 @@ export default class RegisterPage extends React.Component {
     const { isWarning, warningType } = this.state;
     if (isWarning) {
       return (
-        <div>
-          <Alert severity={warningType}>
-            <AlertTitle>Success</AlertTitle>
-            This is a {!warningType} alert!
-            
-          <strong>check it out!</strong>
+        
+<div  style={{display: 'inline-block', padding: '50px',
+ justifyContent:'center', alignItems:'center' }}>
+          <Alert severity="success">
+          <AlertTitle>Success</AlertTitle>
+          Your details have been saved Successfully<strong> ! </strong>
           </Alert>
+          &nbsp;&nbsp;
+          <div  className="row" style={{display: 'flex',justifyContent:'center', alignItems:'center'}}>
+      
           <PrimaryButton
                   gradient="purple"
                   onClick={this.handleCloseWarning}>
                    close 
                </PrimaryButton>
-          
+               </div>
         </div>
       );
     } else {
