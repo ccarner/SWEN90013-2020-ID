@@ -4,49 +4,32 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import { registerUser } from "../../API/loginAPI";
-import { Alert, AlertTitle } from "@material-ui/lab";
+import { Alert, AlertTitle } from '@material-ui/lab';
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 
 
 
-
-
-
-// import { NavLink, BrowserRouter } from "react-router-dom";
-
-
 export default class RegisterPage extends React.Component {
   constructor(props) {
-    super(props);
+    super();
     this.state = {
-      formData: {
-        username: '',
-        password: '',
-        email: '',
-        phonenumber: '',
-        postcode: '',
-
-      },
-
-
-
+      isWarning: false,
+      warningType: null,
+      username: null,
+      password: null,
+      partnerGender: null,
+      email: null,
+      phoneNumber: null,
+      postcode: null,
+      response: "Nothing yet",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-
-  handleChange = (event) => {
-    const { formData } = this.state;
-    formData[event.target.name] = event.target.value;
-    this.setState({ formData });
   }
 
 
   async handleSubmit(event) {
     // the following call will stop the form from submitting
     event.preventDefault();
-
-
 
     // get the user information
     const data = new FormData(event.target);
@@ -56,108 +39,126 @@ export default class RegisterPage extends React.Component {
     });
 
     const response = await registerUser(userObject);
-
     if (response.flag) {
-      alert("Sign up Successful!");
-
+      this.setState({
+        isWarning: true,
+        warningType: "success"
+      });
 
     } else {
-      alert("Sign up Failed");
-
+      this.setState({
+        isWarning: true,
+        warningType: "error"
+      });
     }
+
+  }
+
+  handleCloseWarning = () => {
     window.location.replace("/");
   }
 
-
   render() {
-
-    const { formData, submitted } = this.state;
-    return (
-
-      <div>
-
-        <form onSubmit={this.handleSubmit}   >
-          <div className="font-of-input-box">
-            <div className="padding-1">Register</div>
-            <div className="content">
-              <div className="form">
-                <div>
-                  <label htmlFor="username">Username: </label>
-
-                  <input type="text" name="username" placeholder="username" required />
-                </div>
-                <br />
-                <div>
-                  <label htmlFor="password">Password: </label>
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    required
-                  />
-
-
-                </div>
-                <br />
-                <div>
-                  <label htmlFor="partnerGender">Gender: </label>
-                  <input
-                    type="text"
-                    name="partnerGender"
-                    placeholder="partnerGender"
-                    required
-                  />
-                </div>
-                <br />
-                <div>
-                  <label htmlFor="email">Email Address: </label>
-                  <input type="text" name="email" placeholder="Email Address" required />
-                </div>
-                <br />
-                <div>
-                  <label htmlFor="phoneNumber">Phone Number: </label>
-                  <input
-                    type="text"
-                    name="phoneNumber"
-                    placeholder="phoneNumber"
-                    required
-                  />
-
-
-                </div>
-                <br />
-                <div>
-                  <label htmlFor="postcode">Post Code:</label>
-                  <input type="text" name="postcode" placeholder="postcode" required />
+    const { isWarning, warningType } = this.state;
+    if (isWarning) {
+      return (
+        <div>
+          <Alert severity={warningType}>
+            <AlertTitle>Success</AlertTitle>
+            This is a {!warningType} alert!
+            
+          <strong>check it out!</strong>
+          </Alert>
+          <button onClick={this.handleCloseWarning}>close</button>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <form onSubmit={this.handleSubmit}>
+            <div className="font-of-input-box">
+              <div className="padding-1">Register</div>
+              <div className="content">
+                <div className="form">
+                  <div>
+                    <label htmlFor="username">Username: </label>
+                    <input type="text" name="username" placeholder="username" required pattern="[a-z]{1,15}"
+                      title="Username should only contain lowercase letters. e.g. john" className="input:invalid"
+                    />
+                  </div>
+                  <br />
+                  <div>
+                    <label htmlFor="password">Password: </label>
+                    <input
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+                      title="Password must contain at least 6 characters, including UPPER/lowercase and numbers."
+                      required
+                    />
+                  </div>
+                  <br />
+                  <div>
+                    <label htmlFor="partnerGender">Gender: </label>
+                    <input type="radio" value="Male" name="gender" /> Male  &nbsp;&nbsp;
+        <input type="radio" value="Female" name="gender" /> Female  &nbsp; &nbsp;
+        <input type="radio" value="Other" name="gender" /> Other  &nbsp;&nbsp;
+                  </div>
+                  <br />
+                  <div>
+                    <label htmlFor="email">Email Address: </label>
+                    <input type="email" id="email" name="email" placeholder="Email Address" required
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                      title="Contact's email (format: xxx@xxx.xxx)"
+                    />
+                  </div>
+                  <br />
+                  <div>
+                    <label htmlFor="phoneNumber">Phone Number: </label>
+                    <input
+                      type="text"
+                      name="phoneNumber"
+                      placeholder="phoneNumber"
+                      pattern="^[0-9]{10}$"
+                      title="Enter Valid phone Number with 10 digits"
+                      required
+                    />
+                  </div>
+                  <br />
+                  <div>
+                    <label htmlFor="postcode">Post Code:</label>
+                    <input type="text" name="postcode" placeholder="postcode" required
+                      pattern="[0-9]{4}$" title="Three letter country code"
+                      title="please enter 4 digits number"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <br />
-            <div className="footer">
-
-              <PrimaryButton
-                type="submit"
-                gradient="purple"
-                onClick={this.registerToggle}
-              >
-                Register
+              <br />
+              <div className="footer" >
+                <PrimaryButton
+                  type="submit"
+                  gradient="purple"
+                  onClick={this.registerToggle}
+              
+                >
+                  Register
+                  
                  </PrimaryButton>
 
 
-              <PrimaryButton
+                <PrimaryButton
+                  gradient="purple"
+                  onClick={this.props.registerToggle}>
+                  Login here
+               </PrimaryButton>
 
-                gradient="purple"
-                onClick={this.props.registerToggle}>
-
-                Login here
-                 </PrimaryButton>
-
+              </div>
             </div>
-          </div>
-        </form>
-
-      </div >
-    );
+          </form>
+        </div>
+      );
+    }
   }
 }
-
