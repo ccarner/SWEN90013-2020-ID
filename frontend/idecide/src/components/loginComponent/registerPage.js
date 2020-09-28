@@ -5,8 +5,9 @@ import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import { registerUser } from "../../API/loginAPI";
 import { Alert, AlertTitle } from '@material-ui/lab';
-import { Container, Row, Col } from 'reactstrap';
+
 import PrimaryButton from "../reusableComponents/PrimaryButton";
+import { Button, Card } from "react-bootstrap";
 
 
 
@@ -64,8 +65,8 @@ export default class RegisterPage extends React.Component {
     if (isWarning) {
       return (
         
-<div  style={{display: 'inline-block', padding: '50px',
- justifyContent:'center', alignItems:'center' }}>
+    <div  style={{display: 'inline-block', padding: '50px',
+        justifyContent:'center', alignItems:'center' }}>
           <Alert severity="success">
           <AlertTitle>Success</AlertTitle>
           Your details have been saved Successfully<strong> ! </strong>
@@ -83,14 +84,25 @@ export default class RegisterPage extends React.Component {
       );
     } else {
       return (
-        <div>
+
+        <div style={{
+          paddingTop: '20px',
+          boxSizing: 'content-box',
+        }}>
+        <Card  className="container card-body" style={{ width: "60%" , padding: "5%;" }}>
+        
+        <div className="card-body">
           <form onSubmit={this.handleSubmit}>
             <div className="font-of-input-box">
+             
               <div className="padding-1">Register</div>
+              <br />
+              <br />
               <div className="content">
                 <div className="form">
                   <div>
-                    <label htmlFor="username">Username: </label>
+                    <label htmlFor="username">User Name: </label>
+                    &nbsp;&nbsp;
                     <input type="text" name="username" placeholder="username" required pattern="[a-z]{1,15}"
                       title="Username should only contain lowercase letters. e.g. john" className="input:invalid"
                     />
@@ -98,6 +110,7 @@ export default class RegisterPage extends React.Component {
                   <br />
                   <div>
                     <label htmlFor="password">Password: </label>
+                    &nbsp;&nbsp;
                     <input
                       type="password"
                       name="password"
@@ -110,13 +123,15 @@ export default class RegisterPage extends React.Component {
                   <br />
                   <div>
                     <label htmlFor="partnerGender">Gender: </label>
-                    <input type="radio" value="Male" name="gender" /> Male  &nbsp;&nbsp;
-        <input type="radio" value="Female" name="gender" /> Female  &nbsp; &nbsp;
-        <input type="radio" value="Other" name="gender" /> Other  &nbsp;&nbsp;
+                    &nbsp;&nbsp; &nbsp;
+                    <input type="radio" value="Male" name="gender" /> Male  &nbsp;
+        <input type="radio" value="Female" name="gender" /> Female  &nbsp; 
+        <input type="radio" value="Other" name="gender" /> Other  &nbsp;
                   </div>
                   <br />
                   <div>
                     <label htmlFor="email">Email Address: </label>
+                    &nbsp;&nbsp;
                     <input type="email" id="email" name="email" placeholder="Email Address" required
                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                       title="Contact's email (format: xxx@xxx.xxx)"
@@ -125,6 +140,7 @@ export default class RegisterPage extends React.Component {
                   <br />
                   <div>
                     <label htmlFor="phoneNumber">Phone Number: </label>
+                    &nbsp;&nbsp;
                     <input
                       type="text"
                       name="phoneNumber"
@@ -137,6 +153,7 @@ export default class RegisterPage extends React.Component {
                   <br />
                   <div>
                     <label htmlFor="postcode">Post Code:</label>
+                    &nbsp;&nbsp;
                     <input type="text" name="postcode" placeholder="postcode" required
                       pattern="[0-9]{4}$" title="Three letter country code"
                       title="please enter 4 digits number"
@@ -156,7 +173,7 @@ export default class RegisterPage extends React.Component {
                   
                  </PrimaryButton>
 
-
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <PrimaryButton
                   gradient="purple"
                   onClick={this.props.registerToggle}>
@@ -166,6 +183,9 @@ export default class RegisterPage extends React.Component {
               </div>
             </div>
           </form>
+        </div>
+    
+        </Card>
         </div>
       );
     }
