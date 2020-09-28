@@ -81,10 +81,19 @@ export default class LoginPage extends React.Component {
       }
     } else if (isLoggingPage) {
       return (
-        <div>
-          <Card className="surveyIntroCard" style={{ width: "80%" }}>
-            <Card.Body>
-              <Card.Title>{"Log in to I-Decide "}</Card.Title>
+
+        <div style={{
+          paddingTop: '40px',
+          boxSizing: 'content-box',
+        }}>
+          <Card className="container card-body" style={{ width: "50%", padding: "10%;" }}>
+
+            <Card.Body className="container" style={{ padding: "10%" }}>
+              <Card.Title className="font-of-input-box">
+                <div className="padding-1">
+                  {"Log in to I-Decide "}
+                </div>
+              </Card.Title>
               <Card.Text></Card.Text>
               <form onSubmit={this.handleSubmit}>
                 <div className="font-of-input-box">
@@ -92,19 +101,23 @@ export default class LoginPage extends React.Component {
                     <div className="form">
                       <div>
                         <label htmlFor="email">Email Address: </label>
+                        &nbsp;&nbsp; &nbsp;&nbsp;
                         <input
                           type="text"
                           name="email"
                           placeholder="Email Address"
+                          required
                         />
                       </div>
                       <br />
                       <div>
                         <label htmlFor="password">Password: </label>
+                        &nbsp;&nbsp; &nbsp;&nbsp;
                         <input
                           type="password"
                           name="password"
                           placeholder="Password"
+                          required
                         />
                       </div>
                     </div>
@@ -121,7 +134,7 @@ export default class LoginPage extends React.Component {
                       >
                         Login
                       </PrimaryButton>
-
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <PrimaryButton
                         gradient="purple"
                         onClick={this.registerToggle}
@@ -135,6 +148,7 @@ export default class LoginPage extends React.Component {
             </Card.Body>
           </Card>
         </div>
+
       );
     } else {
       return (

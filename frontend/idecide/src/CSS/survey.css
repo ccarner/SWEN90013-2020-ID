@@ -49,7 +49,8 @@
   text-decoration: solid;
   text-align: center;
   font-size: xx-large;
-  padding-left: 110px;
+  padding-left: 50px;
+  display: inline;
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif,
     monospace;
 }
