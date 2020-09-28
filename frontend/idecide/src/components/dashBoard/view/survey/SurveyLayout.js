@@ -17,6 +17,7 @@ import Alert from '@material-ui/lab/Alert';
 import CloseIcon from '@material-ui/icons/Close';
 import { NavLink } from "react-router-dom";
 import { getAllSurveys, AddNewSurvey } from '../../../../API/surveyAPI';
+import Loading from '../../../util/loading';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -110,7 +111,7 @@ export default function SurveyLayout() {
 	return (
 		<div>
 			{isLoading ? (
-				<div>Loading ...</div>
+				<Loading/>
 			) : (
 				<Box>
 					<Grid container spacing={2}>

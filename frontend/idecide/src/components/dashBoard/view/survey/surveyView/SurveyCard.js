@@ -220,6 +220,7 @@ const SurveyCard = ({ product, editable, ...rest }) => {
 							/>
 							<DialogContentText>
 								<Box p={1} />
+								Please upload an image for this survey:
 								<input type="file" name="img" multiple="multiple" onChange={ImgChange} />
 								<Collapse in={false}>
 								<input name="surveyId" multiple="multiple" value={product.surveyId} />
