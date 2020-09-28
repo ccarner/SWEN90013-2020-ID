@@ -1,8 +1,6 @@
 import React from "react";
 
 import { loginUser } from "../../API/loginAPI";
-import AdminInfo from "./adminInfo";
-import { MDBBtn } from "mdbreact";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
@@ -10,28 +8,22 @@ import "mdbreact/dist/css/mdb.css";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 import RegisterPage from "./registerPage";
 import { Button, Card } from "react-bootstrap";
-import AdminConsole from "../AdminComponents/adminConsole";
+
 
 export default class LoginPage extends React.Component {
   constructor(props) {
-    super(props);
+    super();
     this.state = {
       isLoggingPage: true,
       isLoggedIn: false,
-      isAdmin: false,
       email: null,
       password: null,
-      showAdmin: false,
       error: null,
       isLoaded: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.displayAdmins = this.displayAdmins.bind(this);
   }
 
-  displayAdmins() {
-    this.setState({ showAdmin: true });
-  }
 
   async handleSubmit(event) {
     // the following call will stop the form from submitting
@@ -46,14 +38,7 @@ export default class LoginPage extends React.Component {
     const response = await loginUser(userObject);
 
     if (response.flag) {
-      var userAdmin = false;
-      if (userObject.email === "ccarner13@gmail.com") {
-        userAdmin = true;
-      }
-      this.setState({
-        isLoggedIn: true,
-        isAdmin: userAdmin,
-      });
+      window.location.replace("/loginComponent/userInfo");
     } else {
       alert("Log in Failed");
     }
@@ -72,12 +57,14 @@ export default class LoginPage extends React.Component {
       padding: "10px 10px 50px 10px",
     };
 
-    const { isLoggingPage, isLoggedIn, isAdmin } = this.state;
+    const { isLoggingPage, isLoggedIn } = this.state;
     if (isLoggedIn) {
-      if (isAdmin) {
-        return <AdminConsole />;
-      } else {
-        return <div>You are logged in!</div>;
+      {
+        return (
+          <div>
+            <h1>Welcome!</h1>
+          </div>
+        );
       }
     } else if (isLoggingPage) {
       return (

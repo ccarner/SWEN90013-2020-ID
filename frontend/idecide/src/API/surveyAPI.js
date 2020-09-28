@@ -54,13 +54,16 @@ export async function getAllSurveys() {
 }
 
 export async function postingSurvey(surveyIn) {
-  const endpoint = API_URL + `/answer`;
 
+  const endpoint = API_URL + `/answer`;
+  const token = localStorage.getItem("token");
+  alert(665);
   const dataPost = await axios({
     url: endpoint, // send a request to the library API
     method: "POST", // HTTP POST method
     headers: {
       "Content-Type": "application/json",
+      "Authorization": token
     },
     data: JSON.stringify(surveyIn),
   });
@@ -76,6 +79,7 @@ export async function editSurvey(surveyInfo) {
     method: "PUT", // HTTP POST method
     headers: {
       "Content-Type": "application/json",
+      "Authorization": localStorage.getItem("token")
     },
 
     data: surveyInfo,
@@ -93,6 +97,7 @@ export async function addImageForSurvey(surveyId, imgUrl) {
     method: "POST", // HTTP POST method
     headers: {
       "content-type": "multipart/form-data",
+      "Authorization": localStorage.getItem("token")
     },
     surveyId: surveyId,
     img: imgUrl,
@@ -107,6 +112,7 @@ export async function AddNewSurvey(surveyInfo) {
     method: "POST", // HTTP POST method
     headers: {
       "Content-Type": "application/json",
+      "Authorization": localStorage.getItem("token")
     },
     data: JSON.stringify(JSON.parse(surveyInfo)),
   });
@@ -122,6 +128,7 @@ export async function DeleteSurvey(surveyId) {
     method: "DELETE", // HTTP POST method
     headers: {
       "Content-Type": "application/json",
+      "Authorization": localStorage.getItem("token")
     },
     data: surveyId,
   });
