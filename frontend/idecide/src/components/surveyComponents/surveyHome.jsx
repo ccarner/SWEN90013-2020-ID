@@ -8,8 +8,9 @@ import LoadingSpinner from "../reusableComponents/loadingSpinner";
 import {
   getUserResults,
   getAllSurveys,
-  getStaticImageUrlFromName,
+  getStaticImageUrlFromName
 } from "../../API/surveyAPI";
+import { anonymouseUser } from "../../API/loginAPI";
 import SurveySelectionButton from "./surveySelectionButton";
 import SurveyResultsPage from "./surveyResultsPage";
 import ActionPlans from "./actionPlans";
@@ -41,7 +42,6 @@ export default class SurveyHome extends Component {
     ]; // order that surveys need to be completed in
 
     this.state = {
-      userId: localStorage.getItem("token"),
       nextSurvey: previousCompletions === null ? 0 : parseInt(previousNextSurvey), // index of next survey to complete, from the surveyOrder array
       loaded: false,
       actionPlan: "",
@@ -56,14 +56,10 @@ export default class SurveyHome extends Component {
   }
 
   async componentDidMount() {
-    var userId = this.state.userId;
-    console.log(331, userId)
-    console.log(332, localStorage.getItem("token"))
-    if (userId === null) {
-      console.log(
-        "no user ID passed in as prop to surveyHome... using Id =92138918723"
-      );
-      userId = 92138918723;
+    if (localStorage.getItem("userId") === null) {
+      console.log("no user ID passed in as prop to surveyHome");
+      await anonymouseUser();
+      window.location.reload();
     }
     var surveys = await getAllSurveys();
     //note, need to fix CORS issues with the getUserResults
@@ -71,8 +67,7 @@ export default class SurveyHome extends Component {
 
     this.setState({
       allSurveys: surveys.data,
-      loaded: true,
-      userId: userId,
+      loaded: true
     });
   }
 
@@ -125,7 +120,7 @@ export default class SurveyHome extends Component {
         <SurveyControl
           returnHome={this.returnHomeCallback}
           surveyId={this.state.currentSurveyId}
-          userId={this.state.userId}
+          userId={localStorage.getItem("userId")}
           completeHandler={this.completeHandler}
         />
       );
@@ -147,7 +142,7 @@ export default class SurveyHome extends Component {
           <br />
 
           <div>
-            {this.state.allSurveys.map((survey) => (
+            {this.state.allSurveys.map((survey, index) => (
               <div key={survey.surveyId} className="surveyIcon">
                 <SurveySelectionButton
                   notAvailable={

@@ -37,7 +37,7 @@ class Landing extends Component {
           <NavLink to="./surveyComponent/surveyHome">
             <PrimaryButton>Start</PrimaryButton>
           </NavLink>
-          {userId === null ?
+          {((userId === null) || (localStorage.getItem("userType") === "anonymous")) ?
             <NavLink to="./loginComponent/loginPage">
               <PrimaryButton>Log in</PrimaryButton>
             </NavLink>

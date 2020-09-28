@@ -12,8 +12,5 @@ export async function getResultByUser(userId) {
             "Authorization": localStorage.getItem("token")
         }
     });
-    console.log(322, result)
-    console.log(323, result.data.data)
-
     return result.data.data;
 }

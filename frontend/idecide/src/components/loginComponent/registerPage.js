@@ -91,7 +91,7 @@ export default class RegisterPage extends React.Component {
                 <div className="form">
                   <div>
                     <label htmlFor="username">Username: </label>
-                    <input type="text" name="username" placeholder="username" required pattern="[a-z]{1,15}"
+                    <input type="text" name="username" placeholder="username" required pattern="[a-z0-9]+"
                       title="Username should only contain lowercase letters. e.g. john" className="input:invalid"
                     />
                   </div>

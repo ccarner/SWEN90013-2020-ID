@@ -22,7 +22,7 @@ import evaluateRule from "../RuleEngine/evaluateFeedback";
  */
 export default class SurveyControl extends Component {
   constructor(props) {
-    super(props);
+    super();
 
     this.state = {
       isLoaded: false,

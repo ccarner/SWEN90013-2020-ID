@@ -97,6 +97,7 @@ export async function addImageForSurvey(surveyId, imgUrl) {
     method: "POST", // HTTP POST method
     headers: {
       "content-type": "multipart/form-data",
+      "Authorization": localStorage.getItem("token")
     },
     surveyId: surveyId,
     img: imgUrl,
@@ -111,6 +112,7 @@ export async function AddNewSurvey(surveyInfo) {
     method: "POST", // HTTP POST method
     headers: {
       "Content-Type": "application/json",
+      "Authorization": localStorage.getItem("token")
     },
     data: JSON.stringify(JSON.parse(surveyInfo)),
   });
@@ -126,6 +128,7 @@ export async function DeleteSurvey(surveyId) {
     method: "DELETE", // HTTP POST method
     headers: {
       "Content-Type": "application/json",
+      "Authorization": localStorage.getItem("token")
     },
     data: surveyId,
   });

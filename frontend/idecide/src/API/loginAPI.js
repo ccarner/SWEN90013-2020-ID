@@ -26,6 +26,7 @@ export async function registerUser(userIn) {
     method: "POST", // HTTP POST method
     headers: {
       "Content-Type": "application/json",
+      "Authorization": localStorage.getItem("token")
     },
     data: JSON.stringify({
       // partnerGender,
@@ -95,13 +96,29 @@ export async function loginUser(userIn) {
       password,
     }),
   });
-  console.log(222, result)
-  console.log(223, result.data.data)
+  console.log(222, result);
+  console.log(223, result.data.data);
   localStorage.setItem("token", result.data.data.token);
   localStorage.setItem("userType", result.data.data.roles);
   localStorage.setItem("userId", result.data.data.id);
   return result.data;
 }
 
+
+export async function anonymouseUser() {
+  var endpoint = USER_URL + `/user/anonymousLogin`;
+  const result = await axios({
+    url: endpoint, // send a request to the library API
+    method: "GET", // HTTP GET method
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+
+  localStorage.setItem("token", result.data.data.token);
+  localStorage.setItem("userType", "anonymous");
+  localStorage.setItem("userId", result.data.data.id);
+  return result.data.data.id;
+}
 
 
