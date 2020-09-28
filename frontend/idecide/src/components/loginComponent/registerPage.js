@@ -69,7 +69,12 @@ export default class RegisterPage extends React.Component {
             
           <strong>check it out!</strong>
           </Alert>
-          <button onClick={this.handleCloseWarning}>close</button>
+          <PrimaryButton
+                  gradient="purple"
+                  onClick={this.handleCloseWarning}>
+                   close 
+               </PrimaryButton>
+          
         </div>
       );
     } else {
