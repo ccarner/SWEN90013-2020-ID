@@ -4,6 +4,7 @@ import { getAllAdmins } from "../../API/loginAPI";
 import LoadingSpinner from "../reusableComponents/loadingSpinner";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 import { getResultByUser } from "../../API/resultAPI";
+import AdminConsole from "../AdminComponents/adminConsole";
 
 export default class UserInfo extends React.Component {
     constructor(props) {
@@ -36,9 +37,12 @@ export default class UserInfo extends React.Component {
                     <PrimaryButton onClick={this.handleLogOut}>
                         Log Out</PrimaryButton>
                     <PrimaryButton onClick={this.handleHistory}>
-                        Complete History</PrimaryButton>
+                        Completion History</PrimaryButton>
                     {history === null ? null :
                         JSON.stringify(history)}
+
+                    {(localStorage.getItem("userType") === "admin") ?
+                        <AdminConsole /> : null}
                 </div>
             );
         }

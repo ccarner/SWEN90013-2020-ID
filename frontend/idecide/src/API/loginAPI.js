@@ -40,14 +40,26 @@ export async function registerUser(userIn) {
   return result.data;
 }
 
-export function getAllAdmins() {
+export async function getAllAdmins() {
   const endpoint = USER_URL + `/admin/adminList`;
   try {
-    return axios.get(endpoint).then((res) => res.data);
+    const result = await axios({
+      url: endpoint, // send a request to the library API
+      method: "GET", // HTTP GET method
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.getItem("token")
+      }
+    });
+    console.log(552, endpoint)
+    console.log(553, result.data)
+    return result.data;
   } catch (e) {
     return e;
   }
 }
+
+
 
 export function getAllUsers() {
   const endpoint = `https://www.idecide.icu:9012/user/userList`;

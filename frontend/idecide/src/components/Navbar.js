@@ -7,6 +7,7 @@ import "../CSS/navbar.css";
 import { Link, withRouter } from "react-router-dom";
 import { Navbar, Nav, NavDropdown, Form, Modal, Button } from "react-bootstrap";
 import PrimaryButton from "./reusableComponents/PrimaryButton";
+import { NavLink } from "react-router-dom";
 
 import IconLogo from "../images/idecide-logo.png";
 
@@ -14,17 +15,24 @@ const NavbarID = ({ className, ...rest }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleReturnHome = () => {
+    window.location.replace("/");
+  };
 
   return (
     <div>
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="/">
-          <img
-            src={IconLogo}
-            alt="IconLogo"
-            style={{ height: 40, marginTop: 10 }}
-          />
-        </Navbar.Brand>
+        {/* <Navbar.Brand href="/"> */}
+        {/* <Navbar.Brand onClick={handleReturnHome}> */}
+        <NavLink to="/">
+          <Navbar.Brand>
+            <img
+              src={IconLogo}
+              alt="IconLogo"
+              style={{ height: 40, marginTop: 10 }}
+            />
+          </Navbar.Brand>
+        </NavLink>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
 
@@ -134,26 +142,31 @@ const NavbarID = ({ className, ...rest }) => {
                   Framework
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="/dashboard">
-                  <svg
-                    width="2em"
-                    height="1em"
-                    viewBox="0 0 16 16"
-                    class="bi bi-layout-text-window-reverse"
-                    fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M2 1h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm12-1a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"
-                    />
-                    <path
-                      fill-rule="evenodd"
-                      d="M5 15V4H4v11h1zM.5 4h15V3H.5v1zM13 6.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z"
-                    />
-                  </svg>
+
+                {(localStorage.getItem("userType") === "admin") ?
+                  <NavDropdown.Item href="/dashboard">
+                    <svg
+                      width="2em"
+                      height="1em"
+                      viewBox="0 0 16 16"
+                      class="bi bi-layout-text-window-reverse"
+                      fill="currentColor"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M2 1h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm12-1a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        d="M5 15V4H4v11h1zM.5 4h15V3H.5v1zM13 6.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z"
+                      />
+                    </svg>
                   Dashboard
                 </NavDropdown.Item>
+                  : null}
+
+
               </div>
             </NavDropdown>
           </Nav>
