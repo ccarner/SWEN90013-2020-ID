@@ -111,6 +111,7 @@ export default class SurveyHome extends Component {
     });
   };
 
+
   render() {
     var renderElements = []; // array of elements to be returned from render()
     const { currentState, actionPlan, currentResults } = this.state;
@@ -174,6 +175,8 @@ export default class SurveyHome extends Component {
     } else {
       renderElements.push(<LoadingSpinner />);
     }
+
+
     if (
       this.surveyOrder[this.state.nextSurvey] !== "Action Plan" &&
       this.state.currentState === "menu"

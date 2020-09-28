@@ -33,7 +33,7 @@ const NavbarID = ({ className, ...rest }) => {
         <Navbar.Collapse id="basic-navbar-nav">
 
           <Nav className="mr-auto">
-            <NavLink className="navbar navbar-dark home" to="/">
+            <NavLink className="navbar navbar-dark navbar-home" to="/">
               <svg
                 width="1em"
                 height="1em"
@@ -53,7 +53,7 @@ const NavbarID = ({ className, ...rest }) => {
               </svg>
               Home
             </NavLink>
-            {/* <Nav.Link className="navbar navbar-dark contact" href="/1">
+            {/* <Nav.Link className="navbar navbar-dark navbar-contact" href="/1">
               <svg
                 width="1em"
                 height="1em"
@@ -70,11 +70,11 @@ const NavbarID = ({ className, ...rest }) => {
               Contact
             </Nav.Link> */}
             <NavDropdown
-              className="navbar navbar-dark dropdown"
+              className="navbar navbar-dark navbar-dropdown"
               title="Menu"
               id="basic-nav-dropdown"
             >
-              <div className="dropitem">
+              <div className="navbar-dropitem">
                 <NavDropdown.Item href="/survey/3.1">
                   <div className="ques">
                     <svg
@@ -135,7 +135,7 @@ const NavbarID = ({ className, ...rest }) => {
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
 
-                {(localStorage.getItem("userType") === "admin") ?
+                {((localStorage.getItem("userType") === "admin") || (localStorage.getItem("userType") === "researcher")) ?
                   <NavDropdown.Item href="/dashboard">
                     <svg
                       width="2em"
