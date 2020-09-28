@@ -18,6 +18,7 @@ import DashBoard from "./components/dashBoard/DBLayout";
 import LoginPage from "./components/loginComponent/loginPage";
 import RegisterPage from "./components/loginComponent/registerPage";
 import AdminInfo from "./components/loginComponent/adminInfo";
+import UserInfo from "./components/loginComponent/userInfo";
 
 import SurveyHome from "./components/surveyComponents/surveyHome";
 
@@ -39,20 +40,11 @@ class App extends Component {
               <Route path="/dashboard" component={DashBoard} />
               {/* <Redirect exact from="/dashboard" to="/dashboard/home" /> */}
 
-              <Redirect
-                exact
-                from="/surveyComponent/"
-                to="/surveyComponent/surveyHome"
-              />
-              <Route
-                path="/surveyComponent/surveyHome"
-                component={SurveyHome}
-              />
+              <Redirect exact from="/surveyComponent/" to="/surveyComponent/surveyHome" />
+              <Route path="/surveyComponent/surveyHome" component={SurveyHome} />
               <Route path="/loginComponent/loginPage" component={LoginPage} />
-              <Route
-                path="/loginComponent/registerPage"
-                component={RegisterPage}
-              />
+              <Route path="/loginComponent/registerPage" component={RegisterPage} />
+              <Route path="/loginComponent/userInfo" component={UserInfo} />
               <Route path="/loginComponent/adminInfo" component={AdminInfo} />
 
               <Route path="/" component={Landing} />

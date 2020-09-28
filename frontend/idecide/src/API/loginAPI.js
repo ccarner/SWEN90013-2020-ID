@@ -16,21 +16,17 @@ export async function registerUser(userIn) {
 
   const endpoint = USER_URL + `/user`;
 
-  if (!email) {
-    alert("must include a valid email address");
-    return false;
-  }
-
   const result = await axios({
     url: endpoint, // send a request to the library API
     method: "POST", // HTTP POST method
     headers: {
       "Content-Type": "application/json",
+      "Authorization": localStorage.getItem("token")
     },
     data: JSON.stringify({
-      // partnerGender,
-      // phoneNumber,
-      // postcode,
+      partnerGender,
+      phoneNumber,
+      postcode,
       username,
       password,
       email,
@@ -40,14 +36,24 @@ export async function registerUser(userIn) {
   return result.data;
 }
 
-export function getAllAdmins() {
+export async function getAllAdmins() {
   const endpoint = USER_URL + `/admin/adminList`;
   try {
-    return axios.get(endpoint).then((res) => res.data);
+    const result = await axios({
+      url: endpoint, // send a request to the library API
+      method: "GET", // HTTP GET method
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.getItem("token")
+      }
+    });
+    return result.data;
   } catch (e) {
     return e;
   }
 }
+
+
 
 export function getAllUsers() {
   const endpoint = `https://www.idecide.icu:9012/user/userList`;
@@ -65,16 +71,12 @@ export async function loginUser(userIn) {
   if (userIn.email === "ccarner13@gmail.com") {
     endpoint = USER_URL + `/admin/login`;
   }
-  
-
-  
   // check if the email is present
 
   if (!email) {
     alert("must include a valid email address");
     return false;
   }
-
   const result = await axios({
     url: endpoint, // send a request to the library API
     method: "POST", // HTTP POST method
@@ -86,6 +88,31 @@ export async function loginUser(userIn) {
       password,
     }),
   });
-
+  console.log(222, result);
+  console.log(223, result.data.data);
+  if (result.data.flag) {
+    localStorage.setItem("token", result.data.data.token);
+    localStorage.setItem("userType", result.data.data.roles);
+    localStorage.setItem("userId", result.data.data.id);
+  }
   return result.data;
 }
+
+
+export async function anonymouseUser() {
+  var endpoint = USER_URL + `/user/anonymousLogin`;
+  const result = await axios({
+    url: endpoint, // send a request to the library API
+    method: "GET", // HTTP GET method
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+
+  localStorage.setItem("token", result.data.data.token);
+  localStorage.setItem("userType", "anonymous");
+  localStorage.setItem("userId", result.data.data.id);
+  return result.data.data.id;
+}
+
+

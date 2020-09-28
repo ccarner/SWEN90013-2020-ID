@@ -1,4 +1,8 @@
-/* these all the CSS related to the loginpage and registration page  */
+
+/* Stylesheet Re-organized, this file can be deleted after testing */
+
+
+/* these all the CSS related to the loginpage and registration page 
 .padding-1 {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -75,4 +79,4 @@
 .input,
 input:valid {
   border-color: #ccc;
-}
+} */
