@@ -106,6 +106,7 @@ export default class LoginPage extends React.Component {
                           type="text"
                           name="email"
                           placeholder="Email Address"
+                          required
                         />
                       </div>
                       <br />
@@ -116,6 +117,7 @@ export default class LoginPage extends React.Component {
                           type="password"
                           name="password"
                           placeholder="Password"
+                          required
                         />
                       </div>
                     </div>
