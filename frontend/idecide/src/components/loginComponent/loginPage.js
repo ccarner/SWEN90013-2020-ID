@@ -1,8 +1,6 @@
 import React from "react";
 
 import { loginUser } from "../../API/loginAPI";
-import AdminInfo from "./adminInfo";
-import { MDBBtn } from "mdbreact";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
@@ -10,28 +8,22 @@ import "mdbreact/dist/css/mdb.css";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 import RegisterPage from "./registerPage";
 import { Button, Card } from "react-bootstrap";
-import AdminConsole from "../AdminComponents/adminConsole";
+
 
 export default class LoginPage extends React.Component {
   constructor(props) {
-    super(props);
+    super();
     this.state = {
       isLoggingPage: true,
       isLoggedIn: false,
-      isAdmin: false,
       email: null,
       password: null,
-      showAdmin: false,
       error: null,
       isLoaded: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.displayAdmins = this.displayAdmins.bind(this);
   }
 
-  displayAdmins() {
-    this.setState({ showAdmin: true });
-  }
 
   async handleSubmit(event) {
     // the following call will stop the form from submitting
@@ -46,14 +38,7 @@ export default class LoginPage extends React.Component {
     const response = await loginUser(userObject);
 
     if (response.flag) {
-      var userAdmin = false;
-      if (userObject.email === "ccarner13@gmail.com") {
-        userAdmin = true;
-      }
-      this.setState({
-        isLoggedIn: true,
-        isAdmin: userAdmin,
-      });
+      window.location.replace("/loginComponent/userInfo");
     } else {
       alert("Log in Failed");
     }
@@ -72,19 +57,30 @@ export default class LoginPage extends React.Component {
       padding: "10px 10px 50px 10px",
     };
 
-    const { isLoggingPage, isLoggedIn, isAdmin } = this.state;
+    const { isLoggingPage, isLoggedIn } = this.state;
     if (isLoggedIn) {
-      if (isAdmin) {
-        return <AdminConsole />;
-      } else {
-        return <div>You are logged in!</div>;
+      {
+        return (
+          <div>
+            <h1>Welcome!</h1>
+          </div>
+        );
       }
     } else if (isLoggingPage) {
       return (
-        <div>
-          <Card className="surveyIntroCard" style={{ width: "80%" }}>
-            <Card.Body>
-              <Card.Title>{"Log in to I-Decide "}</Card.Title>
+
+        <div style={{
+          paddingTop: '40px',
+          boxSizing: 'content-box',
+        }}>
+          <Card className="container card-body" style={{ width: "50%", padding: "10%;" }}>
+
+            <Card.Body className="container" style={{ padding: "10%" }}>
+              <Card.Title className="font-of-input-box">
+                <div className="padding-1">
+                  {"Log in to I-Decide "}
+                </div>
+              </Card.Title>
               <Card.Text></Card.Text>
               <form onSubmit={this.handleSubmit}>
                 <div className="font-of-input-box">
@@ -92,19 +88,23 @@ export default class LoginPage extends React.Component {
                     <div className="form">
                       <div>
                         <label htmlFor="email">Email Address: </label>
+                        &nbsp;&nbsp; &nbsp;&nbsp;
                         <input
                           type="text"
                           name="email"
                           placeholder="Email Address"
+                          required
                         />
                       </div>
                       <br />
                       <div>
                         <label htmlFor="password">Password: </label>
+                        &nbsp;&nbsp; &nbsp;&nbsp;
                         <input
                           type="password"
                           name="password"
                           placeholder="Password"
+                          required
                         />
                       </div>
                     </div>
@@ -121,7 +121,7 @@ export default class LoginPage extends React.Component {
                       >
                         Login
                       </PrimaryButton>
-
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <PrimaryButton
                         gradient="purple"
                         onClick={this.registerToggle}
@@ -135,6 +135,7 @@ export default class LoginPage extends React.Component {
             </Card.Body>
           </Card>
         </div>
+
       );
     } else {
       return (
