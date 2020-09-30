@@ -20,9 +20,15 @@ test('renders home link', () => {
   expect(linkElement).toBeInTheDocument();
 });
 
-test('renders survey link', () => {
+test('renders get help', () => {
   const { getByText } = render(<App />);
-  const linkElement = getByText(/Survey/i);
+  const linkElement = getByText(/GET HELP/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+test('renders quick exit', () => {
+  const { getByText } = render(<App />);
+  const linkElement = getByText(/QUICK EXIT/i);
   expect(linkElement).toBeInTheDocument();
 });
 

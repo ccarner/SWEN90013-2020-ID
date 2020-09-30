@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, BrowserRouter } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
@@ -32,12 +32,14 @@ class Landing extends Component {
             ex-partner to plan for the future.
           </h5>
           <br />
+          <BrowserRouter>
           <NavLink to="./surveyComponent/surveyHome">
             <PrimaryButton>Anonymous</PrimaryButton>
           </NavLink>
           <NavLink to="./loginComponent/loginPage">
             <PrimaryButton>Log in</PrimaryButton>
           </NavLink>
+          </BrowserRouter>
         </div>
 
         <MDBFooter className="font-small pt-4 mt-4" style={{ padding: 0 }}>

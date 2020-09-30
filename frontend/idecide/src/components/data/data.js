@@ -41,7 +41,7 @@ const RelationshipSurvey = {
           }
         ]
       },
-    ],    
+    ],
    "resultAlgorithm":"if(questions[0] > 10 && questions[4] == 'yes'){output=10}"
 }
 
@@ -504,10 +504,6 @@ const SafetySurvey = {
           }
         ]
       }
-    ],    
+    ],
    "resultAlgorithm":"if(questions[0] > 10 && questions[4] == 'yes'){output=10}"
   }
-
-
-
-

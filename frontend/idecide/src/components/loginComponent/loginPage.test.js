@@ -24,7 +24,9 @@ test("renders Password field", () => {
   expect(linkElement).toBeInTheDocument();
 });
 
-//Test example
-test("renders learn react link", () => {
-  expect(1 + 1).toEqual(2);
+// Unit test for Email Address in LoginPage
+test("renders Sign Up Here", () => {
+  render(<LoginPage />);
+  const linkElement = screen.getByText(/Sign Up here/i);
+  expect(linkElement).toBeInTheDocument();
 });
