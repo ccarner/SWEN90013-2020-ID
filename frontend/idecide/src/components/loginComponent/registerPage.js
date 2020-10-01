@@ -78,7 +78,7 @@ export default class RegisterPage extends React.Component {
 
             <PrimaryButton
               gradient="purple"
-              onClick={this.handleCloseWarning}>
+              onClick={this.props.registerToggle}>
               close
                </PrimaryButton>
           </div>
