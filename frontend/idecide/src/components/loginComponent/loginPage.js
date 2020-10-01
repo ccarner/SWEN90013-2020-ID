@@ -16,7 +16,7 @@ export default class LoginPage extends React.Component {
     this.state = {
       isLoggingPage: true,
       isLoggedIn: false,
-      email: null,
+      username: null,
       password: null,
       error: null,
       isLoaded: false,
@@ -87,12 +87,12 @@ export default class LoginPage extends React.Component {
                   <div className="content">
                     <div className="form">
                       <div>
-                        <label htmlFor="email">Email Address: </label>
+                        <label htmlFor="username"> Username: </label>
                         &nbsp;&nbsp; &nbsp;&nbsp;
                         <input
                           type="text"
-                          name="email"
-                          placeholder="Email Address"
+                          name="username"
+                          placeholder="username"
                           required
                         />
                       </div>
