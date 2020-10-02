@@ -98,8 +98,7 @@ export default function SurveyLayout() {
 		const fetchData = async () => {
 			setIsLoading(true);
 			const result = await getAllSurveys();
-			console.log(992)
-			alert()
+
 			setData(result.data);
 			setIsLoading(false);
 			//		console.log(data);

@@ -5,9 +5,10 @@ import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import { registerUser } from "../../API/loginAPI";
 import { Alert, AlertTitle } from '@material-ui/lab';
-
+import LoadingSpinner from "../reusableComponents/loadingSpinner";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 import { Button, Card } from "react-bootstrap";
+import loadingSpinner from "../reusableComponents/loadingSpinner";
 
 
 
@@ -24,6 +25,7 @@ export default class RegisterPage extends React.Component {
       phoneNumber: null,
       postcode: null,
       response: "Nothing yet",
+      isLoading: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -40,31 +42,41 @@ export default class RegisterPage extends React.Component {
       userObject[key] = value;
     });
 
-    const response = await registerUser(userObject);
-    if (response.flag) {
-      this.setState({
-        isWarning: false,
-        warningType: "success"
-      });
+    this.setState({
+      isLoading: true
+    });
 
+    const response = await registerUser(userObject);
+
+
+    if (response.flag) {
+      this.handleCloseWarning();
     } else {
+      alert("Failed");
       this.setState({
-        isWarning: true,
-        warningType: "error"
+        isLoading: false
       });
     }
 
   }
 
   handleCloseWarning = () => {
+    this.setState({
+      isLoading: true
+    });
     window.location.replace("/");
   }
 
   render() {
-    const { isWarning, warningType } = this.state;
-    if (isWarning) {
-      return (
+    const { isWarning, warningType, isLoading } = this.state;
 
+    if (isLoading) {
+      return (
+        <loadingSpinner />
+      );
+    } else if (isWarning) {
+
+      return (
         <div style={{
           display: 'inline-block', padding: '50px',
           justifyContent: 'center', alignItems: 'center'
@@ -86,7 +98,6 @@ export default class RegisterPage extends React.Component {
       );
     } else {
       return (
-
         <div style={{
           paddingTop: '20px',
           boxSizing: 'content-box',
@@ -105,7 +116,7 @@ export default class RegisterPage extends React.Component {
                       <div>
                         <label htmlFor="username">Username: </label>
                         <input type="text" name="username" placeholder="username" required pattern="[a-zA-Z0-9]+"
-                          title="Username should only contain lowercase letters. e.g. john" className="input:invalid"
+                          title="Username should only contain letters and numbers. e.g. john" className="input:invalid"
                         />
                       </div>
                       <br />
@@ -133,7 +144,7 @@ export default class RegisterPage extends React.Component {
                       <div>
                         <label htmlFor="email">Email Address: </label>
                     &nbsp;&nbsp;
-                    <input type="email" id="email" name="email" placeholder="Email Address" required
+                    <input type="email" id="email" name="email" placeholder="Email Address"
                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                           title="Contact's email (format: xxx@xxx.xxx)"
                         />
@@ -148,14 +159,14 @@ export default class RegisterPage extends React.Component {
                           placeholder="phoneNumber"
                           pattern="^[0-9]{10}$"
                           title="Enter Valid phone Number with 10 digits"
-                          required
+
                         />
                       </div>
                       <br />
                       <div>
                         <label htmlFor="postcode">Post Code:</label>
                     &nbsp;&nbsp;
-                    <input type="text" name="postcode" placeholder="postcode" required
+                    <input type="text" name="postcode" placeholder="postcode"
                           pattern="[0-9]{4}$" title="Three letter country code"
                           title="please enter 4 digits number"
                         />
@@ -168,7 +179,6 @@ export default class RegisterPage extends React.Component {
                       type="submit"
                       gradient="purple"
                       onClick={this.registerToggle}
-
                     >
                       Register
 
