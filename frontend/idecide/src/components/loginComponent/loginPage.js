@@ -8,6 +8,7 @@ import "mdbreact/dist/css/mdb.css";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 import RegisterPage from "./registerPage";
 import { Button, Card } from "react-bootstrap";
+import LoadingSpinner from "../reusableComponents/loadingSpinner";
 
 
 export default class LoginPage extends React.Component {
@@ -15,17 +16,14 @@ export default class LoginPage extends React.Component {
     super();
     this.state = {
       isLoggingPage: true,
-      isLoggedIn: false,
       username: null,
       password: null,
-      error: null,
-      isLoaded: false,
+      isLoading: false
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
 
-  async handleSubmit(event) {
+  handleSubmit = async (event) => {
     // the following call will stop the form from submitting
     event.preventDefault();
     // get the user information
@@ -35,12 +33,21 @@ export default class LoginPage extends React.Component {
       userObject[key] = value;
     });
 
+    this.setState({
+      isLoading: true
+    });
+
     const response = await loginUser(userObject);
+
+
 
     if (response.flag) {
       window.location.replace("/loginComponent/userInfo");
     } else {
       alert("Log in Failed");
+      this.setState({
+        isLoading: false
+      });
     }
   }
 
@@ -57,92 +64,91 @@ export default class LoginPage extends React.Component {
       padding: "10px 10px 50px 10px",
     };
 
-    const { isLoggingPage, isLoggedIn } = this.state;
-    if (isLoggedIn) {
-      {
-        return (
-          <div>
-            <h1>Welcome!</h1>
-          </div>
-        );
-      }
-    } else if (isLoggingPage) {
+    const { isLoggingPage, isLoading } = this.state;
+
+    if (isLoading) {
       return (
+        <LoadingSpinner />
+      );
+    } else {
+      if (isLoggingPage) {
+        return (
 
-        <div style={{
-          paddingTop: '40px',
-          boxSizing: 'content-box',
-        }}>
-          <Card className="container card-body" style={{ width: "50%", padding: "10%;" }}>
+          <div style={{
+            paddingTop: '40px',
+            boxSizing: 'content-box',
+          }}>
+            <Card className="container card-body" style={{ width: "50%", padding: "10%;" }}>
 
-            <Card.Body className="container" style={{ padding: "10%" }}>
-              <Card.Title className="font-of-input-box">
-                <div className="padding-1">
-                  {"Log in to I-Decide "}
-                </div>
-              </Card.Title>
-              <Card.Text></Card.Text>
-              <form onSubmit={this.handleSubmit}>
-                <div className="font-of-input-box">
-                  <div className="content">
-                    <div className="form">
-                      <div>
-                        <label htmlFor="username"> Username: </label>
+              <Card.Body className="container" style={{ padding: "10%" }}>
+                <Card.Title className="font-of-input-box">
+                  <div className="padding-1">
+                    {"Log in to I-Decide "}
+                  </div>
+                </Card.Title>
+                <Card.Text></Card.Text>
+                <form onSubmit={this.handleSubmit}>
+                  <div className="font-of-input-box">
+                    <div className="content">
+                      <div className="form">
+                        <div>
+                          <label htmlFor="username"> Username: </label>
                         &nbsp;&nbsp; &nbsp;&nbsp;
                         <input
-                          type="text"
-                          name="username"
-                          placeholder="username"
-                          required
-                        />
-                      </div>
-                      <br />
-                      <div>
-                        <label htmlFor="password">Password: </label>
+                            type="text"
+                            name="username"
+                            placeholder="username"
+                            required
+                          />
+                        </div>
+                        <br />
+                        <div>
+                          <label htmlFor="password">Password: </label>
                         &nbsp;&nbsp; &nbsp;&nbsp;
                         <input
-                          type="password"
-                          name="password"
-                          placeholder="Password"
-                          required
-                        />
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            required
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <br />
-                  <br />
+                    <br />
+                    <br />
 
-                  <div className="footer">
-                    <div className="login-form">
-                      <PrimaryButton
-                        type="submit"
-                        gradient="purple"
-                        onSubmit={this.handleSubmit}
-                      >
-                        Login
+                    <div className="footer">
+                      <div className="login-form">
+                        <PrimaryButton
+                          type="submit"
+                          gradient="purple"
+                          onSubmit={this.handleSubmit}
+                        >
+                          Login
                       </PrimaryButton>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <PrimaryButton
-                        gradient="purple"
-                        onClick={this.registerToggle}
-                      >
-                        Sign up here
+                          gradient="purple"
+                          onClick={this.registerToggle}
+                        >
+                          Sign up here
                       </PrimaryButton>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </form>
-            </Card.Body>
-          </Card>
-        </div>
+                </form>
+              </Card.Body>
+            </Card>
+          </div>
 
-      );
-    } else {
-      return (
-        <div>
-          <RegisterPage registerToggle={this.registerToggle} />
-        </div>
-      );
+        );
+      } else {
+        return (
+          <div>
+            <RegisterPage registerToggle={this.registerToggle} />
+          </div>
+        );
+      }
     }
   }
 }

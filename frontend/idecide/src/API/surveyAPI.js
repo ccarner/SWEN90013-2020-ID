@@ -57,7 +57,7 @@ export async function postingSurvey(surveyIn) {
 
   const endpoint = API_URL + `/answer`;
   const token = localStorage.getItem("token");
-  alert(665);
+
   const dataPost = await axios({
     url: endpoint, // send a request to the library API
     method: "POST", // HTTP POST method

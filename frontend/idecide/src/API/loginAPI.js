@@ -6,32 +6,37 @@ const USER_URL = "https://www.idecide.icu:9012";
 
 export async function registerUser(userIn) {
   const {
+    // partnerGender,
+    // email,
+    // phoneNumber,
+    // postcode,
     username,
-    password,
-    partnerGender,
-    email,
-    phoneNumber,
-    postcode,
+    password
   } = userIn;
 
   const endpoint = USER_URL + `/user`;
+
 
   const result = await axios({
     url: endpoint, // send a request to the library API
     method: "POST", // HTTP POST method
     headers: {
-      "Content-Type": "application/json",
-      "Authorization": localStorage.getItem("token")
+      "Content-Type": "application/json"
     },
     data: JSON.stringify({
-      partnerGender,
-      phoneNumber,
-      postcode,
+      // partnerGender,
+      // phoneNumber,
+      // postcode,
+      // email,
       username,
-      password,
-      email,
+      password
     }),
   });
+
+
+  if (result.data.flag) {
+    loginUser({ "username": username, "password": password });
+  }
 
   return result.data;
 }
@@ -66,17 +71,13 @@ export function getAllUsers() {
 
 
 export async function loginUser(userIn) {
-  const { email, password } = userIn;
+  const { username, password } = userIn;
   var endpoint = USER_URL + `/user/login`;
-  if (userIn.email === "ccarner13@gmail.com") {
+  if (username === "ccarner") {
     endpoint = USER_URL + `/admin/login`;
   }
-  // check if the email is present
 
-  if (!email) {
-    alert("must include a valid email address");
-    return false;
-  }
+
   const result = await axios({
     url: endpoint, // send a request to the library API
     method: "POST", // HTTP POST method
@@ -84,12 +85,11 @@ export async function loginUser(userIn) {
       "Content-Type": "application/json",
     },
     data: JSON.stringify({
-      email,
+      username,
       password,
     }),
   });
-  console.log(222, result);
-  console.log(223, result.data.data);
+
   if (result.data.flag) {
     localStorage.setItem("token", result.data.data.token);
     localStorage.setItem("userType", result.data.data.roles);
