@@ -197,7 +197,7 @@ export default class SurveyHome extends Component {
               onClick={() => this.setState({ currentState: "actionPlan" })}
               style={{ width: "70%", borderRadius: "10em" }}
             >
-              Generate your Action Plan >>
+              Generate your Action Plan
             </PrimaryButton>
           </Card.Body>
         </Card>
