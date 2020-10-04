@@ -14,6 +14,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogActions from '@material-ui/core/DialogActions';
 import Grid from '@material-ui/core/Grid';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -235,6 +236,7 @@ function NavBar(props) {
 				fullWidth
 			>
 				<DialogTitle id="form-dialog-title">Get Help</DialogTitle>
+				<Divider />
 				<DialogContent>
 					<DialogContentText>If you’re looking for help, you can call:</DialogContentText>
 					<Typography variant="body1" gutterBottom>
@@ -258,6 +260,12 @@ function NavBar(props) {
 						<a href="https://safercommunity.unimelb.edu.au/">safercommunity.unimelb.edu.au</a>
 					</Typography>
 				</DialogContent>
+
+				<DialogActions>
+					<Button onClick={handleClose}  className={clsx(classes.button)}>
+						Cancel
+					</Button>
+				</DialogActions>
 			</Dialog>
 		</div>
 	);
