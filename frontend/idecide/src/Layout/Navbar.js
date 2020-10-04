@@ -10,6 +10,10 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import Grid from '@material-ui/core/Grid';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -97,9 +101,10 @@ const useStyles = makeStyles((theme) => ({
 
 function NavBar(props) {
 	const classes = useStyles();
-  const theme = useTheme();
-  const {width} = props;
+	const theme = useTheme();
+	const { width } = props;
 	const [ open, setOpen ] = React.useState(false);
+	const [ openHelp, setHelp ] = React.useState(false);
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -107,6 +112,13 @@ function NavBar(props) {
 
 	const handleDrawerClose = () => {
 		setOpen(false);
+	};
+
+	const handleOpen = () => {
+		setHelp(true);
+	};
+	const handleClose = () => {
+		setHelp(false);
 	};
 
 	return (
@@ -135,23 +147,20 @@ function NavBar(props) {
 					</IconButton>
 					<Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
 						<Grid item>
-							<Button
-								className={clsx(classes.button)}
-								//	onClick={() => handleShow()}
-							>
+							<Button className={clsx(classes.button)} onClick={handleOpen}>
 								{isWidthUp('sm', width) ? 'Get Help' : 'Help'}
 							</Button>
 						</Grid>
 						<Grid item>
-								<Button
-									className={clsx(classes.button)}
-									onClick={() => {
-										localStorage.clear();
-										window.location.href = 'https://www.weather.com.au/';
-									}}
-								>
-										{isWidthUp('sm', width) ? 'Quick Exit' : 'Exit'}
-								</Button>
+							<Button
+								className={clsx(classes.button)}
+								onClick={() => {
+									localStorage.clear();
+									window.location.href = 'https://www.weather.com.au/';
+								}}
+							>
+								{isWidthUp('sm', width) ? 'Quick Exit' : 'Exit'}
+							</Button>
 						</Grid>
 					</Grid>
 				</Toolbar>
@@ -218,6 +227,38 @@ function NavBar(props) {
 					ultrices sagittis orci a.
 				</Typography>
 			</main>
+			<Dialog
+				open={openHelp}
+				onClose={handleClose}
+				aria-labelledby="max-width-dialog-title"
+				maxWidth="md"
+				fullWidth
+			>
+				<DialogTitle id="form-dialog-title">Get Help</DialogTitle>
+				<DialogContent>
+					<DialogContentText>If you’re looking for help, you can call:</DialogContentText>
+					<Typography variant="body1" gutterBottom>
+						1800 RESPECT -- <a href={`tel:1800 737 732`}>1800 737 732</a>
+					</Typography>
+					<Typography variant="body1" gutterBottom>
+						Lifeline -- <a href={`tel:13 11 14`}>13 11 14</a>
+					</Typography>
+					<Typography variant="body1" gutterBottom>
+						Sexual Assault Crisis Line -- <a href={`tel:1800 737 732`}>1800 806 292</a>
+					</Typography>
+					<Typography variant="body1" gutterBottom>
+						QLife -- <a href={`tel:1800 184 627`}>1800 184 627</a>
+					</Typography>
+					<Typography variant="body1" gutterBottom>
+						InTouch Multicultural Centre Against Family Violence --{' '}
+						<a href={`tel:1800 737 732`}>1800 755 988</a>
+					</Typography>
+					<Typography variant="body1" gutterBottom>
+						Safer Community Program -- <a href={`tel:1800 737 732`}>61 3 9035 8675</a> -- {' '}
+						<a href="https://safercommunity.unimelb.edu.au/">safercommunity.unimelb.edu.au</a>
+					</Typography>
+				</DialogContent>
+			</Dialog>
 		</div>
 	);
 }
