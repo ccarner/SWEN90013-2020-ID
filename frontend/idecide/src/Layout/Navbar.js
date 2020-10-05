@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -24,12 +25,20 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import MailIcon from '@material-ui/icons/Mail';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 import IconLogo from '../images/idecide-logo.png';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import { getAllSurveys, getSectionBySurveyId } from '../API/surveyAPI';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import Loading from '../components/util/loading';
+import SurveyLayout from '../components/dashBoard/view/survey/SurveyLayout';
+import SurveySection from '../components/dashBoard/view/survey/surveyView/SurveySection';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
+import { NavLink } from 'react-router-dom';
+import { Box } from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -107,33 +116,12 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-function Section(props) {
-	const { sections, classes, index, show } = props;
-	console.log(props);
-
-	return (
-		<Collapse in={sections} timeout="auto" unmountOnExit>
-			<List>
-				{sections &&
-					sections.map((section, index) => (
-						<ListItem button key={section} className={classes.nested}>
-							<ListItemIcon>
-								<AssignmentTurnedInIcon />
-							</ListItemIcon>
-							<ListItemText primary={section.sectionTitle} />
-						</ListItem>
-					))}
-			</List>
-		</Collapse>
-	);
-}
-
 function NavBar(props) {
 	const classes = useStyles();
 	const theme = useTheme();
 	const [ isLoading, setIsLoading ] = useState(false);
 	const { width } = props;
-	const [ open, setOpen ] = React.useState(false);
+	const [ open, setOpen ] = React.useState(true);
 	const [ openHelp, setHelp ] = React.useState(false);
 	const [ surveys, setSurveys ] = React.useState([]);
 	const [ sections, setSections ] = React.useState();
@@ -142,11 +130,10 @@ function NavBar(props) {
 		const fetchData = async () => {
 			setIsLoading(true);
 			const result = await getAllSurveys();
-			
-			setIsLoading(false);
-			
-			setSurveys(result.data);
 
+			setIsLoading(false);
+
+			setSurveys(result.data);
 		};
 
 		fetchData();
@@ -157,17 +144,19 @@ function NavBar(props) {
 	const [ showSection, setShowSection ] = React.useState(
 		surveys &&
 			surveys.map((a, index) => {
-			//	a.sections=Array();
+				//	a.sections=Array();
 				return false;
 			})
 	);
 
 	const fetchData = async (index) => {
-		const result = await getSectionBySurveyId(surveys[index].surveyId);
+		const surveyId = surveys[index].surveyId;
+		const result = await getSectionBySurveyId(surveyId);
 		surveys[index].sections = result.surveySections;
 		const curData = [ ...showSection ];
 		curData[index] = !curData[index];
 		setShowSection(curData);
+		//	window.location.href = './navbar/surveyId=' + surveyId;
 	};
 
 	const handleDrawerOpen = () => {
@@ -199,8 +188,9 @@ function NavBar(props) {
 						})}
 					>
 						<Toolbar>
-							{props.location.pathname !== '/navbar' ? (
-								<div>aaa</div>
+							{props.location.pathname !== '/navbar/surveys' &&
+							props.location.pathname !== '/navbar/surveyId=1306606397995225088' ? (
+								<div />
 							) : (
 								<IconButton
 									color="black"
@@ -245,39 +235,47 @@ function NavBar(props) {
 						}}
 					>
 						<div className={classes.drawerHeader}>
-							<IconButton onClick={handleDrawerClose}>
+							<IconButton onClick={handleDrawerClose} style={{ width: 50 }}>
 								{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
 							</IconButton>
 						</div>
+						<Divider />
+						<Box p={2}>
+							<Typography variant="h6" gutterBottom>
+								DashBoard
+							</Typography>
+						</Box>
 						<Divider />
 						<List>
 							{surveys &&
 								surveys.map((survey, index) => (
 									<div key={index}>
-										<ListItem button key={index} onClick={() => fetchData(index)}>
+										<ListItem
+											button
+											key={index}
+											onClick={() => {
+												fetchData(index);
+												return <Link to={'/navbar/surveyId=' + survey.surveyId} />;
+											}}
+										>
 											<ListItemIcon>
 												<AssignmentIcon />{' '}
 											</ListItemIcon>
 											<ListItemText primary={survey.surveyTitle} />
-											{index}
+											{showSection[index] ? <ExpandLess /> : <ExpandMore />}
 										</ListItem>
-										{/** 
-									<Section
-											sections={sections}
-											show={showSection[index]}
-											classes={classes}
-											index={index}
-										/>
-									*/}
 										<Collapse in={showSection[index]} timeout="auto" unmountOnExit>
 											<List key={survey.surveyId}>
-												{typeof survey.sections !== 'undefined' && survey.sections.length > 0 &&
+												{typeof survey.sections !== 'undefined' &&
+													survey.sections.length > 0 &&
 													survey.sections.map((section, index) => (
 														<ListItem button key={section} className={classes.nested}>
 															<ListItemIcon>
 																<AssignmentTurnedInIcon />
 															</ListItemIcon>
-															<ListItemText primary={section.sectionTitle} />
+															<Link to="/navbar/surveyId=1306606397995225088">
+																<ListItemText primary={section.sectionTitle} />
+															</Link>
 														</ListItem>
 													))}
 											</List>
@@ -291,30 +289,8 @@ function NavBar(props) {
 							[classes.contentShift]: open
 						})}
 					>
-						<div className={classes.drawerHeader} />
-						<Typography paragraph>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-							labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum facilisis leo
-							vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum quisque
-							non tellus. Convallis convallis tellus id interdum velit laoreet id donec ultrices. Odio
-							morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit adipiscing bibendum est
-							ultricies integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate eu
-							scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis imperdiet massa
-							tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget arcu dictum
-							varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-							sapien faucibus et molestie ac.
-						</Typography>
-						<Typography paragraph>
-							Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-							facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac tincidunt.
-							Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-							mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed vulputate
-							odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
-							gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et tortor.
-							Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin nibh sit.
-							Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas accumsan lacus
-							vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-						</Typography>
+						<Route path="/navbar/surveys" component={SurveyLayout} />
+						<Route path="/navbar/surveyId=:surveyId" component={SurveySection} />
 					</main>
 					<Dialog
 						open={openHelp}
