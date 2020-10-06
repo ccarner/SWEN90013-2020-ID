@@ -114,7 +114,7 @@ export default function SurveyLayout() {
 				<Loading/>
 			) : (
 				<Box>
-					<Grid container spacing={2}>
+					<Grid container spacing={5}>
 						<Grid item xs={12} >
 							<Button variant="contained" color="primary" onClick={handleEdit}>
 								Edit

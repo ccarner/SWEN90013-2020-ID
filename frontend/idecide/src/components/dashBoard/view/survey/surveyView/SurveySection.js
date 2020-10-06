@@ -43,8 +43,10 @@ const SurveySection = (props) => {
 
 	const [isShow, setShow] = useState(false);
 
-//	console.log(props);
+	
 	const surveyId = props.match.params.surveyId;
+	console.log(surveyId);
+
 
 	const [sectionIndex, setSectionIndex] = React.useState();
 
@@ -60,17 +62,16 @@ const SurveySection = (props) => {
 		setShow((prev) => !prev);
 	};
 
-
 	function handleView(e, index) {
 		setOpen((prev) => !prev);
 		setSectionIndex(index.index);
 	}
 
 	useEffect(() => {
-		
-		const fetchData = async () => {
+		const fetchData = async (surveyId) => {
 			setIsLoading(true);
-			const result = await getSurveyById(surveyId);
+			console.log(props.match.params.surveyId);
+			const result = await getSurveyById(props.match.params.surveyId);
 			setData(result);
 			setSurveySection(result.surveySections);
 			setIsLoading(false);
@@ -78,9 +79,9 @@ const SurveySection = (props) => {
 			//	console.log(isLoading);
 		};
 		fetchData();
-	}, []);
+	}, [surveyId]);
 
-
+	console.log(data);
 	const QuestionsDisplay = () => {
 		console.log(data);
 		console.log(surveySection[sectionIndex]);

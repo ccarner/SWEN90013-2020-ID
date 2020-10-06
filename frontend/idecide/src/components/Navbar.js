@@ -1,37 +1,33 @@
-import React, { Component, useState } from "react";
-import { MDBBtn, MDBFormInline, MDBCol } from "mdbreact";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "bootstrap-css-only/css/bootstrap.min.css";
-import "mdbreact/dist/css/mdb.css";
-import "../CSS/navbar.css";
-import { Link, withRouter } from "react-router-dom";
-import { Navbar, Nav, NavDropdown, Form, Modal, Button } from "react-bootstrap";
-import PrimaryButton from "./reusableComponents/PrimaryButton";
-
-import IconLogo from "../images/idecide-logo.png";
+import React, { Component, useState } from 'react';
+import { MDBBtn, MDBFormInline, MDBCol } from 'mdbreact';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
+import '../CSS/navbar.css';
+import { Link, withRouter } from 'react-router-dom';
+import { Navbar, Nav, NavDropdown, Form, Modal, Button } from 'react-bootstrap';
+import PrimaryButton from './reusableComponents/PrimaryButton';
+import Grid from '@material-ui/core/Grid';
+import IconLogo from '../images/idecide-logo.png';
 
 const NavbarID = ({ className, ...rest }) => {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+	const [ show, setShow ] = useState(false);
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
 
-  return (
-    <div>
-      <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="/">
-          <img
-            src={IconLogo}
-            alt="IconLogo"
-            style={{ height: 40, marginTop: 10 }}
-          />
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <Nav.Link
+	return (
+		<div>
+			<Navbar bg="light" expand="lg">
+				<Navbar.Brand href="/">
+					<img src={IconLogo} alt="IconLogo" style={{ height: 30, marginTop: 0 }} />
+				</Navbar.Brand>
+				<Navbar.Toggle aria-controls="basic-navbar-nav" />
+				<Navbar.Collapse id="basic-navbar-nav">
+					<Nav className="mr-auto">
+					  <Nav.Link
               className="navbar navbar-dark home"
               activeClassName="active"
-              href="/"
+              href="navbar/surveys"
             >
               <svg
                 width="1em"
@@ -52,7 +48,7 @@ const NavbarID = ({ className, ...rest }) => {
               </svg>
               Home
             </Nav.Link>
-            {/* <Nav.Link className="navbar navbar-dark contact" href="/1">
+         	{/*    <Nav.Link className="navbar navbar-dark contact" href="/1">
               <svg
                 width="1em"
                 height="1em"
@@ -67,7 +63,7 @@ const NavbarID = ({ className, ...rest }) => {
                 />
               </svg>
               Contact
-            </Nav.Link> */}
+            </Nav.Link> 
             <NavDropdown
               className="navbar navbar-dark dropdown"
               title="Menu"
@@ -133,85 +129,76 @@ const NavbarID = ({ className, ...rest }) => {
                   Framework
                 </NavDropdown.Item>
               </div>
-            </NavDropdown>
-          </Nav>
-          <Form inline>
-            <MDBCol md="12">
-              {/* <MDBFormInline className="md-form mr-auto mb-4"> */}
-              <PrimaryButton
-                gradient="purple-gradient"
-                rounded
-                className="purple-gradient"
-                onClick={() => handleShow()}
-              >
-                Get Help
-              </PrimaryButton>
-              <PrimaryButton
-                gradient="purple-gradient"
-                rounded
-                className="purple-gradient"
-                onClick={() => {
-                  localStorage.clear();
-                  window.location.href = "https://www.weather.com.au/";
-                }}
-              >
-                Quick Exit
-              </PrimaryButton>
-              {/* </MDBFormInline> */}
-            </MDBCol>
-          </Form>
-        </Navbar.Collapse>
-      </Navbar>
+            </NavDropdown>*/}
+					</Nav>
+          <Grid container direction="row" justify="flex-end" alignItems="center">
+				<PrimaryButton
+					gradient="purple-gradient"
+					rounded
+					className="purple-gradient"
+					onClick={() => handleShow()}
+				>
+					Get Help
+				</PrimaryButton>
+				<PrimaryButton
+					gradient="purple-gradient"
+					rounded
+					className="purple-gradient"
+					onClick={() => {
+						localStorage.clear();
+						window.location.href = 'https://www.weather.com.au/';
+					}}
+				>
+					Quick Exit
+				</PrimaryButton>
+			</Grid>
+				</Navbar.Collapse>
 
-      <Modal
-        show={show}
-        onHide={handleClose}
-        animation={false}
-        size="lg"
-        dialogClassName="modal-90w"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            <h2 style={{ color: "purple" }}>
-              If you’re looking for help, you can call:
-            </h2>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body style={{ padding: "5%" }}>
-          <h5>
-            {" "}
-            > 1800 RESPECT -- <a href={`tel:1800 737 732`}>1800 737 732</a>
-          </h5>
-          <h5>
-            {" "}
-            > Lifeline -- <a href={`tel:13 11 14`}>13 11 14</a>
-          </h5>
-          <h5>
-            {" "}
-            > Sexual Assault Crisis Line --{" "}
-            <a href={`tel:1800 737 732`}>1800 806 292</a>
-          </h5>
-          <h5>
-            {" "}
-            > QLife -- <a href={`tel:1800 184 627`}>1800 184 627</a>
-          </h5>
-          <h5>
-            {" "}
-            > InTouch Multicultural Centre Against Family Violence --{" "}
-            <a href={`tel:1800 737 732`}>1800 755 988</a>
-          </h5>
-          <h5>
-            {" "}
-            > Safer Community Program --{" "}
-            <a href={`tel:1800 737 732`}>61 3 9035 8675</a>
-            <Nav.Link href="https://safercommunity.unimelb.edu.au/">
-              safercommunity.unimelb.edu.au
-            </Nav.Link>
-          </h5>
-        </Modal.Body>
-      </Modal>
-    </div>
-  );
+			</Navbar>
+			{/**  <Form inline>
+            <MDBCol md="12">*/}
+			{/* <MDBFormInline className="md-form mr-auto mb-4"> */}
+		
+			{/* </MDBFormInline> */}
+			{/*      </MDBCol>
+        </Form>*/}
+			<Modal show={show} onHide={handleClose} animation={false} size="lg" dialogClassName="modal-90w">
+				<Modal.Header closeButton>
+					<Modal.Title>
+						<h2 style={{ color: 'purple' }}>If you’re looking for help, you can call:</h2>
+					</Modal.Title>
+				</Modal.Header>
+				<Modal.Body style={{ padding: '5%' }}>
+					<h5>
+						{' '}
+						> 1800 RESPECT -- <a href={`tel:1800 737 732`}>1800 737 732</a>
+					</h5>
+					<h5>
+						{' '}
+						> Lifeline -- <a href={`tel:13 11 14`}>13 11 14</a>
+					</h5>
+					<h5>
+						{' '}
+						> Sexual Assault Crisis Line -- <a href={`tel:1800 737 732`}>1800 806 292</a>
+					</h5>
+					<h5>
+						{' '}
+						> QLife -- <a href={`tel:1800 184 627`}>1800 184 627</a>
+					</h5>
+					<h5>
+						{' '}
+						> InTouch Multicultural Centre Against Family Violence --{' '}
+						<a href={`tel:1800 737 732`}>1800 755 988</a>
+					</h5>
+					<h5>
+						{' '}
+						> Safer Community Program -- <a href={`tel:1800 737 732`}>61 3 9035 8675</a>
+						<Nav.Link href="https://safercommunity.unimelb.edu.au/">safercommunity.unimelb.edu.au</Nav.Link>
+					</h5>
+				</Modal.Body>
+			</Modal>
+		</div>
+	);
 };
 
 export default NavbarID;

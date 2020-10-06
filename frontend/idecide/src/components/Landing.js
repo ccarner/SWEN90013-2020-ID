@@ -14,24 +14,44 @@ import {
   MDBFooter,
 } from "mdbreact";
 import PrimaryButton from "./reusableComponents/PrimaryButton";
+import { Card, CardContent, CardHeader, Divider, Grid, TextField, Box, Button, Typography } from '@material-ui/core';
 
 class Landing extends Component {
   render() {
     return (
-      <React.Fragment>
-        <div className="container" style={{ padding: "10%" }}>
-          <h1 className="text-center" style={{ color: "#9572A4" }}>
+     <div>
+         <div  style={{ padding: "5%" }}>
+         <Typography color="textPrimary"  style={{ color: "#9572A4" }} variant="h3">
+          Women's Wellbeing
+					</Typography>
+          <br/>
+          <Typography color="textPrimary"  variant="h4">
+            Do you worry about whether your relationship is healthy?
+					</Typography>
+          <br/>
+          <Typography color="textPrimary"  variant="h4">
+            Do you sometimes wonder if you are safe?
+					</Typography>
+          <br/>
+          <Typography color="textSecondary"  variant="h6">
+          This website helps women who feel unsafe or afraid of a current or
+            ex-partner to plan for the future.
+					</Typography>
+         
+       
+        {/**    <h1 className="text-center" style={{ color: "#9572A4" }}>
             Women's Wellbeing Tool
           </h1>
           <br></br>
+         
           <h2>Do you worry about whether your relationship is healthy?</h2>
           <h2>Do you sometimes wonder if you are safe?</h2>
           <br />
           <h5>
             This website helps women who feel unsafe or afraid of a current or
             ex-partner to plan for the future.
-          </h5>
-          <br />
+          </h5>*/}
+          <br /> <br/>
           <NavLink to="./surveyComponent/surveyHome">
             <PrimaryButton>Anonymous</PrimaryButton>
           </NavLink>
@@ -39,7 +59,7 @@ class Landing extends Component {
             <PrimaryButton>Log in</PrimaryButton>
           </NavLink>
         </div>
-
+        <React.Fragment>
         <MDBFooter className="font-small pt-4 mt-4" style={{ padding: 0 }}>
           <div
             style={{
@@ -89,7 +109,7 @@ class Landing extends Component {
             </div>
           </div>
         </MDBFooter>
-      </React.Fragment>
+      </React.Fragment></div>
     );
   }
 }
