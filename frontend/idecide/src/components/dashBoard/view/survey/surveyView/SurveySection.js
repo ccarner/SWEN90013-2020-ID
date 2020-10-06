@@ -136,7 +136,7 @@ const SurveySection = (props) => {
 								addNew([...newQuestion, count]);
 							}}
 						>
-							Add New Section21
+							Add New Section
 						</Button>
 					</Box>
 				</Collapse>

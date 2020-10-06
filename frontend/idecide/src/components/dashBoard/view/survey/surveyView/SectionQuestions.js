@@ -46,6 +46,7 @@ const SectionQuestions = (props) => {
 	const [ values, setValues ] = React.useState({
 		title: props.data.sectionTitle,
 		descrpition: props.data.sectionIntroduction,
+		htmlDescription:'',
 		question: '',
 		option1: 'Never',
 		option2: 'Once',
@@ -350,7 +351,7 @@ const SectionQuestions = (props) => {
 							label="Title"
 							variant="outlined"
 						/>
-						<DialogContentText>value={values.title}</DialogContentText>
+						<Box p={1}></Box>
 						<TextField
 							id="outlined-multiline-flexible"
 							multiline
@@ -360,6 +361,19 @@ const SectionQuestions = (props) => {
 							onChange={handleChange('descrpition')}
 							rows={4}
 							label="Description"
+							variant="outlined"
+						/>
+						<Box p={1}></Box>
+						<DialogContentText>Please input the HTML description for the section.</DialogContentText>
+						<TextField
+							id="outlined-multiline-flexible"
+							multiline
+							fullWidth
+							required
+							value={values.htmlDescription}
+							onChange={handleChange('htmlDescription')}
+							rows={4}
+							label="HTML"
 							variant="outlined"
 						/>
 					</Collapse>
