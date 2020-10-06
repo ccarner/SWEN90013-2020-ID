@@ -19,7 +19,8 @@ import {
 	Divider,
 	Typography,
 	IconButton,
-	Grid
+	Grid,
+	Tooltip
 } from '@material-ui/core';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
@@ -270,14 +271,17 @@ const SectionQuestions = (props) => {
 					<CardHeader
 						action={
 							<div>
-								<IconButton
-									style={{ width: 50 }}
-									color="secondary"
-									aria-label="add an alarm"
-									onClick={handleOpen}
-								>
-									<EditIcon color="primary" />
-								</IconButton>
+								<Tooltip title="Click to edit the section title and introduction">
+									<IconButton
+										style={{ width: 50 }}
+										color="secondary"
+										aria-label="add an alarm"
+										onClick={handleOpen}
+									>
+										<EditIcon color="primary" />
+									</IconButton>
+								</Tooltip>
+								<Tooltip title="Click to add new question.">
 								<IconButton
 									style={{ width: 50 }}
 									color="secondary"
@@ -286,7 +290,8 @@ const SectionQuestions = (props) => {
 								>
 									<ControlPointRoundedIcon color="primary" />
 								</IconButton>
-
+								</Tooltip>
+								<Tooltip title="Click to view all questions.">
 								<IconButton
 									style={{ width: 50 }}
 									color="secondary"
@@ -295,6 +300,7 @@ const SectionQuestions = (props) => {
 								>
 									<ExpandMoreRoundedIcon color="primary" />
 								</IconButton>
+								</Tooltip>
 							</div>
 						}
 						//   subheader="Description"

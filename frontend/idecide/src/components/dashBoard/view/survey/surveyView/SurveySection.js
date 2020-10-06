@@ -67,6 +67,7 @@ const SurveySection = (props) => {
 	}
 
 	useEffect(() => {
+		
 		const fetchData = async () => {
 			setIsLoading(true);
 			const result = await getSurveyById(surveyId);
