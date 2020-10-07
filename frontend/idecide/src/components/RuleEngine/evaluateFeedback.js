@@ -22,6 +22,44 @@ export default function evaluateFeedback(rules, factContainers) {
   //     console.log(params);
   //   });
 
+  let topPriorityFact = function (params, almanac) {
+    return almanac.factValue("surveyResults").then((surveyResults) => {
+      var topPriority = null;
+      try {
+        // result for Q1 of priorities survey, then return first component = 'top' priority
+        topPriority =
+          surveyResults["My Priorities"].questions[1].questionAnswer[0];
+      } catch (err) {
+        console.error(
+          "An answer for an uncompleted question was requested",
+          " (Top priorities question)"
+        );
+      }
+      return topPriority;
+    });
+  };
+
+  engine.addFact("TOP_PRIORITY", topPriorityFact);
+
+  let intentionFact = function (params, almanac) {
+    return almanac.factValue("surveyResults").then((surveyResults) => {
+      var intention = null;
+      try {
+        // result for Q2 of priorities survey
+        intention =
+          surveyResults["My Priorities"].questions[2].questionAnswer[0];
+      } catch (err) {
+        console.error(
+          "An answer for an uncompleted question was requested",
+          " (Intentions question)"
+        );
+      }
+      return intention;
+    });
+  };
+
+  engine.addFact("INTENTION", intentionFact);
+
   //default facts and operators...
   let surveyResultsFact = function (params, almanac) {
     var surveyResults = JSON.parse(localStorage.getItem("surveyResults"));
@@ -64,7 +102,7 @@ export default function evaluateFeedback(rules, factContainers) {
           question = surveyResults[idArr[0]].questions[idArr[2]];
         } catch (err) {
           console.error(
-            "A question asked for had not yet been completed",
+            "An answer for an uncompleted question was requested",
             idArr[0],
             idArr[1],
             idArr[2]
@@ -106,14 +144,14 @@ export default function evaluateFeedback(rules, factContainers) {
   engine.addFact("totalAnswerPoints", totalAnswerPointsFact);
 
   let dangerAssessmentPointsFact = function (params, almanac) {
-    params.totalAnswerPointsQuestions = [["New My Safety", "2", "31-42"]];
+    params.totalAnswerPointsQuestions = [["My Safety", "2", "31-42"]];
     return totalAnswerPointsFact(params, almanac);
   };
 
   engine.addFact("DA_SUM", dangerAssessmentPointsFact);
 
   let casScore = function (params, almanac) {
-    params.totalAnswerPointsQuestions = [["New My Safety", "1", "1-30"]];
+    params.totalAnswerPointsQuestions = [["My Safety", "1", "1-30"]];
     return totalAnswerPointsFact(params, almanac);
   };
 
@@ -121,14 +159,14 @@ export default function evaluateFeedback(rules, factContainers) {
 
   let SEVERE_SUBSCALE_CAS_SCORE = function (params, almanac) {
     params.totalAnswerPointsQuestions = [
-      ["New My Safety", "1", "2"],
-      ["New My Safety", "1", "5"],
-      ["New My Safety", "1", "7"],
-      ["New My Safety", "1", "15"],
-      ["New My Safety", "1", "18"],
-      ["New My Safety", "1", "22"],
-      ["New My Safety", "1", "25"],
-      ["New My Safety", "1", "26"],
+      ["My Safety", "1", "2"],
+      ["My Safety", "1", "5"],
+      ["My Safety", "1", "7"],
+      ["My Safety", "1", "15"],
+      ["My Safety", "1", "18"],
+      ["My Safety", "1", "22"],
+      ["My Safety", "1", "25"],
+      ["My Safety", "1", "26"],
     ];
 
     // return totalAnswerPointsFact(params, almanac);
@@ -141,13 +179,13 @@ export default function evaluateFeedback(rules, factContainers) {
 
   let PHYSICAL_SUBSCALE_CAS_SCORE = function (params, almanac) {
     params.totalAnswerPointsQuestions = [
-      ["New My Safety", "1", "6"],
-      ["New My Safety", "1", "10"],
-      ["New My Safety", "1", "14"],
-      ["New My Safety", "1", "17"],
-      ["New My Safety", "1", "23"],
-      ["New My Safety", "1", "27"],
-      ["New My Safety", "1", "30"],
+      ["My Safety", "1", "6"],
+      ["My Safety", "1", "10"],
+      ["My Safety", "1", "14"],
+      ["My Safety", "1", "17"],
+      ["My Safety", "1", "23"],
+      ["My Safety", "1", "27"],
+      ["My Safety", "1", "30"],
     ];
     return totalAnswerPointsFact(params, almanac);
   };
@@ -156,17 +194,17 @@ export default function evaluateFeedback(rules, factContainers) {
 
   let EMOTIONAL_SUBSCALE_CAS_SCORE = function (params, almanac) {
     params.totalAnswerPointsQuestions = [
-      ["New My Safety", "1", "1"],
-      ["New My Safety", "1", "4"],
-      ["New My Safety", "1", "8"],
-      ["New My Safety", "1", "9"],
-      ["New My Safety", "1", "12"],
-      ["New My Safety", "1", "19"],
-      ["New My Safety", "1", "20"],
-      ["New My Safety", "1", "21"],
-      ["New My Safety", "1", "24"],
-      ["New My Safety", "1", "28"],
-      ["New My Safety", "1", "29"],
+      ["My Safety", "1", "1"],
+      ["My Safety", "1", "4"],
+      ["My Safety", "1", "8"],
+      ["My Safety", "1", "9"],
+      ["My Safety", "1", "12"],
+      ["My Safety", "1", "19"],
+      ["My Safety", "1", "20"],
+      ["My Safety", "1", "21"],
+      ["My Safety", "1", "24"],
+      ["My Safety", "1", "28"],
+      ["My Safety", "1", "29"],
     ];
     return totalAnswerPointsFact(params, almanac);
   };
@@ -175,10 +213,10 @@ export default function evaluateFeedback(rules, factContainers) {
 
   let HARASSMENT_SUBSCALE_CAS_SCORE = function (params, almanac) {
     params.totalAnswerPointsQuestions = [
-      ["New My Safety", "1", "3"],
-      ["New My Safety", "1", "11"],
-      ["New My Safety", "1", "13"],
-      ["New My Safety", "1", "16"],
+      ["My Safety", "1", "3"],
+      ["My Safety", "1", "11"],
+      ["My Safety", "1", "13"],
+      ["My Safety", "1", "16"],
     ];
     return totalAnswerPointsFact(params, almanac);
   };

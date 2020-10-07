@@ -36,7 +36,7 @@
       "sectionIntroduction": "In this section we will ask about your intentions with your relationship with your partner or ex-partner. We understand that your feelings about what you would like to do may change, and that you might feel confused. It is best to answer about how you are feeling right now, even if this might be different in the future",
       "questions": [
         {
-          "questionId": "3",
+          "questionId": "2",
           "questionText": "What are your intentions regarding your relationship?",
           "questionType": "singleSelectionVertical",
           "selectionOptions": [
