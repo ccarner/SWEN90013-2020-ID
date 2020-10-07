@@ -5,7 +5,7 @@ import LoadingSpinner from "../reusableComponents/loadingSpinner";
 
 export default class AdminInfo extends React.Component {
   constructor(props) {
-    super(props);
+    super();
     this.state = {
       email: null,
       password: null,
@@ -15,7 +15,7 @@ export default class AdminInfo extends React.Component {
     };
   }
 
-  async fetchAdmins() {
+  fetchAdmins = async () => {
     const data = await getAllAdmins();
     this.setState({ admins: data["data"], isLoaded: true });
   }

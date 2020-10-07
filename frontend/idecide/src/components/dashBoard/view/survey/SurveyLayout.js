@@ -47,7 +47,7 @@ export default function SurveyLayout() {
 		title: '',
 		descrpition: ''
 	});
-//	console.log(editable);
+	//	console.log(editable);
 
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
@@ -98,6 +98,7 @@ export default function SurveyLayout() {
 		const fetchData = async () => {
 			setIsLoading(true);
 			const result = await getAllSurveys();
+
 			setData(result.data);
 			setIsLoading(false);
 			//		console.log(data);
@@ -112,11 +113,11 @@ export default function SurveyLayout() {
 			{isLoading ? (
 				<div>Loading ...</div>
 			) : (
-				<Box>
-					<Grid container spacing={2}>
-						<Grid item xs={12} >
-							<Button variant="contained" color="primary" onClick={handleEdit}>
-								Edit
+					<Box>
+						<Grid container spacing={2}>
+							<Grid item xs={12} >
+								<Button variant="contained" color="primary" onClick={handleEdit}>
+									Edit
 							</Button>
 							</Grid>
 							<Editable.Provider value={editable}>

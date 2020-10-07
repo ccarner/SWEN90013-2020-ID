@@ -16,7 +16,9 @@ import {
 import PrimaryButton from "./reusableComponents/PrimaryButton";
 
 class Landing extends Component {
+
   render() {
+    const userId = localStorage.getItem("userId");
     return (
       <React.Fragment>
         <div className="container" style={{ padding: "10%" }}>
@@ -34,12 +36,18 @@ class Landing extends Component {
           <br />
           <BrowserRouter>
           <NavLink to="./surveyComponent/surveyHome">
-            <PrimaryButton>Anonymous</PrimaryButton>
+            <PrimaryButton>Start</PrimaryButton>
           </NavLink>
-          <NavLink to="./loginComponent/loginPage">
-            <PrimaryButton>Log in</PrimaryButton>
-          </NavLink>
-          </BrowserRouter>
+
+          {((userId === null) || (localStorage.getItem("userType") === "anonymous")) ?
+            <NavLink to="./loginComponent/loginPage">
+              <PrimaryButton>Log in</PrimaryButton>
+            </NavLink>
+            :
+            <NavLink to="./loginComponent/userInfo">
+              <PrimaryButton>Account</PrimaryButton>
+            </NavLink>
+          }
         </div>
 
         <MDBFooter className="font-small pt-4 mt-4" style={{ padding: 0 }}>
