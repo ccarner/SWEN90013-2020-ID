@@ -84,7 +84,7 @@
           "TALK_CHILD_VIOL",
           "PLAN_CHILD_SAFE",
           "PLAN_SAFE_CONTACT",
-          "LEARN_CUSTODY"
+          "Learn_CUSTODY"
         ],
         "Partner": ["TALK_PARTNER_HELP"],
         "Resource": [
@@ -178,7 +178,7 @@
     "event": {
       "type": "LEFT_HaveChildren",
       "params": {
-        "Children": ["PLAN_CHILD_SAFE", "LEARN_CUSTODY"],
+        "Children": ["PLAN_CHILD_SAFE", "Learn_CUSTODY"],
         "Partner": ["TALK_PARTNER_HELP"],
         "Resource": [
           "HELP_WORK",

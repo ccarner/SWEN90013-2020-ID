@@ -6,16 +6,25 @@ import { Link } from "react-router-dom";
 import { Table, Button, Accordion, CardDeck, Modal } from "react-bootstrap";
 import Grid from "antd/lib/card/Grid";
 import "../../CSS/Modal.css";
+import { Children } from "react";
 var rules = require("../../SurveyJsons/actionPlanAlgorithm.json");
 var planHtmls = require("../../SurveyJsons/actionPlanHtml.json");
 
 export default class ActionPlans extends Component {
   constructor(props) {
     super(props);
-    this.state = { ModalShow: false, ModalBody: undefined };
+    this.state = {
+      ModalShow: false,
+      ModalBody: undefined,
+      priorities: ["Children", "Safety", "Resource", "Health", "Partner"],
+      plan: {},
+    };
     this.addResultsToFacts();
-    this.determineActionPlans();
+
     this.determineActionPlans = this.determineActionPlans.bind(this);
+  }
+  componentDidMount() {
+    this.determineActionPlans();
   }
 
   addResultsToFacts() {
@@ -23,7 +32,6 @@ export default class ActionPlans extends Component {
     var facts = {
       HaveChildren: "Yes",
       Intention: "I intend to leave the relationship",
-      Priority: "Safety",
     };
     var results = JSON.parse(localStorage.getItem("prevCompletions"));
     console.log("results are in", results);
@@ -87,8 +95,88 @@ export default class ActionPlans extends Component {
       console.log(result.events[0]);
     });
   }
+
   handleModalShow = () => {
     this.setState({ ModalShow: !this.state.ModalShow });
+  };
+  handleStrategy = (items) => {
+    let itemlist = items;
+    return (
+      itemlist != undefined &&
+      itemlist.map((item) => {
+        console.log(item);
+      })
+    );
+  };
+
+  HanldePriorityItem = () => {
+    console.log(this.state.plan);
+    return this.state.priorities.map((item, index) => (
+      <Accordion style={{ margin: 10 }}>
+        <Card
+          key={index}
+          style={{
+            background: "rgba(54, 25, 25, 0.00004)",
+            border: "0",
+            boxShadow: "none",
+          }}
+        >
+          <Accordion.Toggle
+            as={Card.Header}
+            eventKey={index + 1} // doesn't work with index of 0 for some reason?
+            style={{
+              background: "linear-gradient(40deg, #ff6ec4, #7873f5)",
+              color: "white",
+              "font-size": "25px",
+            }}
+          >
+            {item}
+          </Accordion.Toggle>
+
+          <Accordion.Collapse eventKey={index + 1}>
+            <CardDeck>
+              <div
+                style={{
+                  display: "grid",
+                  "grid-template-columns": "repeat(3,1fr)",
+                  gap: "45px",
+                  margin: "20px",
+                }}
+              >
+                {/* {this.handleStrategy(this.state.plan[item.toString()])} */}
+                {this.state.plan[item.toString()] !== undefined &&
+                  this.state.plan[item.toString()].map((plan, index) => {
+                    console.log(planHtmls[plan.toString()]);
+                    var html = {
+                      __html: planHtmls[plan.toString()].strategyHtml,
+                    };
+
+                    return (
+                      <Card>
+                        <Card.Body>{planHtmls[plan].description}</Card.Body>
+
+                        <Card.Footer>
+                          <PrimaryButton
+                            gradient="purple-gradient"
+                            rounded
+                            className="purple-gradient"
+                            onClick={() => {
+                              this.handleModalShow();
+                              this.setState({ ModalBody: html });
+                            }}
+                          >
+                            view more
+                          </PrimaryButton>
+                        </Card.Footer>
+                      </Card>
+                    );
+                  })}
+              </div>
+            </CardDeck>
+          </Accordion.Collapse>
+        </Card>
+      </Accordion>
+    ));
   };
 
   render() {
@@ -118,67 +206,9 @@ export default class ActionPlans extends Component {
             deal with your situation. There is additional help, resources and
             recommendations in the "More Strategies" section.
           </p>
-          <Accordion>
-            <Card
-              key={1}
-              style={{
-                background: "rgba(54, 25, 25, 0.00004)",
-                border: "0",
-                boxShadow: "none",
-              }}
-            >
-              <Accordion.Toggle
-                as={Card.Header}
-                eventKey={1 + 1} // doesn't work with index of 0 for some reason?
-                style={{
-                  background: "linear-gradient(40deg, #ff6ec4, #7873f5)",
-                  color: "white",
-                  "font-size": "25px",
-                }}
-              >
-                {/* {planHtmls[plan].description} */}
-                Safety
-              </Accordion.Toggle>
 
-              <Accordion.Collapse eventKey={1 + 1}>
-                <CardDeck>
-                  <div
-                    style={{
-                      display: "grid",
-                      "grid-template-columns": "repeat(3,1fr)",
-                      gap: "45px",
-                      margin: "20px",
-                    }}
-                  >
-                    {this.state.plan &&
-                      this.state.plan.map((plan, index) => {
-                        var html = { __html: planHtmls[plan].strategyHtml };
+          {this.HanldePriorityItem()}
 
-                        return (
-                          <Card>
-                            <Card.Body>{planHtmls[plan].description}</Card.Body>
-
-                            <Card.Footer>
-                              <PrimaryButton
-                                gradient="purple-gradient"
-                                rounded
-                                className="purple-gradient"
-                                onClick={() => {
-                                  this.handleModalShow();
-                                  this.setState({ ModalBody: html });
-                                }}
-                              >
-                                view more
-                              </PrimaryButton>
-                            </Card.Footer>
-                          </Card>
-                        );
-                      })}
-                  </div>
-                </CardDeck>
-              </Accordion.Collapse>
-            </Card>
-          </Accordion>
           <Link to="/surveyComponent">
             <PrimaryButton>Go back home</PrimaryButton>
           </Link>
