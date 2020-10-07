@@ -111,7 +111,7 @@ const useStyles = makeStyles((theme) => ({
 		color: 'white',
 		width: 150,
 		[theme.breakpoints.only('xs')]: {
-			width: 30
+			width: 20
 		},
 		height: 40,
 		padding: '0 30px'
@@ -149,7 +149,7 @@ function NavBar(props) {
 	const [ surveys, setSurveys ] = React.useState([]);
 	const [ showSurvey, setShowSurvey ] = React.useState(true);
 	const [ showData, setShowData ] = React.useState(true);
-	const [ isAdmin, setAdmin ] = React.useState(true);
+	const [ isAdmin, setAdmin ] = React.useState(false);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -207,8 +207,8 @@ function NavBar(props) {
 							<IconButton onClick={() => (window.location.href = '/')}>
 								<img src={IconLogo} alt="IconLogo" style={{ height: 35, marginTop: 0 }} />
 							</IconButton>
-							<Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
-								<Collapse in={!isAdmin}>
+						<Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
+							{/** 		<Collapse in={!isAdmin}>
 									<Grid item>
 										<Tooltip title="Get more help.">
 											<Button className={clsx(classes.button)} onClick={handleOpen}>
@@ -231,15 +231,54 @@ function NavBar(props) {
 									</Grid>
 								</Collapse>
 								<Collapse in={isAdmin}>
-									<Grid item>
-										<Button
-											onClick={() => (window.location.href = '/')}
-											className={clsx(classes.button)}
-										>
-											<ExitToAppIcon />{isWidthUp('sm', width) ? 'LOGOUT' :'' }
-										</Button>
+									<Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
+										<Grid item>
+											<Button
+												onClick={() => (window.location.href = '/')}
+												className={clsx(classes.button)}
+											>
+												<ExitToAppIcon />
+												{isWidthUp('sm', width) ? 'LOGOUT' : ''}
+											</Button>
+										</Grid>
 									</Grid>
-								</Collapse>
+								</Collapse>*/}
+								{isAdmin ? (
+									<Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
+										<Grid item>
+											<Button
+												onClick={() => (window.location.href = '/')}
+												className={clsx(classes.button)}
+											>
+												<ExitToAppIcon />
+												{isWidthUp('sm', width) ? 'LOGOUT' : ''}
+											</Button>
+										</Grid>
+									</Grid>
+								) : (
+									<Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
+										<Grid item>
+											<Tooltip title="Get more help.">
+												<Button className={clsx(classes.button)} onClick={handleOpen}>
+													{isWidthUp('sm', width) ? 'Get Help' : 'Help'}
+												</Button>
+											</Tooltip>
+										</Grid>
+										<Grid item>
+											<Tooltip title="Click to quick exit.">
+												<Button
+													className={clsx(classes.button)}
+													onClick={() => {
+														localStorage.clear();
+														window.location.href = 'https://www.weather.com.au/';
+													}}
+												>
+													{isWidthUp('sm', width) ? 'Quick Exit' : 'Exit'}
+												</Button>
+											</Tooltip>
+										</Grid>
+									</Grid>
+								)}
 							</Grid>
 						</Toolbar>
 					</AppBar>
@@ -321,7 +360,10 @@ function NavBar(props) {
 							<Route path="/navbar/surveyId=:surveyId" component={SurveySection} />
 							<Route path="/dashboard/datacollection" component={DCLayout} />
 							<Route path="/surveyComponent/surveyHome" component={SurveyHome} />
-							<Route path="/loginComponent/loginPage" component={LoginPage} />
+							<Route
+								path="/loginComponent/loginPage"
+								render={(props) => <LoginPage {...props} setAdmin={setAdmin} />}
+							/>
 							<Route path="/loginComponent/registerPage" component={RegisterPage} />
 							<Route path="/loginComponent/adminInfo" component={AdminInfo} />
 
