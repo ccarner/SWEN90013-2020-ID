@@ -6,7 +6,7 @@ import PrimaryButton from "../reusableComponents/PrimaryButton";
  * The initial page displayed after selecting a survey, with info about the survey itself
  * @param {*} props
  */
-export default function SurveyInformationPage(props) {
+export default function SurveyIntroductionPage(props) {
   return (
     <div>
       <Card className="surveyIntroCard" style={{ width: "80%" }}>
@@ -15,6 +15,13 @@ export default function SurveyInformationPage(props) {
           <Card.Title>{"Introduction: " + props.survey.surveyTitle}</Card.Title>
           <Card.Text style={{ fontSize: "18px" }}>
             {props.survey.surveyIntroduction}
+            {console.log("surveyfile was b64 was", props.survey)}
+            <div
+              className="content"
+              dangerouslySetInnerHTML={{
+                __html: atob(props.survey.surveyIntroductionHtmlB64),
+              }}
+            ></div>
           </Card.Text>
 
           <PrimaryButton onClick={props.returnHome}>Go back home</PrimaryButton>

@@ -1,13 +1,16 @@
 {
-  "surveyTitle": "My Safety",
+  "surveyId": "2",
+  "surveyTitle": "New My Safety",
   "surveyVersion": "1.0",
   "surveyIntroduction": "We would like to ask you some questions about behaviours or actions you may have experienced from your partner or ex-partner.",
+  "surveyIntroductionHtmlB64": "PGgzPiBQYXJ0bmVyIEJlaGF2aW91cnMgPC9oMz4KPHA+V2Ugd291bGQgbGlrZSB0byBhc2sgeW91IHNvbWUgcXVlc3Rpb25zIGFib3V0IGJlaGF2aW91cnMgb3IgCmFjdGlvbnMgeW91IG1heSBoYXZlIGV4cGVyaWVuY2VkIGZyb20geW91ciBwYXJ0bmVyIG9yIGV4LSAKcGFydG5lci4gCldlIHdvdWxkIGxpa2UgdG8ga25vdyBpdCB2b3UgZXhwZXJpZW5jZWQgYW52IE9mIHRoZSBhY3Rpb25zIGxpc3RlZCBiZWxvdyB0cm9tIHRoZSBwYXJ0bmVyIC8gCmV4LXBhcnRuZXIgd2hvIG1hZGUgeW91IGZlZWwgYWZyYWlkLiBQbGVhc2UgdGljayB0aGUgZnJlcXVlbmN5LCBvdmVyIHRoZSBsYXN0IHR3ZWx2ZSBtb250aHMsIAp0aGF0IGl0IGhhcHBlbmVkIHRvIHlvdS4gVGhlcmUgaXMgc3BhY2UgYXQgdGhlIGJvdHRvbSBmb3IgYmVoYXZpb3VycyBub3QgaW4gdGhlIGxpc3QuIAo8L3A+",
   "surveyImageName": "1306390151383093248.png",
   "surveySections": [
     {
       "sectionId": "1",
       "sectionTitle": "Partner Behaviours",
       "sectionIntroduction": "We would like to know if you have experienced any of the actions listed below from the partner / ex-partner who made you feel afraid. Please select the frequency, over the last 12 months, that it happened to you.",
+      "sectionIntroductionHtmlB64": "PGgzPk15IFNhZmV0eTwvaDM+CjxwPgogIEV4YW1wbGUgb2YgSFRNTCBmb3IgbXkgc2FmZXR5IGludHJvCjwvcD4KPGg0PkhlYWRlcjwvaDQ+Cjx1bD4KICA8bGk+TXV0dWFsIHRydXN0IGFuZCBzaGFyZWQgcG93ZXI8L2xpPgogIDxsaT5TdXBwb3J0IGFuZCBvcGVuIGNvbW11bmljYXJpb248L2xpPgogIDxsaT5Db21taXRtZW50IGFuZCBob25lc3R5PC9saT4KPC91bD4KQW4gdW5oZWFsdGh5IHJlbGF0aW9uc2hpcCBpbnZvbHZlczoKPHVsPgogIDxsaT5VbnN1cHBvcnRpdmUgYmVoYXZpb3VyPC9saT4KICA8bGk+TWlzdXNlIG9mIHBvd2VyIGFuZCBhdXRob3JpdHk8L2xpPgogIDxsaT5QYWluLCBmZWFyIG9yIGhhcm08L2xpPgo8L3VsPgo=",
       "questions": [
         {
           "questionId": "1",
@@ -399,16 +402,18 @@
             "Daily"
           ]
         }
-      ]
+      ],
+      "sectionResultAlgorithm": null
     },
     {
       "sectionId": "2",
       "sectionTitle": "Danger Assessment",
       "sectionIntroduction": "Next, please answer these questions. These answers will help us determine how much physical danger you are in from your partner or ex-partner",
+      "sectionIntroductionHtmlB64": "PGgzPk15IFNhZmV0eTwvaDM+CjxwPgogIEV4YW1wbGUgb2YgSFRNTCBmb3IgbXkgc2FmZXR5IGludHJvCjwvcD4KPGg0PkhlYWRlcjwvaDQ+Cjx1bD4KICA8bGk+TXV0dWFsIHRydXN0IGFuZCBzaGFyZWQgcG93ZXI8L2xpPgogIDxsaT5TdXBwb3J0IGFuZCBvcGVuIGNvbW11bmljYXJpb248L2xpPgogIDxsaT5Db21taXRtZW50IGFuZCBob25lc3R5PC9saT4KPC91bD4KQW4gdW5oZWFsdGh5IHJlbGF0aW9uc2hpcCBpbnZvbHZlczoKPHVsPgogIDxsaT5VbnN1cHBvcnRpdmUgYmVoYXZpb3VyPC9saT4KICA8bGk+TWlzdXNlIG9mIHBvd2VyIGFuZCBhdXRob3JpdHk8L2xpPgogIDxsaT5QYWluLCBmZWFyIG9yIGhhcm08L2xpPgo8L3VsPgo=",
       "questions": [
         {
           "questionId": "31",
-          "questionText": "Has the physical violence increased in severity or frquency over the past year?",
+          "questionText": "Has the physical violence increased in severity or frequency over the past year?",
           "questionType": "yesOrNo"
         },
         {
@@ -466,49 +471,62 @@
           "questionText": "Is your partner an alcoholic or problem drinker?",
           "questionType": "yesOrNo"
         }
-      ]
+      ],
+      "sectionResultAlgorithm": {
+        "rules": [
+          {
+            "event": {
+              "type": "highRisk",
+              "params": {
+                "categoryName": "High Risk",
+                "responseString": " You seem to have experienced serious abusive behaviours from your partner. It is not acceptable for these things to happen in relationships. It is probably affecting your mental and physical health and possibly your studies as well. ",
+                "imageLink": "https://rlv.zcache.com.au/3d_pink_love_heart_heart_sticker-r133338d543304d8aa228414bd38bc390_0ugd3_8byvr_540.jpg"
+              }
+            },
+            "conditions": {
+              "any": [
+                {
+                  "fact": "totalAnswerPoints",
+                  "operator": "greaterThanInclusive",
+                  "value": 1,
+                  "params": {
+                    "totalAnswerPointsQuestions": [
+                      ["New My Safety", "2", "31"],
+                      ["New My Safety", "2", "32"]
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "event": {
+              "type": "lowRiskEvent",
+              "params": {
+                "categoryName": "Low Risk",
+                "responseString": " You are at low risk ",
+                "imageLink": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Heart_anterior_exterior_view.jpg"
+              }
+            },
+            "conditions": {
+              "any": [
+                {
+                  "fact": "totalAnswerPoints",
+                  "operator": "lessThanInclusive",
+                  "value": 0,
+                  "params": {
+                    "totalAnswerPointsQuestions": [
+                      ["New My Safety", "2", "31"],
+                      ["New My Safety", "2", "32"]
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
     }
   ],
-  "resultAlgorithm": {
-    "rules": [
-      {
-        "event": {
-          "type": "highRisk",
-          "params": {
-            "categoryName": "High Risk",
-            "responseString": " You seem to have experienced serious abusive behaviours from your partner. It is not acceptable for these things to happen in relationships. It is probably affecting your mental and physical health and possibly your studies as well. ",
-            "imageLink": "https://rlv.zcache.com.au/3d_pink_love_heart_heart_sticker-r133338d543304d8aa228414bd38bc390_0ugd3_8byvr_540.jpg"
-          }
-        },
-        "conditions": {
-          "any": [
-            {
-              "fact": "totalAnswerPoints",
-              "operator": "greaterThanInclusive",
-              "value": 1
-            }
-          ]
-        }
-      },
-      {
-        "event": {
-          "type": "lowRiskEvent",
-          "params": {
-            "categoryName": "Low Risk",
-            "responseString": " You are at low risk ",
-            "imageLink": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Heart_anterior_exterior_view.jpg"
-          }
-        },
-        "conditions": {
-          "any": [
-            {
-              "fact": "totalAnswerPoints",
-              "operator": "lessThanInclusive",
-              "value": 0
-            }
-          ]
-        }
-      }
-    ]
-  }
+  "surveyResultAlgorithm": null
 }

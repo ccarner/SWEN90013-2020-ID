@@ -1,13 +1,16 @@
 {
+  "surveyId": "4",
   "surveyTitle": "My Priorities",
   "surveyVersion": "1.0",
   "surveyIntroduction": "There are many things to consider in deciding what to do about safety in your relationship. Thinking about what is most important in your life can help you decide what is best for you. What is most important to one woman may not be important at all to another. On the next page we will ask you to weigh up which of the factors below might be most important to you.",
+  "surveyIntroductionHtmlB64": "PGgzPlByaW9yaXRpZXM8L2gzPgo8cD4KICBUaGVyZSBhcmUgbWFueSB0aGluZ3MgdG8gY29uc2lkZXIgaW4gZGVjaWRpbmcgd2hhdCB0byBkbyBhYm91dCBzYWZldHkgaW4geW91cgogIHJlbGF0aW9uc2hpcC4gVGhpbmtpbmcgYWJvdXQgd2hhdCBpcyBtb3N0IGltcG9ydGFudCBpbiB5b3VyIGxpZmUgY2FuIGhlbHAgeW91CiAgZGVjaWRlIHdoYXQgaXMgYmVzdCBmb3IgeW91LiBXaGF0IGlzIG1vc3QgaW1wb3J0YW50IHRvIG9uZSB3b21hbiBtYXkgbm90IGJlCiAgaW1wb3J0YW50IGF0IGFsbCB0byBhbm90aGVyLiBPbiB0aGUgbmV4dCBwYWdlIHdlIHdpbGwgYXNrIHlvdSB0byB3ZWlnaCB1cAogIHdoaWNoIG9mIHRoZSBmYWN0b3JzIGJlbG93IG1pZ2h0IGJlIG1vc3QgaW1wb3J0YW50IHRvIHlvdS4KPC9wPgo8dWw+CiAgICA8bGk+SGVhbHRoIGFuZCBXZWxsYmVpbmc6IE15IHBoeXNpY2FsIGFuZCBlbW90aW9uYWwgaGVhbHRoIDwvbGk+CiAgICA8bGk+UmVzb3VyY2VzOiBIYXZpbmcgaG91c2luZyBhbmQgaW5jb21lPC9saT4KICAgIDxsaT5TYWZldHk6IFNhZmV0eSBvZiBteXNlbGYsIGZyaWVuZHMgYW5kIGZhbWlseTwvbGk+CiAgICA8bGk+RmVlbGluZ3MgZm9yIFBhcnRuZXI6IExvdmUgb3IgY29uY2VybiBmb3IgbXkgcGFydG5lcjwvbGk+CjwvdWw+",
   "surveyImageName": "1305421023604248576.png",
   "surveySections": [
     {
       "sectionId": "1",
       "sectionTitle": "Priorities",
       "sectionIntroduction": "Please rank the following from most important to you at the top to least important at the bottom",
+      "sectionIntroductionHtmlB64": "",
       "sectionIndex": 0,
       "sectionType": "ranking",
       "questions": [
@@ -23,8 +26,28 @@
             "Children"
           ]
         }
-      ]
+      ],
+      "sectionResultAlgorithm": null
+    },
+    {
+      "sectionId": "2",
+      "sectionTitle": "My Intentions",
+      "sectionIntroductionHtmlB64": "",
+      "sectionIntroduction": "In this section we will ask about your intentions with your relationship with your partner or ex-partner. We understand that your feelings about what you would like to do may change, and that you might feel confused. It is best to answer about how you are feeling right now, even if this might be different in the future",
+      "questions": [
+        {
+          "questionId": "3",
+          "questionText": "What are your intentions regarding your relationship?",
+          "questionType": "singleSelectionVertical",
+          "selectionOptions": [
+            "I intend to stay in the relationship",
+            "I intend to leave the relationship",
+            "I have already left the relationship"
+          ]
+        }
+      ],
+      "sectionResultAlgorithm": null
     }
   ],
-  "resultAlgorithm": null
+  "surveyResultAlgorithm": null
 }

@@ -6,8 +6,10 @@ import {
 } from "../../API/surveyAPI";
 import SurveySection from "./surveySection";
 import { Spinner, Button, Container, Row, Col, Card } from "react-bootstrap";
-import SurveyInformationPage from "./surveyInformationPage";
+import SurveyIntroductionPage from "./surveyIntroductionPage";
+import SectionIntroductionPage from "./sectionIntroductionPage";
 import SurveyResultsPage from "./surveyResultsPage";
+import SectionResultsPage from "./sectionResultsPage";
 import ProgressBar from "../reusableComponents/progressBar";
 import LoadingSpinner from "../reusableComponents/loadingSpinner";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
@@ -32,24 +34,62 @@ export default class SurveyControl extends Component {
       surveyFile: {},
       sectionQuestions: null,
       currentSurveyState: "introduction", // ["introduction", "started", "submitted"]
-      currentSection: 0,
+      currentSurveyMapPosition: 0,
+      // surveyPageMap tells us what to render when we hit 'next' or 'back'
+      // will be of the form [[1,'introduction'],[1,'questions'],[2,'questions'],[3,'introduction']...]
+      // which tells us firstly the index of the 'section' from the json, and then whether we're rendering q or intro
+      // not all sections necessarily have an introduction
+      surveyPageMap: null,
       percentageCompleted: 0,
       results: {
         userId: props.userId,
         surveyId: props.surveyId,
-        sectionId: "ALL",
-        completedTime: 99999,
         questions: undefined,
       },
     };
     this.questionHandler = this.questionHandler.bind(this);
     this.handleNavigateSections = this.handleNavigateSections.bind(this);
     this.setupResults = this.setupResults.bind(this);
+    this.populateSurveyPageMap = this.populateSurveyPageMap.bind(this);
+  }
+
+  currentSectionNumber() {
+    const { surveyPageMap, currentSurveyMapPosition } = this.state;
+    return surveyPageMap[currentSurveyMapPosition][0];
+  }
+
+  currentPageType() {
+    const { surveyPageMap, currentSurveyMapPosition } = this.state;
+    return surveyPageMap[currentSurveyMapPosition][1];
+  }
+
+  // build a map of pages + their orders
+  // intro (optional) -> questions -> feedback (optional) -> [next section]
+  populateSurveyPageMap(surveyFile) {
+    var surveyPageMap = [];
+    var sectionCounter = 0;
+    for (var section of surveyFile.surveySections) {
+      if (section.sectionIntroductionHtmlB64 || section.sectionIntroduction) {
+        // if the file has an intro (html or text), note it in the map
+        surveyPageMap.push([sectionCounter, "introduction"]);
+      }
+
+      surveyPageMap.push([sectionCounter, "questions"]);
+
+      if (section.sectionResultAlgorithm) {
+        // if the file has a result algorithm, note it on the map
+        surveyPageMap.push([sectionCounter, "results"]);
+      }
+
+      sectionCounter++;
+    }
+    this.setState({ surveyPageMap: surveyPageMap });
   }
 
   async componentDidMount() {
     var surveyFile = await getSurveyById(this.props.surveyId);
     var newQuestions = this.setupResults(surveyFile);
+    this.populateSurveyPageMap(surveyFile);
 
     this.setState((prevState) => {
       var newResults = prevState.results;
@@ -88,7 +128,7 @@ export default class SurveyControl extends Component {
    * @param {*} responseValue
    */
   questionHandler(questionId, responseValue) {
-    const { currentSection } = this.state;
+    const currentSection = this.currentSectionNumber();
     const surveySections = this.state.surveyFile.surveySections;
 
     const currentQuestion =
@@ -102,25 +142,43 @@ export default class SurveyControl extends Component {
   }
 
   handleNavigateSections(lambdaSection) {
-    const currentSection = this.state.currentSection;
+    const currentSurveyMapPosition = this.state.currentSurveyMapPosition;
+
     if (
-      currentSection + lambdaSection >=
-      this.state.surveyFile.surveySections.length
+      currentSurveyMapPosition + lambdaSection >=
+      this.state.surveyPageMap.length
     ) {
-      console.log(553, "submitting");
       this.submitHandler();
       this.setState({ percentageCompleted: 100 });
+      this.saveSurveyResultsLocalStorage();
       return;
-    } else if (currentSection + lambdaSection >= 0) {
-      this.setState((prevState) => ({
-        currentSection: prevState.currentSection + lambdaSection,
-        sectionQuestions: this.state.surveyFile.surveySections[
-          currentSection + lambdaSection
-        ],
-        percentageCompleted:
-          (100 * (prevState.currentSection + lambdaSection)) /
-          prevState.surveyFile.surveySections.length,
-      }));
+    } else if (currentSurveyMapPosition + lambdaSection >= 0) {
+      this.saveSurveyResultsLocalStorage();
+      this.setState(
+        (prevState) => ({
+          currentSurveyMapPosition:
+            prevState.currentSurveyMapPosition + lambdaSection,
+          sectionQuestions: this.state.surveyFile.surveySections[
+            prevState.surveyPageMap[
+              prevState.currentSurveyMapPosition + lambdaSection
+            ][0]
+          ],
+          percentageCompleted:
+            (100 * (prevState.currentSurveyMapPosition + lambdaSection)) /
+            prevState.surveyPageMap.length,
+        }),
+        () => {
+          // after updating state...
+
+          if (this.currentPageType() === "results") {
+            // if its a result section, we need to calculate section feedback if the algorithm exists
+            var sectionResultAlgorithm = this.state.surveyFile.surveySections[
+              this.currentSectionNumber()
+            ].sectionResultAlgorithm;
+            this.calculateFeedback(sectionResultAlgorithm);
+          }
+        }
+      );
     }
     //else do nothing if somehow trying to go to invalid negative section
   }
@@ -132,20 +190,38 @@ export default class SurveyControl extends Component {
     this.props.completeHandler(this.state.results);
     console.log(555, "received from the backend", feedBack);
     this.setState({ isLoaded: true, currentSurveyState: "submitted" });
-    this.calculateFeedback();
+
+    //evaluate the final 'survey' level feedback if the algorithm exists
+    var surveyResultAlgorithm = this.state.surveyFile.surveyResultAlgorithm;
+
+    this.calculateFeedback(surveyResultAlgorithm);
   };
 
-  calculateFeedback() {
+  saveSurveyResultsLocalStorage() {
+    var surveyResults = JSON.parse(localStorage.getItem("surveyResults"));
+    if (!surveyResults) {
+      surveyResults = {};
+    }
+    //TODO once get a consistent survey ID across DB, use ID instead... ie the line below:
+    // surveyResults[this.state.surveyFile.surveyId] = this.state.results;
+    surveyResults[this.state.surveyFile.surveyTitle] = this.state.results;
+    console.log("surveyResults being saved was", surveyResults);
+    localStorage.setItem("surveyResults", JSON.stringify(surveyResults));
+  }
+
+  calculateFeedback(resultAlgorithm) {
+    // debugger;
     //skip surveys that have no algorithm (have null for their alg)
-    if (!this.state.surveyFile.resultAlgorithm) {
+    if (!resultAlgorithm) {
+      //clears current result if there is no algorithm
+      this.setState({
+        feedbackText: null,
+        feedbackImage: null,
+        feedbackCategory: null,
+      });
       return null;
     }
-    evaluateRule(this.state.surveyFile.resultAlgorithm.rules, [
-      {
-        factName: "surveyAnswers",
-        fact: this.state.results.questions,
-      },
-    ]).then((results) => {
+    evaluateRule(resultAlgorithm.rules, []).then((results) => {
       console.log(results.events);
       this.setState({
         feedbackText: results.events[0].params.responseString,
@@ -162,9 +238,10 @@ export default class SurveyControl extends Component {
   };
 
   render() {
-    const { isLoaded, currentSection, actionPlan } = this.state;
+    const { isLoaded } = this.state;
     var renderArray = [];
 
+    // the top bar with status of completion, name of survey etc
     renderArray.push(
       <Card style={{ zIndex: -1 }}>
         <Container>
@@ -197,7 +274,7 @@ export default class SurveyControl extends Component {
       if (this.state.currentSurveyState === "introduction") {
         renderArray.push(
           <div>
-            <SurveyInformationPage
+            <SurveyIntroductionPage
               returnHome={this.props.returnHome}
               survey={this.state.surveyFile}
               startSurvey={this.handleStart}
@@ -205,16 +282,45 @@ export default class SurveyControl extends Component {
           </div>
         );
       } else if (this.state.currentSurveyState === "started") {
-        renderArray.push(
-          <React.Fragment>
+        const pageType = this.currentPageType();
+
+        if (pageType === "introduction") {
+          //this is a section introduction
+          renderArray.push(
+            <SectionIntroductionPage
+              section={
+                this.state.surveyFile.surveySections[
+                  this.currentSectionNumber()
+                ]
+              }
+            />
+          );
+        } else if (pageType === "results") {
+          //add section results page here...
+          renderArray.push(
+            <SectionResultsPage
+              feedbackText={this.state.feedbackText}
+              feedbackImage={this.state.feedbackImage}
+              feedbackCategory={this.state.feedbackCategory}
+            />
+          );
+        } else if (pageType === "questions") {
+          //push the questions for the current section to the screen
+          renderArray.push(
             <SurveySection
               questionHandler={this.questionHandler}
               section={
-                this.state.surveyFile.surveySections[this.state.currentSection]
+                this.state.surveyFile.surveySections[
+                  this.currentSectionNumber()
+                ]
               }
               results={this.state.results.questions}
             />
-
+          );
+        }
+        // bottom navigation
+        renderArray.push(
+          <React.Fragment>
             <Card
               style={{
                 position: "fixed",
@@ -259,7 +365,6 @@ export default class SurveyControl extends Component {
         );
       }
     }
-
     return renderArray;
   }
 }
