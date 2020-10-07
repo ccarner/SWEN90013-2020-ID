@@ -9,13 +9,14 @@ import 'mdbreact/dist/css/mdb.css';
 import {Link } from "react-router-dom";
 import PrimaryButton from '../reusableComponents/PrimaryButton';
 import RegisterPage from './registerPage';
-//import { Button, Card } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import AdminConsole from '../AdminComponents/adminConsole';
-import { Card, CardContent, CardHeader, Divider, Grid, TextField, Box, Button, Typography } from '@material-ui/core';
+//import { Card, CardContent, CardHeader, Divider, Grid, TextField, Box, Button, Typography } from '@material-ui/core';
 
 export default class LoginPage extends React.Component {
 	constructor(props) {
-		super(props);
+    super(props);
+    console.log(props);
 		this.state = {
 			isLoggingPage: true,
 			isLoggedIn: false,
@@ -37,14 +38,14 @@ export default class LoginPage extends React.Component {
 	async handleSubmit(event) {
 		// the following call will stop the form from submitting
     event.preventDefault();
-    console.log(userObject);
+    
     // get the user information
 		const data = new FormData(event.target);
 		var userObject = {};
 		data.forEach((value, key) => {
 			userObject[key] = value;
 		});
-
+    console.log(userObject);
 		const response = await loginUser(userObject);
 
 		if (response.flag) {
@@ -78,6 +79,7 @@ export default class LoginPage extends React.Component {
 
 		if (isLoggedIn) {
 			if (isAdmin) {
+        this.props.setAdmin(false);
 				return <AdminConsole />;
 			} else {
 				return <div>You are logged in!</div>;
@@ -89,7 +91,7 @@ export default class LoginPage extends React.Component {
               Welcome to I-Decide
 					  </h1>
             <br/>
-					{/**   <Card className="surveyIntroCard" style={{ width: "80%" }}>
+	 		   <Card className="surveyIntroCard" style={{ width: "80%" }}>
             <Card.Body>
               <Card.Title>{"Log in to I-Decide "}</Card.Title>
               <Card.Text></Card.Text>
@@ -141,8 +143,8 @@ export default class LoginPage extends React.Component {
                 </div>
               </form>
             </Card.Body>
-          </Card>*/}
-           <form onSubmit={this.handleSubmit}>
+          </Card>
+    {/**      <form onSubmit={this.handleSubmit}>
 					<Card>
 						<CardHeader title="Sign In" />
 						<Divider />
@@ -182,7 +184,7 @@ export default class LoginPage extends React.Component {
 						
 						</CardContent>
 					</Card>
-          </form>
+          </form>*/}
 				</div>
 			);
 		} else {
