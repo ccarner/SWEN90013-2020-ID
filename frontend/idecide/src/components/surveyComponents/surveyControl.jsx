@@ -221,7 +221,7 @@ export default class SurveyControl extends Component {
       });
       return null;
     }
-    evaluateRule(resultAlgorithm.rules, []).then((results) => {
+    evaluateRule(resultAlgorithm, []).then((results) => {
       console.log(results.events);
       this.setState({
         feedbackText: results.events[0].params.responseString,
@@ -257,7 +257,7 @@ export default class SurveyControl extends Component {
                 value={this.state.percentageCompleted}
               />
             </Col>
-            <Col>{this.state.percentageCompleted}% Completed</Col>
+            <Col>{Math.round(this.state.percentageCompleted)}% Completed</Col>
           </Row>
         </Container>
       </Card>

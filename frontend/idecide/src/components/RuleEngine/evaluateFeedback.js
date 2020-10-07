@@ -39,7 +39,28 @@ export default function evaluateFeedback(rules, factContainers) {
         // survey answers should be a nested object of surveys,sections,questions
         var question = null;
         try {
-          //dones't actually use the ID of section, since the question ID itself is unique...
+          // if its abbreviated, eg "31-42", replace it with the actual Q numbers
+          if (idArr[2].includes("-")) {
+            let re = /([\d]*)-([\d]*)/g;
+            var match = re.exec(idArr[2]);
+            console.log("match was", match);
+            let startQ = match[1];
+            let endQ = match[2];
+            startQ = parseInt(startQ);
+            endQ = parseInt(endQ);
+            console.log("start/end was", startQ, endQ);
+
+            for (var i = startQ; i <= endQ; i++) {
+              params.totalAnswerPointsQuestions.push([
+                idArr[0],
+                idArr[1],
+                i.toString(),
+              ]);
+            }
+            // not removing since IN the array while looping through, so just skip loop iteration
+            continue;
+          }
+          //TODO doesn't actually use the ID of section, since the question ID itself is unique... maybe remove the ID of section from the format...
           question = surveyResults[idArr[0]].questions[idArr[2]];
         } catch (err) {
           console.error(
@@ -77,11 +98,95 @@ export default function evaluateFeedback(rules, factContainers) {
         }
       }
       console.log("total points is", totalPoints);
+      console.log("Questions were", params.totalAnswerPointsQuestions);
       return totalPoints;
     });
   };
 
   engine.addFact("totalAnswerPoints", totalAnswerPointsFact);
+
+  let dangerAssessmentPointsFact = function (params, almanac) {
+    params.totalAnswerPointsQuestions = [["New My Safety", "2", "31-42"]];
+    return totalAnswerPointsFact(params, almanac);
+  };
+
+  engine.addFact("DA_SUM", dangerAssessmentPointsFact);
+
+  let casScore = function (params, almanac) {
+    params.totalAnswerPointsQuestions = [["New My Safety", "1", "1-30"]];
+    return totalAnswerPointsFact(params, almanac);
+  };
+
+  engine.addFact("CAS_SCORE", casScore);
+
+  let SEVERE_SUBSCALE_CAS_SCORE = function (params, almanac) {
+    params.totalAnswerPointsQuestions = [
+      ["New My Safety", "1", "2"],
+      ["New My Safety", "1", "5"],
+      ["New My Safety", "1", "7"],
+      ["New My Safety", "1", "15"],
+      ["New My Safety", "1", "18"],
+      ["New My Safety", "1", "22"],
+      ["New My Safety", "1", "25"],
+      ["New My Safety", "1", "26"],
+    ];
+
+    // return totalAnswerPointsFact(params, almanac);
+    var value = totalAnswerPointsFact(params, almanac);
+    console.log("severe subscale is", value);
+    return value;
+  };
+
+  engine.addFact("SEVERE_SUBSCALE_CAS_SCORE", SEVERE_SUBSCALE_CAS_SCORE);
+
+  let PHYSICAL_SUBSCALE_CAS_SCORE = function (params, almanac) {
+    params.totalAnswerPointsQuestions = [
+      ["New My Safety", "1", "6"],
+      ["New My Safety", "1", "10"],
+      ["New My Safety", "1", "14"],
+      ["New My Safety", "1", "17"],
+      ["New My Safety", "1", "23"],
+      ["New My Safety", "1", "27"],
+      ["New My Safety", "1", "30"],
+    ];
+    return totalAnswerPointsFact(params, almanac);
+  };
+
+  engine.addFact("PHYSICAL_SUBSCALE_CAS_SCORE", PHYSICAL_SUBSCALE_CAS_SCORE);
+
+  let EMOTIONAL_SUBSCALE_CAS_SCORE = function (params, almanac) {
+    params.totalAnswerPointsQuestions = [
+      ["New My Safety", "1", "1"],
+      ["New My Safety", "1", "4"],
+      ["New My Safety", "1", "8"],
+      ["New My Safety", "1", "9"],
+      ["New My Safety", "1", "12"],
+      ["New My Safety", "1", "19"],
+      ["New My Safety", "1", "20"],
+      ["New My Safety", "1", "21"],
+      ["New My Safety", "1", "24"],
+      ["New My Safety", "1", "28"],
+      ["New My Safety", "1", "29"],
+    ];
+    return totalAnswerPointsFact(params, almanac);
+  };
+
+  engine.addFact("EMOTIONAL_SUBSCALE_CAS_SCORE", EMOTIONAL_SUBSCALE_CAS_SCORE);
+
+  let HARASSMENT_SUBSCALE_CAS_SCORE = function (params, almanac) {
+    params.totalAnswerPointsQuestions = [
+      ["New My Safety", "1", "3"],
+      ["New My Safety", "1", "11"],
+      ["New My Safety", "1", "13"],
+      ["New My Safety", "1", "16"],
+    ];
+    return totalAnswerPointsFact(params, almanac);
+  };
+
+  engine.addFact(
+    "HARASSMENT_SUBSCALE_CAS_SCORE",
+    HARASSMENT_SUBSCALE_CAS_SCORE
+  );
 
   let questionResponseFact = function (params, almanac) {
     return almanac.factValue("surveyResults").then((surveyResults) => {

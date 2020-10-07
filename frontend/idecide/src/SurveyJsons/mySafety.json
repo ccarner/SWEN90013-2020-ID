@@ -403,7 +403,170 @@
           ]
         }
       ],
-      "sectionResultAlgorithm": null
+      "sectionResultAlgorithm": [
+        {
+          "event": {
+            "type": "SEVERE_COMBINED_ABUSE",
+            "params": {
+              "categoryName": "Severe Combined Abuse",
+              "responseString": "You seem to have experienced serious abusive behaviours from your partner. It is not acceptable for these things to happen in relationships. It is probably affecting your mental and physical health. A bit later, this website will suggest some things you could try to help you look after yourself during this stressful time and to keep you safe. The next section will ask you more specifically about physical violence using a surv'ey. We would like to emphasise that emotional abuse can be just as harmful as physical abuse, however we Offer this section as one way to help women reflect on their physical danger"
+            }
+          },
+          "conditions": {
+            "any": [
+              {
+                "fact": "SEVERE_SUBSCALE_CAS_SCORE",
+                "operator": "greaterThanInclusive",
+                "value": 1
+              }
+            ]
+          }
+        },
+        {
+          "event": {
+            "type": "PHYSICAL_ABUSE_ONLY",
+            "params": {
+              "categoryName": "Physical Abuse",
+              "responseString": "You seem to have experienced physical actions from your partner that are abusive. It is not acceptable for this to happen in relationships. A bit later, this decision aid will suggest some things you could try to help you look after yourself during this stressful time. The next section will ask you more specifically about physical violence using a survey. We would like to emphasise that emotional abuse can be just as harmful as physical abuse, however we offer this sectiqn as one way to help women reflect on their physical danger. "
+            }
+          },
+          "conditions": {
+            "all": [
+              {
+                "fact": "PHYSICAL_SUBSCALE_CAS_SCORE",
+                "operator": "greaterThanInclusive",
+                "value": 1
+              },
+              {
+                "fact": "SEVERE_SUBSCALE_CAS_SCORE",
+                "operator": "equal",
+                "value": 0
+              },
+              {
+                "fact": "EMOTIONAL_SUBSCALE_CAS_SCORE",
+                "operator": "equal",
+                "value": 0
+              },
+              {
+                "fact": "HARASSMENT_SUBSCALE_CAS_SCORE",
+                "operator": "equal",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "event": {
+            "type": "EMOTIONAL_ABUSE_ONLY",
+            "params": {
+              "categoryName": "Emotional Abuse",
+              "responseString": "You seem to have experienced emotional actions from your partner that are abusive. It is not acceptable for this to happen in relationships. A bit later, this decision aid will suggest some things you could try to help you look after yourself during this stressful time. The next section will ask you more specifically about physical violence using a survey. We would like to emphasise that emotional abuse can be just as harmful as physical abuse, however we offer this sectiqn as one way to help women reflect on their physical danger. "
+            }
+          },
+          "conditions": {
+            "all": [
+              {
+                "all": [
+                  {
+                    "fact": "PHYSICAL_SUBSCALE_CAS_SCORE",
+                    "operator": "equal",
+                    "value": 0
+                  },
+                  {
+                    "fact": "SEVERE_SUBSCALE_CAS_SCORE",
+                    "operator": "equal",
+                    "value": 0
+                  }
+                ],
+                "any": [
+                  {
+                    "fact": "EMOTIONAL_SUBSCALE_CAS_SCORE",
+                    "operator": "greaterThanInclusive",
+                    "value": 1
+                  },
+                  {
+                    "fact": "HARASSMENT_SUBSCALE_CAS_SCORE",
+                    "operator": "greaterThanInclusive",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "event": {
+            "type": "PHYSICAL_AND_EMOTIONAL_ABUSE",
+            "params": {
+              "categoryName": "Physical And Emotional Abuse",
+              "responseString": "You seem to have experienced physical and emotional actions from your partner that are abusive. It is not acceptable for this to happen in relationships. A bit later, this decision aid will suggest some things you could try to help you look after yourself during this stressful time. The next section will ask you more specifically about physical violence using a survey. We would like to emphasise that emotional abuse can be just as harmful as physical abuse, however we offer this sectiqn as one way to help women reflect on their physical danger. "
+            }
+          },
+          "conditions": {
+            "all": [
+              {
+                "all": [
+                  {
+                    "fact": "PHYSICAL_SUBSCALE_CAS_SCORE",
+                    "operator": "greaterThanInclusive",
+                    "value": 1
+                  },
+                  {
+                    "fact": "SEVERE_SUBSCALE_CAS_SCORE",
+                    "operator": "equal",
+                    "value": 0
+                  }
+                ],
+                "any": [
+                  {
+                    "fact": "EMOTIONAL_SUBSCALE_CAS_SCORE",
+                    "operator": "greaterThanInclusive",
+                    "value": 1
+                  },
+                  {
+                    "fact": "HARASSMENT_SUBSCALE_CAS_SCORE",
+                    "operator": "greaterThanInclusive",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "event": {
+            "type": "NO_FEEDBACK",
+            "params": {
+              "categoryName": "No Feedback Available",
+              "responseString": "Unfortunately we are unable to give you feedback on this section as you hadn't experienced any of those specific behaviours. However, you have obviously experienced similar behaviours from your (ex) partner that are concerning you. A bit later, this decision aid will suggest strategies for safety and wellbeing that may be helpful. "
+            }
+          },
+          "conditions": {
+            "all": [
+              {
+                "fact": "PHYSICAL_SUBSCALE_CAS_SCORE",
+                "operator": "greaterThanInclusive",
+                "value": 0
+              },
+              {
+                "fact": "SEVERE_SUBSCALE_CAS_SCORE",
+                "operator": "equal",
+                "value": 0
+              },
+              {
+                "fact": "EMOTIONAL_SUBSCALE_CAS_SCORE",
+                "operator": "equal",
+                "value": 0
+              },
+              {
+                "fact": "HARASSMENT_SUBSCALE_CAS_SCORE",
+                "operator": "equal",
+                "value": 0
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "sectionId": "2",
@@ -472,60 +635,46 @@
           "questionType": "yesOrNo"
         }
       ],
-      "sectionResultAlgorithm": {
-        "rules": [
-          {
-            "event": {
-              "type": "highRisk",
-              "params": {
-                "categoryName": "High Risk",
-                "responseString": " You seem to have experienced serious abusive behaviours from your partner. It is not acceptable for these things to happen in relationships. It is probably affecting your mental and physical health and possibly your studies as well. ",
-                "imageLink": "https://rlv.zcache.com.au/3d_pink_love_heart_heart_sticker-r133338d543304d8aa228414bd38bc390_0ugd3_8byvr_540.jpg"
-              }
-            },
-            "conditions": {
-              "any": [
-                {
-                  "fact": "totalAnswerPoints",
-                  "operator": "greaterThanInclusive",
-                  "value": 1,
-                  "params": {
-                    "totalAnswerPointsQuestions": [
-                      ["New My Safety", "2", "31"],
-                      ["New My Safety", "2", "32"]
-                    ]
-                  }
-                }
-              ]
+      "sectionResultAlgorithm": [
+        {
+          "event": {
+            "type": "highRisk",
+            "params": {
+              "categoryName": "High Risk",
+              "responseString": " You seem to have experienced serious abusive behaviours from your partner. It is not acceptable for these things to happen in relationships. It is probably affecting your mental and physical health and possibly your studies as well. ",
+              "imageLink": "https://rlv.zcache.com.au/3d_pink_love_heart_heart_sticker-r133338d543304d8aa228414bd38bc390_0ugd3_8byvr_540.jpg"
             }
           },
-          {
-            "event": {
-              "type": "lowRiskEvent",
-              "params": {
-                "categoryName": "Low Risk",
-                "responseString": " You are at low risk ",
-                "imageLink": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Heart_anterior_exterior_view.jpg"
+          "conditions": {
+            "any": [
+              {
+                "fact": "DA_SUM",
+                "operator": "greaterThanInclusive",
+                "value": 1
               }
-            },
-            "conditions": {
-              "any": [
-                {
-                  "fact": "totalAnswerPoints",
-                  "operator": "lessThanInclusive",
-                  "value": 0,
-                  "params": {
-                    "totalAnswerPointsQuestions": [
-                      ["New My Safety", "2", "31"],
-                      ["New My Safety", "2", "32"]
-                    ]
-                  }
-                }
-              ]
-            }
+            ]
           }
-        ]
-      }
+        },
+        {
+          "event": {
+            "type": "lowRiskEvent",
+            "params": {
+              "categoryName": "Low Risk",
+              "responseString": " You are at low risk ",
+              "imageLink": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Heart_anterior_exterior_view.jpg"
+            }
+          },
+          "conditions": {
+            "any": [
+              {
+                "fact": "DA_SUM",
+                "operator": "lessThanInclusive",
+                "value": 0
+              }
+            ]
+          }
+        }
+      ]
     }
   ],
   "surveyResultAlgorithm": null
