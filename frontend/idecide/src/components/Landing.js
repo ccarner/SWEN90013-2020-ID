@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, BrowserRouter } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
@@ -17,7 +17,6 @@ import PrimaryButton from "./reusableComponents/PrimaryButton";
 import { Card, CardContent, CardHeader, Divider, Grid, TextField, Box, Button, Typography } from '@material-ui/core';
 
 class Landing extends Component {
-
   render() {
     const userId = localStorage.getItem("userId");
     return (
@@ -57,21 +56,23 @@ class Landing extends Component {
           <NavLink to="./surveyComponent/surveyHome">
             <PrimaryButton>Start</PrimaryButton>
           </NavLink>
-          {((userId === null) || (localStorage.getItem("userType") === "anonymous")) ?
+
+          {userId === null ||
+          localStorage.getItem("userType") === "anonymous" ? (
             <NavLink to="./loginComponent/loginPage">
               <PrimaryButton>Log in</PrimaryButton>
             </NavLink>
-            :
+          ) : (
             <NavLink to="./loginComponent/userInfo">
               <PrimaryButton>Account</PrimaryButton>
             </NavLink>
-          }
+          )}
         </div>
         <React.Fragment>
         <MDBFooter className="font-small pt-4 mt-4" style={{ padding: 0 }}>
           <div
             style={{
-              backgroundImage: `url(${require("../images/background.png")})`
+              backgroundImage: `url(${require("../images/background.png")})`,
             }}
           >
             <MDBContainer fluid className="text-center text-md-left">
