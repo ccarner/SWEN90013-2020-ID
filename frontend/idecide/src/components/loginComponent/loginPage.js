@@ -6,22 +6,22 @@ import { MDBBtn } from 'mdbreact';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
-import {Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import PrimaryButton from '../reusableComponents/PrimaryButton';
 import RegisterPage from './registerPage';
-import { Button, Card } from "react-bootstrap";
+//import { Button, Card } from "react-bootstrap";
 import AdminConsole from '../AdminComponents/adminConsole';
-//import { Card, CardContent, CardHeader, Divider, Grid, TextField, Box, Button, Typography } from '@material-ui/core';
+import { Card, CardContent, CardHeader, Divider, Grid, TextField, Box, Button, Typography } from '@material-ui/core';
 
 export default class LoginPage extends React.Component {
 	constructor(props) {
-    super(props);
-    console.log(props);
+		super(props);
+		console.log(props);
 		this.state = {
 			isLoggingPage: true,
 			isLoggedIn: false,
 			isAdmin: false,
-			email: null,
+			username: null,
 			password: null,
 			showAdmin: false,
 			error: null,
@@ -37,20 +37,20 @@ export default class LoginPage extends React.Component {
 
 	async handleSubmit(event) {
 		// the following call will stop the form from submitting
-    event.preventDefault();
-    
-    // get the user information
+		event.preventDefault();
+
+		// get the user information
 		const data = new FormData(event.target);
 		var userObject = {};
 		data.forEach((value, key) => {
 			userObject[key] = value;
 		});
-    console.log(userObject);
+		console.log(userObject);
 		const response = await loginUser(userObject);
 
 		if (response.flag) {
 			var userAdmin = false;
-			if (userObject.email === 'ccarner13@gmail.com') {
+			if (userObject.username === 'ccarner') {
 				userAdmin = true;
 			}
 			this.setState({
@@ -79,7 +79,7 @@ export default class LoginPage extends React.Component {
 
 		if (isLoggedIn) {
 			if (isAdmin) {
-        this.props.setAdmin(false);
+				this.props.setAdmin(true);
 				return <AdminConsole />;
 			} else {
 				return <div>You are logged in!</div>;
@@ -87,11 +87,11 @@ export default class LoginPage extends React.Component {
 		} else if (isLoggingPage) {
 			return (
 				<div style={{ padding: '5%' }}>
-          	<h1 className="text-center" style={{ color: '#9572A4' }}>
-              Welcome to I-Decide
-					  </h1>
-            <br/>
-	 		   <Card className="surveyIntroCard" style={{ width: "80%" }}>
+					<h1 className="text-center" style={{ color: '#9572A4' }}>
+						Welcome to I-Decide
+					</h1>
+					<br />
+					{/** 	 		   <Card className="surveyIntroCard" style={{ width: "80%" }}>
             <Card.Body>
               <Card.Title>{"Log in to I-Decide "}</Card.Title>
               <Card.Text></Card.Text>
@@ -143,48 +143,64 @@ export default class LoginPage extends React.Component {
                 </div>
               </form>
             </Card.Body>
-          </Card>
-    {/**      <form onSubmit={this.handleSubmit}>
-					<Card>
-						<CardHeader title="Sign In" />
-						<Divider />
-						<CardContent>
-							<Typography color="textSecondary">
-								Please input your username and password to sign in.
+		  </Card>*/}
+
+					{/** new login UI */}
+					<form onSubmit={this.handleSubmit}>
+						<Card>
+							<CardHeader title="Sign In" />
+							<Divider />
+							<CardContent>
+								<Typography color="textSecondary">
+									Please input your username and password to sign in.
+								</Typography>
+								<Box p={1} />
+								<TextField
+									id="username"
+									required
+									style={{ width: '50%' }}
+									type="text"
+									value={this.state.username}
+									name="username"
+									label="User Name"
+									variant="outlined"
+								/>
+							</CardContent>
+							<CardContent>
+								<TextField
+									id="password"
+									required
+									style={{ width: '50%' }}
+									type="password"
+									name="password"
+									value={this.state.password}
+									label="Password"
+									variant="outlined"
+								/>
+							</CardContent>
+							<Typography>
+								Don't have an account?{' '}
+								<Link
+									to={{
+										pathname: '/loginComponent/registerPage',
+										state: { buttonClass: this.props.classes }
+									}}
+								>
+									Sign Up
+								</Link>
 							</Typography>
-              <Box p={1}/>
-              <TextField
-								id="outlined-multiline-flexible"
-                required
-                style={{width:'50%'}}
-                type="text"
-                value={this.state.email}
-                name="email"
-								label="Email"
-								variant="outlined"
-							/>
-						</CardContent>
-						<CardContent>
-							<TextField
-								id="outlined-multiline-flexible"
-                required
-                style={{width:'50%'}}
-                type="password"
-                name="password"
-                value={this.state.password}
-								label="Password"
-								variant="outlined"
-							/>
-						</CardContent>
-            <Typography>Don't have account? <Link to="/loginComponent/registerPage">Sign Up</Link></Typography>
-						<CardContent>
-								<PrimaryButton  gradient="purple" style={{width:'50%'}} onSubmit={this.handleSubmit}>
+							<CardContent>
+								<Button
+									className={this.props.classes}
+									type="submit"
+									style={{ width: '50%' }}
+									onSubmit={this.handleSubmit}
+								>
 									Sign In
-								</PrimaryButton>
-						
-						</CardContent>
-					</Card>
-          </form>*/}
+								</Button>
+							</CardContent>
+						</Card>
+					</form>
 				</div>
 			);
 		} else {
