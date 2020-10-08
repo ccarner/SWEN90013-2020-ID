@@ -48,7 +48,7 @@ export default function SurveyLayout() {
 		title: '',
 		descrpition: ''
 	});
-//	console.log(editable);
+	//	console.log(editable);
 
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
@@ -99,6 +99,7 @@ export default function SurveyLayout() {
 		const fetchData = async () => {
 			setIsLoading(true);
 			const result = await getAllSurveys();
+
 			setData(result.data);
 			setIsLoading(false);
 			//		console.log(data);

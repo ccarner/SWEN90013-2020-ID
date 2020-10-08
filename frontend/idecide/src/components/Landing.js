@@ -17,7 +17,9 @@ import PrimaryButton from "./reusableComponents/PrimaryButton";
 import { Card, CardContent, CardHeader, Divider, Grid, TextField, Box, Button, Typography } from '@material-ui/core';
 
 class Landing extends Component {
+
   render() {
+    const userId = localStorage.getItem("userId");
     return (
      <div>
          <div  style={{ padding: "5%" }}>
@@ -53,11 +55,17 @@ class Landing extends Component {
           </h5>*/}
           <br /> <br/>
           <NavLink to="./surveyComponent/surveyHome">
-            <PrimaryButton>Anonymous</PrimaryButton>
+            <PrimaryButton>Start</PrimaryButton>
           </NavLink>
-          <NavLink to="./loginComponent/loginPage">
-            <PrimaryButton>Log in</PrimaryButton>
-          </NavLink>
+          {((userId === null) || (localStorage.getItem("userType") === "anonymous")) ?
+            <NavLink to="./loginComponent/loginPage">
+              <PrimaryButton>Log in</PrimaryButton>
+            </NavLink>
+            :
+            <NavLink to="./loginComponent/userInfo">
+              <PrimaryButton>Account</PrimaryButton>
+            </NavLink>
+          }
         </div>
         <React.Fragment>
         <MDBFooter className="font-small pt-4 mt-4" style={{ padding: 0 }}>

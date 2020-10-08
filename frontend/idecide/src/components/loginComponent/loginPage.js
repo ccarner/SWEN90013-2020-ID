@@ -96,48 +96,52 @@ export default class LoginPage extends React.Component {
               <Card.Title>{"Log in to I-Decide "}</Card.Title>
               <Card.Text></Card.Text>
               <form onSubmit={this.handleSubmit}>
-             
+
                 <div className="font-of-input-box">
                   <div className="content">
                     <div className="form">
                       <div>
                         <label htmlFor="email">Email Address: </label>
                         <input
-                          type="text"
-                          name="email"
-                          placeholder="Email Address"
-                        />
-                      </div>
-                      <br />
-                      <div>
-                        <label htmlFor="password">Password: </label>
+                            type="text"
+                            name="username"
+                            placeholder="username"
+                            required
+                          />
+                        </div>
+                        <br />
+                        <div>
+                          <label htmlFor="password">Password: </label>
+                        &nbsp;&nbsp; &nbsp;&nbsp;
                         <input
-                          type="password"
-                          name="password"
-                          placeholder="Password"
-                        />
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            required
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <br />
-                  <br />
+                    <br />
+                    <br />
 
-                  <div className="footer">
-                    <div className="login-form">
-                      <PrimaryButton
-                        type="submit"
-                        gradient="purple"
-                        onSubmit={this.handleSubmit}
-                      >
-                        Login
+                    <div className="footer">
+                      <div className="login-form">
+                        <PrimaryButton
+                          type="submit"
+                          gradient="purple"
+                          onSubmit={this.handleSubmit}
+                        >
+                          Login
                       </PrimaryButton>
-
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <PrimaryButton
-                        gradient="purple"
-                        onClick={this.registerToggle}
-                      >
-                        Sign up here
+                          gradient="purple"
+                          onClick={this.registerToggle}
+                        >
+                          Sign up here
                       </PrimaryButton>
+                      </div>
                     </div>
                   </div>
                 </div>

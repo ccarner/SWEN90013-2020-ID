@@ -10,6 +10,7 @@ import { Spinner, Button } from "react-bootstrap";
 import JsonRuleEngine from "../RuleEngine/jsonRule.js";
 import { MDBBtn } from "mdbreact";
 import LoadingSpinner from "../reusableComponents/loadingSpinner";
+import SortableComponent from "../RankingComponent/testSortable";
 
 export default class CardDeck extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ export default class CardDeck extends Component {
       result: [],
       CasResult: "",
     };
+    this.changeChild = React.createRef();
   }
 
   componentDidMount() {
@@ -180,13 +182,31 @@ export default class CardDeck extends Component {
           </div>
         </div>
       );
-    } else {
+    } else if (item.questionType == "ranking") {
+      return (
+        <div className="questionContainer">
+          <SortableComponent
+            options={item.selectionOptions}
+            ref={this.changeChild}
+          />
+          <div className="button-container">
+            <MDBBtn
+              gradient="purple"
+              onClick={() =>
+                this.handleResult(item, this.changeChild.current.state.items)
+              }
+            >
+              CONFIRM
+            </MDBBtn>
+          </div>
+        </div>
+      );
+    } else
       return (
         <div className="questionContainer">
           Error, question type not supported.
         </div>
       );
-    }
   }
 
   handleSections = async (direction) => {
@@ -234,7 +254,6 @@ export default class CardDeck extends Component {
               </div>
 
               <h4 className="primary-card-text">{item.questionText}</h4>
-
               {this.questionTypeController(item)}
             </div>
           </CSSTransition>

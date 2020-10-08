@@ -95,17 +95,7 @@ export default class RegisterPage extends React.Component {
                   <label htmlFor="postcode">Post Code:</label>
                   <input type="text" name="postcode" placeholder="postcode" />
                 </div>
-              </div>
-            </div>
-            <br />
-            <div className="footer">
-              <MDBBtn type="submit" gradient="purple">
-                Register
-              </MDBBtn>
-
-              <MDBBtn gradient="purple" onClick={this.props.registerToggle}>
-                Login here
-              </MDBBtn>
+              </form>
             </div>
           </div>
         </form>*/}

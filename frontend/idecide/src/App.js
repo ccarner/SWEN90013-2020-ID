@@ -19,6 +19,7 @@ import PersistentDrawerLeft from "./Layout/Navbar";
 import LoginPage from "./components/loginComponent/loginPage";
 import RegisterPage from "./components/loginComponent/registerPage";
 import AdminInfo from "./components/loginComponent/adminInfo";
+import UserInfo from "./components/loginComponent/userInfo";
 
 import SurveyHome from "./components/surveyComponents/surveyHome";
 
@@ -27,7 +28,7 @@ import SurveyHome from "./components/surveyComponents/surveyHome";
 
 function App() {
     const [adminLogin,setAdminLogin] = React.useState(false);
-    
+
     return (
       <Router>
         <div className="App">
@@ -39,8 +40,8 @@ function App() {
               <Route path="/survey/3.1" component={Questions} />
               <Route path="/survey/3.2" component={ActionPlan} />
               <Route path="/survey/3.3" component={Framework} />
-              <Route path="/dashboard" component={DashBoard} /> 
-             
+              <Route path="/dashboard" component={DashBoard} />
+
               {/* <Redirect exact from="/dashboard" to="/dashboard/home" /> */}
 
               <Redirect
@@ -60,7 +61,7 @@ function App() {
               <Route path="/loginComponent/adminInfo" component={AdminInfo} />
 
               <Route path="/" component={Landing} />
-              <Route path="/1" component={NotFound} /> */}  
+              <Route path="/1" component={NotFound} /> */}
             </Switch>
           </div>
         </div>
