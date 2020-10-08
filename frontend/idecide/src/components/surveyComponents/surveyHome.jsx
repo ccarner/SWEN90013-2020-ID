@@ -16,6 +16,7 @@ import SurveyResultsPage from "./surveyResultsPage";
 import ActionPlans from "./actionPlans";
 import { Card, Button } from "react-bootstrap";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
+import { Typography } from "@material-ui/core";
 
 /**
  * The parent component of all survey pages. This component:
@@ -128,42 +129,45 @@ export default class SurveyHome extends Component {
       );
     } else if (currentState === "menu" && this.state.loaded) {
       renderElements.push(
-        <div className="container" className="padding10">
-          <div style={{ padding: "30px" }}>
-            <h1 className="text-center" style={{ color: "#9572A4" }}>
-              Help Me Decide
-            </h1>
-            <br />
-            <h5>
+        <React.Fragment>
+          <div className="container" className="padding10">
+            <div style={{ padding: "30px" }}>
+              <h1 className="text-center" style={{ color: "#9572A4" }}>
+                Help Me Decide
+              </h1>
+            </div>
+            <Typography color="textPrimary" gutterBottom variant="h5">
               Completing the modules below will help us better understand your
               situation
-            </h5>
-            <h5>so we can generate a personalised action plan for you.</h5>
-            <br />
-          </div>
-          <br />
+            </Typography>
+            <Typography color="textPrimary" gutterBottom variant="h5">
+              So we can generate a personalised action plan for you.
+            </Typography>
 
-          <div>
-            {this.state.allSurveys.map((survey, index) => (
-              <div key={survey.surveyId} className="surveyIcon">
-                <SurveySelectionButton
-                  notAvailable={
-                    false && // uncomment this line to test surveys
-                    survey.surveyTitle !==
-                      this.surveyOrder[this.state.nextSurvey]
-                  }
-                  icon={getStaticImageUrlFromName(survey.surveyImageName)}
-                  completed="false"
-                  surveyTitle={survey.surveyTitle}
-                  shortSurveyDescription={survey.surveyIntroduction}
-                  handleClick={() => {
-                    this.startSurvey(survey.surveyId);
-                  }}
-                />
-              </div>
-            ))}
+            <br />
+
+            <div>
+              {this.state.allSurveys.map((survey, index) => (
+                <div key={survey.surveyId} className="surveyIcon">
+                  <SurveySelectionButton
+                    notAvailable={
+                      false && // uncomment this line to test surveys
+                      survey.surveyTitle !==
+                        this.surveyOrder[this.state.nextSurvey]
+                    }
+                    icon={getStaticImageUrlFromName(survey.surveyImageName)}
+                    completed="false"
+                    surveyTitle={survey.surveyTitle}
+                    shortSurveyDescription={survey.surveyIntroduction}
+                    handleClick={() => {
+                      this.startSurvey(survey.surveyId);
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        </React.Fragment>
       );
     } else if (currentState === "completion") {
       //viewing a previous attempt

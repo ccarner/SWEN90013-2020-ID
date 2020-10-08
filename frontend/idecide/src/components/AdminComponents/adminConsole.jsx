@@ -38,7 +38,11 @@ export default class AdminConsole extends Component {
                 <PrimaryButton extraStyle={{ width: "40em" }}>
                   Click here to download a CSV file of all results
                 </PrimaryButton>
+               
               </a>
+              <PrimaryButton extraStyle={{ width: "40em" }} onClick={()=>window.location.href="../../dashboard"}>
+                 Admin Dashboard
+                </PrimaryButton>
             </Card.Body>
           </Card>
         </Container>

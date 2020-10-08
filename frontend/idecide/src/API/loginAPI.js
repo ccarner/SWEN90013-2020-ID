@@ -115,5 +115,3 @@ export async function anonymouseUser() {
   localStorage.setItem("userId", result.data.data.id);
   return result.data.data.id;
 }
-
-

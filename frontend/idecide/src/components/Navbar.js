@@ -1,39 +1,34 @@
-import React, { Component, useState } from "react";
-import { MDBBtn, MDBFormInline, MDBCol } from "mdbreact";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "bootstrap-css-only/css/bootstrap.min.css";
-import "mdbreact/dist/css/mdb.css";
-import "../CSS/navbar.css";
-import { Link, withRouter } from "react-router-dom";
-import { Navbar, Nav, NavDropdown, Form, Modal, Button } from "react-bootstrap";
-import PrimaryButton from "./reusableComponents/PrimaryButton";
-import { NavLink } from "react-router-dom";
-
-import IconLogo from "../images/idecide-logo.png";
+import React, { Component, useState } from 'react';
+import { MDBBtn, MDBFormInline, MDBCol } from 'mdbreact';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
+import '../CSS/navbar.css';
+import { Link, withRouter } from 'react-router-dom';
+import { Navbar, Nav, NavDropdown, Form, Modal, Button } from 'react-bootstrap';
+import PrimaryButton from './reusableComponents/PrimaryButton';
+import Grid from '@material-ui/core/Grid';
+import IconLogo from '../images/idecide-logo.png';
 
 const NavbarID = ({ className, ...rest }) => {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+	const [ show, setShow ] = useState(false);
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
 
-
-  return (
-    <div>
-      <Navbar bg="light" expand="lg">
-        <NavLink to="/">
-          <Navbar.Brand>
-            <img
-              src={IconLogo}
-              alt="IconLogo"
-              style={{ height: 40, marginTop: 10 }}
-            />
-          </Navbar.Brand>
-        </NavLink>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-
-          <Nav className="mr-auto">
-            <NavLink className="navbar navbar-dark navbar-home" to="/">
+	return (
+		<div>
+			<Navbar bg="light" expand="lg">
+				<Navbar.Brand href="/">
+					<img src={IconLogo} alt="IconLogo" style={{ height: 30, marginTop: 0 }} />
+				</Navbar.Brand>
+				<Navbar.Toggle aria-controls="basic-navbar-nav" />
+				<Navbar.Collapse id="basic-navbar-nav">
+					<Nav className="mr-auto">
+					  <Nav.Link
+              className="navbar navbar-dark home"
+              activeClassName="active"
+              href="navbar/surveys"
+            >
               <svg
                 width="1em"
                 height="1em"
@@ -52,8 +47,8 @@ const NavbarID = ({ className, ...rest }) => {
                 />
               </svg>
               Home
-            </NavLink>
-            {/* <Nav.Link className="navbar navbar-dark navbar-contact" href="/1">
+            </Nav.Link>
+         	{/*    <Nav.Link className="navbar navbar-dark contact" href="/1">
               <svg
                 width="1em"
                 height="1em"
@@ -68,7 +63,7 @@ const NavbarID = ({ className, ...rest }) => {
                 />
               </svg>
               Contact
-            </Nav.Link> */}
+            </Nav.Link>
             <NavDropdown
               className="navbar navbar-dark navbar-dropdown"
               title="Menu"
@@ -133,115 +128,77 @@ const NavbarID = ({ className, ...rest }) => {
                   </svg>
                   Framework
                 </NavDropdown.Item>
-                <NavDropdown.Divider />
-
-
-                {((localStorage.getItem("userType") === "admin") || (localStorage.getItem("userType") === "researcher")) ?
-                  <NavDropdown.Item href="/dashboard">
-                    <svg
-                      width="2em"
-                      height="1em"
-                      viewBox="0 0 16 16"
-                      className="bi bi-layout-text-window-reverse"
-                      fill="currentColor"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M2 1h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm12-1a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"
-                      />
-                      <path
-                        fillRule="evenodd"
-                        d="M5 15V4H4v11h1zM.5 4h15V3H.5v1zM13 6.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z"
-                      />
-                    </svg>
-                  Dashboard
-                </NavDropdown.Item>
-                  : null}
-
-
               </div>
-            </NavDropdown>
-          </Nav>
-          <h6>{localStorage.getItem("userType")}</h6>
-          <Form inline>
-            <MDBCol md="12">
-              {/* <MDBFormInline className="md-form mr-auto mb-4"> */}
-              <PrimaryButton
-                gradient="purple-gradient"
-                rounded
-                className="purple-gradient"
-                onClick={() => handleShow()}
-              >
-                Get Help
-              </PrimaryButton>
-              <PrimaryButton
-                gradient="purple-gradient"
-                rounded
-                className="purple-gradient"
-                onClick={() => {
-                  localStorage.clear();
-                  window.location.href = "https://www.weather.com.au/";
-                }}
-              >
-                Quick Exit
-              </PrimaryButton>
-              {/* </MDBFormInline> */}
-            </MDBCol>
-          </Form>
-        </Navbar.Collapse>
+            </NavDropdown>*/}
+					</Nav>
+          <Grid container direction="row" justify="flex-end" alignItems="center">
+				<PrimaryButton
+					gradient="purple-gradient"
+					rounded
+					className="purple-gradient"
+					onClick={() => handleShow()}
+				>
+					Get Help
+				</PrimaryButton>
+				<PrimaryButton
+					gradient="purple-gradient"
+					rounded
+					className="purple-gradient"
+					onClick={() => {
+						localStorage.clear();
+						window.location.href = 'https://www.weather.com.au/';
+					}}
+				>
+					Quick Exit
+				</PrimaryButton>
+			</Grid>
+				</Navbar.Collapse>
 
-      </Navbar>
+			</Navbar>
+			{/**  <Form inline>
+            <MDBCol md="12">*/}
+			{/* <MDBFormInline className="md-form mr-auto mb-4"> */}
 
-      <Modal
-        show={show}
-        onHide={handleClose}
-        animation={false}
-        size="lg"
-        dialogClassName="modal-90w"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            <h2 style={{ color: "purple" }}>
-              If you’re looking for help, you can call:
-            </h2>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body style={{ padding: "5%" }}>
-          <h5>
-            {" "}
-            > 1800 RESPECT -- <a href={`tel:1800 737 732`}>1800 737 732</a>
-          </h5>
-          <h5>
-            {" "}
-            > Lifeline -- <a href={`tel:13 11 14`}>13 11 14</a>
-          </h5>
-          <h5>
-            {" "}
-            > Sexual Assault Crisis Line --{" "}
-            <a href={`tel:1800 737 732`}>1800 806 292</a>
-          </h5>
-          <h5>
-            {" "}
-            > QLife -- <a href={`tel:1800 184 627`}>1800 184 627</a>
-          </h5>
-          <h5>
-            {" "}
-            > InTouch Multicultural Centre Against Family Violence --{" "}
-            <a href={`tel:1800 737 732`}>1800 755 988</a>
-          </h5>
-          <h5>
-            {" "}
-            > Safer Community Program --{" "}
-            <a href={`tel:1800 737 732`}>61 3 9035 8675</a>
-            <Nav.Link href="https://safercommunity.unimelb.edu.au/">
-              safercommunity.unimelb.edu.au
-            </Nav.Link>
-          </h5>
-        </Modal.Body>
-      </Modal>
-    </div>
-  );
+			{/* </MDBFormInline> */}
+			{/*      </MDBCol>
+        </Form>*/}
+			<Modal show={show} onHide={handleClose} animation={false} size="lg" dialogClassName="modal-90w">
+				<Modal.Header closeButton>
+					<Modal.Title>
+						<h2 style={{ color: 'purple' }}>If you’re looking for help, you can call:</h2>
+					</Modal.Title>
+				</Modal.Header>
+				<Modal.Body style={{ padding: '5%' }}>
+					<h5>
+						{' '}
+						> 1800 RESPECT -- <a href={`tel:1800 737 732`}>1800 737 732</a>
+					</h5>
+					<h5>
+						{' '}
+						> Lifeline -- <a href={`tel:13 11 14`}>13 11 14</a>
+					</h5>
+					<h5>
+						{' '}
+						> Sexual Assault Crisis Line -- <a href={`tel:1800 737 732`}>1800 806 292</a>
+					</h5>
+					<h5>
+						{' '}
+						> QLife -- <a href={`tel:1800 184 627`}>1800 184 627</a>
+					</h5>
+					<h5>
+						{' '}
+						> InTouch Multicultural Centre Against Family Violence --{' '}
+						<a href={`tel:1800 737 732`}>1800 755 988</a>
+					</h5>
+					<h5>
+						{' '}
+						> Safer Community Program -- <a href={`tel:1800 737 732`}>61 3 9035 8675</a>
+						<Nav.Link href="https://safercommunity.unimelb.edu.au/">safercommunity.unimelb.edu.au</Nav.Link>
+					</h5>
+				</Modal.Body>
+			</Modal>
+		</div>
+	);
 };
 
 export default NavbarID;

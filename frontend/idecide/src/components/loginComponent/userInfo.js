@@ -17,6 +17,8 @@ export default class UserInfo extends React.Component {
     }
 
     handleLogOut = () => {
+        console.log(772, "loggin out");
+
         localStorage.clear();
         window.location.replace("/")
     }

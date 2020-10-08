@@ -1,9 +1,9 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-
 import { getAllSurveys } from '../../../../API/surveyAPI';
 import ActionDisplay from './ActionDisplay';
+import Loading from '../../../util/loading';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -29,19 +29,19 @@ export default function APLayout() {
 			const result = await getAllSurveys();
 			setData(result.data);
 			setIsLoading(false);
-		//	console.log(data);
-		//	console.log(isLoading);
+			//	console.log(data);
+			//	console.log(isLoading);
 		};
 
 		fetchData();
 	}, []);
 
-//	console.log(isLoading);
-//	console.log(data);
+	//	console.log(isLoading);
+	//	console.log(data);
 	return (
 		<Grid className={classes.root} direction="row" justify="flex-start" alignItems="flex-start">
 			{isLoading ? (
-				<div>Loading ...</div>
+				<Loading />
 			) : (
 				<Grid container spacing={5}>
 					<Grid item xs={12}>

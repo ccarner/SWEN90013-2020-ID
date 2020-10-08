@@ -227,7 +227,7 @@ export default function ResultDisplay() {
 		};
 		fetchData();
 	}, []);
-	//	console.log(data.questions);
+	console.log(data);
 	const rows = Array.from(data);
 
 	const handleRequestSort = (event, property) => {
