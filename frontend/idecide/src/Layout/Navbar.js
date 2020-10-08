@@ -34,7 +34,7 @@ import IconLogo from '../images/idecide-logo.png';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import { getAllSurveys, getSectionBySurveyId } from '../API/surveyAPI';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import PhoneIcon from '@material-ui/icons/Phone';
 import Loading from '../components/util/loading';
 import SurveyLayout from '../components/dashBoard/view/survey/SurveyLayout';
 import SurveySection from '../components/dashBoard/view/survey/surveyView/SurveySection';
@@ -49,6 +49,7 @@ import RegisterPage from '../components/loginComponent/registerPage';
 import AdminInfo from '../components/loginComponent/adminInfo';
 import Landing from '../components/Landing';
 import SurveyHome from '../components/surveyComponents/surveyHome';
+import { getCsvDownloadLink } from '../API/surveyResultsAPI';
 
 const drawerWidth = 240;
 
@@ -109,7 +110,7 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: 20,
 		boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
 		color: 'white',
-		width: 150,
+		width: 170,
 		[theme.breakpoints.only('xs')]: {
 			width: 20
 		},
@@ -148,8 +149,9 @@ function NavBar(props) {
 	const [ openHelp, setHelp ] = React.useState(false);
 	const [ surveys, setSurveys ] = React.useState([]);
 	const [ showSurvey, setShowSurvey ] = React.useState(true);
-	const [ showData, setShowData ] = React.useState(true);
-	const [ isAdmin, setAdmin ] = React.useState(false);
+	const [ link, setLink ] = React.useState();
+	const [ isAdmin, setAdmin ] = React.useState(true); // handle admin sidebar display, please set in the login page with the setAdmin function(props).
+	const [ openDownload, setOpenDownload ] = React.useState(false);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -164,6 +166,21 @@ function NavBar(props) {
 		fetchData();
 	}, []);
 
+	const handleDownloadOpen =  () => {
+		setOpenDownload(true);
+		
+	};
+
+	const handleDownload = async() => {
+		alert(link);
+		await getCsvDownloadLink();
+	//	setLink(link);
+	};
+
+	const handleDowloadClose = () => {
+		setOpenDownload(false);
+	};
+
 	const handleDrawerOpen = () => {
 		setOpen(true);
 	};
@@ -171,6 +188,8 @@ function NavBar(props) {
 	const handleDrawerClose = () => {
 		setOpen(false);
 	};
+
+	console.log(isAdmin);
 
 	const handleOpen = () => {
 		setHelp(true);
@@ -207,8 +226,8 @@ function NavBar(props) {
 							<IconButton onClick={() => (window.location.href = '/')}>
 								<img src={IconLogo} alt="IconLogo" style={{ height: 35, marginTop: 0 }} />
 							</IconButton>
-						<Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
-							{/** 		<Collapse in={!isAdmin}>
+							<Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
+								{/** 		<Collapse in={!isAdmin}>
 									<Grid item>
 										<Tooltip title="Get more help.">
 											<Button className={clsx(classes.button)} onClick={handleOpen}>
@@ -260,7 +279,8 @@ function NavBar(props) {
 										<Grid item>
 											<Tooltip title="Get more help.">
 												<Button className={clsx(classes.button)} onClick={handleOpen}>
-													{isWidthUp('sm', width) ? 'Get Help' : 'Help'}
+													<PhoneIcon />
+													{isWidthUp('sm', width) ? 'Get Help' : ''}
 												</Button>
 											</Tooltip>
 										</Grid>
@@ -273,7 +293,8 @@ function NavBar(props) {
 														window.location.href = 'https://www.weather.com.au/';
 													}}
 												>
-													{isWidthUp('sm', width) ? 'Quick Exit' : 'Exit'}
+													<ExitToAppIcon />
+													{isWidthUp('sm', width) ? 'Quick Exit' : ''}
 												</Button>
 											</Tooltip>
 										</Grid>
@@ -325,7 +346,7 @@ function NavBar(props) {
 							<Collapse in={showSurvey} timeout="auto" unmountOnExit>
 								{surveys &&
 									surveys.map((survey, index) => (
-										<NavLink to={'/navbar/surveyId=' + survey.surveyId}>
+										<NavLink to={'/navbar/surveyId=' + survey.surveyId} key={survey.surveyId}>
 											<MenuItem className={classes.nested}>
 												<ListItemIcon>
 													<AssignmentIcon />
@@ -337,16 +358,14 @@ function NavBar(props) {
 										</NavLink>
 									))}
 							</Collapse>
-							<NavLink to={'/navbar/datacollection'} onMouseDown={() => setShowData(!showData)}>
-								<ListItem>
-									<ListItemIcon>
-										<StorageIcon />
-									</ListItemIcon>
-									<Typography color="textPrimary" gutterBottom variant="body1">
-										Data
-									</Typography>
-								</ListItem>
-							</NavLink>
+							<ListItem button onClick={handleDownloadOpen}>
+								<ListItemIcon>
+									<StorageIcon />
+								</ListItemIcon>
+								<Typography color="textPrimary" gutterBottom variant="body1">
+									Download Data
+								</Typography>
+							</ListItem>
 						</List>
 					</Drawer>
 					<main
@@ -362,7 +381,9 @@ function NavBar(props) {
 							<Route path="/surveyComponent/surveyHome" component={SurveyHome} />
 							<Route
 								path="/loginComponent/loginPage"
-								render={(props) => <LoginPage {...props} setAdmin={setAdmin} />}
+								render={(props) => (
+									<LoginPage {...props} setAdmin={setAdmin} classes={classes.button} />
+								)}
 							/>
 							<Route path="/loginComponent/registerPage" component={RegisterPage} />
 							<Route path="/loginComponent/adminInfo" component={AdminInfo} />
@@ -370,6 +391,8 @@ function NavBar(props) {
 							<Route path="/" component={Landing} />
 						</Switch>
 					</main>
+
+					{/** dialog for get help */}
 					<Dialog
 						open={openHelp}
 						onClose={handleClose}
@@ -406,6 +429,31 @@ function NavBar(props) {
 						<DialogActions>
 							<Button onClick={handleClose} className={clsx(classes.button)}>
 								Cancel
+							</Button>
+						</DialogActions>
+					</Dialog>
+
+					{/** dialog for download data*/}
+					<Dialog
+						open={openDownload}
+						onClose={handleDowloadClose}
+						aria-labelledby="max-width-dialog-title"
+						maxWidth="md"
+						fullWidth
+					>
+						<DialogTitle id="form-dialog-title">Download data</DialogTitle>
+						<Divider />
+						<DialogContent>
+							<DialogContentText>Click the download button to download .csv file.</DialogContentText>
+							{link}
+						</DialogContent>
+
+						<DialogActions>
+							<Button onClick={handleDowloadClose} className={clsx(classes.button)}>
+								Cancel
+							</Button>
+							<Button onClick={handleDownload} className={clsx(classes.button)}>
+								Download
 							</Button>
 						</DialogActions>
 					</Dialog>
