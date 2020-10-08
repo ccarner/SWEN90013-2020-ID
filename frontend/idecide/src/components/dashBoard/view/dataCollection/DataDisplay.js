@@ -248,10 +248,11 @@ export default function DataDisplay() {
 			setIsLoading(true);
 			const result1 = await getAllSurveys();
 			//    console.log(result1);
-			const result = await getSurveyById(result1.data[2].surveyId);
-			setData(result.surveySections[1]);
+			const result = await getSurveyById(result1.data[0].surveyId);
+			setData(result.surveySections[0]);
 			setSurveySection(result.surveySections);
 			setIsLoading(false);
+			console.log(result);
 			//			console.log(data);
 			//			console.log(isLoading);
 		};

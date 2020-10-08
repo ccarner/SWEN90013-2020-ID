@@ -1,204 +1,196 @@
-import React from "react";
-import { MDBBtn } from "mdbreact";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "bootstrap-css-only/css/bootstrap.min.css";
-import "mdbreact/dist/css/mdb.css";
-import { registerUser } from "../../API/loginAPI";
-import { Alert, AlertTitle } from '@material-ui/lab';
-import LoadingSpinner from "../reusableComponents/loadingSpinner";
-import PrimaryButton from "../reusableComponents/PrimaryButton";
-import { Button, Card } from "react-bootstrap";
-import loadingSpinner from "../reusableComponents/loadingSpinner";
-
-
+import React from 'react';
+import { MDBBtn } from 'mdbreact';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
+import { registerUser } from '../../API/loginAPI';
+import { Link } from 'react-router-dom';
+import { Card, CardContent, CardHeader, Divider, Grid, TextField, Box, Button, Typography } from '@material-ui/core';
 
 export default class RegisterPage extends React.Component {
-  constructor(props) {
-    super();
-    this.state = {
-      isWarning: false,
-      warningType: null,
-      username: null,
-      password: null,
-      partnerGender: null,
-      email: null,
-      phoneNumber: null,
-      postcode: null,
-      response: "Nothing yet",
-      isLoading: false
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			username: null,
+			password: null,
+			partnerGender: null,
+			email: null,
+			phoneNumber: null,
+			postcode: null,
+			response: 'Nothing yet'
+		};
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
 
+	async handleSubmit(event) {
+		// the following call will stop the form from submitting
+		event.preventDefault();
 
-  async handleSubmit(event) {
-    // the following call will stop the form from submitting
-    event.preventDefault();
+		// get the user information
+		const data = new FormData(event.target);
+		var userObject = {};
+		data.forEach((value, key) => {
+			userObject[key] = value;
+		});
 
-    // get the user information
-    const data = new FormData(event.target);
-    var userObject = {};
-    data.forEach((value, key) => {
-      userObject[key] = value;
-    });
+		const response = await registerUser(userObject);
+		if (response.flag) {
+			alert('Sign up Successful!');
+		} else {
+			alert('Sign up Failed');
+		}
+		window.location.replace('/');
+	}
 
-    this.setState({
-      isLoading: true
-    });
-
-    const response = await registerUser(userObject);
-
-
-    if (response.flag) {
-      this.handleCloseWarning();
-    } else {
-      alert("Failed");
-      this.setState({
-        isLoading: false
-      });
-    }
-
-  }
-
-  handleCloseWarning = () => {
-    this.setState({
-      isLoading: true
-    });
-    window.location.replace("/");
-  }
-
-  render() {
-    const { isWarning, warningType, isLoading } = this.state;
-
-    if (isLoading) {
-      return (
-        <loadingSpinner />
-      );
-    } else if (isWarning) {
-
-      return (
-        <div style={{
-          display: 'inline-block', padding: '50px',
-          justifyContent: 'center', alignItems: 'center'
-        }}>
-          <Alert severity="success">
-            <AlertTitle>Success</AlertTitle>
-          Your details have been saved Successfully<strong> ! </strong>
-          </Alert>
-          &nbsp;&nbsp;
-          <div className="row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-
-            <PrimaryButton
-              gradient="purple"
-              onClick={this.handleCloseWarning}>
-              close
-               </PrimaryButton>
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div style={{
-          paddingTop: '20px',
-          boxSizing: 'content-box',
-        }}>
-          <Card className="container card-body" style={{ width: "60%", padding: "5%;" }}>
-
-            <div className="card-body">
-              <form onSubmit={this.handleSubmit}>
-                <div className="font-of-input-box">
-
-                  <div className="padding-1">Register</div>
-                  <br />
-                  <br />
-                  <div className="content">
-                    <div className="form">
-                      <div>
-                        <label htmlFor="username">Username: </label>
-                        <input type="text" name="username" placeholder="username" required pattern="[a-zA-Z0-9]+"
-                          title="Username should only contain letters and numbers. e.g. john" className="input:invalid"
-                        />
-                      </div>
-                      <br />
-                      <div>
-                        <label htmlFor="password">Password: </label>
-                    &nbsp;&nbsp;
-                    <input
-                          type="password"
-                          name="password"
-                          placeholder="Password"
-                          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
-                          title="Password must contain at least 6 characters, including UPPER/lowercase and numbers."
-                          required
-                        />
-                      </div>
-                      <br />
-                      <div>
-                        <label htmlFor="partnerGender">Gender: </label>
-                    &nbsp;&nbsp; &nbsp;
-                    <input type="radio" value="Male" name="gender" /> Male  &nbsp;
-        <input type="radio" value="Female" name="gender" /> Female  &nbsp;
-        <input type="radio" value="Other" name="gender" /> Other  &nbsp;
-                  </div>
-                      <br />
-                      <div>
-                        <label htmlFor="email">Email Address: </label>
-                    &nbsp;&nbsp;
-                    <input type="email" id="email" name="email" placeholder="Email Address"
-                          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                          title="Contact's email (format: xxx@xxx.xxx)"
-                        />
-                      </div>
-                      <br />
-                      <div>
-                        <label htmlFor="phoneNumber">Phone Number: </label>
-                    &nbsp;&nbsp;
-                    <input
-                          type="text"
-                          name="phoneNumber"
-                          placeholder="phoneNumber"
-                          pattern="^[0-9]{10}$"
-                          title="Enter Valid phone Number with 10 digits"
-
-                        />
-                      </div>
-                      <br />
-                      <div>
-                        <label htmlFor="postcode">Post Code:</label>
-                    &nbsp;&nbsp;
-                    <input type="text" name="postcode" placeholder="postcode"
-                          pattern="[0-9]{4}$" title="Three letter country code"
-                          title="please enter 4 digits number"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <br />
-                  <div className="footer" >
-                    <PrimaryButton
-                      type="submit"
-                      gradient="purple"
-                      onClick={this.registerToggle}
-                    >
-                      Register
-
-                 </PrimaryButton>
-
-                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <PrimaryButton
-                      gradient="purple"
-                      onClick={this.props.registerToggle}>
-                      Login here
-               </PrimaryButton>
-
-                  </div>
+	render() {
+		return (
+			<div style={{ padding: '5%' }}>
+				<h1 className="text-center" style={{ color: '#9572A4' }}>
+					Welcome to I-Decide
+				</h1>
+				<br />
+				{/** <form onSubmit={this.handleSubmit}>
+          <div className="font-of-input-box">
+            <div className="padding-1">Register</div>
+            <div className="content">
+              <div className="form">
+                <div>
+                  <label htmlFor="username">Username: </label>
+                  <input type="text" name="username" placeholder="username" />
+                </div>
+                <br />
+                <div>
+                  <label htmlFor="password">Password: </label>
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                  />
+                </div>
+                <br />
+                <div>
+                  <label htmlFor="partnerGender">Gender: </label>
+                  <input
+                    type="text"
+                    name="partnerGender"
+                    placeholder="partnerGender"
+                  />
+                </div>
+                <br />
+                <div>
+                  <label htmlFor="email">Email Address: </label>
+                  <input type="text" name="email" placeholder="Email Address" />
+                </div>
+                <br />
+                <div>
+                  <label htmlFor="phoneNumber">Phone Number: </label>
+                  <input
+                    type="text"
+                    name="phoneNumber"
+                    placeholder="phoneNumber"
+                  />
+                </div>
+                <br />
+                <div>
+                  <label htmlFor="postcode">Post Code:</label>
+                  <input type="text" name="postcode" placeholder="postcode" />
                 </div>
               </form>
             </div>
+          </div>
+        </form>*/}
 
-          </Card>
-        </div>
-      );
-    }
-  }
+        {/** new register UI */}
+				<form onSubmit={this.handleSubmit}>
+					<Card>
+						<CardHeader title="Sign Up" />
+						<Divider />
+						<CardContent>
+							<Typography color="textSecondary">
+								Please input the following fields to sign up, fields with * are required.
+							</Typography>
+							<Box p={1} />
+							<TextField
+								id="username"
+								required
+								style={{ width: '50%' }}
+								type="text"
+								value={this.state.username}
+								name="username"
+								label="User Name"
+								variant="outlined"
+								placeholder="Please input username here."
+							/>
+							<Box p={1} />
+							<TextField
+								id="password"
+								required
+								style={{ width: '50%' }}
+								type="password"
+								name="password"
+								value={this.state.password}
+								label="Password"
+								variant="outlined"
+								placeholder="Please input password with numbers and at lease 1 uppercase and 1 lowercase letter."
+							/>
+							<Box p={1} />
+							<TextField
+								id="email"
+								style={{ width: '50%' }}
+								type="text"
+								value={this.state.email}
+								name="email"
+								label="Email"
+								variant="outlined"
+								placeholder="Please input your email here."
+							/>
+							<Box p={1} />
+							<TextField
+								id="phoneNumber"
+								style={{ width: '50%' }}
+								type="text"
+								value={this.state.phoneNumber}
+								name="phoneNumber"
+								label="Phone Number"
+								variant="outlined"
+								placeholder="Please input your phone number here."
+							/>
+							<Box p={1} />
+							<TextField
+								id="postcode"
+								style={{ width: '50%' }}
+								type="text"
+								value={this.state.postcode}
+								name="postcode"
+								label="Post Code"
+								variant="outlined"
+								placeholder="Please input the post code here."
+							/>
+						</CardContent>
+						<Typography>
+							Already have an account?{' '}
+							<Link
+								to={{
+									pathname: '/loginComponent/loginPage',
+									state: { buttonClass: this.props.classes }
+								}}
+							>
+								Log In
+							</Link>
+						</Typography>
+						<CardContent>
+							<Button
+								className={this.props.location.state.buttonClass}
+								style={{ width: '50%' }}
+								type="submit"
+								onSubmit={this.handleSubmit}
+							>
+								Sign Up
+							</Button>
+						</CardContent>
+					</Card>
+				</form>
+			</div>
+		);
+	}
 }
