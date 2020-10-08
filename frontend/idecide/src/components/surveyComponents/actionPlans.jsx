@@ -20,73 +20,75 @@ export default class ActionPlans extends Component {
 
   addResultsToFacts() {
     //facts for use in algorithm, fill with defaults
-    var facts = {
-      HaveChildren: "Yes",
-      Intention: "I intend to leave the relationship",
-      Priority: "Safety",
-    };
-    var results = JSON.parse(localStorage.getItem("prevCompletions"));
-    console.log("results are in", results);
-    //TODO: need to add the parsing for the priorities
-    for (var survey of results) {
-      for (var question of survey.questions) {
-        if (question !== null) {
-          if (
-            question.questionText ===
-              "What are your intentions regarding your relationship?" &&
-            question.questionAnswer.length !== 0
-          ) {
-            switch (question.questionAnswer[0]) {
-              case "I intend to stay in the relationship":
-                facts.Intention = "STAY";
-                break;
-              case "I intend to leave the relationship":
-                facts.Intention = "LEAVE";
-                break;
-              case "I have already left the relationship":
-                facts.Intention = "LEFT";
-                break;
-              default:
-                facts.Intention = "LEAVE";
-            }
-          }
-          if (
-            question.questionText ===
-              "Do you have any dependent children or step-children under the age of 18?" &&
-            question.questionAnswer.length !== 0
-          ) {
-            facts.HaveChildren = question.questionAnswer[0];
-          }
-          if (
-            question.questionText ===
-              "Please rank the following from most important to you at the top to least important at the bottom" &&
-            question.questionAnswer.length !== 0
-          ) {
-            facts.Priority = question.questionAnswer[0];
-          }
-        }
-      }
-    }
-    if (facts.HaveChildren === "Yes" && facts.Priority === "Children") {
-      facts.Priority = "Safety";
-    }
-    localStorage.setItem("actionPlanFacts", JSON.stringify(facts));
-    console.log("straight facts", facts);
+    // var facts = {
+    //   HaveChildren: "Yes",
+    //   Intention: "I intend to leave the relationship",
+    //   Priority: "Safety",
+    // };
+    // var results = JSON.parse(localStorage.getItem("prevCompletions"));
+    // console.log("results are in", results);
+    // //TODO: need to add the parsing for the priorities
+    // for (var survey of results) {
+    //   for (var question of survey.questions) {
+    //     if (question !== null) {
+    //       if (
+    //         question.questionText ===
+    //           "What are your intentions regarding your relationship?" &&
+    //         question.questionAnswer.length !== 0
+    //       ) {
+    //         switch (question.questionAnswer[0]) {
+    //           case "I intend to stay in the relationship":
+    //             facts.Intention = "STAY";
+    //             break;
+    //           case "I intend to leave the relationship":
+    //             facts.Intention = "LEAVE";
+    //             break;
+    //           case "I have already left the relationship":
+    //             facts.Intention = "LEFT";
+    //             break;
+    //           default:
+    //             facts.Intention = "LEAVE";
+    //         }
+    //       }
+    //       if (
+    //         question.questionText ===
+    //           "Do you have any dependent children or step-children under the age of 18?" &&
+    //         question.questionAnswer.length !== 0
+    //       ) {
+    //         facts.HaveChildren = question.questionAnswer[0];
+    //       }
+    //       if (
+    //         question.questionText ===
+    //           "Please rank the following from most important to you at the top to least important at the bottom" &&
+    //         question.questionAnswer.length !== 0
+    //       ) {
+    //         facts.Priority = question.questionAnswer[0];
+    //       }
+    //     }
+    //   }
+    // }
+    // if (facts.HaveChildren === "Yes" && facts.Priority === "Children") {
+    //   facts.Priority = "Safety";
+    // }
+    // localStorage.setItem("actionPlanFacts", JSON.stringify(facts));
   }
 
   determineActionPlans() {
-    var actionPlanFacts = JSON.parse(localStorage.getItem("actionPlanFacts"));
-    var factsContainer = [];
-    for (var key in actionPlanFacts) {
-      factsContainer.push({ factName: key, fact: actionPlanFacts[key] });
-    }
-    console.log("facts container is", factsContainer);
+    // var actionPlanFacts = JSON.parse(localStorage.getItem("actionPlanFacts"));
+    // var factsContainer = [];
+    // for (var key in actionPlanFacts) {
+    //   factsContainer.push({ factName: key, fact: actionPlanFacts[key] });
+    // }
+    // console.log("facts container is", factsContainer);
 
-    evaluateFeedback(rules, factsContainer).then((result) => {
-      this.setState({ plan: result.events[0].params });
-      console.log(result.events[0]);
+    var data = require("../../SurveyJsons/actionPlanAlgorithm.json");
+
+    evaluateFeedback(data, []).then((result) => {
+      this.setState({ plan: result.events.map(({ type }) => type) });
+      console.log("result was in eval feedback", result);
     });
   }
+
   handleModalShow = () => {
     this.setState({ ModalShow: !this.state.ModalShow });
   };
@@ -136,7 +138,6 @@ export default class ActionPlans extends Component {
                   "font-size": "25px",
                 }}
               >
-                {/* {planHtmls[plan].description} */}
                 Safety
               </Accordion.Toggle>
 
@@ -152,7 +153,10 @@ export default class ActionPlans extends Component {
                   >
                     {this.state.plan &&
                       this.state.plan.map((plan, index) => {
-                        var html = { __html: planHtmls[plan].strategyHtml };
+                        console.log("plan was", plan);
+                        var html = {
+                          __html: planHtmls[plan].strategyHtmlString,
+                        };
 
                         return (
                           <Card>

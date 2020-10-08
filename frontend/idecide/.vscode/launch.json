@@ -11,5 +11,37 @@
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}"
     }
+  ],
+  "tasks": [
+    {
+      "label": "debug-start",
+      "command": "npm",
+      "args": ["start"],
+      "isBackground": true,
+      "problemMatcher": {
+        "fileLocation": "relative",
+        "pattern": {
+          "regexp": "^$"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^$",
+          "endsPattern": "^You can now view (.*) in the browser.$"
+        }
+      }
+    },
+    {
+      "label": "debug-stop",
+      "command": "echo ${input:terminate}",
+      "type": "shell"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "terminate",
+      "type": "command",
+      "command": "workbench.action.tasks.terminate",
+      "args": "debug-start"
+    }
   ]
 }

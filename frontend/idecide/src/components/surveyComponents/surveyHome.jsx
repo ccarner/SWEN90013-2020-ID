@@ -8,7 +8,7 @@ import LoadingSpinner from "../reusableComponents/loadingSpinner";
 import {
   getUserResults,
   getAllSurveys,
-  getStaticImageUrlFromName
+  getStaticImageUrlFromName,
 } from "../../API/surveyAPI";
 import { anonymouseUser } from "../../API/loginAPI";
 import SurveySelectionButton from "./surveySelectionButton";
@@ -42,14 +42,16 @@ export default class SurveyHome extends Component {
     ]; // order that surveys need to be completed in
 
     this.state = {
-      nextSurvey: previousCompletions === null ? 0 : parseInt(previousNextSurvey), // index of next survey to complete, from the surveyOrder array
+      nextSurvey:
+        previousCompletions === null ? 0 : parseInt(previousNextSurvey), // index of next survey to complete, from the surveyOrder array
       loaded: false,
       actionPlan: "",
       currentState: "menu", // ["menu","survey","completion", "actionPlan"]
       currentResults: undefined, // when in "completion" state, holds data of completion being viewed
       currentSurveyId: -1, // when in "survey" state, ID of current survey
       allSurveys: {}, // pulled from the API, list of surveys available
-      surveyCompletions: previousCompletions === null ? [] : JSON.parse(previousCompletions), // pulled from localStorage, all previous completions
+      surveyCompletions:
+        previousCompletions === null ? [] : JSON.parse(previousCompletions), // pulled from localStorage, all previous completions
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.startSurvey = this.startSurvey.bind(this);
@@ -67,7 +69,7 @@ export default class SurveyHome extends Component {
 
     this.setState({
       allSurveys: surveys.data,
-      loaded: true
+      loaded: true,
     });
   }
 
@@ -111,7 +113,6 @@ export default class SurveyHome extends Component {
     });
   };
 
-
   render() {
     var renderElements = []; // array of elements to be returned from render()
     const { currentState, actionPlan, currentResults } = this.state;
@@ -147,9 +148,9 @@ export default class SurveyHome extends Component {
               <div key={survey.surveyId} className="surveyIcon">
                 <SurveySelectionButton
                   notAvailable={
-                    // commenting out so can test surveys
+                    false && // uncomment this line to test surveys
                     survey.surveyTitle !==
-                    this.surveyOrder[this.state.nextSurvey]
+                      this.surveyOrder[this.state.nextSurvey]
                   }
                   icon={getStaticImageUrlFromName(survey.surveyImageName)}
                   completed="false"
@@ -175,7 +176,6 @@ export default class SurveyHome extends Component {
     } else {
       renderElements.push(<LoadingSpinner />);
     }
-
 
     if (
       this.surveyOrder[this.state.nextSurvey] !== "Action Plan" &&
