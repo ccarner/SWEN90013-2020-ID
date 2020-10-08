@@ -84,7 +84,7 @@ export default class ActionPlans extends Component {
     var data = require("../../SurveyJsons/actionPlanAlgorithm.json");
 
     evaluateFeedback(data, []).then((result) => {
-      this.setState({ plan: result.events });
+      this.setState({ plan: result.events.map(({ type }) => type) });
       console.log("result was in eval feedback", result);
     });
   }
@@ -138,7 +138,6 @@ export default class ActionPlans extends Component {
                   "font-size": "25px",
                 }}
               >
-                {/* {planHtmls[plan].description} */}
                 Safety
               </Accordion.Toggle>
 
@@ -154,15 +153,14 @@ export default class ActionPlans extends Component {
                   >
                     {this.state.plan &&
                       this.state.plan.map((plan, index) => {
+                        console.log("plan was", plan);
                         var html = {
-                          __html: plan.params.longDescriptionHtmlB64,
+                          __html: planHtmls[plan].strategyHtmlString,
                         };
 
                         return (
                           <Card>
-                            <Card.Body>
-                              {plan.params.shortDescription}
-                            </Card.Body>
+                            <Card.Body>{planHtmls[plan].description}</Card.Body>
 
                             <Card.Footer>
                               <PrimaryButton

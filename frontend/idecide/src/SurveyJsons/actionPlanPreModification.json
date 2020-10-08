@@ -1,0 +1,720 @@
+[
+  {
+    "event": {
+      "type": "LEARN_CALLPOLICE",
+      "params": {
+        "shortDescription": "Call the police if you think you are in danger from your partner.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "emergency",
+        "sequence": 1
+      }
+    },
+    "conditions": {
+      "any": [
+        { "fact": "DA_SUM", "operator": "greaterThanInclusive", "value": 1 },
+        { "fact": "CAS_SCORE", "operator": "greaterThanInclusive", "value": 30 }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "CODE_WORD",
+      "params": {
+        "shortDescription": "Develop a code word or signal to let others know when you are in danger.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "emergency",
+        "sequence": 1
+      }
+    },
+    "conditions": {
+      "any": [
+        { "fact": "DA_SUM", "operator": "greaterThanInclusive", "value": 1 },
+        { "fact": "CAS_SCORE", "operator": "greaterThanInclusive", "value": 30 }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "SAFE_PLACE",
+      "params": {
+        "shortDescription": "Identify a safe place you can go if your partner becomes dangerous.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "emergency",
+        "sequence": 1
+      }
+    },
+    "conditions": {
+      "any": [
+        { "fact": "DA_SUM", "operator": "greaterThanInclusive", "value": 1 },
+        { "fact": "CAS_SCORE", "operator": "greaterThanInclusive", "value": 30 }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "EMERG_BAG",
+      "params": {
+        "shortDescription": "Pack an emergency escape bag with basic necessities.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "emergency",
+        "sequence": 1
+      }
+    },
+    "conditions": {
+      "any": [
+        { "fact": "DA_SUM", "operator": "greaterThanInclusive", "value": 1 },
+        { "fact": "CAS_SCORE", "operator": "greaterThanInclusive", "value": 30 }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "DISC_EPLAN",
+      "params": {
+        "shortDescription": "Discuss your emergency plan with a trusted family member or friend.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "emergency",
+        "sequence": 1
+      }
+    },
+    "conditions": {
+      "any": [
+        { "fact": "DA_SUM", "operator": "greaterThanInclusive", "value": 1 },
+        { "fact": "CAS_SCORE", "operator": "greaterThanInclusive", "value": 30 }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "PARTNER_LEAVE",
+      "params": {
+        "shortDescription": "Do not tell your partner that you are planning to leave.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "emergency",
+        "sequence": 1
+      }
+    },
+    "conditions": {
+      "any": [
+        { "fact": "DA_SUM", "operator": "greaterThanInclusive", "value": 1 },
+        { "fact": "CAS_SCORE", "operator": "greaterThanInclusive", "value": 30 }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "IDENTIFY_UNSAFE",
+      "params": {
+        "shortDescription": "Identify unsafe areas in your home if your partner becomes dangerous.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "emergency",
+        "sequence": 1
+      }
+    },
+    "conditions": {
+      "any": [
+        { "fact": "DA_SUM", "operator": "greaterThanInclusive", "value": 1 },
+        { "fact": "CAS_SCORE", "operator": "greaterThanInclusive", "value": 30 }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "SUIC_HELPLINE",
+      "params": {
+        "shortDescription": "If you are thinking about harming yourself, talk with someone at a confidential suicide helpline.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "emergency",
+        "sequence": 1
+      }
+    },
+    "conditions": {
+      "any": [
+        { "fact": "DA_SUM", "operator": "greaterThanInclusive", "value": 1 },
+        { "fact": "CAS_SCORE", "operator": "greaterThanInclusive", "value": 30 }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "GATHER_IMP_ITEMS",
+      "params": {
+        "shortDescription": "Gather copies of important papers, phone numbers, extra house keys, car keys, and cash, and organise a safe place to store them.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "emergency",
+        "sequence": 1
+      }
+    },
+    "conditions": {
+      "any": [
+        { "fact": "DA_SUM", "operator": "greaterThanInclusive", "value": 1 },
+        { "fact": "CAS_SCORE", "operator": "greaterThanInclusive", "value": 30 }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "TALK_CHILD_VIOL",
+      "params": {
+        "shortDescription": "Talk to your children about violence at home and make a safety plan if age-appropriate.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "child",
+        "sequence": 1
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "child" },
+        { "fact": "INTENTION", "operator": "notEqual", "value": "left" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "PLAN_CHILD_SAFE",
+      "params": {
+        "shortDescription": "Find somewhere to send your children if your partner becomes abusive.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "child",
+        "sequence": 2
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "child" },
+        { "fact": "INTENTION", "operator": "notEqual", "value": "left" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "PLAN_SAFE_CONTACT",
+      "params": {
+        "shortDescription": "If your child has contact with your partner, learn about safe ways for this to happen",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "child",
+        "sequence": 3
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "child" },
+        { "fact": "INTENTION", "operator": "notEqual", "value": "left" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "LEARN_CHILD_VIOL",
+      "params": {
+        "shortDescription": "Help your children cope with violence at home.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "child",
+        "sequence": 4
+      }
+    },
+    "conditions": {
+      "all": [{ "fact": "TOP_PRIORITY", "operator": "equal", "value": "child" }]
+    }
+  },
+  {
+    "event": {
+      "type": "LEARN_CUSTODY",
+      "params": {
+        "shortDescription": "Make decisions about custody, access or parenting orders and child support.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "child",
+        "sequence": 5
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "child" },
+        { "fact": "INTENTION", "operator": "notEqual", "value": "stay" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "TALK_SCHOOL",
+      "params": {
+        "shortDescription": "Apply for an intervention/protection order to protect your child/ren.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "child",
+        "sequence": 6
+      }
+    },
+    "conditions": {
+      "all": [{ "fact": "TOP_PRIORITY", "operator": "equal", "value": "child" }]
+    }
+  },
+  {
+    "event": {
+      "type": "LEARN_INTERVENTION",
+      "params": {
+        "shortDescription": "Apply for an intervention/protection order to protect your child/ren.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "child",
+        "sequence": 7
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "child" },
+        { "fact": "INTENTION", "operator": "notEqual", "value": "left" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "HELP_CHILDPROT",
+      "params": {
+        "shortDescription": "Get help if a child protection report is made.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "child",
+        "sequence": 8
+      }
+    },
+    "conditions": {
+      "any": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "child" },
+        { "fact": "INTENTION", "operator": "equal", "value": "stay" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "SEPARATE_FEEL",
+      "params": {
+        "shortDescription": "Separate your feelings for your partner from your feelings about their behaviour.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "partner",
+        "sequence": 0
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "partner" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "THINK_RETURNING",
+      "params": {
+        "shortDescription": "If you are thinking of returning to a potentially abusive relationship, discuss an alternative plan with someone you trust.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "partner",
+        "sequence": 0
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "partner" },
+        { "fact": "INTENTION", "operator": "equal", "value": "left" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "AVOID_PLACE",
+      "params": {
+        "shortDescription": "Avoid places and situations where you might come into contact with your partner or be reminded of your previous feelings for them.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "partner",
+        "sequence": 0
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "partner" },
+        { "fact": "INTENTION", "operator": "equal", "value": "left" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "TALK_GRIEF",
+      "params": {
+        "shortDescription": "Talk to a counsellor, DV support worker, or helpline about ways of coping with grief and loss.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "partner",
+        "sequence": 0
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "partner" },
+        { "fact": "INTENTION", "operator": "notEqual", "value": "stay" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "TALK_PARTNER_HELP",
+      "params": {
+        "shortDescription": "Talk to your partner about seeking help.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "partner",
+        "sequence": 1
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "partner" },
+        { "fact": "INTENTION", "operator": "notEqual", "value": "left" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "TALK_PARTNER_COUNSELLING",
+      "params": {
+        "shortDescription": "Talk to your partner about attending relationship counselling or individual counselling (if safe to do so)",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "partner",
+        "sequence": 3
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "partner" },
+        { "fact": "INTENTION", "operator": "notEqual", "value": "left" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "TALK_SOMEONE",
+      "params": {
+        "shortDescription": "Talk to a counsellor, DV support worker or helpline about your feelings towards your partner",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "partner",
+        "sequence": 4
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "partner" },
+        { "fact": "INTENTION", "operator": "notEqual", "value": "left" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "SETUP_POST",
+      "params": {
+        "shortDescription": "Set up a private post office box to receive mail",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "resources",
+        "sequence": 0
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "resources" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "TELL_WORK",
+      "params": {
+        "shortDescription": "Confidentially speak to your employer about your partner's behaviour",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "resources",
+        "sequence": 0
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "resources" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "FIND_HOUSING",
+      "params": {
+        "shortDescription": "Find safe and affordable housing",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "resources",
+        "sequence": 1
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "resources" },
+        { "fact": "INTENTION", "operator": "equal", "value": "leave" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "HELP_WORK",
+      "params": {
+        "shortDescription": "Get help looking for work or find out how to obtain Centrelink benefits if you cannot work",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "resources",
+        "sequence": 2
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "resources" },
+        { "fact": "INTENTION", "operator": "notEqual", "value": "left" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "LEARN_SEPDIV",
+      "params": {
+        "shortDescription": "Get legal advice regarding your entitlements if you choose to separate or divorce",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "resources",
+        "sequence": 3
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "resources" },
+        { "fact": "INTENTION", "operator": "equal", "value": "leave" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "PROTECT_FINANCE",
+      "params": {
+        "shortDescription": "Protect your finances and obtain financial counselling or assistance",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "resources",
+        "sequence": 4
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "resources" },
+        { "fact": "INTENTION", "operator": "notEqual", "value": "left" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "TRAINING_EDU",
+      "params": {
+        "shortDescription": "Get further skills training or education",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "resources",
+        "sequence": 5
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "resources" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "KEEP_DIARY",
+      "params": {
+        "shortDescription": "Keep a diary of any incidents that occur",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "safety",
+        "sequence": 0
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "safety" },
+        { "fact": "INTENTION", "operator": "notEqual", "value": "left" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "PROTECT_HOME_STAY",
+      "params": {
+        "shortDescription": "Protect yourself at home if your partner becomes violent.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "safety",
+        "sequence": 0
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "safety" },
+        { "fact": "INTENTION", "operator": "notEqual", "value": "left" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "GO_SHELTER",
+      "params": {
+        "shortDescription": "Go to a women's refuge/shelter if you decide to leave your partner.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "safety",
+        "sequence": 1
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "safety" },
+        { "fact": "INTENTION", "operator": "equal", "value": "leave" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "PART_LEAVE",
+      "params": {
+        "shortDescription": "Keep safe if you decide to leave your partner.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "safety",
+        "sequence": 2
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "safety" },
+        { "fact": "INTENTION", "operator": "notEqual", "value": "stay" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "APPLY_PROTORDER",
+      "params": {
+        "shortDescription": "Apply for an intervention order / protection order.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "safety",
+        "sequence": 3
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "safety" },
+        { "fact": "INTENTION", "operator": "notEqual", "value": "stay" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "CHANGE_LOCKS_SECURITY",
+      "params": {
+        "shortDescription": "Change the locks and/or improve security to your home.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "safety",
+        "sequence": 4
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "safety" },
+        { "fact": "INTENTION", "operator": "notEqual", "value": "stay" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "STALK_TIPS",
+      "params": {
+        "shortDescription": "Deal with stalking or unwanted contact",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "safety",
+        "sequence": 5
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "safety" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "PROTECT_WORK",
+      "params": {
+        "shortDescription": "Protect yourself at work",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "safety",
+        "sequence": 6
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "safety" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "PROTECT_HOME",
+      "params": {
+        "shortDescription": "Protect yourself at home after separating from your partner",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "safety",
+        "sequence": 7
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "safety" },
+        { "fact": "INTENTION", "operator": "notEqual", "value": "stay" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "PROTECT_PHONE",
+      "params": {
+        "shortDescription": "Protect yourself when using a Smartphone or social media.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "safety",
+        "sequence": 8
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "safety" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "KEEP_PETS_SAFE",
+      "params": {
+        "shortDescription": "Keep your pets safe.",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "safety",
+        "sequence": 9
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "safety" },
+        { "fact": "INTENTION", "operator": "equal", "value": "leave" }
+      ]
+    }
+  },
+  {
+    "event": {
+      "type": "WHERETOSTAY_LEAVEPARTNER",
+      "params": {
+        "shortDescription": "Talk to friends and family to organise somewhere you can stay if you decide to leave your partner",
+        "longDescriptionHtmlB64": "",
+        "strategyType": "safety",
+        "sequence": 10
+      }
+    },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "safety" },
+        { "fact": "INTENTION", "operator": "equal", "value": "leave" }
+      ]
+    }
+  }
+]

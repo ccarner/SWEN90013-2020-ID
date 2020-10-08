@@ -28,13 +28,23 @@ export default function evaluateFeedback(rules, factContainers) {
       try {
         // result for Q1 of priorities survey, then return first component = 'top' priority
         topPriority =
-          surveyResults["My Priorities"].questions[1].questionAnswer[0];
+          surveyResults["My Priorities"].questions[1].questionAnswer[0][0];
+
+        // the top priorities as given are the quetion answers, eg "My Safety".. and could be changed
+        let priorities = ["safety", "children", "resources"];
+        for (var priority of priorities) {
+          if (topPriority.toLowerCase().indexOf(priority) > -1) {
+            topPriority = priority;
+            break;
+          }
+        }
       } catch (err) {
         console.error(
           "An answer for an uncompleted question was requested",
           " (Top priorities question)"
         );
       }
+      console.log("top priority was", topPriority);
       return topPriority;
     });
   };
@@ -48,12 +58,22 @@ export default function evaluateFeedback(rules, factContainers) {
         // result for Q2 of priorities survey
         intention =
           surveyResults["My Priorities"].questions[2].questionAnswer[0];
+
+        // the top priorities as given are the quetion answers, eg "My Safety".. and could be changed
+        let intentions = ["stay", "leave", "left"];
+        for (var option of intentions) {
+          if (intention.toLowerCase().indexOf(option) > -1) {
+            intention = option;
+            break;
+          }
+        }
       } catch (err) {
         console.error(
           "An answer for an uncompleted question was requested",
           " (Intentions question)"
         );
       }
+      console.log("intention was", intention);
       return intention;
     });
   };

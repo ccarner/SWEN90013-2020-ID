@@ -11,13 +11,12 @@
       "sectionTitle": "Priorities",
       "sectionIntroduction": "Please rank the following from most important to you at the top to least important at the bottom",
       "sectionIntroductionHtmlB64": "",
-      "sectionIndex": 0,
-      "sectionType": "ranking",
       "questions": [
         {
           "questionIndex": 0,
           "questionId": "1",
-          "questionText": "Rank your Priorities",
+          "questionText": "Drag to arrange your priorities (Highest at the top)",
+          "questionType": "ranking",
           "selectionOptions": [
             "Having resources",
             "My concern for safety",
