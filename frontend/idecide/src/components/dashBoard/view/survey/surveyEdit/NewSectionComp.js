@@ -112,6 +112,20 @@ const SurveySection = (props) => {
 						value={values.descrpition}
 						onChange={handleChange('descrpition')}
 						rows={4}
+						label="HTML"
+						variant="outlined"
+					/>
+				</CardContent>
+
+				<CardContent>
+					<TextField
+						id="outlined-multiline-flexible"
+						multiline
+						fullWidth
+						required
+						value={values.htmlDescription}
+						onChange={handleChange('htmlDescription')}
+						rows={4}
 						label="Description"
 						variant="outlined"
 					/>

@@ -1,0 +1,256 @@
+[
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "STAY" },
+        { "fact": "HaveChildren", "operator": "equal", "value": "Yes" }
+      ]
+    },
+    "event": {
+      "type": "Stay_HaveChildren_Children",
+      "params": {
+        "Children": ["TALK_CHILD_VIOL", "PLAN_CHILD_SAFE"],
+        "Partner": ["TALK_PARTNER_HELP", "TALK_PARTNER_COUNSELING"],
+        "Resource": ["HELP_WORK", "PROTECT_FINANCES", "TRANING_EDU"],
+        "Safety": [
+          "PROTECT_WORK",
+          "PROTECT_PHONE",
+          "PROTECT_HOME",
+          "KEEP_PETS_SAFE",
+          "APPLY_PROTORDER",
+          "PART_LEAVE"
+        ],
+        "Health": [
+          "TALK_FRIENDFAMILY",
+          "CONF_SERV",
+          "MANAGE_ANXIETY",
+          "TALK_WOMEN",
+          "MEDICAL_HELP",
+          "HELP_DRUGALC_USE",
+          "MANAGE_PAIN",
+          "SUIC_HELPLINE",
+          "SUPPORT_FAITH"
+        ]
+      }
+    },
+    "name": "Stay_HavaChildren"
+  },
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "STAY" },
+        { "fact": "HaveChildren", "operator": "equal", "value": "No" }
+      ]
+    },
+    "event": {
+      "type": "Stay_HaveChildren_Children",
+      "params": {
+        "Partner": ["TALK_PARTNER_HELP"],
+        "Resource": ["HELP_WORK", "PROTECT_FINANCES", "TRANING_EDU"],
+        "Safety": [
+          "PROTECT_WORK",
+          "PROTECT_PHONE",
+          "PROTECT_HOME",
+          "KEEP_PETS_SAFE",
+          "APPLY_PROTORDER",
+          "PART_LEAVE"
+        ],
+        "Health": [
+          "TALK_FRIENDFAMILY",
+          "CONF_SERV",
+          "MANAGE_ANXIETY",
+          "TALK_WOMEN",
+          "MEDICAL_HELP",
+          "HELP_DRUGALC_USE",
+          "MANAGE_PAIN",
+          "SUIC_HELPLINE",
+          "SUPPORT_FAITH"
+        ]
+      }
+    },
+    "name": "Stay_NoChildren"
+  },
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "LEAVE" },
+        { "fact": "HaveChildren", "operator": "equal", "value": "Yes" }
+      ]
+    },
+    "event": {
+      "type": "Leave_HaveChildren",
+      "params": {
+        "Children": [
+          "TALK_CHILD_VIOL",
+          "PLAN_CHILD_SAFE",
+          "PLAN_SAFE_CONTACT",
+          "Learn_CUSTODY"
+        ],
+        "Partner": ["TALK_PARTNER_HELP"],
+        "Resource": [
+          "HELP_WORK",
+          "PROTECT_FINANCES",
+          "TRANING_EDU",
+          "FIND_HOUSING"
+        ],
+        "Safety": [
+          "PROTECT_WORK",
+          "PROTECT_PHONE",
+          "PROTECT_HOME",
+          "KEEP_PETS_SAFE",
+          "APPLY_PROTORDER",
+          "PART_LEAVE",
+          "STALK_TIPS",
+          "CHANGE_LOCKS_SECURITY",
+          "WHERETOSTAY_LEAVEPARTNER"
+        ],
+        "Health": [
+          "TALK_FRIENDFAMILY",
+          "CONF_SERV",
+          "MANAGE_ANXIETY",
+          "TALK_WOMEN",
+          "MEDICAL_HELP",
+          "HELP_DRUGALC_USE",
+          "MANAGE_PAIN",
+          "SUIC_HELPLINE",
+          "SUPPORT_FAITH"
+        ]
+      }
+    },
+    "name": "Stay_HaveChildren"
+  },
+
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "LEAVE" },
+        { "fact": "HaveChildren", "operator": "equal", "value": "No" }
+      ]
+    },
+    "event": {
+      "type": "Leave_NoChildren",
+      "params": {
+        "Partner": [
+          "HELP_WORK",
+          "PROTECT_FINANCES",
+          "TRANING_EDU",
+          "FIND_HOUSING"
+        ],
+        "Resource": [
+          "HELP_WORK",
+          "PROTECT_FINANCES",
+          "TRANING_EDU",
+          "FIND_HOUSING"
+        ],
+        "Safety": [
+          "PROTECT_WORK",
+          "PROTECT_PHONE",
+          "PROTECT_HOME",
+          "KEEP_PETS_SAFE",
+          "APPLY_PROTORDER",
+          "PART_LEAVE",
+          "STALK_TIPS",
+          "CHANGE_LOCKS_SECURITY",
+          "WHERETOSTAY_LEAVEPARTNER"
+        ],
+        "Health": [
+          "TALK_FRIENDFAMILY",
+          "CONF_SERV",
+          "MANAGE_ANXIETY",
+          "TALK_WOMEN",
+          "MEDICAL_HELP",
+          "HELP_DRUGALC_USE",
+          "MANAGE_PAIN",
+          "SUIC_HELPLINE",
+          "SUPPORT_FAITH"
+        ]
+      }
+    },
+    "name": "LEAVE_NoChildren"
+  },
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "LEFT" },
+        { "fact": "HaveChildren", "operator": "equal", "value": "Yes" }
+      ]
+    },
+    "event": {
+      "type": "LEFT_HaveChildren",
+      "params": {
+        "Children": ["PLAN_CHILD_SAFE", "Learn_CUSTODY"],
+        "Partner": ["TALK_PARTNER_HELP"],
+        "Resource": [
+          "HELP_WORK",
+          "PROTECT_FINANCES",
+          "TRANING_EDU",
+          "FIND_HOUSING"
+        ],
+        "Safety": [
+          "PROTECT_WORK",
+          "PROTECT_PHONE",
+          "PROTECT_HOME",
+          "APPLY_PROTORDER",
+          "STALK_TIPS",
+          "CHANGE_LOCKS_SECURITY",
+          "WHERETOSTAY_LEAVEPARTNER",
+          "PART_LEAVE"
+        ],
+        "Health": [
+          "TALK_FRIENDFAMILY",
+          "CONF_SERV",
+          "MANAGE_ANXIETY",
+          "TALK_WOMEN",
+          "MEDICAL_HELP",
+          "HELP_DRUGALC_USE",
+          "MANAGE_PAIN",
+          "SUIC_HELPLINE",
+          "SUPPORT_FAITH"
+        ]
+      }
+    },
+    "name": "LEFT_HaveChildren"
+  },
+  {
+    "conditions": {
+      "all": [
+        { "fact": "Intention", "operator": "equal", "value": "LEFT" },
+        { "fact": "HaveChildren", "operator": "equal", "value": "No" }
+      ]
+    },
+    "event": {
+      "type": "LEFT_NoChildren",
+      "params": {
+        "Partner": ["TALK_PARTNER_HELP"],
+        "Resource": [
+          "HELP_WORK",
+          "PROTECT_FINANCES",
+          "TRANING_EDU",
+          "FIND_HOUSING"
+        ],
+        "Safety": [
+          "PROTECT_WORK",
+          "PROTECT_PHONE",
+          "PROTECT_HOME",
+          "APPLY_PROTORDER",
+          "STALK_TIPS",
+          "CHANGE_LOCKS_SECURITY",
+          "WHERETOSTAY_LEAVEPARTNER",
+          "PART_LEAVE"
+        ],
+        "Health": [
+          "TALK_FRIENDFAMILY",
+          "CONF_SERV",
+          "MANAGE_ANXIETY",
+          "TALK_WOMEN",
+          "MEDICAL_HELP",
+          "HELP_DRUGALC_USE",
+          "MANAGE_PAIN",
+          "SUIC_HELPLINE",
+          "SUPPORT_FAITH"
+        ]
+      }
+    },
+    "name": "LEFT_NoChildren"
+  }
+]
