@@ -16,7 +16,6 @@ import {
 import PrimaryButton from "./reusableComponents/PrimaryButton";
 
 class Landing extends Component {
-
   render() {
     const userId = localStorage.getItem("userId");
     return (
@@ -34,26 +33,26 @@ class Landing extends Component {
             ex-partner to plan for the future.
           </h5>
           <br />
-          <BrowserRouter>
           <NavLink to="./surveyComponent/surveyHome">
             <PrimaryButton>Start</PrimaryButton>
           </NavLink>
 
-          {((userId === null) || (localStorage.getItem("userType") === "anonymous")) ?
+          {userId === null ||
+          localStorage.getItem("userType") === "anonymous" ? (
             <NavLink to="./loginComponent/loginPage">
               <PrimaryButton>Log in</PrimaryButton>
             </NavLink>
-            :
+          ) : (
             <NavLink to="./loginComponent/userInfo">
               <PrimaryButton>Account</PrimaryButton>
             </NavLink>
-          }
+          )}
         </div>
 
         <MDBFooter className="font-small pt-4 mt-4" style={{ padding: 0 }}>
           <div
             style={{
-              backgroundImage: `url(${require("../images/background.png")})`
+              backgroundImage: `url(${require("../images/background.png")})`,
             }}
           >
             <MDBContainer fluid className="text-center text-md-left">
