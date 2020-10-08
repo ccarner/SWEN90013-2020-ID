@@ -27,38 +27,39 @@ export default class LoginPage extends React.Component {
 			error: null,
 			isLoaded: false
 		};
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.displayAdmins = this.displayAdmins.bind(this);
+		// this.handleSubmit = this.handleSubmit.bind(this);
+		// this.displayAdmins = this.displayAdmins.bind(this);
 	}
 
-	displayAdmins() {
-		this.setState({ showAdmin: true });
-	}
+	// displayAdmins() {
+	// 	this.setState({ showAdmin: true });
+	// }
 
-	async handleSubmit(event) {
+	handleSubmit = async (event) => {
 		// the following call will stop the form from submitting
 		event.preventDefault();
-
 		// get the user information
 		const data = new FormData(event.target);
 		var userObject = {};
 		data.forEach((value, key) => {
 			userObject[key] = value;
 		});
-		console.log(userObject);
+
+		this.setState({
+			isLoading: true
+		});
+
 		const response = await loginUser(userObject);
 
+
+
 		if (response.flag) {
-			var userAdmin = false;
-			if (userObject.username === 'ccarner') {
-				userAdmin = true;
-			}
-			this.setState({
-				isLoggedIn: true,
-				isAdmin: userAdmin
-			});
+			window.location.replace("/loginComponent/userInfo");
 		} else {
-			alert('Log in Failed');
+			alert("Log in Failed");
+			this.setState({
+				isLoading: false
+			});
 		}
 	}
 
@@ -77,14 +78,7 @@ export default class LoginPage extends React.Component {
 
 		const { isLoggingPage, isLoggedIn, isAdmin } = this.state;
 
-		if (isLoggedIn) {
-			if (isAdmin) {
-				this.props.setAdmin(true);
-				return <AdminConsole />;
-			} else {
-				return <div>You are logged in!</div>;
-			}
-		} else if (isLoggingPage) {
+		if (isLoggingPage) {
 			return (
 				<div style={{ padding: '5%' }}>
 					<h1 className="text-center" style={{ color: '#9572A4' }}>

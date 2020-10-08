@@ -47,6 +47,7 @@ import purple from '@material-ui/core/colors/purple';
 import LoginPage from '../components/loginComponent/loginPage';
 import RegisterPage from '../components/loginComponent/registerPage';
 import AdminInfo from '../components/loginComponent/adminInfo';
+import UserInfo from "../components/loginComponent/userInfo";
 import Landing from '../components/Landing';
 import SurveyHome from '../components/surveyComponents/surveyHome';
 import { getCsvDownloadLink } from '../API/surveyResultsAPI';
@@ -69,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex'
 	},
 	appBar: {
-		transition: theme.transitions.create([ 'margin', 'width' ], {
+		transition: theme.transitions.create(['margin', 'width'], {
 			easing: theme.transitions.easing.sharp,
 			duration: theme.transitions.duration.leavingScreen
 		})
@@ -77,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
 	appBarShift: {
 		width: `calc(100% - ${drawerWidth}px)`,
 		marginLeft: drawerWidth,
-		transition: theme.transitions.create([ 'margin', 'width' ], {
+		transition: theme.transitions.create(['margin', 'width'], {
 			easing: theme.transitions.easing.easeOut,
 			duration: theme.transitions.duration.enteringScreen
 		})
@@ -143,15 +144,15 @@ const useStyles = makeStyles((theme) => ({
 function NavBar(props) {
 	const classes = useStyles();
 	const theme = useTheme();
-	const [ isLoading, setIsLoading ] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 	const { width } = props;
-	const [ open, setOpen ] = React.useState(false);
-	const [ openHelp, setHelp ] = React.useState(false);
-	const [ surveys, setSurveys ] = React.useState([]);
-	const [ showSurvey, setShowSurvey ] = React.useState(true);
-	const [ link, setLink ] = React.useState();
-	const [ isAdmin, setAdmin ] = React.useState(true); // handle admin sidebar display, please set in the login page with the setAdmin function(props).
-	const [ openDownload, setOpenDownload ] = React.useState(false);
+	const [open, setOpen] = React.useState(false);
+	const [openHelp, setHelp] = React.useState(false);
+	const [surveys, setSurveys] = React.useState([]);
+	const [showSurvey, setShowSurvey] = React.useState(true);
+	const [link, setLink] = React.useState();
+	const [isAdmin, setAdmin] = React.useState(true); // handle admin sidebar display, please set in the login page with the setAdmin function(props).
+	const [openDownload, setOpenDownload] = React.useState(false);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -166,15 +167,15 @@ function NavBar(props) {
 		fetchData();
 	}, []);
 
-	const handleDownloadOpen =  () => {
+	const handleDownloadOpen = () => {
 		setOpenDownload(true);
-		
+
 	};
 
-	const handleDownload = async() => {
+	const handleDownload = async () => {
 		alert(link);
 		await getCsvDownloadLink();
-	//	setLink(link);
+		//	setLink(link);
 	};
 
 	const handleDowloadClose = () => {
@@ -189,7 +190,6 @@ function NavBar(props) {
 		setOpen(false);
 	};
 
-	console.log(isAdmin);
 
 	const handleOpen = () => {
 		setHelp(true);
@@ -197,6 +197,12 @@ function NavBar(props) {
 	const handleClose = () => {
 		setHelp(false);
 	};
+
+	const handleLogOut = () => {
+		setAdmin(false);
+		localStorage.clear();
+		window.location.replace("/")
+	}
 
 	return (
 		<div>
@@ -211,7 +217,7 @@ function NavBar(props) {
 						})}
 					>
 						<Toolbar>
-							<Collapse in={isAdmin}>
+							<Collapse in={(localStorage.getItem("userType") === "admin")}>
 								<Tooltip title="Dashboard Side Menu.">
 									<IconButton
 										aria-label="open drawer"
@@ -227,46 +233,13 @@ function NavBar(props) {
 								<img src={IconLogo} alt="IconLogo" style={{ height: 35, marginTop: 0 }} />
 							</IconButton>
 							<Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
-								{/** 		<Collapse in={!isAdmin}>
-									<Grid item>
-										<Tooltip title="Get more help.">
-											<Button className={clsx(classes.button)} onClick={handleOpen}>
-												{isWidthUp('sm', width) ? 'Get Help' : 'Help'}
-											</Button>
-										</Tooltip>
-									</Grid>
-									<Grid item>
-										<Tooltip title="Click to quick exit.">
-											<Button
-												className={clsx(classes.button)}
-												onClick={() => {
-													localStorage.clear();
-													window.location.href = 'https://www.weather.com.au/';
-												}}
-											>
-												{isWidthUp('sm', width) ? 'Quick Exit' : 'Exit'}
-											</Button>
-										</Tooltip>
-									</Grid>
-								</Collapse>
-								<Collapse in={isAdmin}>
+
+
+								{(localStorage.getItem("userType")) ? (
 									<Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
 										<Grid item>
 											<Button
-												onClick={() => (window.location.href = '/')}
-												className={clsx(classes.button)}
-											>
-												<ExitToAppIcon />
-												{isWidthUp('sm', width) ? 'LOGOUT' : ''}
-											</Button>
-										</Grid>
-									</Grid>
-								</Collapse>*/}
-								{isAdmin ? (
-									<Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
-										<Grid item>
-											<Button
-												onClick={() => (window.location.href = '/')}
+												onClick={handleLogOut}
 												className={clsx(classes.button)}
 											>
 												<ExitToAppIcon />
@@ -275,31 +248,31 @@ function NavBar(props) {
 										</Grid>
 									</Grid>
 								) : (
-									<Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
-										<Grid item>
-											<Tooltip title="Get more help.">
-												<Button className={clsx(classes.button)} onClick={handleOpen}>
-													<PhoneIcon />
-													{isWidthUp('sm', width) ? 'Get Help' : ''}
-												</Button>
-											</Tooltip>
+										<Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
+											<Grid item>
+												<Tooltip title="Get more help.">
+													<Button className={clsx(classes.button)} onClick={handleOpen}>
+														<PhoneIcon />
+														{isWidthUp('sm', width) ? 'Get Help' : ''}
+													</Button>
+												</Tooltip>
+											</Grid>
+											<Grid item>
+												<Tooltip title="Click to quick exit.">
+													<Button
+														className={clsx(classes.button)}
+														onClick={() => {
+															localStorage.clear();
+															window.location.href = 'https://www.weather.com.au/';
+														}}
+													>
+														<ExitToAppIcon />
+														{isWidthUp('sm', width) ? 'Quick Exit' : ''}
+													</Button>
+												</Tooltip>
+											</Grid>
 										</Grid>
-										<Grid item>
-											<Tooltip title="Click to quick exit.">
-												<Button
-													className={clsx(classes.button)}
-													onClick={() => {
-														localStorage.clear();
-														window.location.href = 'https://www.weather.com.au/';
-													}}
-												>
-													<ExitToAppIcon />
-													{isWidthUp('sm', width) ? 'Quick Exit' : ''}
-												</Button>
-											</Tooltip>
-										</Grid>
-									</Grid>
-								)}
+									)}
 							</Grid>
 						</Toolbar>
 					</AppBar>
@@ -387,6 +360,7 @@ function NavBar(props) {
 							/>
 							<Route path="/loginComponent/registerPage" component={RegisterPage} />
 							<Route path="/loginComponent/adminInfo" component={AdminInfo} />
+							<Route path="/loginComponent/userInfo" component={UserInfo} />
 
 							<Route path="/" component={Landing} />
 						</Switch>
@@ -459,9 +433,10 @@ function NavBar(props) {
 					</Dialog>
 				</div>
 			) : (
-				<Loading isLoading={isLoading} />
-			)}
-		</div>
+					<Loading isLoading={isLoading} />
+				)
+			}
+		</div >
 	);
 }
 
