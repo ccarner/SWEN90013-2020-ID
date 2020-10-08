@@ -68,7 +68,7 @@ const QuestionDetails = (props) => {
 		return (
 			<div>
 				<form onSubmit={UpdateQuesion}>
-					<DialogContentText>113, Please input the description of the question.</DialogContentText>
+					<DialogContentText>Please input the description of the question.</DialogContentText>
 					<TextField
 						id="outlined-multiline-flexible"
 						name="updatedQuestion"
@@ -97,7 +97,7 @@ const QuestionDetails = (props) => {
 						<Grid container direction="row" justify="flex-start" alignItems="center">
 							<Grid item xs={10}>
 								<Typography color="primary" gutterBottom>
-									{'Q' + (props.data.questionIndex+1) + ' :  ' + props.data.questionText}
+									{'Q' + (props.data.questionIndex + 1) + ' :  ' + props.data.questionText}
 								</Typography>
 							</Grid>
 							<Grid item xs={1}>
