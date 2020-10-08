@@ -1,9 +1,9 @@
-import React, { useContext,createContext } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { Button, FormControl, Select, InputLabel, MenuItem, Input, Checkbox, ListItemText } from '@material-ui/core';
-import { CountContext,SectionSearch } from './DCLayout';
-import { Collapse, Card, TextField, CardContent, makeStyles, Grid, CardHeader, Divider } from '@material-ui/core';
+import { CountContext, SectionSearch } from './DCLayout';
+import { Collapse, Card, Tooltip, CardContent, makeStyles, Grid, CardHeader, Divider } from '@material-ui/core';
 import { getSectionBySurveyId } from '../../../../API/surveyAPI';
 
 const useStyles = makeStyles({
@@ -14,19 +14,17 @@ const useStyles = makeStyles({
 	}
 });
 
-
-
-const Tools = ({ className, ...rest },ref) => {
+const Tools = ({ className, ...rest }, ref) => {
 	const classes = useStyles();
 	const [ survey, setSurvey ] = React.useState('');
 	const [ section, setSection ] = React.useState('');
 	const [ sectionIndex, setSectionIndex ] = React.useState(0);
 
-//	const [ sectionSearch, setSectionSearch ] = React.useState();
+	//	const [ sectionSearch, setSectionSearch ] = React.useState();
 	const [ openSection, setOpenSection ] = React.useState(false);
 	const [ sections, setSections ] = React.useState([]);
 	let surveys = useContext(CountContext);
-	let  {sectionSearch, setSectionSearch}  = useContext(SectionSearch);
+	let { sectionSearch, setSectionSearch } = useContext(SectionSearch);
 
 	const handleSecChange = (event) => {
 		console.log(event.target);
@@ -35,7 +33,7 @@ const Tools = ({ className, ...rest },ref) => {
 		setSectionSearch(sections[event.target.value]);
 	};
 	console.log(sectionSearch);
-//	useContext(SectionSearch);
+	//	useContext(SectionSearch);
 
 	const handleChange = (event) => {
 		setSurvey(event.target.value);
@@ -49,21 +47,20 @@ const Tools = ({ className, ...rest },ref) => {
 		setOpenSection(true);
 	};
 
-	
-
 	const handleSearch = () => {
-	//	console.log("result.surveySections");
-
-	}
+		//	console.log("result.surveySections");
+	};
 
 	return (
 		<form className={clsx(classes.root, className)} {...rest}>
 			<Card>
 				<CardHeader
 					action={
-						<Button variant="contained" color="primary" size="small">
-							Export
-						</Button>
+						<Tooltip title="Currently no survey data in the DB, so this button is not working!">
+							<Button variant="contained" color="primary" size="small">
+								Export
+							</Button>
+						</Tooltip>
 					}
 					title={'Data Collection'}
 				/>
@@ -97,7 +94,7 @@ const Tools = ({ className, ...rest },ref) => {
 										value={section}
 										onChange={handleSecChange}
 									>
-										{Array.from(sections).map((section,index) => (
+										{Array.from(sections).map((section, index) => (
 											<MenuItem key={section.sectionId} value={index} name={index}>
 												<ListItemText primary={section.sectionTitle} />
 											</MenuItem>

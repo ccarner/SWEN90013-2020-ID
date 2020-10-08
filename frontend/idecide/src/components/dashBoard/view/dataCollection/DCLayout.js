@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useRef } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Tools from './Tools';
@@ -6,6 +6,7 @@ import DataDisplay from './DataDisplay';
 import ResultDisplay from './ResultDisplay';
 import { getResults } from '../../../../API/surveyResultsAPI';
 import { getAllSurveys } from '../../../../API/surveyAPI';
+import Loading from '../../../util/loading';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -26,7 +27,6 @@ export default function DCLayout() {
 	const [ isLoading, setIsLoading ] = useState(false);
 	const [ data, setData ] = useState({ hits: [] });
 	const [ sectionSearch, setSectionSearch ] = React.useState([]);
-	//	console.log(sectionSearch.sectionId);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -46,7 +46,7 @@ export default function DCLayout() {
 	return (
 		<Grid className={classes.root} direction="row" justify="flex-start" alignItems="flex-start">
 			{isLoading ? (
-				<div>Loading ...</div>
+				<Loading/>
 			) : (
 				<Grid container spacing={2}>
 					<SectionSearch.Provider value={{ sectionSearch, setSectionSearch }}>
@@ -58,9 +58,7 @@ export default function DCLayout() {
 						<Grid item xs={12}>
 							<DataDisplay />
 						</Grid>
-						<Grid item xs={12}>
-							<ResultDisplay />
-						</Grid>
+						
 					</SectionSearch.Provider>
 				</Grid>
 			)}
