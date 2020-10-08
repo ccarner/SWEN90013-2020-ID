@@ -4,11 +4,11 @@ import RegisterPage from "./registerPage";
 import { NavLink } from "react-router-dom";
 
 // Unit test for Register Text in RegisterPage
-test("renders Register field", () => {
-  render(<RegisterPage />);
-  const linkElement = screen.getByText(/Register/i);
-  expect(linkElement).toBeInTheDocument();
-});
+//test("renders Register field", () => {
+//  render(<RegisterPage />);
+//  const linkElement = screen.getByText(/Register/i);
+//  expect(linkElement).toBeInTheDocument();
+//});
 
 // Unit test for Username Text in RegisterPage
 test("renders Username field", () => {
@@ -24,10 +24,10 @@ test("renders Password field", () => {
   expect(linkElement).toBeInTheDocument();
 });
 
-// Unit test for Last Name Text in RegisterPage
-test("renders Last Name field", () => {
+// Unit test for Gender Text in RegisterPage
+test("renders Gender field", () => {
   render(<RegisterPage />);
-  const linkElement = screen.getByText(/Last Name:/i);
+  const linkElement = screen.getByText(/Gender:/i);
   expect(linkElement).toBeInTheDocument();
 });
 
@@ -50,16 +50,4 @@ test("renders Post Code field", () => {
   render(<RegisterPage />);
   const linkElement = screen.getByText(/Post Code:/i);
   expect(linkElement).toBeInTheDocument();
-});
-
-// Unit test for Post Code Text in RegisterPage
-test("renders Post Code field", () => {
-  render(<RegisterPage />);
-  const linkElement = screen.getByText(/Post Code:/i);
-  expect(linkElement).toBeInTheDocument();
-});
-
-//Test example
-test("renders learn react link", () => {
-  expect(1 + 1).toEqual(2);
 });

@@ -73,6 +73,7 @@ export function getAllUsers() {
 export async function loginUser(userIn) {
   const { username, password } = userIn;
   var endpoint = USER_URL + `/user/login`;
+
   if (username === "ccarner") {
     endpoint = USER_URL + `/admin/login`;
   }
