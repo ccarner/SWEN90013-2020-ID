@@ -7,7 +7,7 @@ const SortableItem = SortableElement(({ value }) => (
   <li
     style={{
       margin: 5,
-      fontSize: "larger",
+      fontSize: "25px",
       color: "white",
       background:
         "linear-gradient(40deg, rgb(255, 110, 196), rgb(120, 115, 245))",

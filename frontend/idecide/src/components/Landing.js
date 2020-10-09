@@ -14,33 +14,45 @@ import {
   MDBFooter,
 } from "mdbreact";
 import PrimaryButton from "./reusableComponents/PrimaryButton";
-import { Card, CardContent, CardHeader, Divider, Grid, TextField, Box, Button, Typography } from '@material-ui/core';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  Grid,
+  TextField,
+  Box,
+  Button,
+  Typography,
+} from "@material-ui/core";
 
 class Landing extends Component {
   render() {
     const userId = localStorage.getItem("userId");
     return (
-     <div>
-         <div  style={{ padding: "5%" }}>
-         <Typography color="textPrimary"  style={{ color: "#9572A4" }} variant="h3">
-          Women's Wellbeing
-					</Typography>
-          <br/>
-          <Typography color="textPrimary"  variant="h4">
+      <div>
+        <div style={{ padding: "5%" }}>
+          <Typography
+            color="textPrimary"
+            style={{ color: "#9572A4" }}
+            variant="h3"
+          >
+            Women's Wellbeing
+          </Typography>
+          <br />
+          <Typography color="textPrimary" variant="h4">
             Do you worry about whether your relationship is healthy?
-					</Typography>
-          <br/>
-          <Typography color="textPrimary"  variant="h4">
+          </Typography>
+          <br />
+          <Typography color="textPrimary" variant="h4">
             Do you sometimes wonder if you are safe?
-					</Typography>
-          <br/>
-          <Typography color="textSecondary"  variant="h6">
-          This website helps women who feel unsafe or afraid of a current or
+          </Typography>
+          <br />
+          <Typography color="textSecondary" variant="h6">
+            This website helps women who feel unsafe or afraid of a current or
             ex-partner to plan for the future.
-					</Typography>
-         
-       
-        {/**    <h1 className="text-center" style={{ color: "#9572A4" }}>
+          </Typography>
+          {/**    <h1 className="text-center" style={{ color: "#9572A4" }}>
             Women's Wellbeing Tool
           </h1>
           <br></br>
@@ -52,11 +64,10 @@ class Landing extends Component {
             This website helps women who feel unsafe or afraid of a current or
             ex-partner to plan for the future.
           </h5>*/}
-          <br /> <br/>
+          <br /> <br />
           <NavLink to="./surveyComponent/surveyHome">
             <PrimaryButton>Start</PrimaryButton>
           </NavLink>
-
           {userId === null ||
           localStorage.getItem("userType") === "anonymous" ? (
             <NavLink to="./loginComponent/loginPage">
@@ -69,56 +80,59 @@ class Landing extends Component {
           )}
         </div>
         <React.Fragment>
-        <MDBFooter className="font-small pt-4 mt-4" style={{ padding: 0 }}>
-          <div
-            style={{
-              backgroundImage: `url(${require("../images/background.png")})`,
-            }}
-          >
-            <MDBContainer fluid className="text-center text-md-left">
-              <MDBRow>
-                <MDBCol md="8">
-                  <h5 className="title">About I-Decide</h5>
-                  <p className="mx-5 mb-5">
-                    I-Decide has been developed by a team of researchers in
-                    general practice, social work, women's health, nursing, and
-                    health technology led by The University of Melbourne.
-                    <br />
-                    <br /> Many women in Australia feel unsafe, or worry that
-                    their relationships with their partners are not healthy.
-                    I-Decide helps women to self-reflect on the health of their
-                    relationhips, become more informed about options available,
-                    and plan for their safety and well being.
-                  </p>
-                </MDBCol>
-                <MDBCol md="4">
-                  <h5 className="title">More Information</h5>
-                  <ul>
-                    {/* <li className="list-unstyled">
+          <MDBFooter className="font-small pt-4 mt-4" style={{ padding: 0 }}>
+            <div
+              style={{
+                backgroundImage: `url(${require("../images/background.png")})`,
+              }}
+            >
+              <MDBContainer fluid className="text-center text-md-left">
+                <MDBRow>
+                  <MDBCol md="8">
+                    <h5 className="title">About I-Decide</h5>
+                    <p className="mx-5 mb-5">
+                      I-Decide has been developed by a team of researchers in
+                      general practice, social work, women's health, nursing,
+                      and health technology led by The University of Melbourne.
+                      <br />
+                      <br /> Many women in Australia feel unsafe, or worry that
+                      their relationships with their partners are not healthy.
+                      I-Decide helps women to self-reflect on the health of
+                      their relationhips, become more informed about options
+                      available, and plan for their safety and well being.
+                    </p>
+                  </MDBCol>
+                  <MDBCol md="4">
+                    <h5 className="title">More Information</h5>
+                    <ul>
+                      {/* <li className="list-unstyled">
                       <a href="/survey/3.2">Resources</a>
                     </li> */}
-                    <li className="list-unstyled">
-                      <a href="https://www.respect.gov.au/">Related Website</a>
-                    </li>
-                    {/* <li className="list-unstyled">
+                      <li className="list-unstyled">
+                        <a href="https://www.respect.gov.au/">
+                          Related Website
+                        </a>
+                      </li>
+                      {/* <li className="list-unstyled">
                       <a href="#!">Get Help</a>
                     </li> */}
-                    {/* <li className="list-unstyled">
+                      {/* <li className="list-unstyled">
                       <a href="#!">Contact Us</a>
                     </li> */}
-                  </ul>
-                </MDBCol>
-              </MDBRow>
-            </MDBContainer>
-            <div className="footer-copyright text-center py-3">
-              <MDBContainer fluid>
-                &copy; {new Date().getFullYear()} Copyright: I-Decide
-                Development Group
+                    </ul>
+                  </MDBCol>
+                </MDBRow>
               </MDBContainer>
+              <div className="footer-copyright text-center py-3">
+                <MDBContainer fluid>
+                  &copy; {new Date().getFullYear()} Copyright: I-Decide
+                  Development Group
+                </MDBContainer>
+              </div>
             </div>
-          </div>
-        </MDBFooter>
-      </React.Fragment></div>
+          </MDBFooter>
+        </React.Fragment>
+      </div>
     );
   }
 }
