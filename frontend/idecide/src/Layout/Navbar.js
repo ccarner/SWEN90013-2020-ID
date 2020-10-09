@@ -247,7 +247,7 @@ function NavBar(props) {
                 alignItems="center"
                 spacing={2}
               >
-                {localStorage.getItem("userType") ? (
+                {localStorage.getItem("userType") && (localStorage.getItem("userType") !== "anonymous") ? (
                   <Grid
                     container
                     direction="row"
@@ -266,41 +266,41 @@ function NavBar(props) {
                     </Grid>
                   </Grid>
                 ) : (
-                  <Grid
-                    container
-                    direction="row"
-                    justify="flex-end"
-                    alignItems="center"
-                    spacing={2}
-                  >
-                    <Grid item>
-                      <Tooltip title="Get more help.">
-                        <Button
-                          className={clsx(classes.button)}
-                          onClick={handleOpen}
-                        >
-                          <PhoneIcon />
-                          {isWidthUp("sm", width) ? "Get Help" : ""}
-                        </Button>
-                      </Tooltip>
+                    <Grid
+                      container
+                      direction="row"
+                      justify="flex-end"
+                      alignItems="center"
+                      spacing={2}
+                    >
+                      <Grid item>
+                        <Tooltip title="Get more help.">
+                          <Button
+                            className={clsx(classes.button)}
+                            onClick={handleOpen}
+                          >
+                            <PhoneIcon />
+                            {isWidthUp("sm", width) ? "Get Help" : ""}
+                          </Button>
+                        </Tooltip>
+                      </Grid>
+                      <Grid item>
+                        <Tooltip title="Click to quick exit.">
+                          <Button
+                            className={clsx(classes.button)}
+                            onClick={() => {
+                              localStorage.clear();
+                              window.location.href =
+                                "https://www.weather.com.au/";
+                            }}
+                          >
+                            <ExitToAppIcon />
+                            {isWidthUp("sm", width) ? "Quick Exit" : ""}
+                          </Button>
+                        </Tooltip>
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      <Tooltip title="Click to quick exit.">
-                        <Button
-                          className={clsx(classes.button)}
-                          onClick={() => {
-                            localStorage.clear();
-                            window.location.href =
-                              "https://www.weather.com.au/";
-                          }}
-                        >
-                          <ExitToAppIcon />
-                          {isWidthUp("sm", width) ? "Quick Exit" : ""}
-                        </Button>
-                      </Tooltip>
-                    </Grid>
-                  </Grid>
-                )}
+                  )}
               </Grid>
             </Toolbar>
           </AppBar>
@@ -318,8 +318,8 @@ function NavBar(props) {
                 {theme.direction === "ltr" ? (
                   <ChevronLeftIcon />
                 ) : (
-                  <ChevronRightIcon />
-                )}
+                    <ChevronRightIcon />
+                  )}
               </IconButton>
             </div>
             <Divider />
@@ -500,8 +500,8 @@ function NavBar(props) {
           </Dialog>
         </div>
       ) : (
-        <Loading isLoading={isLoading} />
-      )}
+          <Loading isLoading={isLoading} />
+        )}
     </div>
   );
 }
