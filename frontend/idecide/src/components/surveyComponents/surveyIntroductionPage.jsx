@@ -13,9 +13,10 @@ export default function SurveyIntroductionPage(props) {
         {/* <Card.Img variant="top" src={imagelocation} /> */}
         <Card.Body>
           <Card.Title>{"Introduction: " + props.survey.surveyTitle}</Card.Title>
-          <Card.Text style={{ fontSize: "18px" }}>
+          <Card.Text
+            style={{ fontSize: "18px", padding: "20px", textAlign: "left" }}
+          >
             {props.survey.surveyIntroduction}
-            {console.log("surveyfile was b64 was", props.survey)}
             <div
               className="content"
               dangerouslySetInnerHTML={{

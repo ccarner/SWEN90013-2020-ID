@@ -26,7 +26,103 @@
           ]
         }
       ],
-      "sectionResultAlgorithm": null
+      "sectionResultAlgorithm": [
+        {
+          "event": {
+            "type": "partner",
+            "params": {
+              "categoryName": "Top Priority: My Partner",
+              "responseString": "<p> It seems like your feelings for your partner are what is most important to you right now. It can be difficult to accept that a person we love is hurting us. Your partner may need help with a variety of issues, however, it is important to remember that nobody deserves to be hit or abused. It might be helpful to assess the relationship to work out whether staying With your partner is the best thing for your health and wellbeing. A bit later, this website will provide: <ul> <li>strategies to help manage your feelings towards your partner </li><li> details of organisations who may be able to help your partner </li> </ul> </p>",
+              "imageLink": null
+            }
+          },
+          "conditions": {
+            "any": [
+              {
+                "fact": "TOP_PRIORITY",
+                "operator": "equal",
+                "value": "partner"
+              }
+            ]
+          }
+        },
+        {
+          "event": {
+            "type": "safety",
+            "params": {
+              "categoryName": "Top Priority: My Safety",
+              "responseString": "<p> It seems like staying safe is what is most important to you right now. Try to keep this in your mind when making decisions about your relationship. You can't control your partner's actions, but there are many things you can do to improve your safety. This applies if you decide to stay in the relationship, and also if you decide to leave. A bit later, this website will provide: <ul> <li> strategies to keep safe on the phone and when using the internet </li><li>  tips to protect yourself at home and at work </li><li>  advice on intervention/protection orders and safety plans. </li> </ul> </p>",
+              "imageLink": null
+            }
+          },
+          "conditions": {
+            "any": [
+              {
+                "fact": "TOP_PRIORITY",
+                "operator": "equal",
+                "value": "safety"
+              }
+            ]
+          }
+        },
+        {
+          "event": {
+            "type": "resources",
+            "params": {
+              "categoryName": "Top Priority: My Resources",
+              "responseString": "<p> It seems like having resources is what is most important to you right now. Being without money, housing, or a job can be very stressful, and worrying about this may affect the choices you make in your relationship. A bit later, this website will provide: <ul> <li>  tips and resources to help with employment </li><li>  information about protecting your finances and increasing savings </li><li> finding a safe place to live. </li> </ul> </p> ",
+              "imageLink": null
+            }
+          },
+          "conditions": {
+            "any": [
+              {
+                "fact": "TOP_PRIORITY",
+                "operator": "equal",
+                "value": "resources"
+              }
+            ]
+          }
+        },
+        {
+          "event": {
+            "type": "health",
+            "params": {
+              "categoryName": "Top Priority: My Health and Wellbeing",
+              "responseString": "<p> It seems like your mental and physical wellbeing is what is most important to you right now. Relationship issues can take a huge toll on your health. It's important that you remember to take some time for yourself to help you to deal with what's going on. It can be very difficult to share personal problems with others, particularly if your upbringing or culture values privacy. However, even if it is hard, it can be good sometimes to talk with a person you trust and let them know what's going on at home. A bit later, this website will provide: <ul> <li>strategies for coping with stress and managing your feelings</li><li> links to some people you can talk to (confidentially) if you wish </li> </ul> </p>",
+              "imageLink": null
+            }
+          },
+          "conditions": {
+            "any": [
+              {
+                "fact": "TOP_PRIORITY",
+                "operator": "equal",
+                "value": "health"
+              }
+            ]
+          }
+        },
+        {
+          "event": {
+            "type": "child",
+            "params": {
+              "categoryName": "Top Priority: My Children",
+              "responseString": "<p> It seems like your children's wellbeing is what is most important to you right now. As a mother, you want to protect your children and you want what's best for them. However, it is likely that your children may know about the issues at home, even if they have not seen it directly. This may be affecting them. Thinking about what's best for your children may help you make a decision about your relationship. A bit later, this website will provide: <ul> <li> strategies that may help you with parenting during this difficult time</li><li>  strategies for managing safe contact if you separate and your partner has access to your children. </li> </ul> </p>",
+              "imageLink": null
+            }
+          },
+          "conditions": {
+            "any": [
+              {
+                "fact": "TOP_PRIORITY",
+                "operator": "equal",
+                "value": "child"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "sectionId": "2",
