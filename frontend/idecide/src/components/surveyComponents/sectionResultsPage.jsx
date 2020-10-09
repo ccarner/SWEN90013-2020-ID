@@ -16,10 +16,14 @@ export default function SectionResultsPage(props) {
     ) : (
       <React.Fragment>
         <Card.Title>
-          Feedback: <b>{props.feedbackCategory}</b>
+          Feedback <br /> <b>{props.feedbackCategory}</b>
         </Card.Title>
         <img src={props.feedbackImage} alt="" width="30%" />
-        <Card.Text style={{ fontSize: "18px" }}>{props.feedbackText}</Card.Text>
+        <Card.Text
+          style={{ fontSize: "18px", padding: "20px", textAlign: "left" }}
+        >
+          <div dangerouslySetInnerHTML={{ __html: props.feedbackText }} />
+        </Card.Text>
       </React.Fragment>
     );
 
