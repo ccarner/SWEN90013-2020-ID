@@ -243,7 +243,7 @@ export default class SurveyControl extends Component {
 
     // the top bar with status of completion, name of survey etc
     renderArray.push(
-      <Card style={{ zIndex: -1 }}>
+      <Card style={{ zIndex: -1, width: "100%" }}>
         <Container>
           <Row className="align-items-center">
             <Col>

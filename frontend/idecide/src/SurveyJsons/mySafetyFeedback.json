@@ -1,42 +1,40 @@
-{
-  "rules": [
-    {
-      "event": {
-        "type": "highRisk",
-        "params": {
-          "categoryName": "High Risk",
-          "responseString": " You seem to have experienced serious abusive behaviours from your partner. It is not acceptable for these things to happen in relationships. It is probably affecting your mental and physical health and possibly your studies as well. ",
-          "imageLink": "https://rlv.zcache.com.au/3d_pink_love_heart_heart_sticker-r133338d543304d8aa228414bd38bc390_0ugd3_8byvr_540.jpg"
-        }
-      },
-      "conditions": {
-        "any": [
-          {
-            "fact": "totalAnswerPoints",
-            "operator": "greaterThanInclusive",
-            "value": 1
-          }
-        ]
+[
+  {
+    "event": {
+      "type": "highRisk",
+      "params": {
+        "categoryName": "High Risk",
+        "responseString": " You seem to have experienced serious abusive behaviours from your partner. It is not acceptable for these things to happen in relationships. It is probably affecting your mental and physical health and possibly your studies as well. ",
+        "imageLink": "https://rlv.zcache.com.au/3d_pink_love_heart_heart_sticker-r133338d543304d8aa228414bd38bc390_0ugd3_8byvr_540.jpg"
       }
     },
-    {
-      "event": {
-        "type": "lowRiskEvent",
-        "params": {
-          "categoryName": "Low Risk",
-          "responseString": " You are at low risk ",
-          "imageLink": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Heart_anterior_exterior_view.jpg"
+    "conditions": {
+      "any": [
+        {
+          "fact": "totalAnswerPoints",
+          "operator": "greaterThanInclusive",
+          "value": 1
         }
-      },
-      "conditions": {
-        "any": [
-          {
-            "fact": "totalAnswerPoints",
-            "operator": "lessThanInclusive",
-            "value": 0
-          }
-        ]
-      }
+      ]
     }
-  ]
-}
+  },
+  {
+    "event": {
+      "type": "lowRiskEvent",
+      "params": {
+        "categoryName": "Low Risk",
+        "responseString": " You are at low risk ",
+        "imageLink": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Heart_anterior_exterior_view.jpg"
+      }
+    },
+    "conditions": {
+      "any": [
+        {
+          "fact": "totalAnswerPoints",
+          "operator": "lessThanInclusive",
+          "value": 0
+        }
+      ]
+    }
+  }
+]

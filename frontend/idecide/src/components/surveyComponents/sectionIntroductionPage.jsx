@@ -23,10 +23,13 @@ export default function SurveyInformationPage(props) {
   return (
     <div>
       <Card className="surveyIntroCard" style={{ width: "80%" }}>
-        {/* <Card.Img variant="top" src={imagelocation} /> */}
         <Card.Body>
           <Card.Title>{"Section: " + props.section.sectionTitle}</Card.Title>
-          <Card.Text style={{ fontSize: "18px" }}>{introComponent}</Card.Text>
+          <Card.Text
+            style={{ fontSize: "18px", padding: "20px", textAlign: "left" }}
+          >
+            {introComponent}
+          </Card.Text>
         </Card.Body>
       </Card>
     </div>

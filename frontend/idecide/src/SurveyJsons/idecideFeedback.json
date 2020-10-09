@@ -1,0 +1,166 @@
+{
+  "surveyId": "5",
+  "surveyTitle": "I-Decide Feedback",
+  "surveyVersion": "1.0",
+  "surveyIntroduction": "Please provide us with some feedback on your experience using I-Decide",
+  "surveyIntroductionHtmlB64": "PHA+V2VsbCBkb25lIG9uIHdvcmtpbmcgeW91ciB3YXkgdGhyb3VnaCB0aGlzIHdlYnNpdGUuIFdlIGFkbWlyZSB5b3VyIGNvdXJhZ2UgaW4gY29tcGxldGluZyB0aGVzZSBhY3Rpdml0aWVzLCBhbmQgd2lzaCB5b3UgYWxsIHRoZSBiZXN0IGluIGNhcnJ5aW5nIG91dCB0aGVzZSBzdGVwcy4gUmVtZW1iZXIsIHRoZXJlIGFyZSByZXNvdXJjZXMgYXZhaWxhYmxlIGlmIHlvdSBuZWVkIGhlbHAgYWxvbmcgdGhlIHdheSwgaW5jbHVkaW5nIGEgY29uZmlkZW50aWFsIGNvdW5zZWxsaW5nIGxpbmUgKDE4MDAgUkVTUEVDVCAtIDE4MDAgNzM3IDczMikuIE5vdyB0aGF0IHlvdSBoYXZlIGNvbXBsZXRlZCBhbGwgdGhlIHNlY3Rpb25zIG9mIHRoZSB3ZWJzaXRlLCB3ZSB3b3VsZCBsaWtlIHRvIGFzayB5b3UgYSBjb3VwbGUgb2YgZmluYWwgcXVlc3Rpb25zIGFib3V0IHlvdXIgZXhwZXJpZW5jZXMuIDwvcD4=",
+  "surveyImageName": "1314207316417056768.jpg",
+  "surveySections": [
+    {
+      "sectionId": "1",
+      "sectionTitle": "",
+      "sectionIntroduction": "",
+      "sectionIntroductionHtmlB64": "",
+      "questions": [
+        {
+          "questionIndex": 0,
+          "questionId": "1",
+          "questionText": "How supported do you currently feel by the I-DECIDE website? (0 is not at all supported and 10 is very supported)",
+          "questionType": "slider",
+          "sliderMaxValue": 10,
+          "sliderMinValue": 0,
+          "sliderDefaultValue": 5
+        },
+        {
+          "questionIndex": 1,
+          "questionId": "2",
+          "questionText": "The partner or ex-partner who made me feel afraid is aware that I am using a website that includes questions about domestic violence",
+          "questionType": "singleSelection",
+          "selectionOptions": [
+            "Completely aware",
+            "Somewhat aware",
+            "I don't know",
+            "Unaware",
+            "Completely unaware"
+          ]
+        },
+        {
+          "questionIndex": 2,
+          "questionId": "3",
+          "questionText": "I am completing this website in a place where I feel free to answer the questions truthfully",
+          "questionType": "singleSelection",
+          "selectionOptions": [
+            "Strongly agree",
+            "Agree",
+            "Neither agree nor disagree",
+            "Disagree",
+            "Strongly disagree"
+          ]
+        },
+        {
+          "questionIndex": 3,
+          "questionId": "4",
+          "questionText": "I am pleased that I have been asked questions about domestic violence in this website",
+          "questionType": "singleSelection",
+          "selectionOptions": [
+            "Strongly agree",
+            "Agree",
+            "Neither agree nor disagree",
+            "Disagree",
+            "Strongly disagree"
+          ]
+        },
+        {
+          "questionIndex": 4,
+          "questionId": "5",
+          "questionText": "I felt comfortable answering questions about domestic violence in this website",
+          "questionType": "singleSelection",
+          "selectionOptions": [
+            "Having resources",
+            "My concern for safety",
+            "Feeling for my partner",
+            "My health and wellbeing",
+            "Children"
+          ]
+        },
+        {
+          "questionIndex": 5,
+          "questionId": "6",
+          "questionText": "For me, being asked questions about domestic violence in this website is…",
+          "questionType": "singleSelection",
+          "selectionOptions": [
+            "Having resources",
+            "My concern for safety",
+            "Feeling for my partner",
+            "My health and wellbeing",
+            "Children"
+          ]
+        },
+        {
+          "questionIndex": 6,
+          "questionId": "7",
+          "questionText": "As a result of questions about domestic violence being asked in this website, my feelings about my relationship with the partner(s) who made me feel afraid are…",
+          "questionType": "singleSelection",
+          "selectionOptions": [
+            "Having resources",
+            "My concern for safety",
+            "Feeling for my partner",
+            "My health and wellbeing",
+            "Children"
+          ]
+        },
+        {
+          "questionIndex": 7,
+          "questionId": "8",
+          "questionText": "The questions I was asked in this website made me feel that the problems in my relationship were the fault of my partner or ex-partner",
+          "questionType": "singleSelection",
+          "selectionOptions": [
+            "Having resources",
+            "My concern for safety",
+            "Feeling for my partner",
+            "My health and wellbeing",
+            "Children"
+          ]
+        },
+        {
+          "questionIndex": 8,
+          "questionId": "9",
+          "questionText": "As a result of being asked questions about domestic violence in this website, my feelings about myself as a person are…",
+          "questionType": "singleSelection",
+          "selectionOptions": [
+            "Having resources",
+            "My concern for safety",
+            "Feeling for my partner",
+            "My health and wellbeing",
+            "Children"
+          ]
+        },
+        {
+          "questionIndex": 9,
+          "questionId": "10",
+          "questionText": "Responding to this website has made me more open to dealing with possible problems in my relationship",
+          "questionType": "singleSelection",
+          "selectionOptions": [
+            "Having resources",
+            "My concern for safety",
+            "Feeling for my partner",
+            "My health and wellbeing",
+            "Children"
+          ]
+        },
+        {
+          "questionIndex": 10,
+          "questionId": "11",
+          "questionText": "I am glad to have used I-Decide",
+          "questionType": "singleSelection",
+          "selectionOptions": [
+            "Having resources",
+            "My concern for safety",
+            "Feeling for my partner",
+            "My health and wellbeing",
+            "Children"
+          ]
+        },
+        {
+          "questionIndex": 11,
+          "questionId": "12",
+          "questionText": "Please tell us about your experiences being referred to this decision aid?",
+          "questionType": "longAnswer",
+          "answerLength": 100
+        }
+      ],
+      "sectionResultAlgorithm": null
+    }
+  ],
+  "surveyResultAlgorithm": null
+}

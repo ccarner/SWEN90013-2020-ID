@@ -31,7 +31,7 @@ export default function evaluateFeedback(rules, factContainers) {
           surveyResults["My Priorities"].questions[1].questionAnswer[0][0];
 
         // the top priorities as given are the quetion answers, eg "My Safety".. and could be changed
-        let priorities = ["safety", "children", "resources"];
+        let priorities = ["safety", "child", "resources", "health", "partner"];
         for (var priority of priorities) {
           if (topPriority.toLowerCase().indexOf(priority) > -1) {
             topPriority = priority;
