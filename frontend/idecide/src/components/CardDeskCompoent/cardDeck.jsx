@@ -248,7 +248,7 @@ export default class CardDeck extends Component {
               `}
               key={index}
             >
-              <div className="counter">
+              <div className="counter" style={{ marginTop: 40 }}>
                 <h5 className="current">{item.questionId}</h5>
                 <h5>/{questions.length + parseInt(item.questionId) - 1}</h5>
               </div>

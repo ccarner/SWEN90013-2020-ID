@@ -66,11 +66,11 @@
           "questionText": "I felt comfortable answering questions about domestic violence in this website",
           "questionType": "singleSelection",
           "selectionOptions": [
-            "Having resources",
-            "My concern for safety",
-            "Feeling for my partner",
-            "My health and wellbeing",
-            "Children"
+            "Strongly agree",
+            "Agree",
+            "Neither agree nor disagree",
+            "Disagree",
+            "Strongly disagree"
           ]
         },
         {
@@ -79,11 +79,11 @@
           "questionText": "For me, being asked questions about domestic violence in this website is…",
           "questionType": "singleSelection",
           "selectionOptions": [
-            "Having resources",
-            "My concern for safety",
-            "Feeling for my partner",
-            "My health and wellbeing",
-            "Children"
+            "Very Acceptable",
+            "Acceptable",
+            "Neutral",
+            "Unaccptable",
+            "Very Unacceptable"
           ]
         },
         {
@@ -92,11 +92,11 @@
           "questionText": "As a result of questions about domestic violence being asked in this website, my feelings about my relationship with the partner(s) who made me feel afraid are…",
           "questionType": "singleSelection",
           "selectionOptions": [
-            "Having resources",
-            "My concern for safety",
-            "Feeling for my partner",
-            "My health and wellbeing",
-            "Children"
+            "More positive",
+            "Somewhat more positive",
+            "Unchanged",
+            "Somewhat more negative",
+            "More negative"
           ]
         },
         {
@@ -105,11 +105,11 @@
           "questionText": "The questions I was asked in this website made me feel that the problems in my relationship were the fault of my partner or ex-partner",
           "questionType": "singleSelection",
           "selectionOptions": [
-            "Having resources",
-            "My concern for safety",
-            "Feeling for my partner",
-            "My health and wellbeing",
-            "Children"
+            "Strongly agree",
+            "Agree",
+            "Neither agree nor disagree",
+            "Disagree",
+            "Strongly disagree"
           ]
         },
         {
@@ -118,11 +118,11 @@
           "questionText": "As a result of being asked questions about domestic violence in this website, my feelings about myself as a person are…",
           "questionType": "singleSelection",
           "selectionOptions": [
-            "Having resources",
-            "My concern for safety",
-            "Feeling for my partner",
-            "My health and wellbeing",
-            "Children"
+            "More positive",
+            "Somewhat more positive",
+            "Unchanged",
+            "Somewhat more negative",
+            "More negative"
           ]
         },
         {
@@ -131,11 +131,11 @@
           "questionText": "Responding to this website has made me more open to dealing with possible problems in my relationship",
           "questionType": "singleSelection",
           "selectionOptions": [
-            "Having resources",
-            "My concern for safety",
-            "Feeling for my partner",
-            "My health and wellbeing",
-            "Children"
+            "Strongly agree",
+            "Agree",
+            "Neither agree nor disagree",
+            "Disagree",
+            "Strongly disagree"
           ]
         },
         {
@@ -144,11 +144,11 @@
           "questionText": "I am glad to have used I-Decide",
           "questionType": "singleSelection",
           "selectionOptions": [
-            "Having resources",
-            "My concern for safety",
-            "Feeling for my partner",
-            "My health and wellbeing",
-            "Children"
+            "Strongly agree",
+            "Agree",
+            "Neither agree nor disagree",
+            "Disagree",
+            "Strongly disagree"
           ]
         },
         {
