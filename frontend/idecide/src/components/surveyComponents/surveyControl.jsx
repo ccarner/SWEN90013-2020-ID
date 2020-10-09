@@ -5,7 +5,7 @@ import {
   getActionPlanRuleEngineStrategy,
 } from "../../API/surveyAPI";
 import SurveySection from "./surveySection";
-import { Spinner, Button, Container, Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import SurveyIntroductionPage from "./surveyIntroductionPage";
 import SectionIntroductionPage from "./sectionIntroductionPage";
 import SurveyResultsPage from "./surveyResultsPage";

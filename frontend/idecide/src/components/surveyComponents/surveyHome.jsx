@@ -17,6 +17,7 @@ import ActionPlans from "./actionPlans";
 import { Card, Button } from "react-bootstrap";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 import { Typography } from "@material-ui/core";
+import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
 
 /**
  * The parent component of all survey pages. This component:
@@ -130,8 +131,12 @@ export default class SurveyHome extends Component {
     } else if (currentState === "menu" && this.state.loaded) {
       renderElements.push(
         <React.Fragment>
-          <div className="container" className="padding10">
-            <div style={{ padding: "30px" }}>
+          <div
+            className="container"
+            className="padding10"
+            style={{ marginBottom: "50px" }}
+          >
+            <div style={{ padding: "20px" }}>
               <h1 className="text-center" style={{ color: "#9572A4" }}>
                 Help Me Decide
               </h1>
@@ -141,10 +146,8 @@ export default class SurveyHome extends Component {
               situation
             </Typography>
             <Typography color="textPrimary" gutterBottom variant="h5">
-              So we can generate a personalised action plan for you.
+              so we can generate a personalised action plan for you.
             </Typography>
-
-            <br />
 
             <div>
               {this.state.allSurveys.map((survey, index) => (
