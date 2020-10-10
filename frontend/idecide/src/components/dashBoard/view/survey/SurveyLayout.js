@@ -69,11 +69,11 @@ export default function SurveyLayout() {
 	const AddNewSurveys = async () => {
 		if (openGreen) {
 			// window.location.replace('./survey');
-			window.location.href = '/dashboard/survey';
+		//	window.location.href = '/dashboard/surveys';
 		} else {
 
 			var readyData = JSON.stringify({
-				surveyId: Array.from(data).length + 1,
+				surveyId: Array.from(data).length + 1 +"",
 				surveyTitle: values.title,
 				surveyIntroduction: values.descrpition,
 				surveyVersion: '',
@@ -84,6 +84,7 @@ export default function SurveyLayout() {
 			});
 			const feedBack = await AddNewSurvey(readyData)
 				.then((data) => {
+					console.log(data);
 					setOpenGreen(true);
 				})
 				.catch((error) => {
@@ -114,8 +115,8 @@ export default function SurveyLayout() {
 			{isLoading ? (
 				<Loading/>
 			) : (
-				<Box>
-					<Grid container spacing={5}>
+				<Box p={1}>
+					<Grid container spacing={2}>
 						<Grid item xs={12} >
 							<Button variant="contained" color="primary" onClick={handleEdit}>
 								Edit

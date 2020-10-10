@@ -64,14 +64,15 @@ const SurveyCard = ({ product, editable, ...rest }) => {
 	const [ open, setDMOpen ] = React.useState(false); //control of adding new survey
 	const [ values, setValues ] = React.useState({
 		title: product.surveyTitle,
-		descrpition: product.surveyIntroduction
+		descrpition: product.surveyIntroduction,
+		surveyIntroductionHtmlB64: product.surveyIntroductionHtmlB64
 	});
 	const [ files, setFiles ] = React.useState([]);
 	const form = useRef(null);
 
 	//	const [ deleteMD, setDeleteMD ] = React.useState(true);
 	//	const editable = useContext(Editable);
-	//	console.log(editable);
+	console.log(product);
 	const handleOpen = () => {
 		setDMOpen(true);
 	};
@@ -109,7 +110,7 @@ const SurveyCard = ({ product, editable, ...rest }) => {
 
 		const feedBack = await DeleteSurvey(product.surveyId)
 			.then(() => {
-				window.location.href = './dashboard/survey';
+				window.location.href = './dashboard/surveys';
 			})
 			.catch((error) => {
 				setOpen(true);
@@ -120,18 +121,20 @@ const SurveyCard = ({ product, editable, ...rest }) => {
 
 	const UpdateSurvey = async () => {
 		if (openGreen) {
-			window.location.href = './dashboard/survey';
+			window.location.href = './dashboard/surveys';
 		}
 		//
 		var readyData = JSON.stringify({
 			surveyId: product.surveyId,
 			surveyTitle: values.title,
 			surveyIntroduction: values.descrpition,
-			surveyVersion: product.surveyVersion
+			surveyVersion: product.surveyVersion,
+			surveyIntroductionHtmlB64: values.surveyIntroductionHtmlB64
     });
-    handleUploadImg();
+    	handleUploadImg();
 		const feedBack = await editSurvey(readyData)
 			.then((data) => {
+				console.log(data);
 				setOpenGreen(true);
 			})
 			.catch((error) => {
@@ -238,6 +241,19 @@ const SurveyCard = ({ product, editable, ...rest }) => {
 								onChange={handleChange('descrpition')}
 								rows={4}
 								label="Description"
+								variant="outlined"
+							/>
+							<Box p={1}></Box>
+							{values.surveyIntroductionHtmlB64}
+							<TextField
+								id="outlined-multiline-flexible"
+								multiline
+								fullWidth
+								required
+								value={values.surveyIntroductionHtmlB64}
+								onChange={handleChange('surveyIntroductionHtmlB64')}
+								rows={4}
+								label="HTML Introduction"
 								variant="outlined"
 							/>
 						</Collapse>

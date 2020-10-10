@@ -126,7 +126,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(1),
+    padding: theme.spacing(0),
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -139,7 +139,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: 0,
+    marginLeft: 2,
     marginTop: "5%",
   },
   nested: {
@@ -338,7 +338,7 @@ function NavBar(props) {
             <Divider />
             <List>
               <NavLink
-                to={"/navbar/surveys"}
+                to={"/dashboard/surveys"}
                 onMouseDown={() => setShowSurvey(!showSurvey)}
               >
                 <ListItem button>
@@ -356,7 +356,7 @@ function NavBar(props) {
                 {surveys &&
                   surveys.map((survey, index) => (
                     <NavLink
-                      to={"/navbar/surveyId=" + survey.surveyId}
+                      to={"/dashboard/surveyId=" + survey.surveyId}
                       key={survey.surveyId}
                     >
                       <MenuItem className={classes.nested}>
@@ -391,9 +391,9 @@ function NavBar(props) {
             })}
           >
             <Switch>
-              <Route exact path="/navbar/surveys" component={SurveyLayout} />
+              <Route exact path="/dashboard/surveys" component={SurveyLayout} />
               <Route
-                path="/navbar/surveyId=:surveyId"
+                path="/dashboard/surveyId=:surveyId"
                 component={SurveySection}
               />
               <Route path="/dashboard/datacollection" component={DCLayout} />

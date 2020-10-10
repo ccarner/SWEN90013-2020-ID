@@ -56,7 +56,7 @@ export default class LoginPage extends React.Component {
 		if (response.flag) {
 			console.log(response);
 			if(response.data.roles == 'admin'){
-				window.location.replace("/navbar/surveys");
+				window.location.replace("/dashboard/surveys");
 			}else{
 				window.location.replace("/loginComponent/userInfo");
 			}
