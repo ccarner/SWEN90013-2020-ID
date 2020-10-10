@@ -73,7 +73,7 @@ const SurveyCard = ({ product, editable, ...rest }) => {
 
 	//	const [ deleteMD, setDeleteMD ] = React.useState(true);
 	//	const editable = useContext(Editable);
-	console.log(product);
+	//console.log(product);
 	const handleOpen = () => {
 		setDMOpen(true);
 	};

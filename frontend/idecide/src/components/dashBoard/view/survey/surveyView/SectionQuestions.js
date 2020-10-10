@@ -49,7 +49,7 @@ const SectionQuestions = (props) => {
 
 	const [ open, setDMOpen ] = React.useState(false); //control of adding new survey
 	const [ openTable, setOpenTable ] = React.useState(false); // open algorithm table
-	const [ openAlert, setOpen ] = React.useState(false);
+	const [ openAlert, setOpen ] = React.useState(false); // open error alert
 	const [ openGreen, setOpenGreen ] = React.useState(false);
 	const [ error, setError ] = React.useState();
 	const [ values, setValues ] = React.useState({
@@ -238,7 +238,7 @@ const SectionQuestions = (props) => {
 				sectionIntroduction: values.descrpition,
 				sectionId: props.data.sectionId,
 				questions: props.data.questions,
-				sectionResultAlgorithm:  props.data.sectionResultAlgorithm,
+				sectionResultAlgorithm: props.data.sectionResultAlgorithm,
 				sectionIntroductionHtmlB64: values.sectionIntroductionHtmlB64
 			};
 
@@ -302,6 +302,7 @@ const SectionQuestions = (props) => {
 				operator: row.conditions.any[0].operator,
 				value: row.conditions.any[0].value,
 				categoryName: row.event.params.categoryName,
+				imageLink: row.event.params.imageLink,
 				responseString: row.event.params.responseString,
 				index: index
 			});
@@ -312,30 +313,105 @@ const SectionQuestions = (props) => {
 		setOpenAlgorithm(!openAlgorithm);
 	};
 
-	const UpdateAlgorithm = () => {
-		console.log('algorithm', algorithm);
-		if(algorithm.index == -1){
-			// adding new algorithm
+	const UpdateAlgorithm = async () => {
+		if (openGreen) {
+			window.location.reload();
+		} else {
+			if (algorithm.index == -1) {
+				console.log('algorithm', algorithm);
+				// adding new algorithm
+				const newAlgorithm = {
+					conditions: {
+						any: [
+							{
+								fact: algorithm.fact,
+								operator: algorithm.operator,
+								value: algorithm.value
+							}
+						]
+					},
+					event: {
+						params: {
+							categoryName: algorithm.categoryName,
+							imageLink: algorithm.imageLink,
+							responseString: algorithm.responseString
+						}
+					}
+				};
 
-		}else{
-			// updating algorithm
-			let row = props.data.sectionResultAlgorithm[algorithm.index];
+				if (typeof props.data.sectionResultAlgorithm == 'undefined') props.data.sectionResultAlgorithm = [];
+				props.data.sectionResultAlgorithm.push(newAlgorithm);
+			} else {
+				// updating algorithm
+				let row = props.data.sectionResultAlgorithm[algorithm.index];
 
-			row.conditions.any[0].fact = algorithm.fact;
-			row.conditions.any[0].operator = algorithm.operator;
-			row.conditions.any[0].value = algorithm.value;
-			row.event.params.categoryName = algorithm.categoryName;
-			row.event.params.responseString = algorithm.responseString;
-			
-			props.data.sectionResultAlgorithm.splice(algorithm.index, 1, row);
-			
-			console.log(algorithm.index, props.data);
+				row.conditions.any[0].fact = algorithm.fact;
+				row.conditions.any[0].operator = algorithm.operator;
+				row.conditions.any[0].value = algorithm.value;
+				row.event.params.categoryName = algorithm.categoryName;
+				row.event.params.imageLink = algorithm.imageLink;
+				row.event.params.responseString = algorithm.responseString;
 
+				props.data.sectionResultAlgorithm.splice(algorithm.index, 1, row);
+			}
+
+			setAlgorithm({
+				fact: '',
+				operator: '',
+				value: '',
+				categoryName: '',
+				responseString: '',
+				index: -1
+			});
+			// updating sections in the survey
+			props.sections.splice(props.index, 1, props.data);
+			console.log(algorithm.index, props.sections[0].sectionResultAlgorithm[0]);
+
+			var readyData = {
+				surveyId: props.surveyId,
+				surveySections: props.sections
+			};
+
+			// updating the survey
+			await editSurvey(readyData)
+				.then((response) => {
+					if (response.data.code == 200) setOpenGreen(true);
+					else {
+						setOpen(true);
+						setError(response.data.message);
+					}
+				})
+				.catch(() => {
+					setOpen(true);
+					setError(error + '');
+				});
 		}
 	};
 
 	const handleAlChange = (prop) => (event) => {
 		setAlgorithm({ ...algorithm, [prop]: event.target.value });
+	};
+
+	const handleDeleteAlgorithm = async (index) => {
+		props.data.sectionResultAlgorithm.splice(index, 1);
+		props.sections.splice(props.index, 1, props.data);
+
+		var readyData = {
+			surveyId: props.surveyId,
+			surveySections: props.sections
+		};
+
+		// updating the deleted algrithm survey
+		await editSurvey(readyData)
+			.then((response) => {
+				if (response.data.code == 200) alert("Delete successfully");
+				else {
+					alert(response.data.message);
+				}
+			})
+			.catch(() => {
+				alert(error + '');
+			});
 	};
 
 	return (
@@ -401,11 +477,16 @@ const SectionQuestions = (props) => {
 								</Typography>
 							</Grid>
 							<Grid item>
-								{typeof props.data.sectionResultAlgorithm == 'undefined' ? (
+								{typeof props.data.sectionResultAlgorithm == 'undefined' ||
+								props.data.sectionResultAlgorithm.length == 0 || typeof props.data.sectionResultAlgorithm[0] == 'undefined'|| typeof props.data.sectionResultAlgorithm.map == 'undefined'? (
 									<div>
 										No algorithm
 										<Tooltip title="Add result algorithm">
-											<IconButton onClick={handleOpenTable} style={{ width: 50 }} color="primary">
+											<IconButton
+												onClick={handleOpenAlgorithm}
+												style={{ width: 50 }}
+												color="primary"
+											>
 												<ControlPointRoundedIcon />
 											</IconButton>
 										</Tooltip>
@@ -432,13 +513,14 @@ const SectionQuestions = (props) => {
 										<TableCell align="right">Operator</TableCell>
 										<TableCell align="right">value</TableCell>
 										<TableCell align="right">categoryName</TableCell>
+										<TableCell align="center">ImageLink</TableCell>
 										<TableCell align="center">responseString</TableCell>
 										<TableCell align="center">Action</TableCell>
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{typeof props.data.sectionResultAlgorithm == 'undefined' ? (
-										<IconButton onClick={handleOpenTable}>
+									{typeof props.data.sectionResultAlgorithm == 'undefined' || typeof props.data.sectionResultAlgorithm.map == 'undefined'? (
+										<IconButton onClick={handleOpenAlgorithm}>
 											No algorithm <ControlPointRoundedIcon />
 										</IconButton>
 									) : (
@@ -451,6 +533,9 @@ const SectionQuestions = (props) => {
 												<TableCell align="right">{row.conditions.any[0].operator}</TableCell>
 												<TableCell align="right">{row.conditions.any[0].value}</TableCell>
 												<TableCell align="right">{row.event.params.categoryName}</TableCell>
+												<TableCell align="center">
+													<Button href={row.event.params.imageLink}>image</Button>
+												</TableCell>
 												<TableCell>{row.event.params.responseString}</TableCell>
 												<TableCell>
 													<IconButton
@@ -465,7 +550,7 @@ const SectionQuestions = (props) => {
 														color="secondary"
 														style={{ width: 50 }}
 														size="small"
-														onClick={deleteSection}
+														onClick={() => handleDeleteAlgorithm(index)}
 													>
 														<DeleteForeverOutlinedIcon fontSize="small" />
 													</IconButton>
@@ -474,7 +559,7 @@ const SectionQuestions = (props) => {
 										))
 									)}
 									<TableRow align="center">
-										<TableCell align="center" colSpan={6}>
+										<TableCell align="center" colSpan={7}>
 											<Button fullWidth onClick={handleOpenAlgorithm}>
 												<ControlPointRoundedIcon fontSize="middle" />
 											</Button>
@@ -622,7 +707,17 @@ const SectionQuestions = (props) => {
 							required
 							value={algorithm.categoryName}
 							onChange={handleAlChange('categoryName')}
-							label="Value"
+							label="CategoryName"
+							variant="outlined"
+						/>
+						<Box p={1} />
+						<TextField
+							id="outlined-multiline-flexible"
+							fullWidth
+							required
+							value={algorithm.imageLink}
+							onChange={handleAlChange('imageLink')}
+							label="ImageLink"
 							variant="outlined"
 						/>
 						<Box p={1} />
