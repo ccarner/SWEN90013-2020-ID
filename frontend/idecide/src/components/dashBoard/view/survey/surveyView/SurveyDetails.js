@@ -96,8 +96,7 @@ const SurveyDetails = (props) => {
 	}
 
 	return (
-		<div>
-			<Grid>
+			<Grid containner padding={3}>
 				<Grid item lg={3} md={6} xs={12}>
 					<Button color="secondary" fullWidth variant="contained" onClick={handleShow}>
 						Edit
@@ -146,6 +145,11 @@ const SurveyDetails = (props) => {
 													{item.sectionIntroduction}
 												</Typography>
 											</Box>
+											<Box display="flex" p={1}>
+												<Typography variant="subtitle1" gutterBottom>
+													{item.sectionResultAlgorithm}
+												</Typography>
+											</Box>
 										</CardContent>
 									</Card>
 									<Collapse in={isOpen}>
@@ -182,7 +186,6 @@ const SurveyDetails = (props) => {
 					</Box>
 				</Collapse>
 			</Grid>
-		</div>
 	);
 };
 

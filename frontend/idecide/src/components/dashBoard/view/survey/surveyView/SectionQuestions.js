@@ -20,12 +20,21 @@ import {
 	Typography,
 	IconButton,
 	Grid,
-	Tooltip
+	Tooltip,
+	Paper,
+	TableContainer,
+	Table,
+	TableHead,
+	TableRow,
+	TableCell,
+	TableBody
 } from '@material-ui/core';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
 import { getSurveyById, editSurvey } from '../../../../../API/surveyAPI';
 import EditIcon from '@material-ui/icons/Edit';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import ExpandLess from '@material-ui/icons/ExpandLess';
 import QuestionDetails from './QuestionDetails';
 import Alert from '@material-ui/lab/Alert';
 import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
@@ -39,14 +48,14 @@ const SectionQuestions = (props) => {
 	const [ isOpen, setIsOpen ] = React.useState(false);
 
 	const [ open, setDMOpen ] = React.useState(false); //control of adding new survey
-	//const [ isOpen, setOpen ] = React.useState(false);
+	const [ openTable, setOpenTable ] = React.useState(false); // open algorithm table
 	const [ openAlert, setOpen ] = React.useState(false);
 	const [ openGreen, setOpenGreen ] = React.useState(false);
 	const [ error, setError ] = React.useState();
 	const [ values, setValues ] = React.useState({
 		title: props.data.sectionTitle,
 		descrpition: props.data.sectionIntroduction,
-		htmlDescription:'',
+		sectionIntroductionHtmlB64: props.data.sectionIntroductionHtmlB64,
 		question: '',
 		option1: 'Never',
 		option2: 'Once',
@@ -55,6 +64,22 @@ const SectionQuestions = (props) => {
 		option5: 'Once A Week',
 		option6: 'Daily'
 	});
+
+	const [ editRow, setRow ] = React.useState();
+	const [ algorithm, setAlgorithm ] = React.useState({
+		fact: '',
+		operator: '',
+		value: '',
+		categoryName: '',
+		responseString: '',
+		index: -1
+	});
+
+	//	console.log('values', values);
+
+	const handleOpenTable = () => {
+		setOpenTable(!openTable);
+	};
 
 	const [ type, setType ] = React.useState('');
 
@@ -203,40 +228,41 @@ const SectionQuestions = (props) => {
 	};
 
 	const UpdateSection = async (event) => {
-		//		event.preventDefault();
+		if (openGreen) {
+			window.location.reload();
+		} else {
+			let sections = props.sections;
 
-		//		const formIn = new FormData(event.target);
-		//		var formObject = {};
-		//		formIn.forEach((value, key) => {
-		//			formObject[key] = value;
-		//		});
+			var modifiedSection = {
+				sectionTitle: values.title,
+				sectionIntroduction: values.descrpition,
+				sectionId: props.data.sectionId,
+				questions: props.data.questions,
+				sectionResultAlgorithm:  props.data.sectionResultAlgorithm,
+				sectionIntroductionHtmlB64: values.sectionIntroductionHtmlB64
+			};
 
-		let sections = props.sections;
+			sections.splice(parseInt(props.index), 1, modifiedSection);
 
-		var modifiedSection = {
-			sectionTitle: values.title,
-			sectionIntroduction: values.descrpition,
-			sectionId: props.data.sectionId,
-			sectionIndex: props.data.sectionIndex,
-			questions: props.data.questions
-		};
-
-		sections.splice(parseInt(props.data.sectionIndex), 1, modifiedSection);
-
-		var readyData = JSON.stringify({
-			surveyId: props.surveyId,
-			surveySections: sections
-		});
-
-		await editSurvey(readyData)
-			.then((data) => {
-				setDMOpen(false);
-				props.handleShow();
-			})
-			.catch(() => {
-				setOpen(true);
-				setError(error + '');
+			var readyData = JSON.stringify({
+				surveyId: props.surveyId,
+				surveySections: sections
 			});
+
+			await editSurvey(readyData)
+				.then((response) => {
+					console.log(response.data);
+					if (response.data.code == 200) setOpenGreen(true);
+					else {
+						setOpen(true);
+						setError(response.data.message);
+					}
+				})
+				.catch(() => {
+					setOpen(true);
+					setError(error + '');
+				});
+		}
 	};
 
 	const deleteSection = async () => {
@@ -265,24 +291,70 @@ const SectionQuestions = (props) => {
 			});
 	};
 
+	//editing, deleting, adding algrithm.
+	const [ openAlgorithm, setOpenAlgorithm ] = React.useState(false);
+
+	const handleOpenAlgorithm = (row, index) => {
+		setOpenAlgorithm(!openAlgorithm);
+		if (typeof row.conditions !== 'undefined') {
+			setAlgorithm({
+				fact: row.conditions.any[0].fact,
+				operator: row.conditions.any[0].operator,
+				value: row.conditions.any[0].value,
+				categoryName: row.event.params.categoryName,
+				responseString: row.event.params.responseString,
+				index: index
+			});
+		}
+	};
+
+	const handleCloseAlgorithm = () => {
+		setOpenAlgorithm(!openAlgorithm);
+	};
+
+	const UpdateAlgorithm = () => {
+		console.log('algorithm', algorithm);
+		if(algorithm.index == -1){
+			// adding new algorithm
+
+		}else{
+			// updating algorithm
+			let row = props.data.sectionResultAlgorithm[algorithm.index];
+
+			row.conditions.any[0].fact = algorithm.fact;
+			row.conditions.any[0].operator = algorithm.operator;
+			row.conditions.any[0].value = algorithm.value;
+			row.event.params.categoryName = algorithm.categoryName;
+			row.event.params.responseString = algorithm.responseString;
+			
+			props.data.sectionResultAlgorithm.splice(algorithm.index, 1, row);
+			
+			console.log(algorithm.index, props.data);
+
+		}
+	};
+
+	const handleAlChange = (prop) => (event) => {
+		setAlgorithm({ ...algorithm, [prop]: event.target.value });
+	};
+
 	return (
-		<div>
-			<Box p={2}>
-				<Card>
-					<CardHeader
-						action={
-							<div>
-								<Tooltip title="Click to edit the section title and introduction">
-									<IconButton
-										style={{ width: 50 }}
-										color="secondary"
-										aria-label="add an alarm"
-										onClick={handleOpen}
-									>
-										<EditIcon color="primary" />
-									</IconButton>
-								</Tooltip>
-								<Tooltip title="Click to add new question.">
+		<div style={{ padding: '2%' }}>
+			<Card>
+				<CardHeader
+					action={
+						<div>
+							<Tooltip title="Click to edit the section title and introduction">
+								<IconButton
+									style={{ width: 50 }}
+									color="secondary"
+									aria-label="add an alarm"
+									onClick={handleOpen}
+								>
+									<EditIcon color="primary" />
+								</IconButton>
+							</Tooltip>
+							<Tooltip title="Click to add new question.">
 								<IconButton
 									style={{ width: 50 }}
 									color="secondary"
@@ -291,8 +363,8 @@ const SectionQuestions = (props) => {
 								>
 									<ControlPointRoundedIcon color="primary" />
 								</IconButton>
-								</Tooltip>
-								<Tooltip title="Click to view all questions.">
+							</Tooltip>
+							<Tooltip title="Click to view all questions.">
 								<IconButton
 									style={{ width: 50 }}
 									color="secondary"
@@ -301,40 +373,139 @@ const SectionQuestions = (props) => {
 								>
 									<ExpandMoreRoundedIcon color="primary" />
 								</IconButton>
-								</Tooltip>
-							</div>
-						}
-						//   subheader="Description"
-						title={props.data.sectionTitle}
-					/>
+							</Tooltip>
+						</div>
+					}
+					//   subheader="Description"
+					title={props.data.sectionTitle}
+				/>
+				<Divider />
+				<CardContent>
+					<Grid container spacing={2} direction="row" justify="flex-start" alignItems="center">
+						<Grid container spacing={2} direction="row" justify="flex-start" alignItems="center">
+							<Grid item>
+								<Typography variant="h6" gutterBottom>
+									Introduction:
+								</Typography>
+							</Grid>
+							<Grid item>
+								<Typography variant="body1" gutterBottom>
+									{props.data.sectionIntroduction}
+								</Typography>
+							</Grid>
+						</Grid>
+						<Grid container spacing={2} direction="row" justify="flex-start" alignItems="center">
+							<Grid item>
+								<Typography variant="h6" gutterBottom>
+									Result Algorithm:
+								</Typography>
+							</Grid>
+							<Grid item>
+								{typeof props.data.sectionResultAlgorithm == 'undefined' ? (
+									<div>
+										No algorithm
+										<Tooltip title="Add result algorithm">
+											<IconButton onClick={handleOpenTable} style={{ width: 50 }} color="primary">
+												<ControlPointRoundedIcon />
+											</IconButton>
+										</Tooltip>
+									</div>
+								) : (
+									<IconButton onClick={handleOpenTable}>
+										<Typography variant="body1" gutterBottom>
+											view{!openTable ? <ExpandMore /> : <ExpandLess />}
+										</Typography>
+									</IconButton>
+								)}
+							</Grid>
+						</Grid>
+					</Grid>
+				</CardContent>
+				<Collapse in={openTable}>
 					<Divider />
 					<CardContent>
-						<Box display="flex" p={1}>
-							<Typography variant="subtitle1" gutterBottom>
-								{props.data.sectionIntroduction}
-							</Typography>
-						</Box>
+						<TableContainer component={Paper}>
+							<Table size="small" aria-label="a dense table">
+								<TableHead>
+									<TableRow>
+										<TableCell>Fact</TableCell>
+										<TableCell align="right">Operator</TableCell>
+										<TableCell align="right">value</TableCell>
+										<TableCell align="right">categoryName</TableCell>
+										<TableCell align="center">responseString</TableCell>
+										<TableCell align="center">Action</TableCell>
+									</TableRow>
+								</TableHead>
+								<TableBody>
+									{typeof props.data.sectionResultAlgorithm == 'undefined' ? (
+										<IconButton onClick={handleOpenTable}>
+											No algorithm <ControlPointRoundedIcon />
+										</IconButton>
+									) : (
+										//	props.data.sectionResultAlgorithm
+										props.data.sectionResultAlgorithm.map((row, index) => (
+											<TableRow key={row.name}>
+												<TableCell component="th" scope="row">
+													{row.conditions.any[0].fact}
+												</TableCell>
+												<TableCell align="right">{row.conditions.any[0].operator}</TableCell>
+												<TableCell align="right">{row.conditions.any[0].value}</TableCell>
+												<TableCell align="right">{row.event.params.categoryName}</TableCell>
+												<TableCell>{row.event.params.responseString}</TableCell>
+												<TableCell>
+													<IconButton
+														onClick={handleOpenTable}
+														style={{ width: 50 }}
+														onClick={() => handleOpenAlgorithm(row, index)}
+														color="primary"
+													>
+														<EditIcon fontSize="small" />
+													</IconButton>
+													<IconButton
+														color="secondary"
+														style={{ width: 50 }}
+														size="small"
+														onClick={deleteSection}
+													>
+														<DeleteForeverOutlinedIcon fontSize="small" />
+													</IconButton>
+												</TableCell>
+											</TableRow>
+										))
+									)}
+									<TableRow align="center">
+										<TableCell align="center" colSpan={6}>
+											<Button fullWidth onClick={handleOpenAlgorithm}>
+												<ControlPointRoundedIcon fontSize="middle" />
+											</Button>
+										</TableCell>
+									</TableRow>
+								</TableBody>
+							</Table>
+						</TableContainer>
 					</CardContent>
-				</Card>
-				<Collapse in={isOpen}>
-					<div>
-						{typeof props.data.questions !== 'undefined' ? (
-							props.data.questions.map((question, index) => (
-								<Box key={index}>
-									<QuestionDetails
-										surveyID={props.surveyId}
-										data={question}
-										currentSection={props.sections}
-										questions={props.data.questions}
-									/>
-								</Box>
-							))
-						) : (
-							<div>No questions</div>
-						)}
-					</div>
 				</Collapse>
-			</Box>
+			</Card>
+			<Collapse in={isOpen}>
+				<div>
+					{typeof props.data.questions !== 'undefined' ? (
+						props.data.questions.map((question, index) => (
+							<Box key={index}>
+								<QuestionDetails
+									surveyID={props.surveyId}
+									data={question}
+									index={index}
+									currentSection={props.sections}
+									questions={props.data.questions}
+								/>
+							</Box>
+						))
+					) : (
+						<div>No questions</div>
+					)}
+				</div>
+			</Collapse>
+
 			{/**  This window is used for updating section */}
 			<Dialog open={open} onClose={handleClose} aria-labelledby="max-width-dialog-title" maxWidth="lg" fullWidth>
 				<DialogTitle id="form-dialog-title">Section</DialogTitle>
@@ -351,7 +522,7 @@ const SectionQuestions = (props) => {
 							label="Title"
 							variant="outlined"
 						/>
-						<Box p={1}></Box>
+						<Box p={1} />
 						<TextField
 							id="outlined-multiline-flexible"
 							multiline
@@ -363,15 +534,15 @@ const SectionQuestions = (props) => {
 							label="Description"
 							variant="outlined"
 						/>
-						<Box p={1}></Box>
+						<Box p={1} />
 						<DialogContentText>Please input the HTML description for the section.</DialogContentText>
 						<TextField
 							id="outlined-multiline-flexible"
 							multiline
 							fullWidth
 							required
-							value={values.htmlDescription}
-							onChange={handleChange('htmlDescription')}
+							value={values.sectionIntroductionHtmlB64}
+							onChange={handleChange('sectionIntroductionHtmlB64')}
 							rows={4}
 							label="HTML"
 							variant="outlined"
@@ -398,6 +569,96 @@ const SectionQuestions = (props) => {
 						</Button>
 					</Collapse>
 					<Button type="submit" color="primary" onClick={UpdateSection}>
+						Confirm
+					</Button>
+				</DialogActions>
+			</Dialog>
+
+			{/**  This window is used for updating result algorithm */}
+			<Dialog
+				open={openAlgorithm}
+				onClose={handleCloseAlgorithm}
+				aria-labelledby="max-width-dialog-title"
+				maxWidth="lg"
+				fullWidth
+			>
+				<DialogTitle id="form-dialog-title">Algorithm</DialogTitle>
+				<DialogContent>
+					<Collapse in={!openGreen}>
+						<DialogContentText>Please input the details for the algorithm.</DialogContentText>
+						<TextField
+							id="outlined-multiline-flexible"
+							required
+							fullWidth
+							value={algorithm.fact}
+							onChange={handleAlChange('fact')}
+							label="Fact"
+							variant="outlined"
+						/>
+						<Box p={1} />
+						<TextField
+							id="outlined-multiline-flexible"
+							fullWidth
+							required
+							value={algorithm.operator}
+							onChange={handleAlChange('operator')}
+							label="Operator"
+							variant="outlined"
+						/>
+						<Box p={1} />
+						<TextField
+							id="outlined-multiline-flexible"
+							fullWidth
+							required
+							value={algorithm.value}
+							onChange={handleAlChange('value')}
+							label="Value"
+							variant="outlined"
+						/>
+						<Box p={1} />
+						<TextField
+							id="outlined-multiline-flexible"
+							fullWidth
+							required
+							value={algorithm.categoryName}
+							onChange={handleAlChange('categoryName')}
+							label="Value"
+							variant="outlined"
+						/>
+						<Box p={1} />
+						<TextField
+							id="outlined-multiline-flexible"
+							fullWidth
+							multiline
+							required
+							value={algorithm.responseString}
+							onChange={handleAlChange('responseString')}
+							rows={4}
+							label="ResponseString"
+							variant="outlined"
+						/>
+					</Collapse>
+				</DialogContent>
+				<DialogContent>
+					<Collapse in={openAlert}>
+						<Alert severity="error">{error}</Alert>
+					</Collapse>
+					<Collapse in={openGreen}>
+						<Alert severity="success">Update Algorithm Successfully!</Alert>
+					</Collapse>
+				</DialogContent>
+				<DialogActions>
+					<Collapse in={!openGreen}>
+						<IconButton color="secondary" aria-label="add an alarm" onClick={deleteSection}>
+							<DeleteForeverOutlinedIcon fontSize="large" />
+						</IconButton>
+					</Collapse>
+					<Collapse in={!openGreen}>
+						<Button onClick={handleCloseAlgorithm} color="primary">
+							Cancel
+						</Button>
+					</Collapse>
+					<Button type="submit" color="primary" onClick={UpdateAlgorithm}>
 						Confirm
 					</Button>
 				</DialogActions>

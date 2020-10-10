@@ -73,7 +73,7 @@ export async function postingSurvey(surveyIn) {
 
 export async function editSurvey(surveyInfo) {
   const endpoint = API_URL + `/survey`;
-
+  console.log(surveyInfo);
   const dataPost = await axios({
     url: endpoint, // send a request to the library API
     method: "PUT", // HTTP POST method
@@ -97,7 +97,7 @@ export async function addImageForSurvey(surveyId, imgUrl) {
     method: "POST", // HTTP POST method
     headers: {
       "content-type": "multipart/form-data",
-      Authorization: localStorage.getItem("token"),
+     //  Authorization: localStorage.getItem("token"),
     },
     surveyId: surveyId,
     img: imgUrl,
