@@ -432,10 +432,6 @@ function NavBar(props) {
 							<Button onClick={handleDowloadClose} className={clsx(classes.button)}>
 								Cancel
 							</Button>
-							<a href={link} download>
-								Download
-							</a>
-
 							<Button className={clsx(classes.button)} onClick={handleDownload}>
 								download
 							</Button>
