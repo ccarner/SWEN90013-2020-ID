@@ -20,6 +20,7 @@ import {
 
 const QuestionDetails = (props) => {
 	const [ isOpen, setOpen ] = React.useState(false);
+	const [question, setQuestion] = React.useState();
 
 	const UpdateQuesion = async (event) => {
 		event.preventDefault();
@@ -75,7 +76,7 @@ const QuestionDetails = (props) => {
 						multiline
 						fullWidth
 						required
-						value={props.data.questionText}
+						defaultValue={props.data.questionText}
 						rows={2}
 						label="Description"
 						variant="outlined"

@@ -62,7 +62,9 @@ const SectionQuestions = (props) => {
 		option3: 'Several Times',
 		option4: 'Once A Month',
 		option5: 'Once A Week',
-		option6: 'Daily'
+		option6: 'Daily',
+		left: '',
+		right: ''
 	});
 
 	const [ editRow, setRow ] = React.useState();
@@ -122,18 +124,30 @@ const SectionQuestions = (props) => {
 
 			if (typeof questions.length !== 'undefined') questionIndex = questions.length;
 			var newSliderQuestion = {
-				questionIndex: questionIndex,
-				questionId: values.questionId,
+				//questionIndex: questionIndex,
+				questionId: questionIndex,
 				questionText: values.question,
 				questionType: type,
 				sliderDefaultValue: 5,
 				sliderMaxValue: 10,
-				sliderMinValue: 0
+				sliderMinValue: 0,
+				left: values.left,
+				right:values.right
 			};
 
-			var newYNQuestion = {
-				questionIndex: questionIndex,
-				questionId: values.questionId,
+			// new long answer
+			var newLongAnswerQuestion = {
+			//	questionIndex: questionIndex,
+				questionId: questionIndex,
+				questionText: values.question,
+				questionType: type,
+				answerLength: 200 // no instruction in confluence
+			};
+
+			// new multiple selection
+			var newMultiSelectionQuestion = {
+			//	questionIndex: questionIndex,
+				questionId: questionIndex,
 				questionText: values.question,
 				questionType: type,
 				selectionOptions: [
@@ -163,13 +177,72 @@ const SectionQuestions = (props) => {
 					}
 				]
 			};
+
+			// new single selection
+			var newSingleSelectionQuestion = {
+			//	questionIndex: questionIndex,
+				questionId: questionIndex,
+				questionText: values.question,
+				questionType: type,
+				selectionOptions: [
+					{
+						name: values.option1,
+						weight: '0'
+					},
+					{
+						name: values.option2,
+						weight: '0.2'
+					},
+					{
+						name: values.option3,
+						weight: '0.4'
+					},
+					{
+						name: values.option4,
+						weight: '0.6'
+					},
+					{
+						name: values.option5,
+						weight: '0.8'
+					},
+					{
+						name: 'Daily',
+						weight: '1'
+					}
+				]
+			};
+
+			// new yes or no
+			var newYNQuestion = {
+			//	questionIndex: questionIndex,
+				questionId: questionIndex,
+				questionText: values.question,
+				questionType: type,
+				selectionOptions: [
+					{
+						name: "yes",
+						weight: '0'
+					},
+					{
+						name: "no",
+						weight: '1'
+					}
+				]
+			};
 			//	questions.push(newMCQuestion);
 
 			if (type == 'slider') {
-				questions.push(newSliderQuestion);
-			} else if (type == 'yesorno') {
+				questions.splice(questionIndex, 1, newSliderQuestion);
+			} else if (type == 'yesOrNo') {
 				questions.push(newYNQuestion);
-			} else {
+			} else if (type == 'longAnswer') {
+				questions.push(newLongAnswerQuestion);
+			} else if (type == 'singleSelection') {
+				questions.push(newSingleSelectionQuestion);
+			} else if (type == 'multipleSelection') {
+				questions.push(newMultiSelectionQuestion);
+			} 
+			/*else {
 				var newMCQuestion = {
 					questionIndex: questionIndex,
 					questionId: values.questionId,
@@ -203,7 +276,7 @@ const SectionQuestions = (props) => {
 					]
 				};
 				questions.push(newMCQuestion);
-			}
+			}*/
 
 			console.log(questions);
 			let sections = props.sections;
@@ -404,7 +477,7 @@ const SectionQuestions = (props) => {
 		// updating the deleted algrithm survey
 		await editSurvey(readyData)
 			.then((response) => {
-				if (response.data.code == 200) alert("Delete successfully");
+				if (response.data.code == 200) alert('Delete successfully');
 				else {
 					alert(response.data.message);
 				}
@@ -478,7 +551,9 @@ const SectionQuestions = (props) => {
 							</Grid>
 							<Grid item>
 								{typeof props.data.sectionResultAlgorithm == 'undefined' ||
-								props.data.sectionResultAlgorithm.length == 0 || typeof props.data.sectionResultAlgorithm[0] == 'undefined'|| typeof props.data.sectionResultAlgorithm.map == 'undefined'? (
+								props.data.sectionResultAlgorithm.length == 0 ||
+								typeof props.data.sectionResultAlgorithm[0] == 'undefined' ||
+								typeof props.data.sectionResultAlgorithm.map == 'undefined' ? (
 									<div>
 										No algorithm
 										<Tooltip title="Add result algorithm">
@@ -519,7 +594,8 @@ const SectionQuestions = (props) => {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{typeof props.data.sectionResultAlgorithm == 'undefined' || typeof props.data.sectionResultAlgorithm.map == 'undefined'? (
+									{typeof props.data.sectionResultAlgorithm == 'undefined' ||
+									typeof props.data.sectionResultAlgorithm.map == 'undefined' ? (
 										<IconButton onClick={handleOpenAlgorithm}>
 											No algorithm <ControlPointRoundedIcon />
 										</IconButton>
@@ -772,7 +848,7 @@ const SectionQuestions = (props) => {
 				<DialogContent>
 					<Collapse in={!openGreen}>
 						<DialogContentText>Please fill in details for the new question.</DialogContentText>
-						<TextField
+						{/** <TextField
 							id="outlined-multiline-flexible"
 							required
 							value={values.questionId}
@@ -783,14 +859,14 @@ const SectionQuestions = (props) => {
 							label="questionId"
 							variant="outlined"
 						/>
-						<Box p={1} />
+						<Box p={1} />*/}
 						<TextField
 							id="outlined-multiline-flexible"
 							required
 							fullWidth
 							value={values.question}
 							onChange={handleChange('question')}
-							label="Question Description"
+							label="Question"
 							variant="outlined"
 						/>
 						<Box p={1} />
@@ -804,13 +880,15 @@ const SectionQuestions = (props) => {
 								onChange={handleTypeChange}
 							>
 								<MenuItem value={'slider'}>Slider </MenuItem>
-								<MenuItem value={'singleSelection'}>MultiChoice</MenuItem>
-								{/* <MenuItem value={'yesorno'}>Yes/No</MenuItem> */}
+								<MenuItem value={'singleSelection'}>Single Selection</MenuItem>
+								<MenuItem value={'yesOrNo'}>Yes/No</MenuItem>
+								<MenuItem value={'longAnswer'}>Long Answer</MenuItem>
+								<MenuItem value={'multipleSelection'}>Multiple Selection</MenuItem>
 							</Select>
 						</FormControl>
 						<Box p={1}>
 							<div>
-								{type === 'singleSelection' ? (
+								{type === 'singleSelection' || type === 'multipleSelection' ? (
 									<div>
 										<TextField
 											label="option1"
@@ -853,6 +931,23 @@ const SectionQuestions = (props) => {
 											variant="outlined"
 											value={values.option6}
 											onChange={handleChange('option6')}
+										/>
+									</div>
+								) : type === 'slider' ? (
+									<div>
+										<TextField
+											label="Left"
+											id="outlined-multiline-flexible"
+											variant="outlined"
+											value={values.left}
+											onChange={handleChange('left')}
+										/>
+										<TextField
+											label="Right"
+											id="outlined-multiline-flexible"
+											variant="outlined"
+											value={values.right}
+											onChange={handleChange('right')}
 										/>
 									</div>
 								) : null}
