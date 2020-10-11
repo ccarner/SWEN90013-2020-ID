@@ -68,14 +68,15 @@ const QuestionDetails = (props) => {
 		return (
 			<div>
 				<form onSubmit={UpdateQuesion}>
-					<DialogContentText>Please input the description of the question.</DialogContentText>
+					<DialogContentText>Please input the description for the question.</DialogContentText>
 					<TextField
 						id="outlined-multiline-flexible"
 						name="updatedQuestion"
 						multiline
 						fullWidth
 						required
-						rows={3}
+						value={props.data.questionText}
+						rows={2}
 						label="Description"
 						variant="outlined"
 					/>
@@ -111,7 +112,7 @@ const QuestionDetails = (props) => {
 									setOpen((prev) => !prev);
 								}}
 							>
-								<EditIcon color="primary" />
+								<EditIcon color="primary" fontSize="small"/>
 							</IconButton>
 						</Grid>
 					</Grid>

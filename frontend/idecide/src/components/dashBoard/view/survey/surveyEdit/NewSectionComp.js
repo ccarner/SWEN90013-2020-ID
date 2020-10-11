@@ -117,7 +117,7 @@ const SurveySection = (props) => {
 				<Divider />
 				<CardContent>
 					<Grid container direction="row" justify="space-evenly" alignItems="center">
-						<Button variant="contained" color="secondary" onClick={() => {}}>
+						<Button variant="contained" color="secondary" onClick={() => window.location.reload()}>
 							Cancel
 						</Button>
 						<Button variant="contained" color="primary" onClick={addNewSectionInComp}>
