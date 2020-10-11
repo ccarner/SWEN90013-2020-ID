@@ -64,14 +64,16 @@ const SurveyCard = ({ product, editable, ...rest }) => {
 	const [ open, setDMOpen ] = React.useState(false); //control of adding new survey
 	const [ values, setValues ] = React.useState({
 		title: product.surveyTitle,
-		descrpition: product.surveyIntroduction
+		descrpition: product.surveyIntroduction,
+		surveyIntroductionHtmlB64: product.surveyIntroductionHtmlB64,
+		surveyResultAlgorithm: product.surveyResultAlgorithm
 	});
 	const [ files, setFiles ] = React.useState([]);
 	const form = useRef(null);
 
 	//	const [ deleteMD, setDeleteMD ] = React.useState(true);
 	//	const editable = useContext(Editable);
-	//	console.log(editable);
+	//console.log(product);
 	const handleOpen = () => {
 		setDMOpen(true);
 	};
@@ -95,7 +97,7 @@ const SurveyCard = ({ product, editable, ...rest }) => {
 		console.log(files);
 		let formData = new FormData();
 		formData.set('img', files);
-		formData.set('surveyId', product.surveyId);
+		formData.set('surveyId', product.surveyId+"");
 		console.log(formData);
 		await addImageForSurvey(formData);
 	};
@@ -109,7 +111,7 @@ const SurveyCard = ({ product, editable, ...rest }) => {
 
 		const feedBack = await DeleteSurvey(product.surveyId)
 			.then(() => {
-				window.location.href = './dashboard/survey';
+				window.location.href = './dashboard/surveys';
 			})
 			.catch((error) => {
 				setOpen(true);
@@ -120,18 +122,21 @@ const SurveyCard = ({ product, editable, ...rest }) => {
 
 	const UpdateSurvey = async () => {
 		if (openGreen) {
-			window.location.href = './dashboard/survey';
+		//	window.location.href = './dashboard/surveys';
 		}
 		//
 		var readyData = JSON.stringify({
 			surveyId: product.surveyId,
 			surveyTitle: values.title,
 			surveyIntroduction: values.descrpition,
-			surveyVersion: product.surveyVersion
+			surveyVersion: product.surveyVersion,
+			surveyIntroductionHtmlB64: values.surveyIntroductionHtmlB64,
+			surveyResultAlgorithm: values.surveyResultAlgorithm
     });
-    handleUploadImg();
+    	handleUploadImg();
 		const feedBack = await editSurvey(readyData)
 			.then((data) => {
+				console.log(data);
 				setOpenGreen(true);
 			})
 			.catch((error) => {
@@ -220,7 +225,7 @@ const SurveyCard = ({ product, editable, ...rest }) => {
 							/>
 							<DialogContentText>
 								<Box p={1} />
-								Please upload an image for this survey:
+								Please upload an image for this survey:<br/>
 								<input type="file" name="img" multiple="multiple" onChange={ImgChange} />
 								<Collapse in={false}>
 								<input name="surveyId" multiple="multiple" value={product.surveyId} />
@@ -238,6 +243,30 @@ const SurveyCard = ({ product, editable, ...rest }) => {
 								onChange={handleChange('descrpition')}
 								rows={4}
 								label="Description"
+								variant="outlined"
+							/>
+							<DialogContentText>Please input the html description for this survey.</DialogContentText>
+							<TextField
+								id="outlined-multiline-flexible"
+								multiline
+								fullWidth
+								required
+								value={values.surveyIntroductionHtmlB64}
+								onChange={handleChange('surveyIntroductionHtmlB64')}
+								rows={4}
+								label="HTML"
+								variant="outlined"
+							/>
+							<DialogContentText>Please input the result algorithm for this survey.</DialogContentText>
+							<TextField
+								id="outlined-multiline-flexible"
+								multiline
+								fullWidth
+								required
+								value={values.surveyResultAlgorithm}
+								onChange={handleChange('surveyResultAlgorithm')}
+								rows={2}
+								label="Algorithm"
 								variant="outlined"
 							/>
 						</Collapse>

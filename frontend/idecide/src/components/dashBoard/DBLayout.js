@@ -42,18 +42,18 @@ export default function DBLayout() {
 			justify="flex-start"
 			alignItems="flex-start"
 		>
-			<Grid item xs={3} lg={2}>
+			{/**		<Grid item xs={3} lg={2}>
 				<VerticalTab />
 			</Grid>
 			<Grid item xs={9} >
-				<Route path="/dashboard/home" component={Dashboard} />
+		<Route path="/dashboard/home" component={Dashboard} />
 				<Route path="/dashboard/survey" component={SurveyLayout} />
 				<Route path="/dashboard/datacollection" component={DCLayout} />
 				<Route path="/dashboard/actionplan" component={APLayout} />
 				<Route path="/dashboard/surveyId=:surveyId" component={SurveySection} />
 				<Route path="/dashboard/newsurvey" component={NewSurvey} />
 				<Route path="/dashboard/user" component={Researcher} />
-			</Grid>
+			</Grid> */} 
 		</Grid>
 	);
 }

@@ -1,17 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import EditIcon from '@material-ui/icons/Edit';
-import { editSurvey } from "../../../../../API/surveyAPI";
+import { editSurvey } from '../../../../../API/surveyAPI';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
-import { Button, Box, Card, Collapse, IconButton, TextField, DialogContentText, CardContent, Divider, Grid, Typography } from '@material-ui/core';
+import {
+	Button,
+	Box,
+	Card,
+	Collapse,
+	Paper,
+	IconButton,
+	TextField,
+	DialogContentText,
+	CardContent,
+	Divider,
+	Grid,
+	Typography
+} from '@material-ui/core';
 
 const QuestionDetails = (props) => {
 	const [isOpen, setOpen] = React.useState(false);
-
+	const [question, setQuestion] = React.useState();
 
 	const UpdateQuesion = async (event) => {
-
-
 		event.preventDefault();
 
 		const dataIn = new FormData(event.target);
@@ -24,25 +35,27 @@ const QuestionDetails = (props) => {
 		props.data.questionText = questionObject.updatedQuestion;
 		props.questions.splice(parseInt(props.data.questionIndex), 1, props.data);
 
-
 		var readyData = JSON.stringify({
 			surveyId: props.surveyID,
 			surveySections: sections
 		});
 
 		await editSurvey(readyData)
-			.then((data) => {
-				alert("Question description has been updated!");
-				window.location.reload();
+			.then((response) => {
+				if (response.data.code == 200) {
+					alert('Question description has been updated!');
+					window.location.reload();
+				} else {
+					alert(response.data.message);
+				}
+			})
+			.catch((error) => {
+				//setOpen(true);
+				alert(error + '');
 			});
-	}
+	};
 
 	const deleteQuestion = async (event) => {
-
-
-
-
-
 		let sections = props.currentSection;
 
 		props.questions.splice(parseInt(props.data.questionIndex), 1);
@@ -50,32 +63,30 @@ const QuestionDetails = (props) => {
 			item.questionIndex = index;
 		});
 
-
 		var readyData = JSON.stringify({
 			surveyId: props.surveyID,
 			surveySections: sections
 		});
 
-		await editSurvey(readyData)
-			.then((data) => {
-				alert("Question has been updated deleted!");
-				window.location.reload();
-			});
-	}
-
+		await editSurvey(readyData).then((data) => {
+			alert('Question has been updated deleted!');
+			window.location.reload();
+		});
+	};
 
 	const QuestionDetail = () => {
 		return (
 			<div>
 				<form onSubmit={UpdateQuesion}>
-					<DialogContentText>Please input the description of the question.</DialogContentText>
+					<DialogContentText>Please input the description for the question.</DialogContentText>
 					<TextField
 						id="outlined-multiline-flexible"
 						name="updatedQuestion"
 						multiline
 						fullWidth
 						required
-						rows={3}
+						defaultValue={props.data.questionText}
+						rows={2}
 						label="Description"
 						variant="outlined"
 					/>
@@ -92,13 +103,36 @@ const QuestionDetails = (props) => {
 	return (
 		<div>
 			<Box p={1}>
+				<Paper>
+					<Grid container container direction="row" justify="flex-start" alignItems="center">
+						<Grid item xs={10}>
+							{'Q' + (props.index + 1) + ' :  ' + props.data.questionText}
+						</Grid>
+						<Grid item xs={1}>
+							<Typography color="textSecondary" gutterBottom variant="body1">
+								{props.data.questionType}
+							</Typography>
+						</Grid>
+						<Grid item xs={1}>
+							<IconButton
+								style={{ width: 50 }}
+								color="secondary"
+								aria-label="add an alarm"
+								onClick={() => {
+									setOpen((prev) => !prev);
+								}}
+							>
+								<EditIcon color="primary" fontSize="small" />
+							</IconButton>
+						</Grid>
+					</Grid>
+				</Paper>
+
 				<Card>
-					<CardContent style={{ height: 70 }}>
+					{/**		<CardContent style={{ height: 70 }}>
 						<Grid container direction="row" justify="flex-start" alignItems="center">
-							<Grid item xs={10}>
-								<Typography color="primary" gutterBottom>
-									{'Q' + (props.data.questionIndex + 1) + ' :  ' + props.data.questionText}
-								</Typography>
+							<Grid item xs={7}>
+								{'Q' + (props.index + 1) + ' :  ' + props.data.questionText}
 							</Grid>
 							<Grid item xs={1}>
 								<Typography color="textSecondary" gutterBottom variant="body1">
@@ -118,7 +152,7 @@ const QuestionDetails = (props) => {
 								</IconButton>
 							</Grid>
 						</Grid>
-					</CardContent>
+					</CardContent> */}
 					<Divider />
 					<Collapse in={isOpen}>
 						<CardContent>

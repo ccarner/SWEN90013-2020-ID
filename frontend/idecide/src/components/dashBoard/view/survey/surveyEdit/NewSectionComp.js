@@ -24,9 +24,10 @@ const blogInfo = {
 };
 
 const SurveySection = (props) => {
-	const [values, setValues] = React.useState({
+	const [ values, setValues ] = React.useState({
 		title: '',
-		descrpition: ''
+		descrpition: '',
+		sectionIntroductionHtmlB64: ''
 	});
 	let currentSections = props.data.surveySections;
 
@@ -38,17 +39,18 @@ const SurveySection = (props) => {
 
 	const addNewSectionInComp = async () => {
 		let sectionIndex = 0;
-		if ((typeof currentSections) !== 'undefined') { sectionIndex = currentSections.length; }
+		if (typeof currentSections !== 'undefined') {
+			sectionIndex = currentSections.length;
+		}
 
 		const newSection = {
-			sectionIndex: sectionIndex,
-			sectionId: values.sectionId,
+			sectionId: sectionIndex,
 			sectionTitle: values.title,
 			sectionIntroduction: values.descrpition,
 			questions: []
 		};
 		if (typeof currentSections == 'undefined') {
-			currentSections = [newSection];
+			currentSections = [ newSection ];
 		} else {
 			currentSections.push(newSection);
 		}
@@ -61,16 +63,12 @@ const SurveySection = (props) => {
 			surveySections: currentSections
 		});
 
-
 		await editSurvey(readyData)
-			.then(() => {
-				// window.location.replace('./surveyId=' + surveyId);
-				window.location.href = '/dashboard/surveyId=' + surveyId;
-				//	setOpenGreen(true);
+			.then((response) => {
+				alert('Adding new section successfully.');
+				window.location.replace('/dashboard/surveyId=' + surveyId);
 			})
 			.catch((error) => {
-				//	setOpen(true);
-				//	setError(error + '');
 				alert('Error from processDataAsycn() with async( When promise gets rejected ): ' + error);
 			});
 	};
@@ -84,26 +82,13 @@ const SurveySection = (props) => {
 					<TextField
 						id="outlined-multiline-flexible"
 						required
-						type="number" min="0" step="1"
-						value={values.sectionId}
-						onChange={handleChange('sectionId')}
-						label="sectionId"
-						variant="outlined"
-					/>
-				</CardContent>
-				<CardContent>
-					<TextField
-						id="outlined-multiline-flexible"
-						required
 						fullWidth
 						value={values.title}
 						onChange={handleChange('title')}
 						label="Title"
 						variant="outlined"
 					/>
-				</CardContent>
-
-				<CardContent>
+					<Box p={1} />
 					<TextField
 						id="outlined-multiline-flexible"
 						multiline
@@ -112,21 +97,19 @@ const SurveySection = (props) => {
 						value={values.descrpition}
 						onChange={handleChange('descrpition')}
 						rows={4}
-						label="HTML"
+						label="Description"
 						variant="outlined"
 					/>
-				</CardContent>
-
-				<CardContent>
+					<Box p={1} />
 					<TextField
 						id="outlined-multiline-flexible"
 						multiline
 						fullWidth
 						required
-						value={values.htmlDescription}
-						onChange={handleChange('htmlDescription')}
+						value={values.sectionIntroductionHtmlB64}
+						onChange={handleChange('sectionIntroductionHtmlB64')}
 						rows={4}
-						label="Description"
+						label="HTML"
 						variant="outlined"
 					/>
 				</CardContent>
@@ -134,7 +117,7 @@ const SurveySection = (props) => {
 				<Divider />
 				<CardContent>
 					<Grid container direction="row" justify="space-evenly" alignItems="center">
-						<Button variant="contained" color="secondary" onClick={() => { }}>
+						<Button variant="contained" color="secondary" onClick={() => window.location.reload()}>
 							Cancel
 						</Button>
 						<Button variant="contained" color="primary" onClick={addNewSectionInComp}>
