@@ -19,8 +19,8 @@ import {
 } from '@material-ui/core';
 
 const QuestionDetails = (props) => {
-	const [ isOpen, setOpen ] = React.useState(false);
-	const [ question, setQuestion ] = React.useState();
+	const [isOpen, setOpen] = React.useState(false);
+	const [question, setQuestion] = React.useState();
 
 	const UpdateQuesion = async (event) => {
 		event.preventDefault();
@@ -49,7 +49,7 @@ const QuestionDetails = (props) => {
 					alert(response.data.message);
 				}
 			})
-			.catch(() => {
+			.catch((error) => {
 				//setOpen(true);
 				alert(error + '');
 			});
