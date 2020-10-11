@@ -81,7 +81,7 @@ const SurveySection = (props) => {
 		[ surveyId ]
 	);
 
-	console.log(data);
+	console.log(JSON.stringify(data));
 	const QuestionsDisplay = () => {
 		console.log(data);
 		console.log(surveySection[sectionIndex]);

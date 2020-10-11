@@ -116,9 +116,9 @@ const QuestionDetails = (props) => {
 						</Grid>
 					</Grid>
 				</Paper>
-				<Divider />
+		
 				<Card>
-					<CardContent style={{ height: 70 }}>
+				{/**		<CardContent style={{ height: 70 }}>
 						<Grid container direction="row" justify="flex-start" alignItems="center">
 							<Grid item xs={7}>
 								{'Q' + (props.index + 1) + ' :  ' + props.data.questionText}
@@ -141,7 +141,7 @@ const QuestionDetails = (props) => {
 								</IconButton>
 							</Grid>
 						</Grid>
-					</CardContent>
+					</CardContent> */}
 					<Divider />
 					<Collapse in={isOpen}>
 						<CardContent>
