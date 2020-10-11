@@ -40,6 +40,7 @@ export default class SurveyHome extends Component {
       "My Situation",
       "My Safety",
       "My Priorities",
+      "I-Decide Feedback",
       "Action Plan",
     ]; // order that surveys need to be completed in
 
@@ -154,9 +155,9 @@ export default class SurveyHome extends Component {
                 <div key={survey.surveyId} className="surveyIcon">
                   <SurveySelectionButton
                     notAvailable={
-                      false && // uncomment this line to test surveys
+                      // false && // uncomment this line to test surveys
                       survey.surveyTitle !==
-                        this.surveyOrder[this.state.nextSurvey]
+                      this.surveyOrder[this.state.nextSurvey]
                     }
                     icon={getStaticImageUrlFromName(survey.surveyImageName)}
                     completed="false"

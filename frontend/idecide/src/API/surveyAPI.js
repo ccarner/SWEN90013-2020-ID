@@ -73,7 +73,7 @@ export async function postingSurvey(surveyIn) {
 
 export async function editSurvey(surveyInfo) {
   const endpoint = API_URL + `/survey`;
-
+  console.log(surveyInfo);
   const dataPost = await axios({
     url: endpoint, // send a request to the library API
     method: "PUT", // HTTP POST method
@@ -93,11 +93,11 @@ export async function editSurvey(surveyInfo) {
 
 export async function addImageForSurvey(surveyId, imgUrl) {
   await axios({
-    url: "https://www.idecide.icu:9012/survey/uploadImg", // send a request to the library API
+    url:  API_URL + "/survey/uploadImg", // send a request to the library API
     method: "POST", // HTTP POST method
     headers: {
       "content-type": "multipart/form-data",
-      Authorization: localStorage.getItem("token"),
+     //  Authorization: localStorage.getItem("token"),
     },
     surveyId: surveyId,
     img: imgUrl,
@@ -107,6 +107,7 @@ export async function addImageForSurvey(surveyId, imgUrl) {
 export async function AddNewSurvey(surveyInfo) {
   const endpoint = API_URL + `/survey`;
   console.log(surveyInfo);
+  console.log("surveyInfo",localStorage.getItem("token"));
   const dataPost = await axios({
     url: endpoint, // send a request to the library API
     method: "POST", // HTTP POST method

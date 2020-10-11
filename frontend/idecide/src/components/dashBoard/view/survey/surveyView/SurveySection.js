@@ -31,34 +31,31 @@ export const t = 4;
 export const QuestionContext = createContext();
 
 const SurveySection = (props) => {
-	const [isLoading, setIsLoading] = useState(false);
-	const [isOpen, setOpen] = React.useState(false);
-	const [values, setValues] = React.useState({
+	const [ isLoading, setIsLoading ] = useState(false);
+	const [ isOpen, setOpen ] = React.useState(false);
+	const [ values, setValues ] = React.useState({
 		title: '',
 		descrpition: ''
 	});
 
-	const [count, setCount] = React.useState(0);
-	const [newQuestion, addNew] = React.useState([]);
+	const [ count, setCount ] = React.useState(0);
+	const [ newQuestion, addNew ] = React.useState([]);
 
-	const [isShow, setShow] = useState(false);
+	const [ isShow, setShow ] = useState(false);
 
-	
 	const surveyId = props.match.params.surveyId;
 	console.log(surveyId);
 
+	const [ sectionIndex, setSectionIndex ] = React.useState();
 
-	const [sectionIndex, setSectionIndex] = React.useState();
-
-	const [data, setData] = useState({ hits: [] });
-	const [surveySection, setSurveySection] = useState({ hits: [] });
+	const [ data, setData ] = useState({ hits: [] });
+	const [ surveySection, setSurveySection ] = useState({ hits: [] });
 
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
 	};
 
 	const handleShow = () => {
-
 		setShow((prev) => !prev);
 	};
 
@@ -67,21 +64,24 @@ const SurveySection = (props) => {
 		setSectionIndex(index.index);
 	}
 
-	useEffect(() => {
-		const fetchData = async (surveyId) => {
-			setIsLoading(true);
-			console.log(props.match.params.surveyId);
-			const result = await getSurveyById(props.match.params.surveyId);
-			setData(result);
-			setSurveySection(result.surveySections);
-			setIsLoading(false);
-			//	console.log(data);
-			//	console.log(isLoading);
-		};
-		fetchData();
-	}, [surveyId]);
+	useEffect(
+		() => {
+			const fetchData = async (surveyId) => {
+				setIsLoading(true);
+				console.log(props.match.params.surveyId);
+				const result = await getSurveyById(props.match.params.surveyId);
+				setData(result);
+				setSurveySection(result.surveySections);
+				setIsLoading(false);
+				//	console.log(data);
+				//	console.log(isLoading);
+			};
+			fetchData();
+		},
+		[ surveyId ]
+	);
 
-	console.log(data);
+	console.log(JSON.stringify(data));
 	const QuestionsDisplay = () => {
 		console.log(data);
 		console.log(surveySection[sectionIndex]);
@@ -89,61 +89,58 @@ const SurveySection = (props) => {
 			if (surveySection[sectionIndex].questions.length > 0)
 				return <QuestionDetails data={surveySection[sectionIndex]} />;
 			else {
-				alert("There is no question in this section, do you want to create new quesitons now?");
+				alert('There is no question in this section, do you want to create new quesitons now?');
 			}
-		}
-		else return <div />;
-	}
+		} else return <div />;
+	};
 
 	return (
-		<div>
-			<Grid>
-				<Grid item lg={3} md={6} xs={12}>
-					<Button color="secondary" fullWidth variant="contained" onClick={handleShow}>
-						Edit
-					</Button>
-				</Grid>
-				{(typeof surveySection.length == 'undefined' || surveySection.length == 0) ? surveySection.length == 0 ? (
-					<div>
-						<NewSectionComp data={surveyId} id={surveyId} />
-					</div>
+		<Grid container spacing={2} style={{ marginTop: '20px' }}>
+			<Grid item xs={12}>
+				<Button color="secondary" variant="contained" onClick={handleShow}>
+					Edit
+				</Button>
+			</Grid>
+			<Grid item xs={12}>
+				{typeof surveySection.length == 'undefined' || surveySection.length == 0 ? surveySection.length == 0 ? (
+					<NewSectionComp data={surveyId} id={surveyId} />
 				) : (
-						<div>Loading</div>
-					) : (
-						surveySection.map((item,index) => (
-							<div key={index}>
-								<SectionQuestions data={item} sections={surveySection} surveyId={surveyId} handleShow={handleShow} />
-							</div>
+					<div>Loading</div>
+				) : (
+					surveySection.map((item, index) => (
+						<SectionQuestions
+							data={item}
+							sections={surveySection}
+							surveyId={surveyId}
+							handleShow={handleShow}
+							index={index}
+						/>
+					))
+				)}
+			</Grid>
+			{newQuestion.map((nq) => (
+				<Grid item xs={12} key={nq}>
+					<Box p={1} />
+					<NewSectionComp data={data} id={surveyId} />
+				</Grid>
+			))}
 
-						))
-					)}
-				{newQuestion.map((nq) => {
-					console.log(nq);
-					return (
-						<div key={nq}>
-							<Box p={1} />
-							<NewSectionComp data={data} id={surveyId} />
-						</div>
-					);
-				})}
+			<Grid item xs={12}>
 				<Collapse in={isShow}>
-					<Box p={1}>
-						<Button
-							color="primary"
-							fullWidth
-							variant="contained"
-							onClick={() => {
-								setCount(count + 1);
-								addNew([...newQuestion, count]);
-							}}
-						>
-							Add New Section
-						</Button>
-					</Box>
+					<Button
+						color="primary"
+						fullWidth
+						variant="contained"
+						onClick={() => {
+							setCount(count + 1);
+							addNew([ ...newQuestion, count ]);
+						}}
+					>
+						Add New Section
+					</Button>
 				</Collapse>
 			</Grid>
-
-		</div>
+		</Grid>
 	);
 };
 
