@@ -20,7 +20,7 @@ import {
 
 const QuestionDetails = (props) => {
 	const [ isOpen, setOpen ] = React.useState(false);
-	const [question, setQuestion] = React.useState();
+	const [ question, setQuestion ] = React.useState();
 
 	const UpdateQuesion = async (event) => {
 		event.preventDefault();
@@ -40,10 +40,19 @@ const QuestionDetails = (props) => {
 			surveySections: sections
 		});
 
-		await editSurvey(readyData).then((data) => {
-			alert('Question description has been updated!');
-			window.location.reload();
-		});
+		await editSurvey(readyData)
+			.then((response) => {
+				if (response.data.code == 200) {
+					alert('Question description has been updated!');
+					window.location.reload();
+				} else {
+					alert(response.data.message);
+				}
+			})
+			.catch(() => {
+				//setOpen(true);
+				alert(error + '');
+			});
 	};
 
 	const deleteQuestion = async (event) => {
@@ -113,14 +122,14 @@ const QuestionDetails = (props) => {
 									setOpen((prev) => !prev);
 								}}
 							>
-								<EditIcon color="primary" fontSize="small"/>
+								<EditIcon color="primary" fontSize="small" />
 							</IconButton>
 						</Grid>
 					</Grid>
 				</Paper>
-		
+
 				<Card>
-				{/**		<CardContent style={{ height: 70 }}>
+					{/**		<CardContent style={{ height: 70 }}>
 						<Grid container direction="row" justify="flex-start" alignItems="center">
 							<Grid item xs={7}>
 								{'Q' + (props.index + 1) + ' :  ' + props.data.questionText}
