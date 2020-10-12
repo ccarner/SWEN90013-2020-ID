@@ -49,7 +49,7 @@ const QuestionDetails = (props) => {
 					alert(response.data.message);
 				}
 			})
-			.catch(() => {
+			.catch((error) => {
 				//setOpen(true);
 				alert(error + '');
 			});
