@@ -7,66 +7,60 @@ import {
   Redirect,
 } from "react-router-dom";
 
-import Navbar from "./components/Navbar";
-import Landing from "./components/Landing";
-import NotFound from "./components/NotFound";
 import Questions from "./components/Questions";
 import ActionPlan from "./components/ActionPlan";
 import Framework from "./components/Framework";
 import DashBoard from "./components/dashBoard/DBLayout";
 import PersistentDrawerLeft from "./Layout/Navbar";
 
-import LoginPage from "./components/loginComponent/loginPage";
-import RegisterPage from "./components/loginComponent/registerPage";
-import AdminInfo from "./components/loginComponent/adminInfo";
-import UserInfo from "./components/loginComponent/userInfo";
-
-import SurveyHome from "./components/surveyComponents/surveyHome";
-
-// import DashBoard from "./components/dashBoard/DBLayout";
+import { Tooltip } from "@material-ui/core";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import PrimaryButton from './components/reusableComponents/PrimaryButton';
 
 
 function App() {
-    const [adminLogin,setAdminLogin] = React.useState(false);
+  const [adminLogin, setAdminLogin] = React.useState(false);
 
-    return (
+  return (
+    <div>
+      {/* <div className="fix_top_right">
+        <Tooltip title="Click to quick exit." >
+          <PrimaryButton onClick={() => {
+            localStorage.clear();
+            window.location.href =
+              "https://www.weather.com.au/";
+          }}>
+            <ExitToAppIcon />Quick Exit
+        </PrimaryButton>
+        </Tooltip>
+      </div> */}
+
       <Router>
         <div className="App">
           <div className="backgroundImage"></div>
-            {/**  <Navbar />*/}
-             <Route path="/" component={PersistentDrawerLeft} />
+          <Route path="/" component={PersistentDrawerLeft} />
           <div>
+
+
             <Switch>
               <Route path="/survey/3.1" component={Questions} />
               <Route path="/survey/3.2" component={ActionPlan} />
               <Route path="/survey/3.3" component={Framework} />
               <Route path="/dashboard" component={DashBoard} />
 
-              {/* <Redirect exact from="/dashboard" to="/dashboard/home" /> */}
 
               <Redirect
                 exact
                 from="/surveyComponent/"
                 to="/surveyComponent/surveyHome"
               />
-          {/**  <Route
-                path="/surveyComponent/surveyHome"
-                component={SurveyHome}
-              />
-              <Route path="/loginComponent/loginPage" component={LoginPage}/>
-              <Route
-                path="/loginComponent/registerPage"
-                component={RegisterPage}
-              />
-              <Route path="/loginComponent/adminInfo" component={AdminInfo} />
-
-              <Route path="/" component={Landing} />
-              <Route path="/1" component={NotFound} /> */}
             </Switch>
           </div>
         </div>
       </Router>
-    );
+
+    </div>
+  );
 }
 
 export default App;

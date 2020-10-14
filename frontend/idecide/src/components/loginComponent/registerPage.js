@@ -100,7 +100,7 @@ export default class RegisterPage extends React.Component {
           </div>
         </form>*/}
 
-        {/** new register UI */}
+				{/** new register UI */}
 				<form onSubmit={this.handleSubmit}>
 					<Card>
 						<CardHeader title="Sign Up" />

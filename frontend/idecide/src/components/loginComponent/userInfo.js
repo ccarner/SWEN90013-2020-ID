@@ -16,16 +16,17 @@ export default class UserInfo extends React.Component {
         };
     }
 
-    handleLogOut = () => {
-        console.log(772, "loggin out");
-
-        localStorage.clear();
-        window.location.replace("/")
+    componentDidMount = () => {
+        if (localStorage.getItem("userType") === "anonymous" || (localStorage.getItem("userType") === null)) {
+            window.location.replace('/loginComponent/loginPage');
+        }
     }
+
+
+
 
     handleHistory = async () => {
         const history = await getResultByUser(this.state.userId);
-        console.log(225, this.state.userId, history);
         this.setState({
             history: history
         });
@@ -36,8 +37,6 @@ export default class UserInfo extends React.Component {
         {
             return (
                 <div>
-                    <PrimaryButton onClick={this.handleLogOut}>
-                        Log Out</PrimaryButton>
                     <PrimaryButton onClick={this.handleHistory}>
                         Completion History</PrimaryButton>
                     {history === null ? null :

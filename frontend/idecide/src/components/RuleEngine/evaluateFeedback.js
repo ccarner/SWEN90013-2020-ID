@@ -2,6 +2,7 @@ export default function evaluateFeedback(rules, factContainers) {
   let RuleEngine = require("json-rules-engine");
   let engine = new RuleEngine.Engine();
 
+  console.log(669, rules, factContainers)
   // a rule is an object of form {conditions, event}
   for (const rule of rules) {
     let engineRule = new RuleEngine.Rule(rule);

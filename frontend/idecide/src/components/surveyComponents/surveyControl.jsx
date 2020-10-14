@@ -160,7 +160,7 @@ export default class SurveyControl extends Component {
             prevState.currentSurveyMapPosition + lambdaSection,
           sectionQuestions: this.state.surveyFile.surveySections[
             prevState.surveyPageMap[
-              prevState.currentSurveyMapPosition + lambdaSection
+            prevState.currentSurveyMapPosition + lambdaSection
             ][0]
           ],
           percentageCompleted:
@@ -222,7 +222,6 @@ export default class SurveyControl extends Component {
       return null;
     }
     evaluateRule(resultAlgorithm, []).then((results) => {
-      console.log(results.events);
       this.setState({
         feedbackText: results.events[0].params.responseString,
         feedbackImage: results.events[0].params.imageLink,
@@ -290,7 +289,7 @@ export default class SurveyControl extends Component {
             <SectionIntroductionPage
               section={
                 this.state.surveyFile.surveySections[
-                  this.currentSectionNumber()
+                this.currentSectionNumber()
                 ]
               }
             />
@@ -311,7 +310,7 @@ export default class SurveyControl extends Component {
               questionHandler={this.questionHandler}
               section={
                 this.state.surveyFile.surveySections[
-                  this.currentSectionNumber()
+                this.currentSectionNumber()
                 ]
               }
               results={this.state.results.questions}

@@ -54,13 +54,11 @@ export default class LoginPage extends React.Component {
 
 
 		if (response.flag) {
-			console.log(response);
-			if(response.data.roles == 'admin'){
+			if (response.data.roles == 'admin') {
 				window.location.replace("/dashboard/surveys");
-			}else{
+			} else {
 				window.location.replace("/loginComponent/userInfo");
 			}
-			
 		} else {
 			alert("Log in Failed");
 			this.setState({
