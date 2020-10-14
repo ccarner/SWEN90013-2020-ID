@@ -4,10 +4,7 @@ import { Slider } from "antd";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./cards.css";
 import "antd/dist/antd.css";
-import DragableList from "../RankingComponent/DragableList";
-import { getSurveyById, postingSurvey } from "../../API/surveyAPI";
-import { Spinner, Button } from "react-bootstrap";
-import JsonRuleEngine from "../RuleEngine/jsonRule.js";
+
 import { MDBBtn } from "mdbreact";
 import LoadingSpinner from "../reusableComponents/loadingSpinner";
 import SortableComponent from "../RankingComponent/testSortable";
@@ -24,7 +21,6 @@ export default class CardDeck extends Component {
       fadeAwayState: false,
       skiped: { name: "skpied" },
       result: [],
-      CasResult: "",
     };
     this.changeChild = React.createRef();
   }
@@ -72,22 +68,22 @@ export default class CardDeck extends Component {
     console.log(
       parseInt(item.questionId) + " :" + parseInt(this.state.questionLen)
     );
-    if (item.questionId == this.state.questionLen) {
-      JsonRuleEngine(
-        this.state.result,
-        this.state.algorithmRelatedQuestion,
-        this.state.enginRule,
-        this.handleCASResult
-      );
-    }
+    // if (item.questionId == this.state.questionLen) {
+    //   JsonRuleEngine(
+    //     this.state.result,
+    //     this.state.algorithmRelatedQuestion,
+    //     this.state.enginRule,
+    //     this.handleCASResult
+    //   );
+    // }
     // this.props.handleNav(1);
   }
 
-  handleCASResult = (casResult) => {
-    this.setState({
-      CasResult: casResult,
-    });
-  };
+  // handleCASResult = (casResult) => {
+  //   this.setState({
+  //     CasResult: casResult,
+  //   });
+  // };
 
   questionTypeController(item) {
     if (item.questionType === "singleSelection") {
@@ -266,7 +262,7 @@ export default class CardDeck extends Component {
         <div className="cards-wrapper">
           <div className="cards-list">
             {ItemList}
-            <div>{this.state.CasResult}</div>
+            <div>Section Complete</div>
           </div>
         </div>
       </div>
