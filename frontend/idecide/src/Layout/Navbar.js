@@ -139,7 +139,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: 0,
+    marginLeft: 2,
     marginTop: "5%",
   },
   nested: {
@@ -175,12 +175,26 @@ function NavBar(props) {
 
   const handleDownloadOpen = () => {
     setOpenDownload(true);
+    //   setIsLoading(true);
   };
 
   const handleDownload = async () => {
-    alert(link);
-    await getCsvDownloadLink();
-    //	setLink(link);
+    const link = await getCsvDownloadLink()
+      .then((response) => {
+        if (response.data.code && response.data.code == 200) {
+          const oa = document.createElement("a");
+          oa.href = `//${link.data.data}`;
+          oa.setAttribute("target", "_blank");
+          document.body.appendChild(oa);
+          oa.click();
+        } else {
+          alert(response.data.message);
+          window.location.href = "./";
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
   };
 
   const handleDowloadClose = () => {
@@ -247,7 +261,8 @@ function NavBar(props) {
                 alignItems="center"
                 spacing={2}
               >
-                {localStorage.getItem("userType") ? (
+                {localStorage.getItem("userType") &&
+                localStorage.getItem("userType") !== "anonymous" ? (
                   <Grid
                     container
                     direction="row"
@@ -325,7 +340,7 @@ function NavBar(props) {
             <Divider />
 
             <Box p={3}>
-              <Link to={"/navbar/surveys"}>
+              <Link to={"/dashboard/surveys"}>
                 <Typography variant="h6" gutterBottom>
                   DashBoard
                 </Typography>
@@ -338,7 +353,7 @@ function NavBar(props) {
             <Divider />
             <List>
               <NavLink
-                to={"/navbar/surveys"}
+                to={"/dashboard/surveys"}
                 onMouseDown={() => setShowSurvey(!showSurvey)}
               >
                 <ListItem button>
@@ -356,7 +371,7 @@ function NavBar(props) {
                 {surveys &&
                   surveys.map((survey, index) => (
                     <NavLink
-                      to={"/navbar/surveyId=" + survey.surveyId}
+                      to={"/dashboard/surveyId=" + survey.surveyId}
                       key={survey.surveyId}
                     >
                       <MenuItem className={classes.nested}>
@@ -391,9 +406,9 @@ function NavBar(props) {
             })}
           >
             <Switch>
-              <Route exact path="/navbar/surveys" component={SurveyLayout} />
+              <Route exact path="/dashboard/surveys" component={SurveyLayout} />
               <Route
-                path="/navbar/surveyId=:surveyId"
+                path="/dashboard/surveyId=:surveyId"
                 component={SurveySection}
               />
               <Route path="/dashboard/datacollection" component={DCLayout} />
@@ -453,13 +468,6 @@ function NavBar(props) {
                 InTouch Multicultural Centre Against Family Violence --{" "}
                 <a href={`tel:1800 737 732`}>1800 755 988</a>
               </Typography>
-              <Typography variant="body1" gutterBottom>
-                Safer Community Program --{" "}
-                <a href={`tel:1800 737 732`}>61 3 9035 8675</a> --{" "}
-                <a href="https://safercommunity.unimelb.edu.au/">
-                  safercommunity.unimelb.edu.au
-                </a>
-              </Typography>
             </DialogContent>
 
             <DialogActions>
@@ -481,9 +489,8 @@ function NavBar(props) {
             <Divider />
             <DialogContent>
               <DialogContentText>
-                Click the download button to download .csv file.
+                Click the download button to download .csv file. {link}
               </DialogContentText>
-              {link}
             </DialogContent>
 
             <DialogActions>
@@ -493,8 +500,8 @@ function NavBar(props) {
               >
                 Cancel
               </Button>
-              <Button onClick={handleDownload} className={clsx(classes.button)}>
-                Download
+              <Button className={clsx(classes.button)} onClick={handleDownload}>
+                download
               </Button>
             </DialogActions>
           </Dialog>

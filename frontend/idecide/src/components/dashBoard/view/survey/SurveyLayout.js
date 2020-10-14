@@ -2,6 +2,7 @@ import React, { useState, useEffect, createContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SurveyCard from './surveyView/SurveyCard';
+import clsx from "clsx";
 import {
 	Button,
 	Dialog,
@@ -14,8 +15,8 @@ import {
 	Box
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import CloseIcon from '@material-ui/icons/Close';
-import { NavLink } from "react-router-dom";
+import EditIcon from '@material-ui/icons/Edit';
+import { NavLink } from 'react-router-dom';
 import { getAllSurveys, AddNewSurvey } from '../../../../API/surveyAPI';
 import Loading from '../../../util/loading';
 
@@ -24,9 +25,22 @@ const useStyles = makeStyles((theme) => ({
 		flexGrow: 1
 	},
 	paper: {
-		padding: theme.spacing(2),
+		padding: theme.spacing(5),
 		textAlign: 'center',
-		color: theme.palette.text.secondary
+	//	color: theme.palette.text.secondary,
+	},
+	button: {
+		background: 'linear-gradient(45deg, #DA76C7 30%, #8973E6 90%)',
+		border: 0,
+		borderRadius: 20,
+		boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+		color: 'white',
+		width: 170,
+		[theme.breakpoints.only('xs')]: {
+			width: 20
+		},
+		height: 40,
+		padding: '0 30px'
 	}
 }));
 
@@ -36,15 +50,15 @@ export const Editable = createContext();
 
 export default function SurveyLayout() {
 	const classes = useStyles();
-	const [editable, setEditable] = useState(false);
-	const [isLoading, setIsLoading] = useState(false);
-	const [data, setData] = useState({ hits: [] });
-	const [open, setDMOpen] = React.useState(false); //control of adding new survey
+	const [ editable, setEditable ] = useState(false);
+	const [ isLoading, setIsLoading ] = useState(false);
+	const [ data, setData ] = useState({ hits: [] });
+	const [ open, setDMOpen ] = React.useState(false); //control of adding new survey
 	//const [ isOpen, setOpen ] = React.useState(false);
-	const [openAlert, setOpen] = React.useState(false);
-	const [openGreen, setOpenGreen] = React.useState(false);
-	const [error, setError] = React.useState();
-	const [values, setValues] = React.useState({
+	const [ openAlert, setOpen ] = React.useState(false);
+	const [ openGreen, setOpenGreen ] = React.useState(false);
+	const [ error, setError ] = React.useState();
+	const [ values, setValues ] = React.useState({
 		title: '',
 		descrpition: ''
 	});
@@ -69,11 +83,10 @@ export default function SurveyLayout() {
 	const AddNewSurveys = async () => {
 		if (openGreen) {
 			// window.location.replace('./survey');
-			window.location.href = '/dashboard/survey';
+			window.location.href = '/dashboard/surveys';
 		} else {
-
 			var readyData = JSON.stringify({
-				surveyId: Array.from(data).length + 1,
+				surveyId: Array.from(data).length + 1 + '',
 				surveyTitle: values.title,
 				surveyIntroduction: values.descrpition,
 				surveyVersion: '',
@@ -84,6 +97,7 @@ export default function SurveyLayout() {
 			});
 			const feedBack = await AddNewSurvey(readyData)
 				.then((data) => {
+					console.log(data);
 					setOpenGreen(true);
 				})
 				.catch((error) => {
@@ -110,101 +124,103 @@ export default function SurveyLayout() {
 	}, []);
 
 	return (
-		<div>
+		<div className={classes.paper}>
 			{isLoading ? (
-				<Loading/>
+				<Loading />
 			) : (
-				<Box>
-					<Grid container spacing={5}>
-						<Grid item xs={12} >
-							<Button variant="contained" color="primary" onClick={handleEdit}>
-								Edit
-							</Button>
-							</Grid>
-							<Editable.Provider value={editable}>
-								{Array.from(data).map((item) => (
-									<Grid item lg={4} md={6} xs={12} key={item.surveyId}>
-										<SurveyCard
-											style={{ height: 400 }}
-											key={item.surveyId}
-											product={item}
-											editable={editable}
-											useStyles
-											onClick={() => {
-
-												// window.location.replace('/dashboard/surveyId=' + item.surveyId);
-												window.location.href = '/dashboard/surveyId=' + item.surveyId;
-											}}
-										/>
-									</Grid>
-								))}
-							</Editable.Provider>
-							<Grid item xs={12}>
-								<Collapse in={editable}>
-									<Button variant="contained" color="secondary" fullWidth onClick={handleOpen}>
-										Add New Survey
+				<Grid container spacing={5}  direction="row" justify="flex-end" alignItems="center" direction="row" justify="flex-end" alignItems="center">
+					<Grid item>
+						<Button
+                        onClick={handleEdit}
+                        className={clsx(classes.button)}
+                      >
+                        <EditIcon />
+                        Edit
+                      </Button>
+					</Grid>
+					<Grid container spacing={2}>
+						<Editable.Provider value={editable}>
+							{Array.from(data).map((item) => (
+								<Grid item lg={4} md={6} xs={12} key={item.surveyId}>
+									<SurveyCard
+										style={{ height: 400 }}
+										key={item.surveyId}
+										product={item}
+										editable={editable}
+										useStyles
+										onClick={() => {
+											// window.location.replace('/dashboard/surveyId=' + item.surveyId);
+											window.location.href = '/dashboard/surveyId=' + item.surveyId;
+										}}
+									/>
+								</Grid>
+							))}
+						</Editable.Provider>
+						<Grid item xs={12}>
+							<Collapse in={editable}>
+								<Button variant="contained" color="secondary" fullWidth onClick={handleOpen}>
+									Add New Survey
 								</Button>
-								</Collapse>
-							</Grid>
+							</Collapse>
 						</Grid>
-
-						<Dialog
-							open={open}
-							onClose={handleClose}
-							aria-labelledby="max-width-dialog-title"
-							//	fullWidth="md"
-							maxWidth="md"
-						>
-							<DialogTitle id="form-dialog-title">Survey</DialogTitle>
-							<DialogContent>
-								<Collapse in={!openGreen}>
-									<DialogContentText>
-										Please input the title and description for the new Survey.
+					</Grid>
+					<Dialog
+						open={open}
+						onClose={handleClose}
+						aria-labelledby="max-width-dialog-title"
+						//	fullWidth="md"
+						maxWidth="md"
+					>
+						<DialogTitle id="form-dialog-title">Survey</DialogTitle>
+						<DialogContent>
+							<Collapse in={!openGreen}>
+								<DialogContentText>
+									Please input the title and description for the new Survey.
 								</DialogContentText>
-									<TextField
-										id="outlined-multiline-flexible"
-										required
-										fullWidth
-										value={values.title}
-										onChange={handleChange('title')}
-										label="Title"
-										variant="outlined"
-									/>
-									<DialogContentText>value={values.title}</DialogContentText>
-									<TextField
-										id="outlined-multiline-flexible"
-										multiline
-										fullWidth
-										required
-										value={values.descrpition}
-										onChange={handleChange('descrpition')}
-										rows={4}
-										label="Description"
-										variant="outlined"
-									/>
-								</Collapse>
-							</DialogContent>
-							<DialogContent>
-								<Collapse in={openAlert}>
-									<Alert severity="error">{error}</Alert>
-								</Collapse>
-								<Collapse in={openGreen}>
-									<Alert severity="success">Update Survey Successfully!</Alert>
-								</Collapse>
-							</DialogContent>
-							<DialogActions>
-								<Collapse in={!openGreen}>
-									<Button onClick={handleClose} color="primary">
-										Cancel
+								<TextField
+									id="outlined-multiline-flexible"
+									required
+									fullWidth
+									value={values.title}
+									onChange={handleChange('title')}
+									label="Title"
+									variant="outlined"
+								/>
+								<DialogContentText>value={values.title}</DialogContentText>
+								<TextField
+									id="outlined-multiline-flexible"
+									multiline
+									fullWidth
+									required
+									value={values.descrpition}
+									onChange={handleChange('descrpition')}
+									rows={4}
+									label="Description"
+									variant="outlined"
+								/>
+							</Collapse>
+						</DialogContent>
+						<DialogContent>
+							<Collapse in={openAlert}>
+								<Alert severity="error">{error}</Alert>
+							</Collapse>
+							<Collapse in={openGreen}>
+								<Alert severity="success">Update Survey Successfully!</Alert>
+							</Collapse>
+						</DialogContent>
+						<DialogActions>
+							<Collapse in={!openGreen}>
+								<Button onClick={handleClose} color="primary">
+									Cancel
 								</Button>
-								</Collapse>
-								<Button onClick={AddNewSurveys} color="primary">
-									Confirm
+							</Collapse>
+							<Button onClick={AddNewSurveys} color="primary">
+								Confirm
 							</Button>
-							</DialogActions>
-						</Dialog>
-					</Box>
-				)}
+						</DialogActions>
+					</Dialog>
+				</Grid>
+			)}
 		</div>
 	);
 }
