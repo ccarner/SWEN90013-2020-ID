@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 //TODO: refactor so that sidebar is a child of navbar, not vice versa...
-=======
->>>>>>> frontend
 import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import {
@@ -20,10 +17,7 @@ import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-<<<<<<< HEAD
-=======
 import Button from "@material-ui/core/Button";
->>>>>>> frontend
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -37,10 +31,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Collapse from "@material-ui/core/Collapse";
-<<<<<<< HEAD
-=======
 import MenuList from "@material-ui/core/MenuList";
->>>>>>> frontend
 import MenuItem from "@material-ui/core/MenuItem";
 import StorageIcon from "@material-ui/icons/Storage";
 import ExpandLess from "@material-ui/icons/ExpandLess";
