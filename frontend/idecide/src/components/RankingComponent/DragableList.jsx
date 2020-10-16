@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { MDBBtn } from "mdbreact";
-//import "@atlaskit/css-reset";
+import PrimaryButton from "../reusableComponents/PrimaryButton";
 import "./DraggableList.css";
 
 import Column from "./Column";
@@ -111,8 +110,7 @@ class DragableList extends Component {
           })}
         </DragDropContext>
         <div className="button-container">
-          <MDBBtn
-            gradient="purple"
+          <PrimaryButton
             onClick={() =>
               this.handleResult(
                 this.props.section.questions[0],
@@ -121,7 +119,7 @@ class DragableList extends Component {
             }
           >
             CONFIRM
-          </MDBBtn>
+          </PrimaryButton>
         </div>
       </div>
     );

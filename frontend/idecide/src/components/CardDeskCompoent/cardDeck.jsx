@@ -8,9 +8,9 @@ import DragableList from "../RankingComponent/DragableList";
 import { getSurveyById, postingSurvey } from "../../API/surveyAPI";
 import { Spinner, Button } from "react-bootstrap";
 import JsonRuleEngine from "../RuleEngine/jsonRule.js";
-import { MDBBtn } from "mdbreact";
 import LoadingSpinner from "../reusableComponents/loadingSpinner";
 import SortableComponent from "../RankingComponent/testSortable";
+import PrimaryButton from "./../reusableComponents/PrimaryButton";
 
 export default class CardDeck extends Component {
   constructor(props) {
@@ -127,18 +127,16 @@ export default class CardDeck extends Component {
 
           {/* Need to discuss about the button locations */}
           <div className="button-container">
-            <MDBBtn
-              gradient="purple"
+            <PrimaryButton
               onClick={() => this.handleResult(item, this.state.skiped)}
             >
               rather not answer
-            </MDBBtn>
-            <MDBBtn
-              gradient="purple"
+            </PrimaryButton>
+            <PrimaryButton
               onClick={() => this.handleResult(item, silderresult)}
             >
               CONFIRM
-            </MDBBtn>
+            </PrimaryButton>
           </div>
         </div>
       );
@@ -146,20 +144,19 @@ export default class CardDeck extends Component {
       return (
         <div className="questionContainer">
           <div className="button-container">
-            <MDBBtn
+            <PrimaryButton
               gradient="aqua"
               style={{ border: "none", "border-radius": "15px" }}
               onClick={() => this.handleResult(item, "No")}
             >
               No
-            </MDBBtn>
-            <MDBBtn
-              gradient="purple"
+            </PrimaryButton>
+            <PrimaryButton
               style={{ border: "none", "border-radius": "15px" }}
               onClick={() => this.handleResult(item, "Yes")}
             >
               Yes
-            </MDBBtn>
+            </PrimaryButton>
           </div>
         </div>
       );
@@ -190,14 +187,13 @@ export default class CardDeck extends Component {
             ref={this.changeChild}
           />
           <div className="button-container">
-            <MDBBtn
-              gradient="purple"
+            <PrimaryButton
               onClick={() =>
                 this.handleResult(item, this.changeChild.current.state.items)
               }
             >
               CONFIRM
-            </MDBBtn>
+            </PrimaryButton>
           </div>
         </div>
       );
