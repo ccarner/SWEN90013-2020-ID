@@ -5,14 +5,7 @@ const USER_URL = "https://www.idecide.icu:9012";
 // https://www.idecide.icu:9012/user/
 
 export async function registerUser(userIn) {
-  const {
-    // partnerGender,
-    // email,
-    // phoneNumber,
-    // postcode,
-    username,
-    password,
-  } = userIn;
+  const { username, password } = userIn;
 
   const endpoint = USER_URL + `/user`;
 
@@ -23,10 +16,6 @@ export async function registerUser(userIn) {
       "Content-Type": "application/json",
     },
     data: JSON.stringify({
-      // partnerGender,
-      // phoneNumber,
-      // postcode,
-      // email,
       username,
       password,
     }),

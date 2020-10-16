@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex'
 	},
 	appBar: {
-		transition: theme.transitions.create([ 'margin', 'width' ], {
+		transition: theme.transitions.create(['margin', 'width'], {
 			easing: theme.transitions.easing.sharp,
 			duration: theme.transitions.duration.leavingScreen
 		})
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 	appBarShift: {
 		width: `calc(100% - ${drawerWidth}px)`,
 		marginLeft: drawerWidth,
-		transition: theme.transitions.create([ 'margin', 'width' ], {
+		transition: theme.transitions.create(['margin', 'width'], {
 			easing: theme.transitions.easing.easeOut,
 			duration: theme.transitions.duration.enteringScreen
 		})
@@ -107,8 +107,8 @@ function NavBar(props) {
 	const theme = useTheme();
 	const { width } = props;
 	//  const {adminLogin, setAdminLogin} = React.useContext(AdminLogin); // admin login
-	const [ open, setOpen ] = React.useState(false);
-	const [ openHelp, setHelp ] = React.useState(false);
+	const [open, setOpen] = React.useState(false);
+	const [openHelp, setHelp] = React.useState(false);
 
 	console.log(props);
 
@@ -142,16 +142,16 @@ function NavBar(props) {
 					{props.location.pathname === '/navbar' ? (
 						<div>aaa</div>
 					) : (
-						<IconButton
-							color="black"
-							aria-label="open drawer"
-							onClick={handleDrawerOpen}
-							edge="start"
-							className={clsx(classes.menuButton, open && classes.hide)}
-						>
-							<MenuIcon />
-						</IconButton>
-					)}
+							<IconButton
+								color="black"
+								aria-label="open drawer"
+								onClick={handleDrawerOpen}
+								edge="start"
+								className={clsx(classes.menuButton, open && classes.hide)}
+							>
+								<MenuIcon />
+							</IconButton>
+						)}
 					<IconButton onClick={() => (window.location.href = '/')}>
 						<img src={IconLogo} alt="IconLogo" style={{ height: 35, marginTop: 0 }} />
 					</IconButton>
@@ -191,7 +191,7 @@ function NavBar(props) {
 				</div>
 				<Divider />
 				<List>
-					{[ 'Inbox', 'Starred', 'Send email', 'Drafts' ].map((text, index) => (
+					{['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
 						<ListItem button key={text}>
 							<ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
 							<ListItemText primary={text} />
@@ -200,7 +200,7 @@ function NavBar(props) {
 				</List>
 				<Divider />
 				<List>
-					{[ 'All mail', 'Trash', 'Spam' ].map((text, index) => (
+					{['All mail', 'Trash', 'Spam'].map((text, index) => (
 						<ListItem button key={text}>
 							<ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
 							<ListItemText primary={text} />
