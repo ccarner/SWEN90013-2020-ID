@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink, BrowserRouter } from "react-router-dom";
+//TODO: this 'fort awesome' / font awesome, are we actually USING it??? why not importing it at the 'App.js' level?
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Container, Row, Col } from "react-bootstrap";
 import PrimaryButton from "./reusableComponents/PrimaryButton";
