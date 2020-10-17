@@ -1,7 +1,7 @@
+import { getUserContext } from "./loginAPI";
 const axios = require("axios");
 
 const SURVEY_RESULT_URL = "https://www.idecide.icu:9012";
-
 
 export async function getCsvDownloadLink() {
   const endpoint = SURVEY_RESULT_URL + `/answer/downloadResult`;
@@ -10,7 +10,7 @@ export async function getCsvDownloadLink() {
     method: "GET", // HTTP POST method
     headers: {
       "Content-Type": "application/json",
-       Authorization: localStorage.getItem("token"),
+      Authorization: getUserContext().token,
     },
   });
 

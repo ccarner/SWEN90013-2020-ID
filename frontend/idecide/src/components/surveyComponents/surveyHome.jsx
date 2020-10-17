@@ -2,22 +2,21 @@ import React, { Component } from "react";
 import SurveyControl from "./surveyControl";
 import "../../CSS/survey.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import "bootstrap-css-only/css/bootstrap.min.css";
-import "mdbreact/dist/css/mdb.css";
 import LoadingSpinner from "../reusableComponents/loadingSpinner";
 import {
   getUserResults,
   getAllSurveys,
   getStaticImageUrlFromName,
 } from "../../API/surveyAPI";
-import { anonymouseUser } from "../../API/loginAPI";
+import { anonymousUser } from "../../API/loginAPI";
 import SurveySelectionButton from "./surveySelectionButton";
 import SurveyResultsPage from "./surveyResultsPage";
 import ActionPlans from "./actionPlans";
 import { Card, Button } from "react-bootstrap";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 import { Typography } from "@material-ui/core";
-import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
+
+import userContext from "../../contexts/userContext";
 
 /**
  * The parent component of all survey pages. This component:
@@ -29,6 +28,9 @@ import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
  * doesn't fetch the survey itself or post the results.
  */
 export default class SurveyHome extends Component {
+  // allows us to use this.context to get user context details
+  static contextType = userContext;
+
   constructor(props) {
     super();
 
@@ -61,14 +63,13 @@ export default class SurveyHome extends Component {
   }
 
   async componentDidMount() {
-    if (localStorage.getItem("userId") === null) {
-      console.log("no user ID passed in as prop to surveyHome");
-      await anonymouseUser();
-      window.location.reload();
+    if (!this.context.userContext.userId) {
+      console.log(
+        "User has not logged in, no userId provided, log in anonymously"
+      );
+      await anonymousUser();
     }
     var surveys = await getAllSurveys();
-    //note, need to fix CORS issues with the getUserResults
-    // var completions = await getUserResults(userId);
 
     this.setState({
       allSurveys: surveys.data,
@@ -84,14 +85,11 @@ export default class SurveyHome extends Component {
   }
 
   completeHandler = (surveyResults) => {
-    console.log("here inside of complete handler", surveyResults);
     this.setState((prevState) => {
-      console.log("old survey completions is", prevState.surveyCompletions);
       var newSurveyCompletions = [
         ...prevState.surveyCompletions,
         surveyResults,
       ];
-      console.log("new survey completions is", newSurveyCompletions);
       localStorage.setItem(
         "prevCompletions",
         JSON.stringify(newSurveyCompletions)
@@ -125,7 +123,7 @@ export default class SurveyHome extends Component {
         <SurveyControl
           returnHome={this.returnHomeCallback}
           surveyId={this.state.currentSurveyId}
-          userId={localStorage.getItem("userId")}
+          userId={this.context.userContext.userId}
           completeHandler={this.completeHandler}
         />
       );

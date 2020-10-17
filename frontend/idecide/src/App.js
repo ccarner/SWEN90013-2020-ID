@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+
+import userContext from "./contexts/userContext";
+import { ToastProvider } from "react-toast-notifications";
 
 import {
   BrowserRouter as Router,
@@ -7,66 +10,121 @@ import {
   Redirect,
 } from "react-router-dom";
 
-import Navbar from "./components/Navbar";
 import Landing from "./components/Landing";
-import NotFound from "./components/NotFound";
 import Questions from "./components/Questions";
 import ActionPlan from "./components/ActionPlan";
 import Framework from "./components/Framework";
 import DashBoard from "./components/dashBoard/DBLayout";
 import PersistentDrawerLeft from "./Layout/Navbar";
-
+import dashboardAllSurveysExpose from "./components/dashBoard/view/survey/dashboardAllSurveysExpose";
+import SurveySection from "./components/dashBoard/view/survey/surveyView/SurveySection";
+import DCLayout from "./components/dashBoard/view/dataCollection/DCLayout";
 import LoginPage from "./components/loginComponent/loginPage";
 import RegisterPage from "./components/loginComponent/registerPage";
 import AdminInfo from "./components/loginComponent/adminInfo";
 import UserInfo from "./components/loginComponent/userInfo";
-
 import SurveyHome from "./components/surveyComponents/surveyHome";
-
+import clsx from "clsx";
 // import DashBoard from "./components/dashBoard/DBLayout";
+import { ToastNotification } from "./components/reusableComponents/toastNotification";
 
+class App extends React.Component {
+  // const [adminLogin, setAdminLogin] = React.useState(false);
 
-function App() {
-    const [adminLogin,setAdminLogin] = React.useState(false);
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      // types are "anon","admin","user"
+      userContext: { userType: null, token: null, userId: null },
+    };
+    this.logout = this.logout.bind(this);
+  }
+
+  componentDidMount() {
+    let previousUserContext = localStorage.getItem("userContext");
+
+    if (previousUserContext) {
+      this.setState({ userContext: JSON.parse(previousUserContext) });
+    }
+    //else we just leave with the default 'null'
+  }
+
+  logout() {
+    this.setState({
+      userContext: { userType: null, token: null, userId: null },
+    });
+    localStorage.clear();
+    window.location.href = "/";
+  }
+
+  switchMainContent() {
     return (
-      <Router>
-        <div className="App">
-          <div className="backgroundImage"></div>
-            {/**  <Navbar />*/}
-             <Route path="/" component={PersistentDrawerLeft} />
-          <div>
-            <Switch>
-              <Route path="/survey/3.1" component={Questions} />
-              <Route path="/survey/3.2" component={ActionPlan} />
-              <Route path="/survey/3.3" component={Framework} />
-              <Route path="/dashboard" component={DashBoard} />
-
-              {/* <Redirect exact from="/dashboard" to="/dashboard/home" /> */}
-
-              <Redirect
-                exact
-                from="/surveyComponent/"
-                to="/surveyComponent/surveyHome"
-              />
-          {/**  <Route
-                path="/surveyComponent/surveyHome"
-                component={SurveyHome}
-              />
-              <Route path="/loginComponent/loginPage" component={LoginPage}/>
-              <Route
-                path="/loginComponent/registerPage"
-                component={RegisterPage}
-              />
-              <Route path="/loginComponent/adminInfo" component={AdminInfo} />
-
-              <Route path="/" component={Landing} />
-              <Route path="/1" component={NotFound} /> */}
-            </Switch>
-          </div>
-        </div>
-      </Router>
+      <Switch>
+        {/* TODO: make the dashboard a single hierarchical component that is navigated via links... */}
+        <Route exact path="/dashboard" component={DashBoard} />
+        {/* <Redirect
+          exact
+          from="/surveyComponent/"
+          to="/surveyComponent/surveyHome"
+        /> */}
+        <Route
+          exact
+          path="/dashboard/surveys"
+          component={dashboardAllSurveysExpose}
+        />
+        <Route
+          exact
+          path="/dashboard/surveyId=:surveyId"
+          component={SurveySection}
+        />
+        <Route exact path="/dashboard/datacollection" component={DCLayout} />
+        <Route
+          exact
+          path="/surveyComponent/surveyHome"
+          component={SurveyHome}
+        />
+        <Route
+          exact
+          path="/loginComponent/loginPage"
+          render={(props) => <LoginPage />}
+        />
+        <Route
+          exact
+          path="/loginComponent/registerPage"
+          component={RegisterPage}
+        />
+        <Route exact path="/loginComponent/adminInfo" component={AdminInfo} />
+        <Route exact path="/loginComponent/userInfo" component={UserInfo} />
+        <Route exact path="/" component={Landing} />{" "}
+      </Switch>
     );
+  }
+
+  render() {
+    return (
+      <userContext.Provider
+        value={{
+          userContext: this.state.userContext,
+          logout: this.logout,
+        }}
+      >
+        <ToastProvider
+          components={{ Toast: ToastNotification }}
+          style={{ zIndex: 1500 }}
+        >
+          <Router>
+            <div className="App">
+              <div className="backgroundImage"></div>
+              <PersistentDrawerLeft>
+                {this.switchMainContent()}
+              </PersistentDrawerLeft>
+            </div>
+          </Router>
+        </ToastProvider>
+      </userContext.Provider>
+    );
+  }
 }
 
 export default App;

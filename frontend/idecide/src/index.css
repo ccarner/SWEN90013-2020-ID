@@ -63,3 +63,12 @@ label {
   width: 130px;
   display: inline;
 }
+
+
+.fix_top_right{
+  color: blue;
+  position: fixed;
+  top: 5em;
+  right: 1em;
+}
+

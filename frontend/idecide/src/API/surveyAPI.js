@@ -1,3 +1,4 @@
+import { getUserContext } from "./loginAPI";
 const axios = require("axios");
 
 const API_BASE = "http://8.210.28.169";
@@ -56,7 +57,7 @@ export async function getAllSurveys() {
 
 export async function postingSurvey(surveyIn) {
   const endpoint = API_URL + `/answer`;
-  const token = localStorage.getItem("token");
+  const token = getUserContext().token;
 
   const dataPost = await axios({
     url: endpoint, // send a request to the library API
@@ -67,7 +68,6 @@ export async function postingSurvey(surveyIn) {
     },
     data: JSON.stringify(surveyIn),
   });
-
   return dataPost;
 }
 
@@ -79,7 +79,7 @@ export async function editSurvey(surveyInfo) {
     method: "PUT", // HTTP POST method
     headers: {
       "Content-Type": "application/json",
-      Authorization: localStorage.getItem("token"),
+      Authorization: getUserContext().token,
     },
 
     data: surveyInfo,
@@ -93,11 +93,11 @@ export async function editSurvey(surveyInfo) {
 
 export async function addImageForSurvey(surveyId, imgUrl) {
   await axios({
-    url:  API_URL + "/survey/uploadImg", // send a request to the library API
+    url: API_URL + "/survey/uploadImg", // send a request to the library API
     method: "POST", // HTTP POST method
     headers: {
       "content-type": "multipart/form-data",
-     //  Authorization: localStorage.getItem("token"),
+      //  Authorization: localStorage.getItem("token"),
     },
     surveyId: surveyId,
     img: imgUrl,
@@ -107,13 +107,12 @@ export async function addImageForSurvey(surveyId, imgUrl) {
 export async function AddNewSurvey(surveyInfo) {
   const endpoint = API_URL + `/survey`;
   console.log(surveyInfo);
-  console.log("surveyInfo",localStorage.getItem("token"));
   const dataPost = await axios({
     url: endpoint, // send a request to the library API
     method: "POST", // HTTP POST method
     headers: {
       "Content-Type": "application/json",
-      Authorization: localStorage.getItem("token"),
+      Authorization: getUserContext().token,
     },
     data: JSON.stringify(JSON.parse(surveyInfo)),
   });
@@ -129,7 +128,7 @@ export async function DeleteSurvey(surveyId) {
     method: "DELETE", // HTTP POST method
     headers: {
       "Content-Type": "application/json",
-      Authorization: localStorage.getItem("token"),
+      Authorization: getUserContext().token,
     },
     data: surveyId,
   });

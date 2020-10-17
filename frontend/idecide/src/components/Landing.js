@@ -1,20 +1,10 @@
 import React, { Component } from "react";
 import { NavLink, BrowserRouter } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import "bootstrap-css-only/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
-import "mdbreact/dist/css/mdb.css";
-import {
-  MDBJumbotron,
-  MDBBtn,
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBCardTitle,
-  MDBIcon,
-  MDBFooter,
-} from "mdbreact";
 import PrimaryButton from "./reusableComponents/PrimaryButton";
+import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import {
   Card,
   CardContent,
@@ -31,9 +21,14 @@ import unimelbLogo from "../images/unimelbLogo.png";
 import womenAroundEarth from "../images/womenAroundEarth.png";
 import idecideLogo from "../images/idecide-logo.png";
 
+import userContext from "../contexts/userContext";
+
 class Landing extends Component {
+  static contextType = userContext;
+
   render() {
-    const userId = localStorage.getItem("userId");
+    const userId = this.context.userContext.userId;
+    const userType = this.context.userContext.userType;
     return (
       <div>
         <Container style={{ width: "100%" }}>
@@ -69,17 +64,31 @@ class Landing extends Component {
                 This website helps women who feel unsafe or afraid of a current
                 or ex-partner to plan for the future.
               </Typography>
-              <NavLink to="./surveyComponent/surveyHome">
-                <PrimaryButton>Start</PrimaryButton>
+              <NavLink
+                to="/surveyComponent/surveyHome"
+                style={{ textDecoration: "none" }}
+              >
+                <PrimaryButton>
+                  Start <KeyboardArrowRightIcon />
+                </PrimaryButton>
               </NavLink>
-              {userId === null ||
-              localStorage.getItem("userType") === "anonymous" ? (
-                <NavLink to="./loginComponent/loginPage">
-                  <PrimaryButton>Log in</PrimaryButton>
+              {userId === null || userType === "anon" ? (
+                <NavLink
+                  to="/loginComponent/loginPage"
+                  style={{ textDecoration: "none" }}
+                >
+                  <PrimaryButton>
+                    Log in <AccountCircleIcon />
+                  </PrimaryButton>
                 </NavLink>
               ) : (
-                <NavLink to="./loginComponent/userInfo">
-                  <PrimaryButton>Account</PrimaryButton>
+                <NavLink
+                  to="/loginComponent/userInfo"
+                  style={{ textDecoration: "none" }}
+                >
+                  <PrimaryButton>
+                    Account <AccountCircleIcon />
+                  </PrimaryButton>
                 </NavLink>
               )}
             </Col>
