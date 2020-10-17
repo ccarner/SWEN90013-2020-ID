@@ -153,9 +153,9 @@ export default class SurveyHome extends Component {
                 <div key={survey.surveyId} className="surveyIcon">
                   <SurveySelectionButton
                     notAvailable={
-                      // false && // uncomment this line to test surveys
+                      false && // uncomment this line to test surveys
                       survey.surveyTitle !==
-                      this.surveyOrder[this.state.nextSurvey]
+                        this.surveyOrder[this.state.nextSurvey]
                     }
                     icon={getStaticImageUrlFromName(survey.surveyImageName)}
                     completed="false"
@@ -171,12 +171,13 @@ export default class SurveyHome extends Component {
           </div>
         </React.Fragment>
       );
-    } else if (currentState === "completion") {
-      //viewing a previous attempt
-      //different from when we JUST completed a survey, which is rendered in the surveyControl component
-      renderElements.push(
-        <SurveyResultsPage returnHome={this.returnHomeCallback} />
-      );
+      // } else if (currentState === "completion") {
+      //   //TODO: no longer need to show 'previous completions', remove this.
+      //   //viewing a previous attempt
+      //   //different from when we JUST completed a survey, which is rendered in the surveyControl component
+      //   renderElements.push(
+      //     <SurveyResultsPage returnHome={this.returnHomeCallback} />
+      //   );
     } else if (currentState === "actionPlan") {
       renderElements.push(<ActionPlans />);
     } else {

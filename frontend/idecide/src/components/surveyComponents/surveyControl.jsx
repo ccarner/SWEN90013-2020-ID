@@ -76,7 +76,11 @@ export default class SurveyControl extends Component {
 
       surveyPageMap.push([sectionCounter, "questions"]);
 
-      if (section.sectionResultAlgorithm) {
+      if (
+        section.sectionResultAlgorithm ||
+        section.sectionFeedbackHtml ||
+        section.sectionFeedbackHeading
+      ) {
         // if the file has a result algorithm, note it on the map
         surveyPageMap.push([sectionCounter, "results"]);
       }
@@ -160,7 +164,7 @@ export default class SurveyControl extends Component {
             prevState.currentSurveyMapPosition + lambdaSection,
           sectionQuestions: this.state.surveyFile.surveySections[
             prevState.surveyPageMap[
-            prevState.currentSurveyMapPosition + lambdaSection
+              prevState.currentSurveyMapPosition + lambdaSection
             ][0]
           ],
           percentageCompleted:
@@ -289,7 +293,7 @@ export default class SurveyControl extends Component {
             <SectionIntroductionPage
               section={
                 this.state.surveyFile.surveySections[
-                this.currentSectionNumber()
+                  this.currentSectionNumber()
                 ]
               }
             />
@@ -298,6 +302,16 @@ export default class SurveyControl extends Component {
           //add section results page here...
           renderArray.push(
             <SectionResultsPage
+              heading={
+                this.state.surveyFile.surveySections[
+                  this.currentSectionNumber()
+                ].sectionFeedbackHeading
+              }
+              bodyHtml={
+                this.state.surveyFile.surveySections[
+                  this.currentSectionNumber()
+                ].sectionFeedbackHtml
+              }
               feedbackText={this.state.feedbackText}
               feedbackImage={this.state.feedbackImage}
               feedbackCategory={this.state.feedbackCategory}
@@ -310,7 +324,7 @@ export default class SurveyControl extends Component {
               questionHandler={this.questionHandler}
               section={
                 this.state.surveyFile.surveySections[
-                this.currentSectionNumber()
+                  this.currentSectionNumber()
                 ]
               }
               results={this.state.results.questions}
@@ -356,6 +370,8 @@ export default class SurveyControl extends Component {
         renderArray.push(
           <SurveyResultsPage
             returnHome={this.props.returnHome}
+            heading={this.state.surveyFile.surveyResultHeading}
+            bodyHtml={this.state.surveyFile.surveyResultHtml}
             surveyResults={this.state.results.questions}
             feedbackText={this.state.feedbackText}
             feedbackImage={this.state.feedbackImage}
