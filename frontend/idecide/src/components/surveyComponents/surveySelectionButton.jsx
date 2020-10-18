@@ -16,7 +16,7 @@ export default function SurveySelectionButton(props) {
   var description = props.shortSurveyDescription;
 
   //truncate the string if it's too loadingSpinner
-  if (description.length > 140) {
+  if (description.length > 120) {
     description = description.substring(0, 120);
     description += "…";
   }

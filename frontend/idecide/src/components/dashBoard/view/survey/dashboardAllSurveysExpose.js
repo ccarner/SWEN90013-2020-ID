@@ -20,6 +20,10 @@ import EditIcon from "@material-ui/icons/Edit";
 import { NavLink } from "react-router-dom";
 import { getAllSurveys, AddNewSurvey } from "../../../../API/surveyAPI";
 import Loading from "../../../util/loading";
+import SurveyOptionsButtons from "./surveyOptionsButtons";
+import PrimaryButton from "../../../reusableComponents/PrimaryButton";
+import BackupIcon from "@material-ui/icons/Backup";
+import NoteAddIcon from "@material-ui/icons/NoteAdd";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,7 +56,6 @@ export default function DashboardAllSurveysExpose() {
   const { addToast } = useToasts();
 
   const classes = useStyles();
-  const [editable, setEditable] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
 
@@ -77,10 +80,6 @@ export default function DashboardAllSurveysExpose() {
       ...newSurveyAttributes,
       [prop]: event.target.value,
     });
-  };
-
-  const handleEdit = () => {
-    setEditable((pre) => !pre);
   };
 
   //takes a STRINGIFIED json (ie need to verify its proper json already)
@@ -161,57 +160,34 @@ export default function DashboardAllSurveysExpose() {
           alignItems="center"
         >
           <Grid item>
-            <Button onClick={handleEdit} className={clsx(classes.button)}>
-              <EditIcon />
-              Edit
-            </Button>
+            <PrimaryButton
+              style={{ width: "16em" }}
+              onClick={() => {
+                setOpenCreateSurveyDialog(true);
+              }}
+            >
+              <NoteAddIcon style={{ paddingRight: "5px" }} /> Create New Survey
+            </PrimaryButton>
+            <PrimaryButton
+              style={{ width: "16em" }}
+              onClick={() => {
+                setOpenUploadSurveyDialog(true);
+              }}
+            >
+              <BackupIcon style={{ paddingRight: "5px" }} /> Upload Survey File
+            </PrimaryButton>
           </Grid>
           <Grid container spacing={2}>
-            <Editable.Provider value={editable}>
-              {console.log(data) ||
-                data.map((item) => (
-                  <Grid item lg={4} md={6} xs={12} key={item.surveyId}>
-                    <SurveyCard
-                      style={{ height: 400 }}
-                      key={item.surveyId}
-                      product={item}
-                      editable={editable}
-                      useStyles
-                      onClick={() => {
-                        // window.location.replace('/dashboard/surveyId=' + item.surveyId);
-                        window.location.href =
-                          "/dashboard/surveyId=" + item.surveyId;
-                      }}
-                    />
-                  </Grid>
-                ))}
-            </Editable.Provider>
-            <Grid item xs={12}>
-              <Collapse in={editable}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  fullWidth
-                  onClick={() => {
-                    setOpenCreateSurveyDialog(true);
-                  }}
-                >
-                  Create New Survey
-                </Button>
-              </Collapse>
-              <Collapse in={editable}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  fullWidth
-                  onClick={() => {
-                    setOpenUploadSurveyDialog(true);
-                  }}
-                >
-                  Upload Survey File
-                </Button>
-              </Collapse>
-            </Grid>
+            {data.map((item) => (
+              <Grid item lg={4} md={6} xs={12} key={item.surveyId}>
+                <SurveyCard
+                  style={{ height: 400 }}
+                  key={item.surveyId}
+                  surveyHeaders={item}
+                  useStyles
+                />
+              </Grid>
+            ))}
           </Grid>
 
           <Dialog

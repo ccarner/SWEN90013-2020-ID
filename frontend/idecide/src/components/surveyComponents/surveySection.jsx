@@ -77,7 +77,6 @@ export default class SurveySection extends React.Component {
         />
       );
     } else if (section.sectionType === "ranking") {
-      console.log("HERE ITS A DRAGGABLE LIST", section);
       return (
         <DragableList handleAnswer={this.handleInputChange} section={section} />
       );
