@@ -12,13 +12,16 @@ var planHtmls = require("../../SurveyJsons/actionPlanHtml.json");
 export default class ActionPlans extends Component {
   constructor(props) {
     super(props);
-    this.state = { ModalShow: false, ModalBody: undefined, ShowTopfive: true };
+    this.state = {
+      ModalShow: false,
+      ModalBody: undefined,
+      ShowTopfive: true
+    };
     this.addResultsToFacts();
     this.determineActionPlans();
-    this.determineActionPlans = this.determineActionPlans.bind(this);
   }
 
-  addResultsToFacts() {
+  addResultsToFacts = () => {
     //facts for use in algorithm, fill with defaults
     // var facts = {
     //   HaveChildren: "Yes",
@@ -73,7 +76,7 @@ export default class ActionPlans extends Component {
     // localStorage.setItem("actionPlanFacts", JSON.stringify(facts));
   }
 
-  determineActionPlans() {
+  determineActionPlans = () => {
     // var actionPlanFacts = JSON.parse(localStorage.getItem("actionPlanFacts"));
     // var factsContainer = [];
     // for (var key in actionPlanFacts) {
@@ -82,10 +85,12 @@ export default class ActionPlans extends Component {
     // console.log("facts container is", factsContainer);
 
     var data = require("../../SurveyJsons/actionPlanAlgorithm.json");
+    // console.log(777, this.props.isReview);
+    // alert(777);
 
-    evaluateFeedback(data, []).then((result) => {
+    evaluateFeedback(data, [], this.props.isReview).then((result) => {
       this.setState({ plan: result.events.map(({ type }) => type) });
-      console.log("result was in eval feedback", result);
+      // console.log("result was in eval feedback", result);
     });
   }
 
@@ -134,7 +139,7 @@ export default class ActionPlans extends Component {
                     >
                       {this.state.plan &&
                         this.state.plan.slice(0, 9).map((plan, index) => {
-                          console.log("plan was", plan);
+                          // console.log("plan was", plan);
                           var html = {
                             __html: planHtmls[plan].strategyHtmlString,
                           };
@@ -199,7 +204,7 @@ export default class ActionPlans extends Component {
                     >
                       {this.state.plan &&
                         this.state.plan.slice(9, 14).map((plan, index) => {
-                          console.log("plan was", plan);
+                          // console.log("plan was", plan);
                           var html = {
                             __html: planHtmls[plan].strategyHtmlString,
                           };
@@ -302,6 +307,9 @@ export default class ActionPlans extends Component {
       }
     }
   };
+
+
+
   handleAllStrategies = () => {
     const keys = Object.keys(planHtmls);
     var AllStrategies = {};
@@ -434,7 +442,7 @@ export default class ActionPlans extends Component {
   }
 }
 /* <div>
-          
+
               <Table striped bordered hover>
                 <thead>
                   <tr>
@@ -456,7 +464,7 @@ export default class ActionPlans extends Component {
                     ))}
                 </tbody>
               </Table>
-              
+
             </Card.Body>
-          
+
         </div> */
