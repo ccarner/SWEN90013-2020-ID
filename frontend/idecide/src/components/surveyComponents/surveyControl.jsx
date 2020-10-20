@@ -193,12 +193,26 @@ export default class SurveyControl extends Component {
     //else do nothing if somehow trying to go to invalid negative section
   }
 
+  prioritiesAdaptor = (postAnswer) => {
+    postAnswer.questions[1]["questionAnswer"] =
+      postAnswer.questions[1]["questionAnswer"][0];
+  };
+
   submitHandler = async () => {
     this.setState({ isLoaded: false });
-    console.log(550, "posted this data", JSON.stringify(this.state.results));
-    const feedBack = await postingSurvey(this.state.results);
+    var postAnswer = this.state.results;
+    postAnswer.completedTime = JSON.stringify({
+      time: Date.now(),
+      type: this.state.surveyFile.surveyTitle,
+    });
+    if (this.state.surveyFile.surveyTitle === "My Priorities") {
+      this.prioritiesAdaptor(postAnswer);
+    }
+    console.log(992, JSON.stringify(postAnswer));
+
+    const feedback = await postingSurvey(postAnswer);
+
     this.props.completeHandler(this.state.results);
-    console.log(555, "received from the backend", feedBack);
     this.setState({ isLoaded: true, currentSurveyState: "submitted" });
 
     //evaluate the final 'survey' level feedback if the algorithm exists

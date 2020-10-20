@@ -1,8 +1,8 @@
-export default function evaluateFeedback(rules, factContainers) {
+export default function evaluateFeedback(rules, factContainers, isReview) {
   let RuleEngine = require("json-rules-engine");
   let engine = new RuleEngine.Engine();
 
-  console.log(669, rules, factContainers);
+  // console.log(669, rules, factContainers)
   // a rule is an object of form {conditions, event}
   for (const rule of rules) {
     let engineRule = new RuleEngine.Rule(rule);
@@ -47,7 +47,7 @@ export default function evaluateFeedback(rules, factContainers) {
           " (Top priorities question)"
         );
       }
-      console.log("top priority was", topPriority);
+      // console.log("top priority was", topPriority);
       return topPriority;
     });
   };
@@ -76,7 +76,7 @@ export default function evaluateFeedback(rules, factContainers) {
           " (Intentions question)"
         );
       }
-      console.log("intention was", intention);
+      // console.log("intention was", intention);
       return intention;
     });
   };
@@ -105,12 +105,12 @@ export default function evaluateFeedback(rules, factContainers) {
           if (idArr[2].includes("-")) {
             let re = /([\d]*)-([\d]*)/g;
             var match = re.exec(idArr[2]);
-            console.log("match was", match);
+            // console.log("match was", match);
             let startQ = match[1];
             let endQ = match[2];
             startQ = parseInt(startQ);
             endQ = parseInt(endQ);
-            console.log("start/end was", startQ, endQ);
+            // console.log("start/end was", startQ, endQ);
 
             for (var i = startQ; i <= endQ; i++) {
               params.totalAnswerPointsQuestions.push([
@@ -159,8 +159,8 @@ export default function evaluateFeedback(rules, factContainers) {
           }
         }
       }
-      console.log("total points is", totalPoints);
-      console.log("Questions were", params.totalAnswerPointsQuestions);
+      // console.log("total points is", totalPoints);
+      // console.log("Questions were", params.totalAnswerPointsQuestions);
       return totalPoints;
     });
   };
@@ -198,7 +198,7 @@ export default function evaluateFeedback(rules, factContainers) {
 
     // return totalAnswerPointsFact(params, almanac);
     var value = totalAnswerPointsFact(params, almanac);
-    console.log("severe subscale is", value);
+    // console.log("severe subscale is", value);
     return value;
   };
 
@@ -294,10 +294,10 @@ export default function evaluateFeedback(rules, factContainers) {
   });
 
   var results = engine.run().then((result) => {
-    console.log(
-      "all rules executed; the following events were triggered: ",
-      result.events
-    );
+    // console.log(
+    //   "all rules executed; the following events were triggered: ",
+    //   result.events
+    // );
     return result;
   });
   return results;

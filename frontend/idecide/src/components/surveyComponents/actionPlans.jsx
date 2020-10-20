@@ -34,7 +34,7 @@ export default class ActionPlans extends Component {
     this.setState({ currentView: newView });
   }
 
-  addResultsToFacts() {
+  addResultsToFacts = () => {
     //facts for use in algorithm, fill with defaults
     // var facts = {
     //   HaveChildren: "Yes",
@@ -87,9 +87,9 @@ export default class ActionPlans extends Component {
     //   facts.Priority = "Safety";
     // }
     // localStorage.setItem("actionPlanFacts", JSON.stringify(facts));
-  }
+  };
 
-  determineActionPlans() {
+  determineActionPlans = () => {
     // var actionPlanFacts = JSON.parse(localStorage.getItem("actionPlanFacts"));
     // var factsContainer = [];
     // for (var key in actionPlanFacts) {
@@ -98,12 +98,14 @@ export default class ActionPlans extends Component {
     // console.log("facts container is", factsContainer);
 
     var data = require("../../SurveyJsons/actionPlanAlgorithm.json");
+    // console.log(777, this.props.isReview);
+    // alert(777);
 
-    evaluateFeedback(data, []).then((result) => {
+    evaluateFeedback(data, [], this.props.isReview).then((result) => {
       this.setState({ plan: result.events.map(({ type }) => type) });
-      console.log("result was in eval feedback", result);
+      // console.log("result was in eval feedback", result);
     });
-  }
+  };
 
   handleModalShow = () => {
     this.setState({ ModalShow: !this.state.ModalShow });
@@ -218,7 +220,7 @@ export default class ActionPlans extends Component {
                     >
                       {this.state.plan &&
                         this.state.plan.slice(9, 14).map((plan, index) => {
-                          console.log("plan was", plan);
+                          // console.log("plan was", plan);
                           var html = {
                             __html: planHtmls[plan].strategyHtmlString,
                           };
@@ -327,6 +329,7 @@ export default class ActionPlans extends Component {
       }
     }
   };
+
   handleAllStrategies = () => {
     const keys = Object.keys(planHtmls);
     var AllStrategies = {};
