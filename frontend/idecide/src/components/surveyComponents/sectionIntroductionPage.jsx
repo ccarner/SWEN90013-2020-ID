@@ -5,7 +5,7 @@ import { Card } from "react-bootstrap";
  * The initial page displayed after selecting a survey, with info about the survey itself
  * @param {*} props
  */
-export default function SurveyInformationPage(props) {
+export default function SectionIntroductionPage(props) {
   var introComponent = null;
   if (props.section.sectionIntroductionHtmlB64) {
     introComponent = (
@@ -21,17 +21,15 @@ export default function SurveyInformationPage(props) {
   }
 
   return (
-    <div>
-      <Card className="surveyIntroCard" style={{ width: "80%" }}>
-        <Card.Body>
-          <Card.Title>{"Section: " + props.section.sectionTitle}</Card.Title>
-          <Card.Text
-            style={{ fontSize: "18px", padding: "20px", textAlign: "left" }}
-          >
-            {introComponent}
-          </Card.Text>
-        </Card.Body>
-      </Card>
-    </div>
+    <Card style={{ minWidth: "80%" }}>
+      <Card.Body style={{ alignSelf: "center" }}>
+        <Card.Title>{"Section: " + props.section.sectionTitle}</Card.Title>
+        <Card.Text
+          style={{ fontSize: "18px", padding: "20px", textAlign: "left" }}
+        >
+          {introComponent}
+        </Card.Text>
+      </Card.Body>
+    </Card>
   );
 }

@@ -104,7 +104,7 @@ export default class CardDeck extends Component {
           </div>
         </div>
       );
-    } else if (item.questionType == "slider") {
+    } else if (item.questionType === "slider") {
       let silderresult = 0;
 
       return (
@@ -125,7 +125,7 @@ export default class CardDeck extends Component {
             <PrimaryButton
               onClick={() => this.handleResult(item, this.state.skiped)}
             >
-              rather not answer
+              Skip
             </PrimaryButton>
             <PrimaryButton
               onClick={() => this.handleResult(item, silderresult)}
@@ -174,7 +174,7 @@ export default class CardDeck extends Component {
           </div>
         </div>
       );
-    } else if (item.questionType == "ranking") {
+    } else if (item.questionType === "ranking") {
       return (
         <div className="questionContainer">
           <SortableComponent
@@ -183,9 +183,9 @@ export default class CardDeck extends Component {
           />
           <div className="button-container">
             <PrimaryButton
-              onClick={() =>
-                this.handleResult(item, this.changeChild.current.state.items)
-              }
+              onClick={() => {
+                this.handleResult(item, this.changeChild.current.state.items);
+              }}
             >
               CONFIRM
             </PrimaryButton>

@@ -1,4 +1,3 @@
-import { useToasts } from "react-toast-notifications";
 import React, { useState, useEffect, createContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -24,6 +23,8 @@ import SurveyOptionsButtons from "./surveyOptionsButtons";
 import PrimaryButton from "../../../reusableComponents/PrimaryButton";
 import BackupIcon from "@material-ui/icons/Backup";
 import NoteAddIcon from "@material-ui/icons/NoteAdd";
+
+import { toast } from "react-toastify";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,8 +54,6 @@ export const CountContext = createContext();
 export const Editable = createContext();
 
 export default function DashboardAllSurveysExpose() {
-  const { addToast } = useToasts();
-
   const classes = useStyles();
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -93,20 +92,13 @@ export default function DashboardAllSurveysExpose() {
         })
         .catch((err) => {
           console.error("error when uploading", err);
-          addToast("Failure to upload" + err, {
-            appearance: "error",
-          });
+          toast("Failure to upload" + err);
         });
-      addToast("uploaded successfully", {
-        appearance: "success",
-        autoDismiss: true,
-      });
+      toast("uploaded successfully");
       setOpenUploadSurveyDialog(false);
       setOpenCreateSurveyDialog(false);
     } catch (err) {
-      addToast("Failure to upload" + err, {
-        appearance: "error",
-      });
+      toast("Failure to upload" + err);
       console.error("Error when uploading file", err);
     }
   };

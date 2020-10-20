@@ -29,7 +29,7 @@ export default function SectionResultsPage(props) {
 
   return (
     <div>
-      <Card className="surveyIntroCard" style={{ width: "80%" }}>
+      <Card>
         <Card.Body>
           <h1 className="text-center" style={{ color: "#9572A4" }}>
             {props.heading === null

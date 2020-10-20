@@ -52,6 +52,7 @@ import { getCsvDownloadLink } from "../API/surveyResultsAPI";
 
 import userContext from "../contexts/userContext";
 import PrimaryButton from "./../components/reusableComponents/PrimaryButton";
+import GetHelpContent from "./getHelpContent";
 
 const drawerWidth = 240;
 
@@ -120,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: -drawerWidth,
-    marginTop: "5%",
+    marginTop: "60px",
   },
   contentShift: {
     transition: theme.transitions.create("margin", {
@@ -128,7 +129,7 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: 2,
-    marginTop: "5%",
+    marginTop: "60px",
   },
   nested: {
     paddingLeft: theme.spacing(4),
@@ -253,25 +254,27 @@ function NavBar(props) {
                     spacing={2}
                   >
                     {userContextValue.userContext.userType &&
-                    userContextValue.userContext.userType !== "anon" ? (
-                      <Grid
-                        container
-                        direction="row"
-                        justify="flex-end"
-                        alignItems="center"
-                        spacing={2}
-                      >
-                        <Grid item>
-                          <PrimaryButton
-                            onClick={userContextValue.logout}
-                            // className={clsx(classes.button)}
-                          >
-                            <ExitToAppIcon />
-                            {isWidthUp("sm", width) ? "LOGOUT" : ""}
-                          </PrimaryButton>
+                      userContextValue.userContext.userType === "admin" && (
+                        <Grid
+                          container
+                          direction="row"
+                          justify="flex-end"
+                          alignItems="center"
+                          spacing={2}
+                        >
+                          <Grid item>
+                            <PrimaryButton
+                              onClick={userContextValue.logout}
+                              // className={clsx(classes.button)}
+                            >
+                              <ExitToAppIcon />
+                              {isWidthUp("sm", width) ? "LOGOUT" : ""}
+                            </PrimaryButton>
+                          </Grid>
                         </Grid>
-                      </Grid>
-                    ) : (
+                      )}
+                    {(!userContextValue.userContext.userType ||
+                      userContextValue.userContext.userType !== "admin") && (
                       <Grid
                         container
                         direction="row"
@@ -291,7 +294,7 @@ function NavBar(props) {
                           </Tooltip>
                         </Grid>
                         <Grid item>
-                          <Tooltip title=" Click to quickly exit the site and clear saved data">
+                          <Tooltip title="Click to quickly exit the site and clear saved data">
                             <PrimaryButton
                               className={clsx(classes.button)}
                               onClick={() => {
@@ -407,9 +410,10 @@ function NavBar(props) {
               >
                 {props.children}
               </main>
+              <GetHelpContent open={openHelp} handleClose={handleClose} />
 
-              {/** dialog for get help */}
-              <Dialog
+              {/** dialog for get help, relocated to its own component TODO remove this */}
+              {/* <Dialog
                 open={openHelp}
                 onClose={handleClose}
                 aria-labelledby="max-width-dialog-title"
@@ -447,10 +451,10 @@ function NavBar(props) {
                     onClick={handleClose}
                     className={clsx(classes.button)}
                   >
-                    Cancel
+                    Close
                   </PrimaryButton>
                 </DialogActions>
-              </Dialog>
+              </Dialog> */}
 
               {/** dialog for download data*/}
               <Dialog

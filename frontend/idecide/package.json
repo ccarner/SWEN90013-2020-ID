@@ -30,7 +30,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.3",
     "react-sortable-hoc": "^1.11.0",
-    "react-toast-notifications": "^2.4.0",
+    "react-toastify": "^6.0.9",
     "react-transition-group": "^4.4.1",
     "reactstrap": "^8.6.0",
     "selectn": "^1.1.2",

@@ -13,6 +13,8 @@ import {
   Button,
   Typography,
 } from "@material-ui/core";
+import PrimaryButton from "../reusableComponents/PrimaryButton";
+import { toast } from "react-toastify";
 
 export default class RegisterPage extends React.Component {
   constructor(props) {
@@ -20,13 +22,20 @@ export default class RegisterPage extends React.Component {
     this.state = {
       username: null,
       password: null,
-      partnerGender: null,
-      email: null,
-      phoneNumber: null,
-      postcode: null,
-      response: "Nothing yet",
+      repeatedPassword: null,
+      response: null,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  validateInputPopToasts(userObject) {
+    //not checking for strength of passwords
+    if (userObject.password !== userObject.repeatPassword) {
+      toast("Passwords given do not match", { autoClose: false });
+      return false;
+    }
+
+    return true;
   }
 
   async handleSubmit(event) {
@@ -40,20 +49,26 @@ export default class RegisterPage extends React.Component {
       userObject[key] = value;
     });
 
+    if (!this.validateInputPopToasts(userObject)) {
+      return;
+    }
+
     const response = await registerUser(userObject);
     if (response.flag) {
-      alert("Sign up Successful!");
+      toast("Successfully Saved", { autoClose: true });
+      window.setTimeout(function () {
+        window.location.replace("/surveyComponent/surveyHome");
+      }, 2000);
     } else {
-      alert("Sign up Failed");
+      toast("Signup Failed:" + response.message, { autoClose: true });
     }
-    window.location.replace("/");
   }
 
   render() {
     return (
       <div style={{ padding: "5%" }}>
-        <h1 className="text-center" style={{ color: "#9572A4" }}>
-          Welcome to I-Decide
+        <h1 className="text-center" style={{ color: "white" }}>
+          Save Your Results
         </h1>
         <br />
         {/** <form onSubmit={this.handleSubmit}>
@@ -114,8 +129,8 @@ export default class RegisterPage extends React.Component {
             <Divider />
             <CardContent>
               <Typography color="textSecondary">
-                Please input the following fields to sign up, fields with * are
-                required.
+                Create a username and password to save your Action Plan for
+                later
               </Typography>
               <Box p={1} />
               <TextField
@@ -127,7 +142,7 @@ export default class RegisterPage extends React.Component {
                 name="username"
                 label="User Name"
                 variant="outlined"
-                placeholder="Please input username here."
+                placeholder="Username"
               />
               <Box p={1} />
               <TextField
@@ -139,43 +154,41 @@ export default class RegisterPage extends React.Component {
                 value={this.state.password}
                 label="Password"
                 variant="outlined"
-                placeholder="Please input password with numbers and at lease 1 uppercase and 1 lowercase letter."
+                placeholder="Password"
               />
               <Box p={1} />
               <TextField
-                id="email"
+                id="repeatPassword"
+                required
                 style={{ width: "50%" }}
-                type="text"
-                value={this.state.email}
-                name="email"
-                label="Email"
+                type="password"
+                name="repeatPassword"
+                value={this.state.repeatPassword}
+                label="Repeat Password"
                 variant="outlined"
-                placeholder="Please input your email here."
-              />
-              <Box p={1} />
-              <TextField
-                id="phoneNumber"
-                style={{ width: "50%" }}
-                type="text"
-                value={this.state.phoneNumber}
-                name="phoneNumber"
-                label="Phone Number"
-                variant="outlined"
-                placeholder="Please input your phone number here."
-              />
-              <Box p={1} />
-              <TextField
-                id="postcode"
-                style={{ width: "50%" }}
-                type="text"
-                value={this.state.postcode}
-                name="postcode"
-                label="Post Code"
-                variant="outlined"
-                placeholder="Please input the post code here."
+                placeholder="Repeat  password"
               />
             </CardContent>
-            <Typography>
+            <CardContent>
+              <PrimaryButton
+                style={{ width: "50%" }}
+                type="submit"
+                onSubmit={this.handleSubmit}
+              >
+                Save results
+              </PrimaryButton>
+            </CardContent>
+            <Link
+              style={{ textDecoration: "none" }}
+              to={{
+                pathname: "/surveyComponent/surveyHome",
+              }}
+            >
+              <PrimaryButton style={{ width: "50%" }}>
+                Back to Action Plan
+              </PrimaryButton>
+            </Link>
+            {/* <Typography>
               Already have an account?{" "}
               <Link
                 to={{
@@ -183,19 +196,10 @@ export default class RegisterPage extends React.Component {
                   state: { buttonClass: this.props.classes },
                 }}
               >
-                Log In
+                Sign In
               </Link>
-            </Typography>
-            <CardContent>
-              <Button
-                className={this.props.location.state.buttonClass}
-                style={{ width: "50%" }}
-                type="submit"
-                onSubmit={this.handleSubmit}
-              >
-                Sign Up
-              </Button>
-            </CardContent>
+              <Box p={1} />
+            </Typography> */}
           </Card>
         </form>
       </div>

@@ -55,9 +55,12 @@ export async function getAllSurveys() {
   }
 }
 
+//post results for a survey
 export async function postingSurvey(surveyIn) {
   const endpoint = API_URL + `/answer`;
   const token = getUserContext().token;
+  console.log("token is-----*", token);
+  console.log("surveyIn", surveyIn);
 
   const dataPost = await axios({
     url: endpoint, // send a request to the library API
