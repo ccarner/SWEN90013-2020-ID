@@ -408,7 +408,7 @@
           "event": {
             "type": "SEVERE_COMBINED_ABUSE",
             "params": {
-              "categoryName": "Severe Combined Abuse",
+              "categoryName": "You may be suffering from abuse",
               "responseString": "You seem to have experienced serious abusive behaviours from your partner. It is not acceptable for these things to happen in relationships. It is probably affecting your mental and physical health. A bit later, this website will suggest some things you could try to help you look after yourself during this stressful time and to keep you safe. The next section will ask you more specifically about physical violence using a surv'ey. We would like to emphasise that emotional abuse can be just as harmful as physical abuse, however we Offer this section as one way to help women reflect on their physical danger"
             }
           },
@@ -426,7 +426,7 @@
           "event": {
             "type": "PHYSICAL_ABUSE_ONLY",
             "params": {
-              "categoryName": "Physical Abuse",
+              "categoryName": "You may be suffering from abuse",
               "responseString": "You seem to have experienced physical actions from your partner that are abusive. It is not acceptable for this to happen in relationships. A bit later, this decision aid will suggest some things you could try to help you look after yourself during this stressful time. The next section will ask you more specifically about physical violence using a survey. We would like to emphasise that emotional abuse can be just as harmful as physical abuse, however we offer this sectiqn as one way to help women reflect on their physical danger. "
             }
           },
@@ -459,7 +459,7 @@
           "event": {
             "type": "EMOTIONAL_ABUSE_ONLY",
             "params": {
-              "categoryName": "Emotional Abuse",
+              "categoryName": "You may be suffering from abuse",
               "responseString": "You seem to have experienced emotional actions from your partner that are abusive. It is not acceptable for this to happen in relationships. A bit later, this decision aid will suggest some things you could try to help you look after yourself during this stressful time. The next section will ask you more specifically about physical violence using a survey. We would like to emphasise that emotional abuse can be just as harmful as physical abuse, however we offer this sectiqn as one way to help women reflect on their physical danger. "
             }
           },
@@ -498,7 +498,7 @@
           "event": {
             "type": "PHYSICAL_AND_EMOTIONAL_ABUSE",
             "params": {
-              "categoryName": "Physical And Emotional Abuse",
+              "categoryName": "You may be suffering from abuse",
               "responseString": "You seem to have experienced physical and emotional actions from your partner that are abusive. It is not acceptable for this to happen in relationships. A bit later, this decision aid will suggest some things you could try to help you look after yourself during this stressful time. The next section will ask you more specifically about physical violence using a survey. We would like to emphasise that emotional abuse can be just as harmful as physical abuse, however we offer this sectiqn as one way to help women reflect on their physical danger. "
             }
           },

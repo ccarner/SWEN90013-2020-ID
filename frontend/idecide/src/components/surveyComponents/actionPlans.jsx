@@ -3,9 +3,17 @@ import { Card } from "react-bootstrap";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 import evaluateFeedback from "../RuleEngine/evaluateFeedback";
 import { Link } from "react-router-dom";
-import { Table, Button, Accordion, CardDeck, Modal } from "react-bootstrap";
+//TODO change this over to materialUI to be consistent (instead of bootstrap)
+import { Table, Accordion, CardDeck, Modal } from "react-bootstrap";
 import Grid from "antd/lib/card/Grid";
+import SaveIcon from "@material-ui/icons/Save";
 import "../../CSS/Modal.css";
+import ToggleButton from "@material-ui/lab/ToggleButton";
+import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+
+//TODO refactor this class: LOTS of repetition of eg the slicing... ctrl-f for "view", there are about 6 instances, one per each accordion...
+// TODO: this class ia also quite laggy/slow I think when executing... needs to be improved speedwise
+
 var rules = require("../../SurveyJsons/actionPlanAlgorithm.json");
 var planHtmls = require("../../SurveyJsons/actionPlanHtml.json");
 
@@ -15,10 +23,15 @@ export default class ActionPlans extends Component {
     this.state = {
       ModalShow: false,
       ModalBody: undefined,
-      ShowTopfive: true
+      currentView: "top5",
     };
     this.addResultsToFacts();
     this.determineActionPlans();
+    this.determineActionPlans = this.determineActionPlans.bind(this);
+    this.handleAlignment = this.handleAlignment.bind(this);
+  }
+  handleAlignment(event, newView) {
+    this.setState({ currentView: newView });
   }
 
   addResultsToFacts = () => {
@@ -74,7 +87,7 @@ export default class ActionPlans extends Component {
     //   facts.Priority = "Safety";
     // }
     // localStorage.setItem("actionPlanFacts", JSON.stringify(facts));
-  }
+  };
 
   determineActionPlans = () => {
     // var actionPlanFacts = JSON.parse(localStorage.getItem("actionPlanFacts"));
@@ -92,15 +105,16 @@ export default class ActionPlans extends Component {
       this.setState({ plan: result.events.map(({ type }) => type) });
       // console.log("result was in eval feedback", result);
     });
-  }
+  };
 
   handleModalShow = () => {
     this.setState({ ModalShow: !this.state.ModalShow });
   };
 
-  hanldeActionPlanAccordion = () => {
+  handleActionPlanAccordion = () => {
     var list = this.state.plan;
-    if (list != undefined) {
+    console.log("plan is ----", this.state.plan);
+    if (list !== undefined) {
       var firstType = planHtmls[list[0]].strategyType;
       if (firstType === "EMERGENCY") {
         var secondType = planHtmls[list[9]].strategyType;
@@ -139,7 +153,6 @@ export default class ActionPlans extends Component {
                     >
                       {this.state.plan &&
                         this.state.plan.slice(0, 9).map((plan, index) => {
-                          // console.log("plan was", plan);
                           var html = {
                             __html: planHtmls[plan].strategyHtmlString,
                           };
@@ -157,10 +170,13 @@ export default class ActionPlans extends Component {
                                   className="purple-gradient"
                                   onClick={() => {
                                     this.handleModalShow();
-                                    this.setState({ ModalBody: html });
+                                    this.setState({
+                                      ModalBody: html,
+                                      modalHeader: planHtmls[plan].description,
+                                    });
                                   }}
                                 >
-                                  view more
+                                  view
                                 </PrimaryButton>
                               </Card.Footer>
                             </Card>
@@ -189,7 +205,7 @@ export default class ActionPlans extends Component {
                     "font-size": "25px",
                   }}
                 >
-                  Your top 5 strategy
+                  Your top 5 strategies
                 </Accordion.Toggle>
 
                 <Accordion.Collapse eventKey={1 + 1}>
@@ -222,10 +238,13 @@ export default class ActionPlans extends Component {
                                   className="purple-gradient"
                                   onClick={() => {
                                     this.handleModalShow();
-                                    this.setState({ ModalBody: html });
+                                    this.setState({
+                                      ModalBody: html,
+                                      modalHeader: planHtmls[plan].description,
+                                    });
                                   }}
                                 >
-                                  view more
+                                  view
                                 </PrimaryButton>
                               </Card.Footer>
                             </Card>
@@ -258,7 +277,7 @@ export default class ActionPlans extends Component {
                   "font-size": "25px",
                 }}
               >
-                Your top 5 strategy
+                Your top 5 strategies
               </Accordion.Toggle>
 
               <Accordion.Collapse eventKey={1 + 1}>
@@ -289,10 +308,13 @@ export default class ActionPlans extends Component {
                                 className="purple-gradient"
                                 onClick={() => {
                                   this.handleModalShow();
-                                  this.setState({ ModalBody: html });
+                                  this.setState({
+                                    ModalBody: html,
+                                    modalHeader: planHtmls[plan].description,
+                                  });
                                 }}
                               >
-                                view more
+                                view
                               </PrimaryButton>
                             </Card.Footer>
                           </Card>
@@ -307,8 +329,6 @@ export default class ActionPlans extends Component {
       }
     }
   };
-
-
 
   handleAllStrategies = () => {
     const keys = Object.keys(planHtmls);
@@ -373,10 +393,13 @@ export default class ActionPlans extends Component {
                               className="purple-gradient"
                               onClick={() => {
                                 this.handleModalShow();
-                                this.setState({ ModalBody: html });
+                                this.setState({
+                                  ModalBody: html,
+                                  modalHeader: planHtmls[plan].description,
+                                });
                               }}
                             >
-                              view more
+                              view
                             </PrimaryButton>
                           </Card.Footer>
                         </Card>
@@ -391,15 +414,13 @@ export default class ActionPlans extends Component {
     });
   };
   handleStrategySwitch = () => {
-    if (this.state.ShowTopfive) {
-      return this.hanldeActionPlanAccordion();
+    if (this.state.currentView === "top5") {
+      return this.handleActionPlanAccordion();
     } else {
       return this.handleAllStrategies();
     }
   };
-  switchStrategy = () => {
-    this.setState({ ShowTopfive: !this.state.ShowTopfive });
-  };
+
   render() {
     return (
       <div>
@@ -407,64 +428,53 @@ export default class ActionPlans extends Component {
           show={this.state.ModalShow}
           onHide={() => this.handleModalShow()}
           dialogClassName="main-modal"
-          aria-labelledby="example-custom-modal-styling-title"
         >
           <Modal.Header closeButton>
-            <Modal.Title id="example-custom-modal-styling-title">
-              Custom Modal Styling
-            </Modal.Title>
+            <Modal.Title>{this.state.modalHeader}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div dangerouslySetInnerHTML={this.state.ModalBody}></div>
           </Modal.Body>
         </Modal>
         <div className="surveyIntroCard" style={{ width: "80%" }}>
-          <h1 className="text-center" style={{ color: "#9572A4" }}>
+          <h1 className="text-center" style={{ color: "white" }}>
             Action Plan
           </h1>
-          <p style={{ fontSize: "20px" }}>
+          <p style={{ fontSize: "20px", color: "white" }}>
             Based on your responses, we have recommended strategies to help you
             deal with your situation. There is additional help, resources and
             recommendations in the "More Strategies" section.
           </p>
-          {/* {this.hanldeActionPlanAccordion()} */}
-          {this.handleStrategySwitch()}
-          <Link to="/surveyComponent">
-            <PrimaryButton>Go back home</PrimaryButton>
-          </Link>
+          <Card style={{ margin: "1em" }}>
+            <Card.Body>
+              <ToggleButtonGroup
+                value={this.state.currentView}
+                exclusive
+                onChange={this.handleAlignment}
+              >
+                <ToggleButton value="top5">Top 5 Strategies</ToggleButton>
+                <ToggleButton value="all">More Strategies</ToggleButton>
+              </ToggleButtonGroup>
+              {/* {this.handleActionPlanAccordion()} */}
+              {this.handleStrategySwitch()}
+              <Link to="/" style={{ textDecoration: "none" }}>
+                <PrimaryButton>Go home</PrimaryButton>
+              </Link>
 
-          <PrimaryButton onClick={() => this.switchStrategy()}>
-            {`${this.state.ShowTopfive ? "MORE STRATEGIES" : "MY TOP 5"}`}
-          </PrimaryButton>
+              <Link
+                style={{ textDecoration: "none" }}
+                to={{
+                  pathname: "/loginComponent/registerPage",
+                }}
+              >
+                <PrimaryButton>
+                  Save your Plan <SaveIcon />
+                </PrimaryButton>
+              </Link>
+            </Card.Body>
+          </Card>
         </div>
       </div>
     );
   }
 }
-/* <div>
-
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Action Plan</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.plan &&
-                    this.state.plan.map((plan, index) => (
-                      <tr>
-                        <td>{index}</td>
-                        <td>{plan}</td>
-                        <td>
-                          <Button variant="outline-success">View</Button>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </Table>
-
-            </Card.Body>
-
-        </div> */

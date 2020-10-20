@@ -3,10 +3,11 @@ import React from "react";
 
 import { loginUser } from "../../API/loginAPI";
 import AdminLogin from "../../App";
-import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Link } from "react-router-dom";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 import RegisterPage from "./registerPage";
+import { getResultByUser } from "../../API/resultAPI";
+import userContext from "../../contexts/userContext";
 //import { Button, Card } from "react-bootstrap";
 
 import {
@@ -21,6 +22,7 @@ import {
 } from "@material-ui/core";
 
 export default class LoginPage extends React.Component {
+  static contextType = userContext;
   constructor(props) {
     super(props);
     console.log(props);
@@ -42,6 +44,18 @@ export default class LoginPage extends React.Component {
   // 	this.setState({ showAdmin: true });
   // }
 
+  handleHistory = async () => {
+    const userContext = JSON.parse(localStorage.getItem("userContext"));
+    const prevCompletionHistory = await getResultByUser(userContext.userId);
+    console.log("prev completion is ----*", prevCompletionHistory);
+    var surveyResults = {};
+    // convert into format of {"surveyId":{surveyCompetion}}
+    for (const surveyCompletion of prevCompletionHistory) {
+      surveyResults[surveyCompletion.surveyId] = surveyCompletion;
+    }
+    localStorage.setItem("prevCompletions", JSON.stringify(surveyResults));
+  };
+
   handleSubmit = async (event) => {
     // the following call will stop the form from submitting
     event.preventDefault();
@@ -60,10 +74,17 @@ export default class LoginPage extends React.Component {
 
     if (response.flag) {
       // console.log(response);
+      this.context.setUserContext({
+        userId: response.data.id,
+        userType: response.data.roles,
+        token: response.data.token,
+      });
+
       if (response.data.roles === "admin") {
         window.location.replace("/dashboard/surveys");
       } else {
-        window.location.replace("/loginComponent/userInfo");
+        await this.handleHistory();
+        window.location.replace("/surveyComponent/surveyHome");
       }
     } else {
       alert("Log in Failed");
@@ -91,8 +112,8 @@ export default class LoginPage extends React.Component {
     if (isLoggingPage) {
       return (
         <div style={{ padding: "5%" }}>
-          <h1 className="text-center" style={{ color: "#9572A4" }}>
-            Welcome to I-Decide
+          <h1 className="text-center" style={{ color: "white" }}>
+            Review a Saved Action Plan
           </h1>
           <br />
           {/** 	 		   <Card className="surveyIntroCard" style={{ width: "80%" }}>
@@ -160,7 +181,7 @@ export default class LoginPage extends React.Component {
               <Divider />
               <CardContent>
                 <Typography color="textSecondary">
-                  Please input your username and password to sign in.
+                  Sign in here to review your previous action plan
                 </Typography>
                 <Box p={1} />
                 <TextField
@@ -186,7 +207,7 @@ export default class LoginPage extends React.Component {
                   variant="outlined"
                 />
               </CardContent>
-              <Typography>
+              {/* <Typography>
                 Don't have an account?{" "}
                 <Link
                   to={{
@@ -196,7 +217,7 @@ export default class LoginPage extends React.Component {
                 >
                   Sign Up
                 </Link>
-              </Typography>
+              </Typography> */}
               <CardContent>
                 <PrimaryButton
                   type="submit"
@@ -205,6 +226,16 @@ export default class LoginPage extends React.Component {
                 >
                   Sign In
                 </PrimaryButton>
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to={{
+                    pathname: "/",
+                  }}
+                >
+                  <PrimaryButton style={{ width: "50%" }}>
+                    Back to Home
+                  </PrimaryButton>
+                </Link>
               </CardContent>
             </Card>
           </form>

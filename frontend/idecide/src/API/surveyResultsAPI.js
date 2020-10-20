@@ -17,6 +17,7 @@ export async function getCsvDownloadLink() {
   return dataPost;
 }
 
+//todo not sure we use this api?
 export async function getActionPlanStrategy() {
   const endpoint = SURVEY_RESULT_URL + `/actionplan/actionStrategyRule`;
   try {

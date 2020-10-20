@@ -14,6 +14,7 @@ export async function registerUser(userIn) {
     method: "POST", // HTTP POST method
     headers: {
       "Content-Type": "application/json",
+      Authorization: getUserContext().token,
     },
     data: JSON.stringify({
       username,
