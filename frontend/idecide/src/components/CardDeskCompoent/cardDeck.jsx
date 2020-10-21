@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Slider } from "antd";
+import { Button, Slider,Form } from "antd";
 
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./cards.css";
@@ -7,6 +7,8 @@ import "antd/dist/antd.css";
 import LoadingSpinner from "../reusableComponents/loadingSpinner";
 import SortableComponent from "../RankingComponent/testSortable";
 import PrimaryButton from "./../reusableComponents/PrimaryButton";
+import TextField from '@material-ui/core/TextField';
+import testJson from "../../SurveyJsons/mySituation.json";
 
 export default class CardDeck extends Component {
   constructor(props) {
@@ -83,6 +85,13 @@ export default class CardDeck extends Component {
   //     CasResult: casResult,
   //   });
   // };
+
+  handleSubmit =(item,value) =>{
+    //Make a network call somewhere
+    console.log(item);
+    console.log(value);
+    this.handleResult()
+ }
 
   questionTypeController(item) {
     if (item.questionType === "singleSelection") {
@@ -192,7 +201,33 @@ export default class CardDeck extends Component {
           </div>
         </div>
       );
-    } else
+    } 
+    else if(item.questionType ==="longAnswer"){
+      return(
+        <div style={{width:"80%"}}>
+          <Form onFinish ={(value)=> this.handleResult(item,value["contents"])}>
+          <Form.Item  name="contents">
+        <TextField
+        inputProps={{
+          maxLength: 200,
+        }}
+        id="outlined-textarea"
+        placeholder="Placeholder"
+        multiline
+        fullWidth
+        variant="outlined"
+  
+        />
+        </Form.Item>
+        <Form.Item>
+        <PrimaryButton type="submit">submit</PrimaryButton>
+        </Form.Item>
+        </Form>
+        </div>
+
+      )
+    }
+    else
       return (
         <div className="questionContainer">
           Error, question type not supported.

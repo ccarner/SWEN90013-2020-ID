@@ -20,6 +20,12 @@ export default {
             "Children",
           ],
         },
+        {
+          questionId:"2",
+          questionText:"Please tell us about your experiences being referred to this decision aid",
+          questionType:"longAnswer",
+          answerLength:100
+        }
       ],
     },
   ],
