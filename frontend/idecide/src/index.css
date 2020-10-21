@@ -11,8 +11,9 @@ button:hover {
 }
 
 button {
-  height: 50px;
-  width: 150px;
+  /* removed these defaults, since they messed with size of closing buttons for toast notification */
+  /* height: 50px; */
+  /* width: 150px; */
   text-align: justify;
   background-color: purple;
   font-style: normal;
@@ -64,11 +65,9 @@ label {
   display: inline;
 }
 
-
-.fix_top_right{
+.fix_top_right {
   color: blue;
   position: fixed;
   top: 5em;
   right: 1em;
 }
-

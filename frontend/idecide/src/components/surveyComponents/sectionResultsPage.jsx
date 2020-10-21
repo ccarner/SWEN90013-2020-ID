@@ -29,11 +29,20 @@ export default function SectionResultsPage(props) {
 
   return (
     <div>
-      <Card className="surveyIntroCard" style={{ width: "80%" }}>
+      <Card>
         <Card.Body>
           <h1 className="text-center" style={{ color: "#9572A4" }}>
-            Thank you for completing this section
+            {props.heading === null
+              ? "Thank you for completing this section"
+              : props.heading}
           </h1>
+          {props.bodyHtml != null && (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: props.bodyHtml,
+              }}
+            />
+          )}
 
           {feedback}
         </Card.Body>

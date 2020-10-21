@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink, BrowserRouter } from "react-router-dom";
+//TODO: this 'fort awesome' / font awesome, are we actually USING it??? why not importing it at the 'App.js' level?
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Container, Row, Col } from "react-bootstrap";
 import PrimaryButton from "./reusableComponents/PrimaryButton";
@@ -20,6 +21,7 @@ import frontPageMainImage from "../images/hands_earth_transparent.png";
 import unimelbLogo from "../images/unimelbLogo.png";
 import womenAroundEarth from "../images/womenAroundEarth.png";
 import idecideLogo from "../images/idecide-logo.png";
+import idecideLogoWhite from "../images/idecide-logo-white.png";
 
 import userContext from "../contexts/userContext";
 
@@ -29,68 +31,95 @@ class Landing extends Component {
   render() {
     const userId = this.context.userContext.userId;
     const userType = this.context.userContext.userType;
+    const completionSaved = localStorage.getItem("prevCompletions");
     return (
       <div>
         <Container style={{ width: "100%" }}>
+          <img
+            src={idecideLogoWhite}
+            style={{ padding: "20px", width: "14em" }}
+            alt="logo"
+          />
+          <Typography
+            color="textPrimary"
+            style={{ color: "white" }}
+            variant="h2"
+          >
+            Women's Wellbeing Tool
+          </Typography>
+
           <Row className="align-items-center">
             <Col
               style={{
                 padding: "10px",
-                backgroundColor: "rgba(255,255,255,0.7)",
               }}
             >
-              <img
-                src={idecideLogo}
-                style={{ padding: "10px", width: "40%" }}
-                alt="logo"
-              />
-              <Typography
-                color="textPrimary"
-                style={{ color: "#9572A4" }}
-                variant="h4"
-              >
-                Women's Wellbeing Tool
-              </Typography>
               <br />
-              <Typography color="textPrimary" variant="h5">
+              <Typography style={{ color: "white" }} variant="h5">
                 Do you worry about whether your relationship is healthy?
               </Typography>
               <br />
-              <Typography color="textPrimary" variant="h5">
+              <Typography style={{ color: "white" }} variant="h5">
                 Do you sometimes wonder if you are safe?
               </Typography>
               <br />
-              <Typography color="textSecondary" variant="h6">
-                This website helps women who feel unsafe or afraid of a current
-                or ex-partner to plan for the future.
+              <Typography style={{ color: "white" }} variant="h6">
+                This website helps women who feel afraid of a current or
+                ex-partner to plan for the future.
               </Typography>
               <NavLink
                 to="/surveyComponent/surveyHome"
                 style={{ textDecoration: "none" }}
               >
-                <PrimaryButton>
-                  Start <KeyboardArrowRightIcon />
+                <PrimaryButton style={{ background: "white" }}>
+                  <span
+                    style={{
+                      background:
+                        "linear-gradient(45deg, #DA76C7 30%, #8973E6 90%)",
+                      backgroundClip: "text",
+                      webkitBackgroundClip: "text",
+                      color: "rgba(0,0,0,.2)",
+                    }}
+                  >
+                    {completionSaved
+                      ? "Continue your session"
+                      : "Start a new session"}
+                    <KeyboardArrowRightIcon />
+                  </span>
                 </PrimaryButton>
               </NavLink>
-              {userId === null || userType === "anon" ? (
-                <NavLink
-                  to="/loginComponent/loginPage"
-                  style={{ textDecoration: "none" }}
-                >
-                  <PrimaryButton>
-                    Log in <AccountCircleIcon />
-                  </PrimaryButton>
-                </NavLink>
-              ) : (
-                <NavLink
-                  to="/loginComponent/userInfo"
-                  style={{ textDecoration: "none" }}
-                >
-                  <PrimaryButton>
-                    Account <AccountCircleIcon />
-                  </PrimaryButton>
-                </NavLink>
-              )}
+
+              <NavLink
+                to="/loginComponent/loginPage"
+                style={{ textDecoration: "none" }}
+              >
+                <PrimaryButton style={{ background: "white" }}>
+                  <span
+                    style={{
+                      background:
+                        "linear-gradient(45deg, #DA76C7 30%, #8973E6 90%)",
+                      backgroundClip: "text",
+                      webkitBackgroundClip: "text",
+                      color: "rgba(0,0,0,.2)",
+                    }}
+                  >
+                    View a saved action plan
+                    <AccountCircleIcon style={{ color: "#8973E6" }} />
+                  </span>
+                </PrimaryButton>
+              </NavLink>
+
+              {/* <PrimaryButton
+                style={{
+                  border: "10px",
+                  borderColor: "white",
+                  borderWidth: "5px",
+                  borderStyle: "solid",
+                  background: "rgba(0,0,0,0)",
+                }}
+              >
+                Start <KeyboardArrowRightIcon />
+              </PrimaryButton> */}
             </Col>
 
             <Col>

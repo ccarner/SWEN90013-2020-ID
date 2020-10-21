@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 
 import userContext from "./contexts/userContext";
-import { ToastProvider } from "react-toast-notifications";
+// import { ToastProvider } from "react-toast-notifications";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import {
   BrowserRouter as Router,
@@ -22,11 +24,11 @@ import DCLayout from "./components/dashBoard/view/dataCollection/DCLayout";
 import LoginPage from "./components/loginComponent/loginPage";
 import RegisterPage from "./components/loginComponent/registerPage";
 import AdminInfo from "./components/loginComponent/adminInfo";
-import UserInfo from "./components/loginComponent/userInfo";
+// import UserInfo from "./components/loginComponent/userInfo";
 import SurveyHome from "./components/surveyComponents/surveyHome";
 import clsx from "clsx";
 // import DashBoard from "./components/dashBoard/DBLayout";
-import { ToastNotification } from "./components/reusableComponents/toastNotification";
+// import { ToastNotification } from "./components/reusableComponents/toastNotification";
 
 class App extends React.Component {
   // const [adminLogin, setAdminLogin] = React.useState(false);
@@ -39,6 +41,7 @@ class App extends React.Component {
       userContext: { userType: null, token: null, userId: null },
     };
     this.logout = this.logout.bind(this);
+    this.setUserContext = this.setUserContext.bind(this);
   }
 
   componentDidMount() {
@@ -56,6 +59,13 @@ class App extends React.Component {
     });
     localStorage.clear();
     window.location.href = "/";
+  }
+
+  setUserContext(newUserContextObject) {
+    localStorage.setItem("userContext", JSON.stringify(newUserContextObject));
+    this.setState({
+      userContext: newUserContextObject,
+    });
   }
 
   switchMainContent() {
@@ -95,7 +105,7 @@ class App extends React.Component {
           component={RegisterPage}
         />
         <Route exact path="/loginComponent/adminInfo" component={AdminInfo} />
-        <Route exact path="/loginComponent/userInfo" component={UserInfo} />
+        {/* <Route exact path="/loginComponent/userInfo" component={UserInfo} /> */}
         <Route exact path="/" component={Landing} />{" "}
       </Switch>
     );
@@ -107,21 +117,18 @@ class App extends React.Component {
         value={{
           userContext: this.state.userContext,
           logout: this.logout,
+          setUserContext: this.setUserContext,
         }}
       >
-        <ToastProvider
-          components={{ Toast: ToastNotification }}
-          style={{ zIndex: 1500 }}
-        >
-          <Router>
-            <div className="App">
-              <div className="backgroundImage"></div>
-              <PersistentDrawerLeft>
-                {this.switchMainContent()}
-              </PersistentDrawerLeft>
-            </div>
-          </Router>
-        </ToastProvider>
+        <ToastContainer />
+        <Router>
+          <div className="App">
+            <div className="backgroundImage"></div>
+            <PersistentDrawerLeft>
+              {this.switchMainContent()}
+            </PersistentDrawerLeft>
+          </div>
+        </Router>
       </userContext.Provider>
     );
   }

@@ -11,6 +11,8 @@
       "sectionTitle": "You and Your Family",
       "sectionIntroduction": "These questions are about your current situation and your family",
       "surveyIntroductionHtmlB64": "",
+      "sectionFeedbackHtml": "<p>Thank you for completing this section</p>",
+      "sectionFeedbackHeading": "Thank you",
       "questions": [
         {
           "questionId": "1",

@@ -4,24 +4,27 @@ import Button from "@material-ui/core/Button";
 
 const StyledButton = withStyles((theme) => ({
   root: {
+    color: "purple",
+    // backgroundImage: "linear-gradient(70deg, Violet , purple);",
+    borderRadius: "10em",
+    // border: "none",
+    borderColor: "purple",
+    minHeight: "3em",
+    minWidth: "6em",
+    height: "auto",
+    width: "auto",
     margin: "1em",
-    height: "3em",
-    background: "linear-gradient(45deg, #DA76C7 30%, #8973E6 90%)",
-    border: 0,
-    borderRadius: 20,
-    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-    color: "white",
+    // backgroundColor: purple[500],
     "&:hover": {
       opacity: "0.9",
     },
   },
 }))(Button);
 
-export default function PrimaryButton(props) {
+export default function SecondaryButton(props) {
   return (
     <StyledButton
-      variant="contained"
-      color="primary"
+      variant="outlined"
       size="large"
       style={{ ...props.extraStyle }}
       {...props}

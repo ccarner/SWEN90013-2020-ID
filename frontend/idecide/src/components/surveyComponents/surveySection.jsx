@@ -76,8 +76,8 @@ export default class SurveySection extends React.Component {
           section={section}
         />
       );
+      //TODO: can remove this 'dragable list': this was before it was put INTO the card deck
     } else if (section.sectionType === "ranking") {
-      console.log("HERE ITS A DRAGGABLE LIST", section);
       return (
         <DragableList handleAnswer={this.handleInputChange} section={section} />
       );
@@ -87,17 +87,12 @@ export default class SurveySection extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className="container" style={{ padding: "50px" }}>
-          <h3 style={{ color: "#9572A4" }}>
+        <div style={{ display: "inline" }}>
+          <h3 style={{ color: "white", marginBottom: "1em" }}>
             {this.props.section.sectionTitle}
           </h3>
+          {this.handleSectionType(this.props.section)}
         </div>
-        {this.handleSectionType(this.props.section)}
-        {/* <CardDeck
-          key={this.props.section.sectionId}
-          handleAnswer={this.handleInputChange}
-          section={this.props.section}
-        /> */}
       </React.Fragment>
     );
   }

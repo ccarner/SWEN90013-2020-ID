@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import EditIcon from "@material-ui/icons/Edit";
 import Editable from "../dashboardAllSurveysExpose";
 import { DropzoneDialogBase } from "material-ui-dropzone";
+import { saveAs } from "file-saver";
 import {
   Dialog,
   DialogTitle,
@@ -38,6 +39,8 @@ import {
   DeleteSurvey,
   addImageForSurvey,
 } from "../../../../../API/surveyAPI";
+import SurveyOptionsButtons from "../surveyOptionsButtons";
+import { getSurveyById } from "../../../../../API/surveyAPI";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,17 +64,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SurveyCard = ({ product, editable, ...rest }) => {
+const SurveyCard = ({ surveyHeaders, editable, ...rest }) => {
+  const exportSurvey = async () => {
+    const fullSurvey = await getSurveyById(surveyHeaders.surveyId);
+    var blob = new Blob([JSON.stringify(fullSurvey)], {
+      type: "json;charset=utf-8",
+    });
+    saveAs(blob, surveyHeaders.surveyTitle + ".json");
+  };
   const classes = useStyles();
   const [openAlert, setOpen] = React.useState(false);
   const [openGreen, setOpenGreen] = React.useState(false);
   const [error, setError] = React.useState();
   const [open, setDMOpen] = React.useState(false); //control of adding new survey
   const [values, setValues] = React.useState({
-    title: product.surveyTitle,
-    descrpition: product.surveyIntroduction,
-    surveyIntroductionHtmlB64: product.surveyIntroductionHtmlB64,
-    surveyResultAlgorithm: product.surveyResultAlgorithm,
+    title: surveyHeaders.surveyTitle,
+    descrpition: surveyHeaders.surveyIntroduction,
+    surveyIntroductionHtmlB64: surveyHeaders.surveyIntroductionHtmlB64,
+    surveyResultAlgorithm: surveyHeaders.surveyResultAlgorithm,
   });
   const [files, setFiles] = React.useState([]);
   const form = useRef(null);
@@ -102,7 +112,7 @@ const SurveyCard = ({ product, editable, ...rest }) => {
     console.log(files);
     let formData = new FormData();
     formData.set("img", files);
-    formData.set("surveyId", product.surveyId + "");
+    formData.set("surveyId", surveyHeaders.surveyId + "");
     console.log(formData);
     await addImageForSurvey(formData);
   };
@@ -112,9 +122,7 @@ const SurveyCard = ({ product, editable, ...rest }) => {
   };
 
   const handleDelete = async () => {
-    alert("Are you sure you want to delete this survey?");
-
-    const feedBack = await DeleteSurvey(product.surveyId)
+    const feedBack = await DeleteSurvey(surveyHeaders.surveyId)
       .then(() => {
         window.location.href = "./dashboard/surveys";
       })
@@ -130,10 +138,10 @@ const SurveyCard = ({ product, editable, ...rest }) => {
     }
     //
     var readyData = JSON.stringify({
-      surveyId: product.surveyId,
+      surveyId: surveyHeaders.surveyId,
       surveyTitle: values.title,
       surveyIntroduction: values.descrpition,
-      surveyVersion: product.surveyVersion,
+      surveyVersion: surveyHeaders.surveyVersion,
       surveyIntroductionHtmlB64: values.surveyIntroductionHtmlB64,
       surveyResultAlgorithm: values.surveyResultAlgorithm,
     });
@@ -174,12 +182,12 @@ const SurveyCard = ({ product, editable, ...rest }) => {
         </Grid>
       </Collapse>
       <Card {...rest} className={useStyles.root} align="center">
-        <CardHeader title={product.surveyTitle} />
+        <CardHeader title={surveyHeaders.surveyTitle} />
         <Divider />
         <Box p={1} />
         <CardMedia
           className={classes.media}
-          image={getStaticImageUrlFromName(product.surveyImageName)}
+          image={getStaticImageUrlFromName(surveyHeaders.surveyImageName)}
           title="Contemplative Reptile"
           style={{
             width: "30%",
@@ -192,8 +200,13 @@ const SurveyCard = ({ product, editable, ...rest }) => {
           }}
         >
           <Typography align="center" color="textPrimary" variant="body2">
-            {product.surveyIntroduction}
+            {surveyHeaders.surveyIntroduction.substring(0, 120) + "..."}
           </Typography>
+          <SurveyOptionsButtons
+            handleExportSurvey={exportSurvey}
+            handleDelete={handleDelete}
+            surveyId={surveyHeaders.surveyId}
+          />
         </CardContent>
         <Divider />
         <Box p={1}>
@@ -205,7 +218,7 @@ const SurveyCard = ({ product, editable, ...rest }) => {
                 display="inline"
                 variant="body2"
               >
-                {product.surveyVersion}
+                {surveyHeaders.surveyVersion}
               </Typography>
             </Grid>
             <Grid item>
@@ -222,7 +235,6 @@ const SurveyCard = ({ product, editable, ...rest }) => {
           </Grid>
         </Box>
       </Card>
-
       <Dialog
         open={open}
         onClose={handleClose}
@@ -260,7 +272,7 @@ const SurveyCard = ({ product, editable, ...rest }) => {
                   <input
                     name="surveyId"
                     multiple="multiple"
-                    value={product.surveyId}
+                    value={surveyHeaders.surveyId}
                   />
                 </Collapse>
               </DialogContentText>
@@ -334,7 +346,7 @@ const SurveyCard = ({ product, editable, ...rest }) => {
 
 SurveyCard.propTypes = {
   className: PropTypes.string,
-  product: PropTypes.object.isRequired,
+  surveyHeaders: PropTypes.object.isRequired,
 };
 
 export default SurveyCard;

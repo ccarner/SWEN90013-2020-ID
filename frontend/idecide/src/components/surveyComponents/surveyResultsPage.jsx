@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { Card, Accordion } from "react-bootstrap";
+import { Card, Collapse } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 
@@ -9,7 +9,13 @@ import PrimaryButton from "../reusableComponents/PrimaryButton";
  * filled in by the user.
  */
 
-export default function surveyResultsPage(props) {
+export default function SurveyResultsPage(props) {
+  const [getAnswersOpen, setAnswersOpen] = useState(false);
+
+  const toggleAnswersOpen = () => {
+    setAnswersOpen(!getAnswersOpen);
+  };
+
   var feedback =
     props.feedbackCategory === null ? (
       ""
@@ -25,30 +31,40 @@ export default function surveyResultsPage(props) {
 
   return (
     <div>
-      <Card className="surveyIntroCard" style={{ width: "80%" }}>
+      <Card style={{ width: "80%", justifyContent: "center" }}>
         <Card.Body>
           <h1 className="text-center" style={{ color: "#9572A4" }}>
-            Thank you for completing this section
+            {props.heading
+              ? props.heading
+              : "Thank you for completing this module"}
           </h1>
+          {props.bodyHtml != null && (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: props.bodyHtml,
+              }}
+            />
+          )}
 
           {feedback}
-          <PrimaryButton onClick={props.returnHome}>Go back home</PrimaryButton>
-          <Accordion>
-            <Accordion.Toggle as={PrimaryButton} variant="link" eventKey="0">
-              View Answers
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey="0">
-              <Card.Text>
-                <ol>
-                  {props.surveyResults.map((question) => (
-                    <li>
-                      {question.questionText} : {question.questionAnswer.join()}
-                    </li>
-                  ))}
-                </ol>
-              </Card.Text>
-            </Accordion.Collapse>
-          </Accordion>
+          <PrimaryButton style={{ width: "16em" }} onClick={props.returnHome}>
+            Back home
+          </PrimaryButton>
+
+          <PrimaryButton style={{ width: "16em" }} onClick={toggleAnswersOpen}>
+            View Responses
+          </PrimaryButton>
+          <Collapse in={getAnswersOpen}>
+            <Card.Text>
+              <ol>
+                {props.surveyResults.map((question) => (
+                  <li>
+                    {question.questionText} : {question.questionAnswer.join()}
+                  </li>
+                ))}
+              </ol>
+            </Card.Text>
+          </Collapse>
         </Card.Body>
       </Card>
     </div>

@@ -1,8 +1,8 @@
-export default function evaluateFeedback(rules, factContainers) {
+export default function evaluateFeedback(rules, factContainers, isReview) {
   let RuleEngine = require("json-rules-engine");
   let engine = new RuleEngine.Engine();
 
-  console.log(669, rules, factContainers)
+  // console.log(669, rules, factContainers)
   // a rule is an object of form {conditions, event}
   for (const rule of rules) {
     let engineRule = new RuleEngine.Rule(rule);
@@ -24,13 +24,15 @@ export default function evaluateFeedback(rules, factContainers) {
   //   });
 
   let topPriorityFact = function (params, almanac) {
-    return almanac.factValue("surveyResults").then((surveyResults) => {
+    return almanac.factValue("prevCompletions").then((prevCompletions) => {
       var topPriority = null;
       try {
         // result for Q1 of priorities survey, then return first component = 'top' priority
-        topPriority =
-          surveyResults["My Priorities"].questions[1].questionAnswer[0][0];
+        // ID of my priorities survey is "4"
+        console.log("prevCompletions is ---*", prevCompletions);
+        topPriority = prevCompletions[4].questions[1].questionAnswer[0];
 
+        console.log("topPriority was", topPriority);
         // the top priorities as given are the quetion answers, eg "My Safety".. and could be changed
         let priorities = ["safety", "child", "resources", "health", "partner"];
         for (var priority of priorities) {
@@ -45,7 +47,7 @@ export default function evaluateFeedback(rules, factContainers) {
           " (Top priorities question)"
         );
       }
-      console.log("top priority was", topPriority);
+      // console.log("top priority was", topPriority);
       return topPriority;
     });
   };
@@ -53,12 +55,12 @@ export default function evaluateFeedback(rules, factContainers) {
   engine.addFact("TOP_PRIORITY", topPriorityFact);
 
   let intentionFact = function (params, almanac) {
-    return almanac.factValue("surveyResults").then((surveyResults) => {
+    return almanac.factValue("prevCompletions").then((prevCompletions) => {
       var intention = null;
       try {
         // result for Q2 of priorities survey
-        intention =
-          surveyResults["My Priorities"].questions[2].questionAnswer[0];
+        // priorities surveyID = "4"
+        intention = prevCompletions[4].questions[2].questionAnswer[0];
 
         // the top priorities as given are the quetion answers, eg "My Safety".. and could be changed
         let intentions = ["stay", "leave", "left"];
@@ -74,7 +76,7 @@ export default function evaluateFeedback(rules, factContainers) {
           " (Intentions question)"
         );
       }
-      console.log("intention was", intention);
+      // console.log("intention was", intention);
       return intention;
     });
   };
@@ -82,15 +84,16 @@ export default function evaluateFeedback(rules, factContainers) {
   engine.addFact("INTENTION", intentionFact);
 
   //default facts and operators...
-  let surveyResultsFact = function (params, almanac) {
-    var surveyResults = JSON.parse(localStorage.getItem("surveyResults"));
-    return surveyResults;
+  let prevCompletionsFact = function (params, almanac) {
+    var prevCompletions = JSON.parse(localStorage.getItem("prevCompletions"));
+
+    return prevCompletions;
   };
 
-  engine.addFact("surveyResults", surveyResultsFact);
+  engine.addFact("prevCompletions", prevCompletionsFact);
 
   let totalAnswerPointsFact = function (params, almanac) {
-    return almanac.factValue("surveyResults").then((surveyResults) => {
+    return almanac.factValue("prevCompletions").then((prevCompletions) => {
       var totalPoints = 0;
       // totalAnswerPointsQuestions needs to be an array of form [[surveyId,sectionId,questionId], [surveyId,..,..],...]
       // one entry in array per question we're considering when adding up points.
@@ -102,12 +105,12 @@ export default function evaluateFeedback(rules, factContainers) {
           if (idArr[2].includes("-")) {
             let re = /([\d]*)-([\d]*)/g;
             var match = re.exec(idArr[2]);
-            console.log("match was", match);
+            // console.log("match was", match);
             let startQ = match[1];
             let endQ = match[2];
             startQ = parseInt(startQ);
             endQ = parseInt(endQ);
-            console.log("start/end was", startQ, endQ);
+            // console.log("start/end was", startQ, endQ);
 
             for (var i = startQ; i <= endQ; i++) {
               params.totalAnswerPointsQuestions.push([
@@ -120,7 +123,7 @@ export default function evaluateFeedback(rules, factContainers) {
             continue;
           }
           //TODO doesn't actually use the ID of section, since the question ID itself is unique... maybe remove the ID of section from the format...
-          question = surveyResults[idArr[0]].questions[idArr[2]];
+          question = prevCompletions[idArr[0]].questions[idArr[2]];
         } catch (err) {
           console.error(
             "An answer for an uncompleted question was requested",
@@ -156,8 +159,8 @@ export default function evaluateFeedback(rules, factContainers) {
           }
         }
       }
-      console.log("total points is", totalPoints);
-      console.log("Questions were", params.totalAnswerPointsQuestions);
+      // console.log("total points is", totalPoints);
+      // console.log("Questions were", params.totalAnswerPointsQuestions);
       return totalPoints;
     });
   };
@@ -165,48 +168,52 @@ export default function evaluateFeedback(rules, factContainers) {
   engine.addFact("totalAnswerPoints", totalAnswerPointsFact);
 
   let dangerAssessmentPointsFact = function (params, almanac) {
-    params.totalAnswerPointsQuestions = [["My Safety", "2", "31-42"]];
+    // mysafety = survey Id of "2"
+    params.totalAnswerPointsQuestions = [["2", "2", "31-42"]];
     return totalAnswerPointsFact(params, almanac);
   };
 
   engine.addFact("DA_SUM", dangerAssessmentPointsFact);
 
   let casScore = function (params, almanac) {
-    params.totalAnswerPointsQuestions = [["My Safety", "1", "1-30"]];
+    // mysafety = survey Id of "2"
+    params.totalAnswerPointsQuestions = [["2", "1", "1-30"]];
     return totalAnswerPointsFact(params, almanac);
   };
 
   engine.addFact("CAS_SCORE", casScore);
 
   let SEVERE_SUBSCALE_CAS_SCORE = function (params, almanac) {
+    // mysafety = survey Id of "2"
     params.totalAnswerPointsQuestions = [
-      ["My Safety", "1", "2"],
-      ["My Safety", "1", "5"],
-      ["My Safety", "1", "7"],
-      ["My Safety", "1", "15"],
-      ["My Safety", "1", "18"],
-      ["My Safety", "1", "22"],
-      ["My Safety", "1", "25"],
-      ["My Safety", "1", "26"],
+      ["2", "1", "2"],
+      ["2", "1", "5"],
+      ["2", "1", "7"],
+      ["2", "1", "15"],
+      ["2", "1", "18"],
+      ["2", "1", "22"],
+      ["2", "1", "25"],
+      ["2", "1", "26"],
     ];
 
     // return totalAnswerPointsFact(params, almanac);
     var value = totalAnswerPointsFact(params, almanac);
-    console.log("severe subscale is", value);
+    // console.log("severe subscale is", value);
     return value;
   };
 
   engine.addFact("SEVERE_SUBSCALE_CAS_SCORE", SEVERE_SUBSCALE_CAS_SCORE);
 
   let PHYSICAL_SUBSCALE_CAS_SCORE = function (params, almanac) {
+    // mysafety = survey Id of "2"
     params.totalAnswerPointsQuestions = [
-      ["My Safety", "1", "6"],
-      ["My Safety", "1", "10"],
-      ["My Safety", "1", "14"],
-      ["My Safety", "1", "17"],
-      ["My Safety", "1", "23"],
-      ["My Safety", "1", "27"],
-      ["My Safety", "1", "30"],
+      ["2", "1", "6"],
+      ["2", "1", "10"],
+      ["2", "1", "14"],
+      ["2", "1", "17"],
+      ["2", "1", "23"],
+      ["2", "1", "27"],
+      ["2", "1", "30"],
     ];
     return totalAnswerPointsFact(params, almanac);
   };
@@ -214,18 +221,19 @@ export default function evaluateFeedback(rules, factContainers) {
   engine.addFact("PHYSICAL_SUBSCALE_CAS_SCORE", PHYSICAL_SUBSCALE_CAS_SCORE);
 
   let EMOTIONAL_SUBSCALE_CAS_SCORE = function (params, almanac) {
+    // mysafety = survey Id of "2"
     params.totalAnswerPointsQuestions = [
-      ["My Safety", "1", "1"],
-      ["My Safety", "1", "4"],
-      ["My Safety", "1", "8"],
-      ["My Safety", "1", "9"],
-      ["My Safety", "1", "12"],
-      ["My Safety", "1", "19"],
-      ["My Safety", "1", "20"],
-      ["My Safety", "1", "21"],
-      ["My Safety", "1", "24"],
-      ["My Safety", "1", "28"],
-      ["My Safety", "1", "29"],
+      ["2", "1", "1"],
+      ["2", "1", "4"],
+      ["2", "1", "8"],
+      ["2", "1", "9"],
+      ["2", "1", "12"],
+      ["2", "1", "19"],
+      ["2", "1", "20"],
+      ["2", "1", "21"],
+      ["2", "1", "24"],
+      ["2", "1", "28"],
+      ["2", "1", "29"],
     ];
     return totalAnswerPointsFact(params, almanac);
   };
@@ -234,10 +242,10 @@ export default function evaluateFeedback(rules, factContainers) {
 
   let HARASSMENT_SUBSCALE_CAS_SCORE = function (params, almanac) {
     params.totalAnswerPointsQuestions = [
-      ["My Safety", "1", "3"],
-      ["My Safety", "1", "11"],
-      ["My Safety", "1", "13"],
-      ["My Safety", "1", "16"],
+      ["2", "1", "3"],
+      ["2", "1", "11"],
+      ["2", "1", "13"],
+      ["2", "1", "16"],
     ];
     return totalAnswerPointsFact(params, almanac);
   };
@@ -248,11 +256,11 @@ export default function evaluateFeedback(rules, factContainers) {
   );
 
   let questionResponseFact = function (params, almanac) {
-    return almanac.factValue("surveyResults").then((surveyResults) => {
+    return almanac.factValue("prevCompletions").then((prevCompletions) => {
       var answer = null;
       try {
         answer =
-          surveyResults[params.surveyId][params.sectionId][params.questionId];
+          prevCompletions[params.surveyId][params.sectionId][params.questionId];
       } catch (error) {
         console.error(
           "Error: a surveyAnswer fact was requested, and either the answer didn't exist in completions or the required params were not provided to the fact"
@@ -286,10 +294,10 @@ export default function evaluateFeedback(rules, factContainers) {
   });
 
   var results = engine.run().then((result) => {
-    console.log(
-      "all rules executed; the following events were triggered: ",
-      result.events
-    );
+    // console.log(
+    //   "all rules executed; the following events were triggered: ",
+    //   result.events
+    // );
     return result;
   });
   return results;

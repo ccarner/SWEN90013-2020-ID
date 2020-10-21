@@ -14,7 +14,9 @@ import ProgressBar from "../reusableComponents/progressBar";
 import LoadingSpinner from "../reusableComponents/loadingSpinner";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 import evaluateRule from "../RuleEngine/evaluateFeedback";
-
+import Grid from "@material-ui/core/Grid";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 /**
  * This component is passed an ID for a survey, and then:
  * a) fetches survey data from server
@@ -76,7 +78,11 @@ export default class SurveyControl extends Component {
 
       surveyPageMap.push([sectionCounter, "questions"]);
 
-      if (section.sectionResultAlgorithm) {
+      if (
+        section.sectionResultAlgorithm ||
+        section.sectionFeedbackHtml ||
+        section.sectionFeedbackHeading
+      ) {
         // if the file has a result algorithm, note it on the map
         surveyPageMap.push([sectionCounter, "results"]);
       }
@@ -131,11 +137,15 @@ export default class SurveyControl extends Component {
     const currentSection = this.currentSectionNumber();
     const surveySections = this.state.surveyFile.surveySections;
 
-    const currentQuestion =
-      surveySections[currentSection].questions[questionId];
+    // const currentQuestion =
+    //   surveySections[currentSection].questions[questionId];
 
     var currentResults = this.state.results;
-    currentResults["questions"][questionId]["questionAnswer"] = [responseValue];
+    //some answers are already arrays, and the baclend doesn't like nested arrays for whatever reason...
+    responseValue = Array.isArray(responseValue)
+      ? responseValue
+      : [responseValue];
+    currentResults["questions"][questionId]["questionAnswer"] = responseValue;
     this.setState({
       results: currentResults,
     });
@@ -160,7 +170,7 @@ export default class SurveyControl extends Component {
             prevState.currentSurveyMapPosition + lambdaSection,
           sectionQuestions: this.state.surveyFile.surveySections[
             prevState.surveyPageMap[
-            prevState.currentSurveyMapPosition + lambdaSection
+              prevState.currentSurveyMapPosition + lambdaSection
             ][0]
           ],
           percentageCompleted:
@@ -183,12 +193,26 @@ export default class SurveyControl extends Component {
     //else do nothing if somehow trying to go to invalid negative section
   }
 
+  prioritiesAdaptor = (postAnswer) => {
+    postAnswer.questions[1]["questionAnswer"] =
+      postAnswer.questions[1]["questionAnswer"][0];
+  };
+
   submitHandler = async () => {
     this.setState({ isLoaded: false });
-    console.log(550, "posted this data", JSON.stringify(this.state.results));
-    const feedBack = await postingSurvey(this.state.results);
+    var postAnswer = this.state.results;
+    postAnswer.completedTime = JSON.stringify({
+      time: Date.now(),
+      type: this.state.surveyFile.surveyTitle,
+    });
+    if (this.state.surveyFile.surveyTitle === "My Priorities") {
+      this.prioritiesAdaptor(postAnswer);
+    }
+    console.log(992, JSON.stringify(postAnswer));
+
+    const feedback = await postingSurvey(postAnswer);
+
     this.props.completeHandler(this.state.results);
-    console.log(555, "received from the backend", feedBack);
     this.setState({ isLoaded: true, currentSurveyState: "submitted" });
 
     //evaluate the final 'survey' level feedback if the algorithm exists
@@ -198,15 +222,13 @@ export default class SurveyControl extends Component {
   };
 
   saveSurveyResultsLocalStorage() {
-    var surveyResults = JSON.parse(localStorage.getItem("surveyResults"));
-    if (!surveyResults) {
-      surveyResults = {};
+    var prevCompletions = JSON.parse(localStorage.getItem("prevCompletions"));
+    if (!prevCompletions) {
+      prevCompletions = {};
     }
-    //TODO once get a consistent survey ID across DB, use ID instead... ie the line below:
-    // surveyResults[this.state.surveyFile.surveyId] = this.state.results;
-    surveyResults[this.state.surveyFile.surveyTitle] = this.state.results;
-    console.log("surveyResults being saved was", surveyResults);
-    localStorage.setItem("surveyResults", JSON.stringify(surveyResults));
+    prevCompletions[this.state.surveyFile.surveyId] = this.state.results;
+    console.log("surveyResults being saved was", prevCompletions);
+    localStorage.setItem("prevCompletions", JSON.stringify(prevCompletions));
   }
 
   calculateFeedback(resultAlgorithm) {
@@ -272,13 +294,23 @@ export default class SurveyControl extends Component {
       //we have loaded
       if (this.state.currentSurveyState === "introduction") {
         renderArray.push(
-          <div>
+          // todo: unify these grid styles as eg a css class...
+          <Grid
+            container
+            style={{
+              alignSelf: "center",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "70vh",
+              padding: "2em",
+            }}
+          >
             <SurveyIntroductionPage
               returnHome={this.props.returnHome}
               survey={this.state.surveyFile}
               startSurvey={this.handleStart}
             />
-          </div>
+          </Grid>
         );
       } else if (this.state.currentSurveyState === "started") {
         const pageType = this.currentPageType();
@@ -286,35 +318,78 @@ export default class SurveyControl extends Component {
         if (pageType === "introduction") {
           //this is a section introduction
           renderArray.push(
-            <SectionIntroductionPage
-              section={
-                this.state.surveyFile.surveySections[
-                this.currentSectionNumber()
-                ]
-              }
-            />
+            <Grid
+              container
+              style={{
+                alignSelf: "center",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "70vh",
+                padding: "2em",
+              }}
+            >
+              <SectionIntroductionPage
+                section={
+                  this.state.surveyFile.surveySections[
+                    this.currentSectionNumber()
+                  ]
+                }
+              />
+            </Grid>
           );
         } else if (pageType === "results") {
           //add section results page here...
           renderArray.push(
-            <SectionResultsPage
-              feedbackText={this.state.feedbackText}
-              feedbackImage={this.state.feedbackImage}
-              feedbackCategory={this.state.feedbackCategory}
-            />
+            <Grid
+              container
+              style={{
+                alignSelf: "center",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "70vh",
+                padding: "2em",
+              }}
+            >
+              <SectionResultsPage
+                heading={
+                  this.state.surveyFile.surveySections[
+                    this.currentSectionNumber()
+                  ].sectionFeedbackHeading
+                }
+                bodyHtml={
+                  this.state.surveyFile.surveySections[
+                    this.currentSectionNumber()
+                  ].sectionFeedbackHtml
+                }
+                feedbackText={this.state.feedbackText}
+                feedbackImage={this.state.feedbackImage}
+                feedbackCategory={this.state.feedbackCategory}
+              />
+            </Grid>
           );
         } else if (pageType === "questions") {
           //push the questions for the current section to the screen
           renderArray.push(
-            <SurveySection
-              questionHandler={this.questionHandler}
-              section={
-                this.state.surveyFile.surveySections[
-                this.currentSectionNumber()
-                ]
-              }
-              results={this.state.results.questions}
-            />
+            <Grid
+              container
+              style={{
+                alignSelf: "center",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "70vh",
+                padding: "2em",
+              }}
+            >
+              <SurveySection
+                questionHandler={this.questionHandler}
+                section={
+                  this.state.surveyFile.surveySections[
+                    this.currentSectionNumber()
+                  ]
+                }
+                results={this.state.results.questions}
+              />
+            </Grid>
           );
         }
         // bottom navigation
@@ -335,7 +410,7 @@ export default class SurveyControl extends Component {
                         this.handleNavigateSections(-1);
                       }}
                     >
-                      {"< Previous"}
+                      <ChevronLeftIcon /> Previous
                     </PrimaryButton>
                   </Col>
                   <Col>
@@ -344,7 +419,7 @@ export default class SurveyControl extends Component {
                         this.handleNavigateSections(1);
                       }}
                     >
-                      {"Next >"}
+                      Next <ChevronRightIcon />
                     </PrimaryButton>
                   </Col>
                 </Row>
@@ -354,13 +429,26 @@ export default class SurveyControl extends Component {
         );
       } else if (this.state.currentSurveyState === "submitted") {
         renderArray.push(
-          <SurveyResultsPage
-            returnHome={this.props.returnHome}
-            surveyResults={this.state.results.questions}
-            feedbackText={this.state.feedbackText}
-            feedbackImage={this.state.feedbackImage}
-            feedbackCategory={this.state.feedbackCategory}
-          />
+          <Grid
+            container
+            style={{
+              alignSelf: "center",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "70vh",
+              padding: "2em",
+            }}
+          >
+            <SurveyResultsPage
+              returnHome={this.props.returnHome}
+              heading={this.state.surveyFile.surveyResultHeading}
+              bodyHtml={this.state.surveyFile.surveyResultHtml}
+              surveyResults={this.state.results.questions}
+              feedbackText={this.state.feedbackText}
+              feedbackImage={this.state.feedbackImage}
+              feedbackCategory={this.state.feedbackCategory}
+            />
+          </Grid>
         );
       }
     }

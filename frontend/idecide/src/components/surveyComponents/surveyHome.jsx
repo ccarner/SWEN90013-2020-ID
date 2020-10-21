@@ -15,6 +15,7 @@ import ActionPlans from "./actionPlans";
 import { Card, Button } from "react-bootstrap";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 import { Typography } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 
 import userContext from "../../contexts/userContext";
 
@@ -36,30 +37,80 @@ export default class SurveyHome extends Component {
 
     //load in previous completions from localStorage
     let previousCompletions = localStorage.getItem("prevCompletions");
-    let previousNextSurvey = localStorage.getItem("nextSurvey");
+
+    // this will now be built INTO THE SURVEY ITSELF as 'surveyDisplayOrder'
+    // let previousNextSurvey = localStorage.getItem("nextSurvey");
     //this.surveyOrder = ["My Situation", "My Safety", "Action Plan"];
-    this.surveyOrder = [
-      "My Situation",
-      "My Safety",
-      "My Priorities",
-      "I-Decide Feedback",
-      "Action Plan",
-    ]; // order that surveys need to be completed in
+    // this.surveyOrder = [
+    //   "My Situation",
+    //   "My Safety",
+    //   "My Priorities",
+    //   "I-Decide Feedback",
+    //   "Action Plan",
+    // ]; // order that surveys need to be completed in
 
     this.state = {
-      nextSurvey:
-        previousCompletions === null ? 0 : parseInt(previousNextSurvey), // index of next survey to complete, from the surveyOrder array
+      // nextSurvey:
+      //   previousCompletions === null ? 0 : parseInt(previousNextSurvey), // index of next survey to complete, from the surveyOrder array
       loaded: false,
       actionPlan: "",
       currentState: "menu", // ["menu","survey","completion", "actionPlan"]
-      currentResults: undefined, // when in "completion" state, holds data of completion being viewed
       currentSurveyId: -1, // when in "survey" state, ID of current survey
       allSurveys: {}, // pulled from the API, list of surveys available
-      surveyCompletions:
-        previousCompletions === null ? [] : JSON.parse(previousCompletions), // pulled from localStorage, all previous completions
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.startSurvey = this.startSurvey.bind(this);
+    this.surveysCompletionStatus = this.surveysCompletionStatus.bind(this);
+  }
+
+  // TODO need to update this to use surveyDisplayOrder rather than ID, but for now using IDs...
+  // rather than just when they were uploaded... note that the display order is important BEFORE
+  // passing into function, since it assumes its in correct order when receiving the array
+  //takes an array of surveyIds (in the order they should be displayed/completed), and returns an object of statuses:
+  // eg {"1":"Completed","2":"Next","3": "Locked"}
+  surveysCompletionStatus(surveyIds) {
+    const previousCompletions = JSON.parse(
+      localStorage.getItem("prevCompletions")
+    );
+
+    var previousSurveyWasComplete = true;
+    var returnObj = {};
+    console.log("prevCompletions ius ----", previousCompletions);
+    for (const surveyId of surveyIds) {
+      if (previousCompletions && previousCompletions.hasOwnProperty(surveyId)) {
+        returnObj[surveyId] = "Completed";
+        previousSurveyWasComplete = true;
+      } else if (previousSurveyWasComplete) {
+        returnObj[surveyId] = "Next";
+        previousSurveyWasComplete = false;
+      } else {
+        returnObj[surveyId] = "Locked";
+        previousSurveyWasComplete = false;
+      }
+    }
+    console.log("the return obj was", returnObj);
+    return returnObj;
+  }
+
+  //returns if all surveys are complete so can show action plan
+  allSurveysComplete() {
+    if (!this.state.loaded) {
+      return false;
+    }
+    //Improvement: factor out all of the parsing of localstorage to put this into state
+    // But need to make sure setState when the previous completions change...
+    const previousCompletions = JSON.parse(
+      localStorage.getItem("prevCompletions")
+    );
+    for (const survey of this.state.allSurveys) {
+      if (
+        !previousCompletions ||
+        !previousCompletions.hasOwnProperty(survey.surveyId)
+      ) {
+        return false;
+      }
+    }
+    return true;
   }
 
   async componentDidMount() {
@@ -84,26 +135,6 @@ export default class SurveyHome extends Component {
     });
   }
 
-  completeHandler = (surveyResults) => {
-    this.setState((prevState) => {
-      var newSurveyCompletions = [
-        ...prevState.surveyCompletions,
-        surveyResults,
-      ];
-      localStorage.setItem(
-        "prevCompletions",
-        JSON.stringify(newSurveyCompletions)
-      );
-      localStorage.setItem("nextSurvey", prevState.nextSurvey + 1);
-
-      return {
-        nextSurvey: prevState.nextSurvey + 1,
-        currentResults: surveyResults,
-        surveyCompletions: newSurveyCompletions,
-      };
-    });
-  };
-
   returnHomeCallback = () => {
     this.setState({ currentState: "menu" });
   };
@@ -116,7 +147,14 @@ export default class SurveyHome extends Component {
 
   render() {
     var renderElements = []; // array of elements to be returned from render()
-    const { currentState, actionPlan, currentResults } = this.state;
+    const { currentState } = this.state;
+
+    if (this.state.loaded) {
+      var completionStatus = this.surveysCompletionStatus(
+        this.state.allSurveys.map((survey) => survey.surveyId)
+      );
+      console.log("completion status is ----", completionStatus);
+    }
 
     if (currentState === "survey") {
       renderElements.push(
@@ -124,41 +162,45 @@ export default class SurveyHome extends Component {
           returnHome={this.returnHomeCallback}
           surveyId={this.state.currentSurveyId}
           userId={this.context.userContext.userId}
-          completeHandler={this.completeHandler}
+          completeHandler={() => {}}
         />
       );
     } else if (currentState === "menu" && this.state.loaded) {
       renderElements.push(
-        <React.Fragment>
-          <div
-            className="container"
-            className="padding10"
-            style={{ marginBottom: "50px" }}
-          >
+        <Grid
+          container
+          style={{
+            alignSelf: "center",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "90vh",
+            padding: "2em",
+          }}
+        >
+          <div style={{ marginBottom: "50px" }}>
             <div style={{ padding: "20px" }}>
-              <h1 className="text-center" style={{ color: "#9572A4" }}>
+              <h1 className="text-center" style={{ color: "white" }}>
                 Help Me Decide
               </h1>
             </div>
-            <Typography color="textPrimary" gutterBottom variant="h5">
+            <Typography style={{ color: "white" }} gutterBottom variant="h5">
               Completing the modules below will help us better understand your
-              situation
-            </Typography>
-            <Typography color="textPrimary" gutterBottom variant="h5">
-              so we can generate a personalised action plan for you.
+              situation so we can generate a personalised action plan for you.
             </Typography>
 
-            <div>
-              {this.state.allSurveys.map((survey, index) => (
+            <div style={{ marginBottom: "10vh" }}>
+              {this.state.allSurveys.map((survey) => (
                 <div key={survey.surveyId} className="surveyIcon">
                   <SurveySelectionButton
                     notAvailable={
                       // false && // uncomment this line to test surveys
-                      survey.surveyTitle !==
-                      this.surveyOrder[this.state.nextSurvey]
+                      completionStatus[survey.surveyId] === "Locked"
                     }
                     icon={getStaticImageUrlFromName(survey.surveyImageName)}
-                    completed="false"
+                    completed={
+                      // false && // uncomment this line to test surveys
+                      completionStatus[survey.surveyId] === "Completed"
+                    }
                     surveyTitle={survey.surveyTitle}
                     shortSurveyDescription={survey.surveyIntroduction}
                     handleClick={() => {
@@ -169,24 +211,22 @@ export default class SurveyHome extends Component {
               ))}
             </div>
           </div>
-        </React.Fragment>
+        </Grid>
       );
-    } else if (currentState === "completion") {
-      //viewing a previous attempt
-      //different from when we JUST completed a survey, which is rendered in the surveyControl component
-      renderElements.push(
-        <SurveyResultsPage returnHome={this.returnHomeCallback} />
-      );
+      // } else if (currentState === "completion") {
+      //   //TODO: no longer need to show 'previous completions', remove this.
+      //   //viewing a previous attempt
+      //   //different from when we JUST completed a survey, which is rendered in the surveyControl component
+      //   renderElements.push(
+      //     <SurveyResultsPage returnHome={this.returnHomeCallback} />
+      //   );
     } else if (currentState === "actionPlan") {
       renderElements.push(<ActionPlans />);
     } else {
       renderElements.push(<LoadingSpinner />);
     }
 
-    if (
-      this.surveyOrder[this.state.nextSurvey] !== "Action Plan" &&
-      this.state.currentState === "menu"
-    ) {
+    if (!this.allSurveysComplete() && this.state.currentState === "menu") {
       renderElements.push(
         <Card style={{ position: "fixed", bottom: 0, width: "100%" }}>
           <Card.Body>
@@ -201,9 +241,9 @@ export default class SurveyHome extends Component {
           <Card.Body>
             <PrimaryButton
               onClick={() => this.setState({ currentState: "actionPlan" })}
-              style={{ width: "70%", borderRadius: "10em" }}
+              style={{ width: "70%", borderRadius: "10em", margin: "0px" }}
             >
-              Generate your Action Plan
+              View your Action Plan
             </PrimaryButton>
           </Card.Body>
         </Card>

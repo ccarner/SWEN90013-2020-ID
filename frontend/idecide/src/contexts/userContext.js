@@ -3,7 +3,7 @@ import React from "react";
 
 // helpful resource: https://www.digitalocean.com/community/tutorials/react-manage-user-login-react-context
 const userContext = React.createContext({
-  userContext: { userType: null, jwt: null, username: null },
+  userContext: { userType: null, token: null, username: null },
 });
 
 export default userContext;
