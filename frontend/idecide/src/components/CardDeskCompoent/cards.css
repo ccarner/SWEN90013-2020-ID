@@ -199,7 +199,7 @@
   background: none;
   border-width: 7px;
   border-style: solid;
-  border-color: rgb(2, 126, 174);
+  border-color: rgb(92, 74, 145);
   border-image: initial;
 }
 
@@ -236,7 +236,7 @@
   background: none;
   border-width: 7px;
   border-style: solid;
-  border-color: rgb(2, 126, 174);
+  border-color: rgb(92, 74, 145);
   border-image: initial;
 }
 .card-container .top::before {
@@ -249,26 +249,26 @@
   width: 12px;
   opacity: 0;
   z-index: -1;
-  background: rgb(2, 126, 174);
+  background: rgb(92, 74, 145);
   border-radius: 50%;
   transition: all 60ms ease 0s;
 }
 .option-container .composite-option-button:nth-of-type(2) .top {
   border-width: 7px;
   border-style: solid;
-  border-color: rgb(41, 104, 162);
+  border-color: rgb(112, 62, 138);
   border-image: initial;
 }
 .option-container .composite-option-button:nth-of-type(3) .top {
   border-width: 7px;
   border-style: solid;
-  border-color: rgb(92, 74, 145);
+  border-color: rgb(140, 41, 153);
   border-image: initial;
 }
 .card-container .composite-option-button:nth-of-type(4) .top {
   border-width: 7px;
   border-style: solid;
-  border-color: rgb(112, 62, 138);
+  border-color: rgb(153, 41, 140);
   border-image: initial;
 }
 .card-container .composite-option-button:nth-of-type(5) .top {
@@ -300,16 +300,16 @@
 
 .card-container .bottom {
   font-size: 14px;
-  color: rgb(2, 126, 174);
+  color: rgb(92, 74, 145);
 }
 .card-container .composite-option-button:nth-of-type(2) .top::before {
-  background-color: rgb(41, 104, 162);
+  background-color: rgb(112, 62, 138);
 }
 .card-container .composite-option-button:nth-of-type(3) .top::before {
-  background-color: rgb(92, 74, 145);
+  background-color: rgb(140, 41, 153);
 }
 .card-container .composite-option-button:nth-of-type(4) .top::before {
-  background-color: rgb(112, 62, 138);
+  background-color: rgb(153, 41, 140);
 }
 .card-container .composite-option-button:nth-of-type(5) .top::before {
   background-color: rgb(163, 34, 123);
@@ -319,13 +319,13 @@
 }
 
 .card-container .composite-option-button:nth-of-type(2) .bottom {
-  color: rgb(41, 104, 162);
+  color: rgb(112, 62, 138);
 }
 .card-container .composite-option-button:nth-of-type(3) .bottom {
-  color: rgb(92, 74, 145);
+  color: rgb(140, 41, 153);
 }
 .card-container .composite-option-button:nth-of-type(4) .bottom {
-  color: rgb(112, 62, 138);
+  color: rgb(153, 41, 140);
 }
 .card-container .composite-option-button:nth-of-type(5) .bottom {
   color: rgb(163, 34, 123);

@@ -209,7 +209,7 @@ export default class CardDeck extends Component {
           <Form.Item  name="contents">
         <TextField
         inputProps={{
-          maxLength: 200,
+          maxLength: `${item.answerLength}`,
         }}
         id="outlined-textarea"
         placeholder="Placeholder"
