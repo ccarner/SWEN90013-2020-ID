@@ -163,7 +163,6 @@ export default class SurveyControl extends Component {
       this.saveSurveyResultsLocalStorage();
       return;
     } else if (currentSurveyMapPosition + lambdaSection >= 0) {
-      this.saveSurveyResultsLocalStorage();
       this.setState(
         (prevState) => ({
           currentSurveyMapPosition:
@@ -193,11 +192,6 @@ export default class SurveyControl extends Component {
     //else do nothing if somehow trying to go to invalid negative section
   }
 
-  prioritiesAdaptor = (postAnswer) => {
-    postAnswer.questions[1]["questionAnswer"] =
-      postAnswer.questions[1]["questionAnswer"][0];
-  };
-
   submitHandler = async () => {
     this.setState({ isLoaded: false });
     var postAnswer = this.state.results;
@@ -205,9 +199,7 @@ export default class SurveyControl extends Component {
       time: Date.now(),
       type: this.state.surveyFile.surveyTitle,
     });
-    if (this.state.surveyFile.surveyTitle === "My Priorities") {
-      this.prioritiesAdaptor(postAnswer);
-    }
+
     console.log(992, JSON.stringify(postAnswer));
 
     const feedback = await postingSurvey(postAnswer);

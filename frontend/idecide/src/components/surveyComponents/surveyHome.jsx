@@ -75,7 +75,6 @@ export default class SurveyHome extends Component {
 
     var previousSurveyWasComplete = true;
     var returnObj = {};
-    console.log("prevCompletions ius ----", previousCompletions);
     for (const surveyId of surveyIds) {
       if (previousCompletions && previousCompletions.hasOwnProperty(surveyId)) {
         returnObj[surveyId] = "Completed";
@@ -88,8 +87,15 @@ export default class SurveyHome extends Component {
         previousSurveyWasComplete = false;
       }
     }
-    console.log("the return obj was", returnObj);
     return returnObj;
+  }
+
+  getSurveyImage(survey) {
+    if (survey.surveyImageName) {
+      return getStaticImageUrlFromName(survey.surveyImageName);
+    } else {
+      return getStaticImageUrlFromName(survey.surveyId + ".png");
+    }
   }
 
   //returns if all surveys are complete so can show action plan
@@ -153,7 +159,6 @@ export default class SurveyHome extends Component {
       var completionStatus = this.surveysCompletionStatus(
         this.state.allSurveys.map((survey) => survey.surveyId)
       );
-      console.log("completion status is ----", completionStatus);
     }
 
     if (currentState === "survey") {
@@ -188,7 +193,14 @@ export default class SurveyHome extends Component {
               situation so we can generate a personalised action plan for you.
             </Typography>
 
-            <div style={{ marginBottom: "10vh" }}>
+            <div
+              style={{
+                marginBottom: "10vh",
+                display: "flex",
+                overflowX: "auto",
+                whiteSpace: "nonwrap",
+              }}
+            >
               {this.state.allSurveys.map((survey) => (
                 <div key={survey.surveyId} className="surveyIcon">
                   <SurveySelectionButton
@@ -196,7 +208,7 @@ export default class SurveyHome extends Component {
                       // false && // uncomment this line to test surveys
                       completionStatus[survey.surveyId] === "Locked"
                     }
-                    icon={getStaticImageUrlFromName(survey.surveyImageName)}
+                    icon={this.getSurveyImage(survey)}
                     completed={
                       // false && // uncomment this line to test surveys
                       completionStatus[survey.surveyId] === "Completed"
