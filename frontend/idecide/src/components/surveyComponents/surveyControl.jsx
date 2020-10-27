@@ -170,7 +170,7 @@ export default class SurveyControl extends Component {
             prevState.currentSurveyMapPosition + lambdaSection,
           sectionQuestions: this.state.surveyFile.surveySections[
             prevState.surveyPageMap[
-              prevState.currentSurveyMapPosition + lambdaSection
+            prevState.currentSurveyMapPosition + lambdaSection
             ][0]
           ],
           percentageCompleted:
@@ -206,11 +206,13 @@ export default class SurveyControl extends Component {
       type: this.state.surveyFile.surveyTitle,
     });
     if (this.state.surveyFile.surveyTitle === "My Priorities") {
-      this.prioritiesAdaptor(postAnswer);
+      // this.prioritiesAdaptor(postAnswer);
     }
     console.log(992, JSON.stringify(postAnswer));
 
     const feedback = await postingSurvey(postAnswer);
+    console.log(993, feedback);
+    // alert(993);
 
     this.props.completeHandler(this.state.results);
     this.setState({ isLoaded: true, currentSurveyState: "submitted" });
@@ -331,7 +333,7 @@ export default class SurveyControl extends Component {
               <SectionIntroductionPage
                 section={
                   this.state.surveyFile.surveySections[
-                    this.currentSectionNumber()
+                  this.currentSectionNumber()
                   ]
                 }
               />
@@ -384,7 +386,7 @@ export default class SurveyControl extends Component {
                 questionHandler={this.questionHandler}
                 section={
                   this.state.surveyFile.surveySections[
-                    this.currentSectionNumber()
+                  this.currentSectionNumber()
                   ]
                 }
                 results={this.state.results.questions}
