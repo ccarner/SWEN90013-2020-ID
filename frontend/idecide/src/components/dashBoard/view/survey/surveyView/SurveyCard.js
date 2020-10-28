@@ -187,7 +187,7 @@ const SurveyCard = ({ surveyHeaders, editable, ...rest }) => {
         <Box p={1} />
         <CardMedia
           className={classes.media}
-          image={getStaticImageUrlFromName(surveyHeaders.surveyImageName)}
+          // image={getStaticImageUrlFromName(surveyHeaders.surveyImageName)}
           title="Contemplative Reptile"
           style={{
             width: "30%",

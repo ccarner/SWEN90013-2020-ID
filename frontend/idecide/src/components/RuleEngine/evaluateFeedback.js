@@ -1,4 +1,4 @@
-export default function evaluateFeedback(rules, factContainers, isReview) {
+export default function evaluateFeedback(rules, factContainers) {
   let RuleEngine = require("json-rules-engine");
   let engine = new RuleEngine.Engine();
 

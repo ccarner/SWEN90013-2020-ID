@@ -162,7 +162,7 @@ export default class SurveyHome extends Component {
           returnHome={this.returnHomeCallback}
           surveyId={this.state.currentSurveyId}
           userId={this.context.userContext.userId}
-          completeHandler={() => {}}
+          completeHandler={() => { }}
         />
       );
     } else if (currentState === "menu" && this.state.loaded) {
@@ -196,7 +196,7 @@ export default class SurveyHome extends Component {
                       // false && // uncomment this line to test surveys
                       completionStatus[survey.surveyId] === "Locked"
                     }
-                    icon={getStaticImageUrlFromName(survey.surveyImageName)}
+                    // icon={getStaticImageUrlFromName(survey.surveyImageName)}
                     completed={
                       // false && // uncomment this line to test surveys
                       completionStatus[survey.surveyId] === "Completed"

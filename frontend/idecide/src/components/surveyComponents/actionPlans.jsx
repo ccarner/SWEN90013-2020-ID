@@ -101,7 +101,7 @@ export default class ActionPlans extends Component {
     // console.log(777, this.props.isReview);
     // alert(777);
 
-    evaluateFeedback(data, [], this.props.isReview).then((result) => {
+    evaluateFeedback(data, []).then((result) => {
       this.setState({ plan: result.events.map(({ type }) => type) });
       // console.log("result was in eval feedback", result);
     });
