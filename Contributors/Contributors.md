@@ -9,6 +9,7 @@
 | Colton Carner | https://github.com/ccarner   | ![Image of Yaktocat](https://github.com/ccarner/SWEN90013-2020-ID/blob/master/Contributors/Contributors.pic/Colton%20Carner.jpg) |
 | Hao Ding      | https://github.com/Melon-Eater  | ![Image of Yaktocat](https://github.com/ccarner/SWEN90013-2020-ID/blob/master/Contributors/Contributors.pic/Hao%20Ding.jpg)|
 
+| Hao Ding      | https://github.com/Melon-Eater  | ![Image of Yaktocat](https://github.com/ccarner/SWEN90013-2020-ID/blob/master/Contributors/Contributors.pic/Hao%20Ding.jpg)|
 | Ashwaq AlSaqer | https://github.com/aalsaqer   | Should be added later  |
 
 | Yue Hu        | Should be added later | Should be added later |
