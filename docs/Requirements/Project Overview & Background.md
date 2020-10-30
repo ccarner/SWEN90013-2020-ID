@@ -30,8 +30,8 @@ System-As-Is vs Ideal System
 | Problems with -system-as-is         | Features of Ideal system         |
 | ----------------------------------- |:-------------------------------:| 
 | Several problems with the current system-as-is were identified during client interviews: 
-+ The current Desktop website uses older web-design styles, including in particular the need for many clickthroughs as part of the process rather than scrolling.
-+ 
+| + The current Desktop website uses older web-design styles, including in particular the need for many clickthroughs as part of the process rather than scrolling.
+
 
 
 
