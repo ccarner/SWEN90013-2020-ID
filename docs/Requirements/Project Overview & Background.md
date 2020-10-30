@@ -37,7 +37,7 @@ System-As-Is vs Ideal System
 |- Information in the database is stored in the US (makes it hard to harvest data).
 |- Web developer controls the entire site structure, possibly owns the codebase legally (so difficult to extend/modify).
 |- Current software team hard to get in contact with.
-|- Some functionality of the website is underused / over complicated (the later modules after the initial questions are not used very frequently)
+|- Some functionality of the website is underused / over complicated (the later modules after the initial questions are not used very frequently)|
  
 
 
