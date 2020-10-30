@@ -31,14 +31,16 @@ System-As-Is vs Ideal System
 | ----------------------------------- |:-------------------------------:| 
 | Several problems with the current system-as-is were identified during client interviews:      | (Kelsey) Survey results were previously provided by the software engineer, ideally, Kelsey will have direct access to the information | 
 |- The current Desktop website uses older web-design styles, including in particular the need for many clickthroughs as part of the process rather than scrolling. | (Kelsey, Orgs interested in adapting program) Complete and transparent ownership of the project and the codebase.
+|- There is currently no mobile website (the desktop site is simply given to people on their phones). | (Kelsey, Orgs interested in adapting program) Allow for future expansion of platform (Addition of more modules/questions).
+|- Ownership of the current system is uncertain: it is likely that the creator has some ownership over the current codebase. | (Kelsey) Ability to easily add content such as new questions, or modify the algorithm. 
+|- Algorithms are partially owned by overseas entities (ie the initial questions asked in the survey developed at Johns Hopkins). | (Users) Secure, safe and private platform.
 
 
 
 
 
-|- There is currently no mobile website (the desktop site is simply given to people on their phones).
-|- Ownership of the current system is uncertain: it is likely that the creator has some ownership over the current codebase
-|- Algorithms are partially owned by overseas entities (ie the initial questions asked in the survey developed at Johns Hopkins)
+
+
 |- Information in the database is stored in the US (makes it hard to harvest data).
 |- Web developer controls the entire site structure, possibly owns the codebase legally (so difficult to extend/modify).
 |- Current software team hard to get in contact with.
