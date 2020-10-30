@@ -28,14 +28,9 @@ Stakeholder Information
 System-As-Is vs Ideal System
 ================================================================================
 | Problems with -system-as-is         | Features of Ideal system         |
-| ----------------------------------- |:-------------------------------:| | + Kelsey) Survey results were previously provided by the software engineer, ideally, Kelsey will have direct access to the information. + (Kelsey, Orgs interested in adapting program) Complete and transparent ownership of the project and the codebase. + (Kelsey, Orgs interested in adapting program) Allow for future expansion of platform (Addition of more modules/questions). + (Kelsey) Ability to easily add content such as new questions, or modify the algorithm
-| + (Users) Secure, safe and private platform.
-+ (Users) More modern interface with:
-   + Fewer 'clickthroughs' (ie more scrolling rather than hitting 'next').
-   + Mobile-friendly sit.
-   + More multimedia: eg add short videos (survivor videos, ~ 2 mins) to make the website more interactive (tentative), or short audios for those who do not want their pictures appear in the videos|
+| ----------------------------------- |:-------------------------------:| 
 
-| Several problems with the current system-as-is were identified during client interviews: 
+| Several problems with the current system-as-is were identified during client interviews: | | (Kelsey) Survey results were previously provided by the software engineer, ideally, Kelsey will have direct access to the information|
 |- The current Desktop website uses older web-design styles, including in particular the need for many clickthroughs as part of the process rather than scrolling.
 |- There is currently no mobile website (the desktop site is simply given to people on their phones).
 |- Ownership of the current system is uncertain: it is likely that the creator has some ownership over the current codebase
