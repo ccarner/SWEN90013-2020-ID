@@ -16,13 +16,13 @@ Stakeholder Information
 + Kelsey Hegarty (Project Owner): Professor interested in Family Violence, and done research and address about domestic family violence in last 20 years, recently moved online.
 + Laura: Academic worker in partnership with Kelsey
 + Additional academics at the university interested in using the data collected: The data produced by the site is used by researchers who are interested in family/domestic violence.
-Website target demographic/users: Women who are experiencing domestic abuse or violence, and have access to the internet via a smartphone of computer. Of these women:
-11% are Aboriginal and Torres Strait Islander
-20% were culturally diverse
-Most are educated (Passed grade 12)
-Many use libraries/public spaces to access the site so that the site is not in their history etc (Desktop usage is important)
-Research council: Originally funded the site development (Not as involved at this stage, since the grant is completed)
-Possibly other organisations interested in extending the platform or using as a basis for new projects, eg the Victorian government (possibility of extending for use as a self-assessment tool, front-risk assessment for women)
++ Website target demographic/users: Women who are experiencing domestic abuse or violence, and have access to the internet via a smartphone of computer. Of these women:
+   + 11% are Aboriginal and Torres Strait Islander
+   + 20% were culturally diverse
+   + Most are educated (Passed grade 12)
+   +  Many use libraries/public spaces to access the site so that the site is not in their history etc (Desktop usage is important)
+   +  Research council: Originally funded the site development (Not as involved at this stage, since the grant is completed)
+   +  Possibly other organisations interested in extending the platform or using as a basis for new projects, eg the Victorian government (possibility of extending for use as a self-assessment tool, front-risk assessment for women)
 
 
 System-As-Is vs Ideal System
