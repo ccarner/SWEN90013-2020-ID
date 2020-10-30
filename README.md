@@ -270,4 +270,4 @@ Backend: Apache 2.0
 see full documentation [here](/docs)
 
 ## Table of Content
-[I'm a relative reference to a repository file](../master/docs)
++[I'm a relative reference to a repository file](../master/docs)
