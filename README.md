@@ -270,5 +270,4 @@ Backend: Apache 2.0
 see full documentation [here](/docs)
 
 ## Table of Content
-[❓Requirements]
-<a name="custom_anchor_name"> Add the contetn here</a>
+[I'm a relative reference to a repository file](../blob/master/LICENSE)
