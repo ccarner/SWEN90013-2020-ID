@@ -31,7 +31,14 @@ System-As-Is vs Ideal System
 | ----------------------------------- |:-------------------------------:| 
 | Several problems with the current system-as-is were identified during client interviews: 
 |- The current Desktop website uses older web-design styles, including in particular the need for many clickthroughs as part of the process rather than scrolling.
-
+|- There is currently no mobile website (the desktop site is simply given to people on their phones).
+|- Ownership of the current system is uncertain: it is likely that the creator has some ownership over the current codebase
+|- Algorithms are partially owned by overseas entities (ie the initial questions asked in the survey developed at Johns Hopkins)
+|- Information in the database is stored in the US (makes it hard to harvest data).
+|- Web developer controls the entire site structure, possibly owns the codebase legally (so difficult to extend/modify).
+|- Current software team hard to get in contact with.
+|- Some functionality of the website is underused / over complicated (the later modules after the initial questions are not used very frequently)
+ 
 
 
 
