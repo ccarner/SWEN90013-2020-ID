@@ -30,7 +30,7 @@ System-As-Is vs Ideal System
 | Problems with -system-as-is         | Features of Ideal system         |
 | ----------------------------------- |:-------------------------------:| 
 | Several problems with the current system-as-is were identified during client interviews: |
-| (Kelsey) Survey results were previously provided by the software engineer, ideally, Kelsey will have direct access to the information|
+(Kelsey) Survey results were previously provided by the software engineer, ideally, Kelsey will have direct access to the information|
 
 
 
