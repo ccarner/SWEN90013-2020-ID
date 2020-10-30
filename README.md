@@ -278,9 +278,9 @@ see full documentation [here](/docs)
 + [Requirements](../master/docs/Requirements)
 + [Design](../master/docs/Design)
 + [Prototype ](../master/docs)
-+ [Risk Management](../master/docs)
-+ [Risk Management](../master/docs)
-+ [Quality Assurance](../master/docs)
++ [Front-End implementation](../master/docs)
++ [Back-End Implementation](../master/docs)
++ [Testing](../master/test)
 + [Deployment](../master/docs)
-+ [Test](../master/docs)
++ 
 
