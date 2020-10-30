@@ -30,7 +30,13 @@ System-As-Is vs Ideal System
 | Problems with -system-as-is         | Features of Ideal system         |
 | ----------------------------------- |:-------------------------------:| 
 
-| Several problems with the current system-as-is were identified during client interviews: | | (Kelsey) Survey results were previously provided by the software engineer, ideally, Kelsey will have direct access to the information|
+| Several problems with the current system-as-is were identified during client interviews: |
+| (Kelsey) Survey results were previously provided by the software engineer, ideally, Kelsey will have direct access to the information|
+
+
+
+
+
 |- The current Desktop website uses older web-design styles, including in particular the need for many clickthroughs as part of the process rather than scrolling.
 |- There is currently no mobile website (the desktop site is simply given to people on their phones).
 |- Ownership of the current system is uncertain: it is likely that the creator has some ownership over the current codebase
