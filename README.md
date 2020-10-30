@@ -267,5 +267,5 @@ Backend: Apache 2.0
 
 
 ## Documentations
-see full documentation [here](myLib/README.md)
+see full documentation [here](ccarner/SWEN90013-2020-ID/docs)
 
