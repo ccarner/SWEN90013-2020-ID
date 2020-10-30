@@ -30,7 +30,7 @@ System-As-Is vs Ideal System
 | Problems with -system-as-is         | Features of Ideal system         |
 | ----------------------------------- |:-------------------------------:| 
 | Several problems with the current system-as-is were identified during client interviews: | + Kelsey) Survey results were previously provided by the software engineer, ideally, Kelsey will have direct access to the information. + (Kelsey, Orgs interested in adapting program) Complete and transparent ownership of the project and the codebase. + (Kelsey, Orgs interested in adapting program) Allow for future expansion of platform (Addition of more modules/questions). + (Kelsey) Ability to easily add content such as new questions, or modify the algorithm
-+ (Users) Secure, safe and private platform.
+| + (Users) Secure, safe and private platform.
 + (Users) More modern interface with:
    + Fewer 'clickthroughs' (ie more scrolling rather than hitting 'next').
    + Mobile-friendly sit.
