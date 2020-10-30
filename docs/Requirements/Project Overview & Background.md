@@ -34,15 +34,10 @@ System-As-Is vs Ideal System
 |- There is currently no mobile website (the desktop site is simply given to people on their phones). | (Kelsey, Orgs interested in adapting program) Allow for future expansion of platform (Addition of more modules/questions).
 |- Ownership of the current system is uncertain: it is likely that the creator has some ownership over the current codebase. | (Kelsey) Ability to easily add content such as new questions, or modify the algorithm. 
 |- Algorithms are partially owned by overseas entities (ie the initial questions asked in the survey developed at Johns Hopkins). | (Users) Secure, safe and private platform.
-
-
-
-
-
-
-
-|- Information in the database is stored in the US (makes it hard to harvest data).
-|- Web developer controls the entire site structure, possibly owns the codebase legally (so difficult to extend/modify).
+|- Information in the database is stored in the US (makes it hard to harvest data). | (Users) More modern interface with:
+|- Web developer controls the entire site structure, possibly owns the codebase legally (so difficult to extend/modify). | Fewer 'clickthroughs' (ie more scrolling rather than hitting 'next')
+Mobile-friendly site
+More multimedia: eg add short videos (survivor videos, ~ 2 mins) to make the website more interactive (tentative), or short audios for those who do not want their pictures appear in the videos
 |- Current software team hard to get in contact with.
 |- Some functionality of the website is underused / over complicated (the later modules after the initial questions are not used very frequently)|
  
