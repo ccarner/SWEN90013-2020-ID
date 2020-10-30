@@ -1,5 +1,5 @@
 
 | Student Name  | GitHub Account| Picture |
 | ------------- | ------------- | ------------- |
-| Content Cell  | Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  | Content Cell  |
+| Colton Carner | @ccarner      | Content Cell  |
+| Hao Ding.     | Content Cell  | Content Cell  |
