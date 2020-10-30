@@ -275,8 +275,8 @@ see full documentation [here](/docs)
 
 
 ## Table of Content
-+ [Requirements](../master/docs)
-+ [Design](../master/docs)
++ [Requirements](../master/docs/Requirements)
++ [Design](../master/docs/Design)
 + [Prototype ](../master/docs)
 + [Risk Management](../master/docs)
 + [Risk Management](../master/docs)
