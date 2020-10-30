@@ -27,7 +27,7 @@ Stakeholder Information
 
 System-As-Is vs Ideal System
 ================================================================================
-| ### Problems with -system-as-is         | ### Features of Ideal system         |
+| Problems with -system-as-is         |  Features of Ideal system         |
 | ----------------------------------- |:-------------------------------:| 
 | Several problems with the current system-as-is were identified during client interviews:      | (Kelsey) Survey results were previously provided by the software engineer, ideally, Kelsey will have direct access to the information | 
 |- The current Desktop website uses older web-design styles, including in particular the need for many clickthroughs as part of the process rather than scrolling. | (Kelsey, Orgs interested in adapting program) Complete and transparent ownership of the project and the codebase.
@@ -38,6 +38,15 @@ System-As-Is vs Ideal System
 |- Web developer controls the entire site structure, possibly owns the codebase legally (so difficult to extend/modify) -Current software team hard to get in contact with -Some functionality of the website is underused / over complicated (the later modules after the initial questions are not used very frequently)
 
  
+Benefits of this project
+================================================================================
+Benefits for stakeholders are:
+
++ Kelsey + Laura : Ownership over the codebase, option to have the codebase extended in future by developer of their choice, simplified data collection process
++ Additional academics at the university: simplified data collection process
++ Website Users: Simplified navigation and easier use, easier to understand/streamlined functionality, mobile site availability
++ Research Council: Further extension of the original goals of the original grant, without a need for extra funding
++ Other organisations interested in extension: Opportunity to extend the platform through collaboration with Kelsey
 
 
 
