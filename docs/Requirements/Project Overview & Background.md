@@ -49,8 +49,18 @@ Benefits for stakeholders are:
 + Other organisations interested in extension: Opportunity to extend the platform through collaboration with Kelsey
 
 
+Scope of Project
+================================================================================
 
+From the Features of Ideal system (Assuming we cannot have access to the current codebase), the scope of the project will be:
 
+- A fresh codebase will be created, using the questions/algorithm from the existing site as a template. This will involve:
+  - A backend data collection system for user data storage
+  - A Mobile-friendly web portal
+  - A Desktop-friendly web portal
+
+- Deployment and hosting for the website will need to be organised, in a way that the client can easily manage self hosting afterwards
+- Code will need to be developed to be maintainable/extensible so that future extensions might be made by stakeholders who are interested in extending the platform
 
 
  
