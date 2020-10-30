@@ -10,10 +10,18 @@
 | Hao Ding      | https://github.com/Melon-Eater  | ![Image of Yaktocat](https://github.com/ccarner/SWEN90013-2020-ID/blob/master/Contributors/Contributors.pic/Hao%20Ding.jpg)|
 
 | Ashwaq AlSaqer| https://github.com/aalsaqer  | Should be added later |
+
 | Yue Hu        | Should be added later | Should be added later |
+
 | Lu Wang.      | https://github.com/Olivia0012  | Should be added later |
+
 | Haobei Ma.    | https://github.com/haobei98  | Should be added later |
+
 | Dingchun FeI  | Should be added later.       | Should be added later |
+
 | Dong Han.     | Should be added later.     | Should be added later |
+
 | Shuai Liu    | Should be added later.     | Should be added later |
+
 | Bo Xu   | Should be added later.     | Should be added later |
+
