@@ -265,6 +265,8 @@ Backend: Apache 2.0
 2. Backend Deployment:
 ```
 
+## Contributors
+see full details  [here](/docs)
 
 ## Documentations
 see full documentation [here](/docs)
