@@ -281,6 +281,6 @@ see full documentation [here](/docs)
 + [Front-End implementation](../master/docs)
 + [Back-End Implementation](../master/docs)
 + [Testing](../master/test)
-+ [Deployment](../master/docs)
-+ 
++ [Deployment](../master/docs/Deployment)
++ [Protocols](../master/docs/Protocols)
 
