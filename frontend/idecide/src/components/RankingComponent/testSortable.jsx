@@ -1,7 +1,10 @@
+//TODO: clean this up... has 'test' code in here
 import React, { Component } from "react";
 import { render } from "react-dom";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import arrayMove from "array-move";
+import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
+import PrimaryButton from "./../reusableComponents/PrimaryButton";
 
 const SortableItem = SortableElement(({ value }) => (
   <li
@@ -14,9 +17,16 @@ const SortableItem = SortableElement(({ value }) => (
       borderRadius: "2rem",
       listStyle: "none",
       textAlign: "center",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "8px 20px",
     }}
   >
+    {/* <PrimaryButton style={{ display: "flex", alignItems: "center" }}> */}
+    <DragIndicatorIcon />
     {value}
+    {/* </PrimaryButton> */}
   </li>
 ));
 

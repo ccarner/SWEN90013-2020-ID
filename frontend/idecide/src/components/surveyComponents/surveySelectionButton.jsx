@@ -43,7 +43,9 @@ export default function SurveySelectionButton(props) {
         style={{
           width: "16rem",
           opacity: props.notAvailable || props.completed ? "0.7" : "1",
+          transform: props.notAvailable || props.completed ? "" : "scale(1.05)",
         }}
+        className={props.notAvailable || props.completed ? "" : "pulsing"}
       >
         <Card.Img variant="top" src={imagelocation} />
         <Card.Body>

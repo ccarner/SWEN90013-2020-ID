@@ -1,3 +1,4 @@
+//TODO: remove this component, not being used anymore
 import React, { useState, useEffect, createContext } from 'react';
 import { Box, Button, Collapse, makeStyles } from '@material-ui/core';
 import { Card, CardContent, CardHeader, Divider, Typography, IconButton, Grid } from '@material-ui/core';

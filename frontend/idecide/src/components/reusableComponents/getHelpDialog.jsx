@@ -4,11 +4,11 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import Divider from "@material-ui/core/Divider";
-import PrimaryButton from "../components/reusableComponents/PrimaryButton";
+import PrimaryButton from "./PrimaryButton";
 
-import { getValue } from "../API/keyValueAPI";
+import { getValue } from "../../API/keyValueAPI";
 
-export default function GetHelpContent(props) {
+export default function GetHelpDialog(props) {
   const [contentHtml, setContentHtml] = useState("");
 
   const fetchHtml = async () => {

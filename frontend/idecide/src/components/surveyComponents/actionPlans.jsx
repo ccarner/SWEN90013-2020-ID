@@ -101,7 +101,9 @@ export default class ActionPlans extends Component {
     // console.log(777, this.props.isReview);
     // alert(777);
 
-    evaluateFeedback(data, [], this.props.isReview).then((result) => {
+    const prevCompletions = JSON.parse(localStorage.getItem("prevCompletions"));
+
+    evaluateFeedback(data, [], prevCompletions).then((result) => {
       this.setState({ plan: result.events.map(({ type }) => type) });
       // console.log("result was in eval feedback", result);
     });
@@ -115,9 +117,9 @@ export default class ActionPlans extends Component {
     var list = this.state.plan;
     console.log("plan is ----", this.state.plan);
     if (list !== undefined) {
+      console.log(list[0], planHtmls);
       var firstType = planHtmls[list[0]].strategyType;
       if (firstType === "EMERGENCY") {
-        var secondType = planHtmls[list[9]].strategyType;
         return (
           <div>
             <Accordion style={{ marginTop: 10 }}>
@@ -292,7 +294,7 @@ export default class ActionPlans extends Component {
                   >
                     {this.state.plan &&
                       this.state.plan.slice(0, 5).map((plan, index) => {
-                        console.log("plan was", plan);
+                        // console.log("plan was", plan);
                         var html = {
                           __html: planHtmls[plan].strategyHtmlString,
                         };
@@ -377,7 +379,7 @@ export default class ActionPlans extends Component {
                 >
                   {AllStrategies &&
                     AllStrategies[type].map((plan, index) => {
-                      console.log("plan was", plan);
+                      // console.log("plan was", plan);
                       var html = {
                         __html: planHtmls[plan].strategyHtmlString,
                       };
@@ -424,6 +426,21 @@ export default class ActionPlans extends Component {
   render() {
     return (
       <div>
+        <Card
+          style={{ position: "fixed", bottom: 0, width: "100%", zIndex: "10" }}
+        >
+          <Link
+            style={{ textDecoration: "none" }}
+            to={{
+              pathname: "/loginComponent/registerPage",
+            }}
+          >
+            <PrimaryButton>
+              Save your Plan &nbsp; <SaveIcon />
+            </PrimaryButton>
+          </Link>
+        </Card>
+
         <Modal
           show={this.state.ModalShow}
           onHide={() => this.handleModalShow()}
@@ -445,7 +462,7 @@ export default class ActionPlans extends Component {
             deal with your situation. There is additional help, resources and
             recommendations in the "More Strategies" section.
           </p>
-          <Card style={{ margin: "1em" }}>
+          <Card style={{ margin: "1em", marginBottom: "10vh" }}>
             <Card.Body>
               <ToggleButtonGroup
                 value={this.state.currentView}
@@ -457,20 +474,9 @@ export default class ActionPlans extends Component {
               </ToggleButtonGroup>
               {/* {this.handleActionPlanAccordion()} */}
               {this.handleStrategySwitch()}
-              <Link to="/" style={{ textDecoration: "none" }}>
+              {/* <Link to="/" style={{ textDecoration: "none" }}>
                 <PrimaryButton>Go home</PrimaryButton>
-              </Link>
-
-              <Link
-                style={{ textDecoration: "none" }}
-                to={{
-                  pathname: "/loginComponent/registerPage",
-                }}
-              >
-                <PrimaryButton>
-                  Save your Plan <SaveIcon />
-                </PrimaryButton>
-              </Link>
+              </Link> */}
             </Card.Body>
           </Card>
         </div>

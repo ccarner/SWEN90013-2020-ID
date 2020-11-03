@@ -1,4 +1,4 @@
-export default function evaluateFeedback(rules, factContainers, isReview) {
+export default function evaluateFeedback(rules, factContainers, surveyResults) {
   let RuleEngine = require("json-rules-engine");
   let engine = new RuleEngine.Engine();
 
@@ -84,13 +84,14 @@ export default function evaluateFeedback(rules, factContainers, isReview) {
   engine.addFact("INTENTION", intentionFact);
 
   //default facts and operators...
-  let prevCompletionsFact = function (params, almanac) {
-    var prevCompletions = JSON.parse(localStorage.getItem("prevCompletions"));
 
-    return prevCompletions;
-  };
+  // let prevCompletionsFact = function (params, almanac) {
+  //   var prevCompletions = JSON.parse(localStorage.getItem("prevCompletions"));
 
-  engine.addFact("prevCompletions", prevCompletionsFact);
+  //   return prevCompletions;
+  // };
+
+  engine.addFact("prevCompletions", surveyResults);
 
   let totalAnswerPointsFact = function (params, almanac) {
     return almanac.factValue("prevCompletions").then((prevCompletions) => {

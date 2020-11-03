@@ -19,13 +19,14 @@ import Framework from "./components/Framework";
 import DashBoard from "./components/dashBoard/DBLayout";
 import PersistentDrawerLeft from "./Layout/Navbar";
 import dashboardAllSurveysExpose from "./components/dashBoard/view/survey/dashboardAllSurveysExpose";
-import SurveySection from "./components/dashBoard/view/survey/surveyView/SurveySection";
+import SurveyEditingView from "./components/dashBoard/view/survey/surveyView/surveyEditingView-old";
 import DCLayout from "./components/dashBoard/view/dataCollection/DCLayout";
 import LoginPage from "./components/loginComponent/loginPage";
 import RegisterPage from "./components/loginComponent/registerPage";
 import AdminInfo from "./components/loginComponent/adminInfo";
 // import UserInfo from "./components/loginComponent/userInfo";
 import SurveyHome from "./components/surveyComponents/surveyHome";
+import "./App.css";
 import clsx from "clsx";
 // import DashBoard from "./components/dashBoard/DBLayout";
 // import { ToastNotification } from "./components/reusableComponents/toastNotification";
@@ -86,7 +87,7 @@ class App extends React.Component {
         <Route
           exact
           path="/dashboard/surveyId=:surveyId"
-          component={SurveySection}
+          component={SurveyEditingView}
         />
         <Route exact path="/dashboard/datacollection" component={DCLayout} />
         <Route

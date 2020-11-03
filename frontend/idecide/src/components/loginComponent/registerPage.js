@@ -68,7 +68,7 @@ export default class RegisterPage extends React.Component {
     return (
       <div style={{ padding: "5%" }}>
         <h1 className="text-center" style={{ color: "white" }}>
-          Save Your Results
+          Save Your Progress
         </h1>
         <br />
         {/** <form onSubmit={this.handleSubmit}>
@@ -129,8 +129,10 @@ export default class RegisterPage extends React.Component {
             <Divider />
             <CardContent>
               <Typography color="textSecondary">
-                Create a username and password to save your Action Plan for
-                later
+                Create a username and password to save your partial progress or
+                Action Plan for later.
+                <br /> If you have previously saved a completion, choose a
+                different username and password (one per save)
               </Typography>
               <Box p={1} />
               <TextField

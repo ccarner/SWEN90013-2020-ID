@@ -3,9 +3,8 @@
     "event": {
       "type": "highRisk",
       "params": {
-        "categoryName": "High Risk",
-        "responseString": " You seem to have experienced serious abusive behaviours from your partner. It is not acceptable for these things to happen in relationships. It is probably affecting your mental and physical health and possibly your studies as well. ",
-        "imageLink": "https://rlv.zcache.com.au/3d_pink_love_heart_heart_sticker-r133338d543304d8aa228414bd38bc390_0ugd3_8byvr_540.jpg"
+        "categoryName": "At Risk",
+        "responseString": " You seem to have experienced serious abusive behaviours from your partner. It is not acceptable for these things to happen in relationships. It is probably affecting your mental and physical health and possibly your studies as well. "
       }
     },
     "conditions": {
@@ -13,7 +12,8 @@
         {
           "fact": "totalAnswerPoints",
           "operator": "greaterThanInclusive",
-          "value": 1
+          "value": 1,
+          "params": { "totalAnswerPointsQuestions": ["2", "2", "31-42"] }
         }
       ]
     }
@@ -23,8 +23,7 @@
       "type": "lowRiskEvent",
       "params": {
         "categoryName": "Low Risk",
-        "responseString": " You are at low risk ",
-        "imageLink": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Heart_anterior_exterior_view.jpg"
+        "responseString": "Your responses indicate that you are at low risk of serious abusive behaviours from your partner."
       }
     },
     "conditions": {
@@ -32,7 +31,8 @@
         {
           "fact": "totalAnswerPoints",
           "operator": "lessThanInclusive",
-          "value": 0
+          "value": 0,
+          "params": { "totalAnswerPointsQuestions": ["2", "2", "31-42"] }
         }
       ]
     }
