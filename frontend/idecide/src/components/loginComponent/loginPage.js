@@ -59,6 +59,8 @@ export default class LoginPage extends React.Component {
   handleSubmit = async (event) => {
     // the following call will stop the form from submitting
     event.preventDefault();
+    //clear any previous saved data
+    localStorage.clear();
     // get the user information
     const data = new FormData(event.target);
     var userObject = {};

@@ -381,5 +381,87 @@
         { "fact": "INTENTION", "operator": "equal", "value": "leave" }
       ]
     }
+  },
+  {
+    "event": { "type": "CONF_SERV" },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "health" }
+      ]
+    }
+  },
+  {
+    "event": { "type": "TALK_FRIENDFAMILY" },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "health" }
+      ]
+    }
+  },
+  {
+    "event": { "type": "TALK_WOMEN" },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "health" }
+      ]
+    }
+  },
+  {
+    "event": { "type": "SUPPORT_FAITH" },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "health" }
+      ]
+    }
+  },
+  {
+    "event": { "type": "HELP_DRUGALC_USE" },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "health" }
+      ]
+    }
+  },
+  {
+    "event": { "type": "MEDICAL_HELP" },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "health" }
+      ]
+    }
+  },
+  {
+    "event": { "type": "PROVIDER_IMPROVEH" },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "health" },
+        { "fact": "INTENTION", "operator": "notEqual", "value": "left" }
+      ]
+    }
+  },
+  {
+    "event": { "type": "SUIC_HELPLINE" },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "health" },
+        { "fact": "INTENTION", "operator": "notEqual", "value": "left" }
+      ]
+    }
+  },
+  {
+    "event": { "type": "MANAGE_ANXIETY" },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "health" }
+      ]
+    }
+  },
+  {
+    "event": { "type": "MANAGE_PAIN" },
+    "conditions": {
+      "all": [
+        { "fact": "TOP_PRIORITY", "operator": "equal", "value": "health" }
+      ]
+    }
   }
 ]

@@ -4,6 +4,8 @@ import SingleChoice from "./questionComponents/questionSingleChoice";
 import QuestionYesOrNo from "./questionComponents/questionYesOrNo";
 import DragableList from "../RankingComponent/DragableList";
 import CardDeck from "../CardDeskCompoent/cardDeck";
+import { Card, Typography } from "@material-ui/core";
+
 /**
  * This component handles the DISPLAY of a section in a survey. State is contained
  * in the parent component (SurveyControl)
@@ -74,6 +76,7 @@ export default class SurveySection extends React.Component {
           key={section.sectionId}
           handleAnswer={this.handleInputChange}
           section={section}
+          canProgress={this.props.canProgress}
         />
       );
       //TODO: can remove this 'dragable list': this was before it was put INTO the card deck
@@ -88,9 +91,9 @@ export default class SurveySection extends React.Component {
     return (
       <React.Fragment>
         <div style={{ display: "inline" }}>
-          <h3 style={{ color: "white", marginBottom: "1em" }}>
+          <Typography style={{ color: "white" }} gutterBottom variant="h3">
             {this.props.section.sectionTitle}
-          </h3>
+          </Typography>
           {this.handleSectionType(this.props.section)}
         </div>
       </React.Fragment>

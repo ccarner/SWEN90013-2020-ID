@@ -1,3 +1,4 @@
+//TODO: remove this component, not being used anymore
 import React, { useState, useEffect, createContext } from 'react';
 import {
 	Box,

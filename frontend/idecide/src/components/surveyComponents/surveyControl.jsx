@@ -36,6 +36,7 @@ export default class SurveyControl extends Component {
       surveyFile: {},
       sectionQuestions: null,
       currentSurveyState: "introduction", // ["introduction", "started", "submitted"]
+      canProgress: true, // set to false when we get to a component with a cardDeck, then the carddeck will set this back to true with a callback when its been completed
       currentSurveyMapPosition: 0,
       // surveyPageMap tells us what to render when we hit 'next' or 'back'
       // will be of the form [[1,'introduction'],[1,'questions'],[2,'questions'],[3,'introduction']...]
@@ -163,22 +164,25 @@ export default class SurveyControl extends Component {
       this.saveSurveyResultsLocalStorage();
       return;
     } else if (currentSurveyMapPosition + lambdaSection >= 0) {
-      this.saveSurveyResultsLocalStorage();
       this.setState(
         (prevState) => ({
           currentSurveyMapPosition:
             prevState.currentSurveyMapPosition + lambdaSection,
           sectionQuestions: this.state.surveyFile.surveySections[
             prevState.surveyPageMap[
-            prevState.currentSurveyMapPosition + lambdaSection
+              prevState.currentSurveyMapPosition + lambdaSection
             ][0]
           ],
           percentageCompleted:
             (100 * (prevState.currentSurveyMapPosition + lambdaSection)) /
             prevState.surveyPageMap.length,
+          canProgress: true,
         }),
         () => {
           // after updating state...
+          if (this.currentPageType() === "questions") {
+            this.setState({ canProgress: false });
+          }
 
           if (this.currentPageType() === "results") {
             // if its a result section, we need to calculate section feedback if the algorithm exists
@@ -192,11 +196,6 @@ export default class SurveyControl extends Component {
     }
     //else do nothing if somehow trying to go to invalid negative section
   }
-
-  prioritiesAdaptor = (postAnswer) => {
-    postAnswer.questions[1]["questionAnswer"] =
-      postAnswer.questions[1]["questionAnswer"][0];
-  };
 
   submitHandler = async () => {
     this.setState({ isLoaded: false });
@@ -224,14 +223,18 @@ export default class SurveyControl extends Component {
     this.calculateFeedback(surveyResultAlgorithm);
   };
 
-  saveSurveyResultsLocalStorage() {
+  combinePrevCurrentResults() {
     var prevCompletions = JSON.parse(localStorage.getItem("prevCompletions"));
     if (!prevCompletions) {
       prevCompletions = {};
     }
     prevCompletions[this.state.surveyFile.surveyId] = this.state.results;
-    console.log("surveyResults being saved was", prevCompletions);
-    localStorage.setItem("prevCompletions", JSON.stringify(prevCompletions));
+    return prevCompletions;
+  }
+
+  saveSurveyResultsLocalStorage() {
+    var combined = this.combinePrevCurrentResults();
+    localStorage.setItem("prevCompletions", JSON.stringify(combined));
   }
 
   calculateFeedback(resultAlgorithm) {
@@ -246,13 +249,26 @@ export default class SurveyControl extends Component {
       });
       return null;
     }
-    evaluateRule(resultAlgorithm, []).then((results) => {
-      this.setState({
-        feedbackText: results.events[0].params.responseString,
-        feedbackImage: results.events[0].params.imageLink,
-        feedbackCategory: results.events[0].params.categoryName,
-      });
-    });
+    evaluateRule(resultAlgorithm, [], this.combinePrevCurrentResults()).then(
+      (results) => {
+        if (results.events[0]) {
+          this.setState({
+            feedbackText: results.events[0].params.responseString,
+            feedbackImage: results.events[0].params.imageLink,
+            feedbackCategory: results.events[0].params.categoryName,
+          });
+        } else {
+          console.log(
+            "A survey which HAS a feedback algorithm did not return any events after evaluation, potentially the feedback algorithm was not total"
+          );
+          this.setState({
+            feedbackText: null,
+            feedbackImage: null,
+            feedbackCategory: null,
+          });
+        }
+      }
+    );
   }
 
   handleStart = () => {
@@ -304,8 +320,10 @@ export default class SurveyControl extends Component {
               alignSelf: "center",
               alignItems: "center",
               justifyContent: "center",
-              height: "70vh",
+              minHeight: "70vh",
               padding: "2em",
+              flexDirection: "column",
+              flexWrap: "nowrap",
             }}
           >
             <SurveyIntroductionPage
@@ -327,14 +345,16 @@ export default class SurveyControl extends Component {
                 alignSelf: "center",
                 alignItems: "center",
                 justifyContent: "center",
-                height: "70vh",
+                minHeight: "70vh",
                 padding: "2em",
+                flexDirection: "column",
+                flexWrap: "nowrap",
               }}
             >
               <SectionIntroductionPage
                 section={
                   this.state.surveyFile.surveySections[
-                  this.currentSectionNumber()
+                    this.currentSectionNumber()
                   ]
                 }
               />
@@ -349,8 +369,10 @@ export default class SurveyControl extends Component {
                 alignSelf: "center",
                 alignItems: "center",
                 justifyContent: "center",
-                height: "70vh",
+                minHeight: "70vh",
                 padding: "2em",
+                flexDirection: "column",
+                flexWrap: "nowrap",
               }}
             >
               <SectionResultsPage
@@ -379,17 +401,22 @@ export default class SurveyControl extends Component {
                 alignSelf: "center",
                 alignItems: "center",
                 justifyContent: "center",
-                height: "70vh",
+                minHeight: "70vh",
                 padding: "2em",
+                flexDirection: "column",
+                flexWrap: "nowrap",
               }}
             >
               <SurveySection
                 questionHandler={this.questionHandler}
                 section={
                   this.state.surveyFile.surveySections[
-                  this.currentSectionNumber()
+                    this.currentSectionNumber()
                   ]
                 }
+                canProgress={() => {
+                  this.setState({ canProgress: true });
+                }}
                 results={this.state.results.questions}
               />
             </Grid>
@@ -412,6 +439,7 @@ export default class SurveyControl extends Component {
                       onClick={(e) => {
                         this.handleNavigateSections(-1);
                       }}
+                      disabled={this.state.currentSurveyMapPosition === 0}
                     >
                       <ChevronLeftIcon /> Previous
                     </PrimaryButton>
@@ -421,6 +449,8 @@ export default class SurveyControl extends Component {
                       onClick={(e) => {
                         this.handleNavigateSections(1);
                       }}
+                      // disabled={!this.state.canProgress} //comment out to debug, else uncomment for production
+                      className={this.state.canProgress && "pulsing"}
                     >
                       Next <ChevronRightIcon />
                     </PrimaryButton>
@@ -438,8 +468,10 @@ export default class SurveyControl extends Component {
               alignSelf: "center",
               alignItems: "center",
               justifyContent: "center",
-              height: "70vh",
+              minHeight: "70vh",
               padding: "2em",
+              flexDirection: "column",
+              flexWrap: "nowrap",
             }}
           >
             <SurveyResultsPage

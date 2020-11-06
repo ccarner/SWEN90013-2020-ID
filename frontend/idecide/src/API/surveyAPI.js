@@ -100,7 +100,7 @@ export async function addImageForSurvey(surveyId, imgUrl) {
     method: "POST", // HTTP POST method
     headers: {
       "content-type": "multipart/form-data",
-      //  Authorization: localStorage.getItem("token"),
+      Authorization: localStorage.getItem("userContext").token,
     },
     surveyId: surveyId,
     img: imgUrl,
@@ -119,7 +119,6 @@ export async function AddNewSurvey(surveyInfo) {
     },
     data: JSON.stringify(JSON.parse(surveyInfo)),
   });
-
   return dataPost;
 }
 

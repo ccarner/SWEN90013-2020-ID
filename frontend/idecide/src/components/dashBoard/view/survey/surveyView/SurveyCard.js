@@ -72,6 +72,7 @@ const SurveyCard = ({ surveyHeaders, editable, ...rest }) => {
     });
     saveAs(blob, surveyHeaders.surveyTitle + ".json");
   };
+
   const classes = useStyles();
   const [openAlert, setOpen] = React.useState(false);
   const [openGreen, setOpenGreen] = React.useState(false);
@@ -79,7 +80,7 @@ const SurveyCard = ({ surveyHeaders, editable, ...rest }) => {
   const [open, setDMOpen] = React.useState(false); //control of adding new survey
   const [values, setValues] = React.useState({
     title: surveyHeaders.surveyTitle,
-    descrpition: surveyHeaders.surveyIntroduction,
+    description: surveyHeaders.surveyIntroduction,
     surveyIntroductionHtmlB64: surveyHeaders.surveyIntroductionHtmlB64,
     surveyResultAlgorithm: surveyHeaders.surveyResultAlgorithm,
   });
@@ -97,6 +98,7 @@ const SurveyCard = ({ surveyHeaders, editable, ...rest }) => {
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
+
   const submit = (e) => {
     e.preventDefault();
     const data = new FormData(form.current);
@@ -140,7 +142,7 @@ const SurveyCard = ({ surveyHeaders, editable, ...rest }) => {
     var readyData = JSON.stringify({
       surveyId: surveyHeaders.surveyId,
       surveyTitle: values.title,
-      surveyIntroduction: values.descrpition,
+      surveyIntroduction: values.description,
       surveyVersion: surveyHeaders.surveyVersion,
       surveyIntroductionHtmlB64: values.surveyIntroductionHtmlB64,
       surveyResultAlgorithm: values.surveyResultAlgorithm,
@@ -185,10 +187,15 @@ const SurveyCard = ({ surveyHeaders, editable, ...rest }) => {
         <CardHeader title={surveyHeaders.surveyTitle} />
         <Divider />
         <Box p={1} />
+
         <CardMedia
           className={classes.media}
-          // image={getStaticImageUrlFromName(surveyHeaders.surveyImageName)}
-          title="Contemplative Reptile"
+          image={
+            surveyHeaders.surveyImageName
+              ? getStaticImageUrlFromName(surveyHeaders.surveyImageName)
+              : getStaticImageUrlFromName(surveyHeaders.surveyId + ".png")
+          }
+          title="Survey Image"
           style={{
             width: "30%",
             height: "30%",
@@ -235,7 +242,7 @@ const SurveyCard = ({ surveyHeaders, editable, ...rest }) => {
           </Grid>
         </Box>
       </Card>
-      <Dialog
+      {/* <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="max-width-dialog-title"
@@ -284,8 +291,8 @@ const SurveyCard = ({ surveyHeaders, editable, ...rest }) => {
                 multiline
                 fullWidth
                 required
-                value={values.descrpition}
-                onChange={handleChange("descrpition")}
+                value={values.description}
+                onChange={handleChange("description")}
                 rows={4}
                 label="Description"
                 variant="outlined"
@@ -339,7 +346,7 @@ const SurveyCard = ({ surveyHeaders, editable, ...rest }) => {
             </Button>
           </DialogActions>
         </form>
-      </Dialog>
+      </Dialog> */}
     </div>
   );
 };

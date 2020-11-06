@@ -5,12 +5,7 @@ import userContext from "./contexts/userContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
 import Landing from "./components/Landing";
 import Questions from "./components/Questions";
@@ -19,13 +14,14 @@ import Framework from "./components/Framework";
 import DashBoard from "./components/dashBoard/DBLayout";
 import PersistentDrawerLeft from "./Layout/Navbar";
 import dashboardAllSurveysExpose from "./components/dashBoard/view/survey/dashboardAllSurveysExpose";
-import SurveySection from "./components/dashBoard/view/survey/surveyView/SurveySection";
+import SurveyEditingView from "./components/dashBoard/view/survey/surveyView/surveyEditingView";
 import DCLayout from "./components/dashBoard/view/dataCollection/DCLayout";
 import LoginPage from "./components/loginComponent/loginPage";
 import RegisterPage from "./components/loginComponent/registerPage";
 import AdminInfo from "./components/loginComponent/adminInfo";
 // import UserInfo from "./components/loginComponent/userInfo";
 import SurveyHome from "./components/surveyComponents/surveyHome";
+import "./App.css";
 import clsx from "clsx";
 // import DashBoard from "./components/dashBoard/DBLayout";
 // import { ToastNotification } from "./components/reusableComponents/toastNotification";
@@ -86,7 +82,7 @@ class App extends React.Component {
         <Route
           exact
           path="/dashboard/surveyId=:surveyId"
-          component={SurveySection}
+          component={SurveyEditingView}
         />
         <Route exact path="/dashboard/datacollection" component={DCLayout} />
         <Route
@@ -113,23 +109,24 @@ class App extends React.Component {
 
   render() {
     return (
-      <userContext.Provider
-        value={{
-          userContext: this.state.userContext,
-          logout: this.logout,
-          setUserContext: this.setUserContext,
-        }}
-      >
-        <ToastContainer />
-        <Router>
+      <Router>
+        <userContext.Provider
+          value={{
+            userContext: this.state.userContext,
+            logout: this.logout,
+            setUserContext: this.setUserContext,
+          }}
+        >
+          <ToastContainer />
+          <div id="background" />
           <div className="App">
             <div className="backgroundImage"></div>
             <PersistentDrawerLeft>
               {this.switchMainContent()}
             </PersistentDrawerLeft>
           </div>
-        </Router>
-      </userContext.Provider>
+        </userContext.Provider>
+      </Router>
     );
   }
 }

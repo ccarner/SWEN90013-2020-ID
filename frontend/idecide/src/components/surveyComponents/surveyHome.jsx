@@ -18,7 +18,16 @@ import { Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 
 import userContext from "../../contexts/userContext";
+import ScrollingSurveyView from "./scrollingSurveyView";
 
+import { Link } from "react-router-dom";
+import SaveIcon from "@material-ui/icons/Save";
+
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import SurveyHomeIntroduction from "./surveyHomeIntroduction";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 /**
  * The parent component of all survey pages. This component:
  * a) fetches all available surveys from the server
@@ -36,7 +45,9 @@ export default class SurveyHome extends Component {
     super();
 
     //load in previous completions from localStorage
-    let previousCompletions = localStorage.getItem("prevCompletions");
+    // let previousCompletions = localStorage.getItem("prevCompletions");
+    const previousState = localStorage.getItem("stepperState");
+    // if restoring a save, skip to the action plan if done with surveys
 
     // this will now be built INTO THE SURVEY ITSELF as 'surveyDisplayOrder'
     // let previousNextSurvey = localStorage.getItem("nextSurvey");
@@ -54,13 +65,31 @@ export default class SurveyHome extends Component {
       //   previousCompletions === null ? 0 : parseInt(previousNextSurvey), // index of next survey to complete, from the surveyOrder array
       loaded: false,
       actionPlan: "",
-      currentState: "menu", // ["menu","survey","completion", "actionPlan"]
+      currentState: previousState ? previousState : "introduction", // ["introduction","menu","survey","completion", "actionPlan"]
       currentSurveyId: -1, // when in "survey" state, ID of current survey
       allSurveys: {}, // pulled from the API, list of surveys available
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.startSurvey = this.startSurvey.bind(this);
     this.surveysCompletionStatus = this.surveysCompletionStatus.bind(this);
+    this.getCurrentStep = this.getCurrentStep.bind(this);
+  }
+
+  getCurrentStep() {
+    switch (this.state.currentState) {
+      case "introduction":
+        return 0;
+      case "menu":
+        return 1;
+      case "survey":
+        return 1;
+      case "completion":
+        return 1;
+      case "actionPlan":
+        return 2;
+      default:
+        return 0;
+    }
   }
 
   // TODO need to update this to use surveyDisplayOrder rather than ID, but for now using IDs...
@@ -75,7 +104,6 @@ export default class SurveyHome extends Component {
 
     var previousSurveyWasComplete = true;
     var returnObj = {};
-    console.log("prevCompletions ius ----", previousCompletions);
     for (const surveyId of surveyIds) {
       if (previousCompletions && previousCompletions.hasOwnProperty(surveyId)) {
         returnObj[surveyId] = "Completed";
@@ -88,8 +116,15 @@ export default class SurveyHome extends Component {
         previousSurveyWasComplete = false;
       }
     }
-    console.log("the return obj was", returnObj);
     return returnObj;
+  }
+
+  getSurveyImage(survey) {
+    if (survey.surveyImageName) {
+      return getStaticImageUrlFromName(survey.surveyImageName);
+    } else {
+      return getStaticImageUrlFromName(survey.surveyId + ".png");
+    }
   }
 
   //returns if all surveys are complete so can show action plan
@@ -122,10 +157,27 @@ export default class SurveyHome extends Component {
     }
     var surveys = await getAllSurveys();
 
+    var allSurveys = surveys.data;
+
+    allSurveys.forEach((survey) => {
+      if (!survey.surveyDisplayOrder) {
+        //just give an order of 10
+        survey.surveyDisplayOrder = 10;
+      }
+    });
+
+    allSurveys.sort((x, y) => {
+      return x.surveyDisplayOrder - y.surveyDisplayOrder;
+    });
+
     this.setState({
-      allSurveys: surveys.data,
+      allSurveys: allSurveys,
       loaded: true,
     });
+
+    if (this.allSurveysComplete()) {
+      this.setState({ currentState: "actionPlan" });
+    }
   }
 
   startSurvey(surveyId) {
@@ -148,12 +200,54 @@ export default class SurveyHome extends Component {
   render() {
     var renderElements = []; // array of elements to be returned from render()
     const { currentState } = this.state;
+    const currentStep = this.getCurrentStep();
+
+    const steps = ["Introduction", "Modules", "Action Plan"];
 
     if (this.state.loaded) {
       var completionStatus = this.surveysCompletionStatus(
         this.state.allSurveys.map((survey) => survey.surveyId)
       );
-      console.log("completion status is ----", completionStatus);
+    }
+
+    // render the stepper
+    if (["introduction", "menu", "actionPlan"].indexOf(currentState) > -1) {
+      renderElements.push(
+        <Card style={{ flexDirection: "row", justifyContent: "center" }}>
+          <Stepper activeStep={currentStep} style={{ minWidth: "80%" }}>
+            {steps.map((label, index) => {
+              return (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              );
+            })}
+          </Stepper>
+        </Card>
+      );
+    }
+    if (currentState === "introduction") {
+      renderElements.push(
+        <Grid
+          container
+          style={{
+            alignSelf: "center",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "2em",
+            flexDirection: "column",
+            flexWrap: "nowrap",
+            minHeight: "70vh",
+          }}
+        >
+          <SurveyHomeIntroduction
+            handleNext={() => {
+              this.setState({ currentState: "menu" });
+              localStorage.setItem("stepperState", "menu");
+            }}
+          />
+        </Grid>
+      );
     }
 
     if (currentState === "survey") {
@@ -162,7 +256,7 @@ export default class SurveyHome extends Component {
           returnHome={this.returnHomeCallback}
           surveyId={this.state.currentSurveyId}
           userId={this.context.userContext.userId}
-          completeHandler={() => { }}
+          completeHandler={() => {}}
         />
       );
     } else if (currentState === "menu" && this.state.loaded) {
@@ -173,44 +267,32 @@ export default class SurveyHome extends Component {
             alignSelf: "center",
             alignItems: "center",
             justifyContent: "center",
-            height: "90vh",
-            padding: "2em",
+            // padding: "2em",
+            width: "100vw",
+            marginBottom: "50px",
+            flexDirection: "column",
+            flexWrap: "nowrap",
           }}
         >
-          <div style={{ marginBottom: "50px" }}>
-            <div style={{ padding: "20px" }}>
-              <h1 className="text-center" style={{ color: "white" }}>
-                Help Me Decide
-              </h1>
-            </div>
+          <div style={{ padding: "4em" }}>
+            <h1
+              className="text-center"
+              style={{ color: "white", margin: "0.5em" }}
+            >
+              Help Me Decide
+            </h1>
             <Typography style={{ color: "white" }} gutterBottom variant="h5">
               Completing the modules below will help us better understand your
               situation so we can generate a personalised action plan for you.
             </Typography>
-
-            <div style={{ marginBottom: "10vh" }}>
-              {this.state.allSurveys.map((survey) => (
-                <div key={survey.surveyId} className="surveyIcon">
-                  <SurveySelectionButton
-                    notAvailable={
-                      // false && // uncomment this line to test surveys
-                      completionStatus[survey.surveyId] === "Locked"
-                    }
-                    // icon={getStaticImageUrlFromName(survey.surveyImageName)}
-                    completed={
-                      // false && // uncomment this line to test surveys
-                      completionStatus[survey.surveyId] === "Completed"
-                    }
-                    surveyTitle={survey.surveyTitle}
-                    shortSurveyDescription={survey.surveyIntroduction}
-                    handleClick={() => {
-                      this.startSurvey(survey.surveyId);
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
           </div>
+
+          <ScrollingSurveyView
+            allSurveys={this.state.allSurveys}
+            getSurveyImage={this.getSurveyImage}
+            completionStatus={completionStatus}
+            startSurvey={this.startSurvey}
+          />
         </Grid>
       );
       // } else if (currentState === "completion") {
@@ -222,17 +304,29 @@ export default class SurveyHome extends Component {
       //   );
     } else if (currentState === "actionPlan") {
       renderElements.push(<ActionPlans />);
-    } else {
+    } else if (currentState !== "introduction") {
       renderElements.push(<LoadingSpinner />);
     }
 
     if (!this.allSurveysComplete() && this.state.currentState === "menu") {
       renderElements.push(
         <Card style={{ position: "fixed", bottom: 0, width: "100%" }}>
-          <Card.Body>
-            Please complete the required sections before we generate an action
-            plan
-          </Card.Body>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-around",
+            }}
+          >
+            <PrimaryButton
+              onClick={() => {
+                this.props.history.push("/loginComponent/registerPage");
+              }}
+            >
+              Save your Progress &nbsp;
+              <SaveIcon />
+            </PrimaryButton>
+          </div>
         </Card>
       );
     } else if (this.state.currentState === "menu") {
@@ -240,7 +334,11 @@ export default class SurveyHome extends Component {
         <Card style={{ position: "fixed", bottom: 0, width: "100%" }}>
           <Card.Body>
             <PrimaryButton
-              onClick={() => this.setState({ currentState: "actionPlan" })}
+              className={"pulsing"}
+              onClick={() => {
+                this.setState({ currentState: "actionPlan" });
+                localStorage.setItem("stepperState", "actionPlan");
+              }}
               style={{ width: "70%", borderRadius: "10em", margin: "0px" }}
             >
               View your Action Plan

@@ -22,13 +22,34 @@
   font-size: large;
 }
 
-
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* pulse used for highlighting important buttons/elements */
+.pulsing {
+  animation: pulsing 3s linear infinite;
+}
+.pulsing:hover {
+  animation-play-state: paused;
+}
+
+@keyframes pulsing {
+  0% {
+    opacity: 0.8;
+    transform: scaleY(1) scaleX(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1.03) scaleX(1.03);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scaleY(1) scaleX(1);
   }
 }

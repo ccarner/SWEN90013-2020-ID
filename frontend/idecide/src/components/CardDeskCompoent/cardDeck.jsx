@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Slider } from "antd";
+import { Button, Slider, Form } from "antd";
 
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./cards.css";
@@ -7,6 +7,9 @@ import "antd/dist/antd.css";
 import LoadingSpinner from "../reusableComponents/loadingSpinner";
 import SortableComponent from "../RankingComponent/testSortable";
 import PrimaryButton from "./../reusableComponents/PrimaryButton";
+import TextField from "@material-ui/core/TextField";
+import testJson from "../../SurveyJsons/mySituation.json";
+import { Typography } from "@material-ui/core";
 
 export default class CardDeck extends Component {
   constructor(props) {
@@ -37,16 +40,26 @@ export default class CardDeck extends Component {
   handleClick(item) {
     const _this = this;
     const questions = this.state.questions;
-    this.setState({
-      questions: questions.filter((ite) => ite.questionId !== item.questionId),
-      fadeAwayState: true,
-    });
+    this.setState(
+      {
+        questions: questions.filter(
+          (ite) => ite.questionId !== item.questionId
+        ),
+        fadeAwayState: true,
+      },
+      () => {
+        if (this.state.questions.length === 0) {
+          //let the upper components know that we've completed the card deck! We can continue!
+          this.props.canProgress();
+        }
+      }
+    );
     setTimeout(() => {
       _this.setState({
         fadeAwayState: false,
         clickTapStatus: true,
       });
-    }, 600);
+    }, 400);
   }
 
   handleResult(item, result) {
@@ -83,6 +96,13 @@ export default class CardDeck extends Component {
   //     CasResult: casResult,
   //   });
   // };
+
+  handleSubmit = (item, value) => {
+    //Make a network call somewhere
+    console.log(item);
+    console.log(value);
+    this.handleResult();
+  };
 
   questionTypeController(item) {
     if (item.questionType === "singleSelection") {
@@ -192,7 +212,35 @@ export default class CardDeck extends Component {
           </div>
         </div>
       );
+      // <<<<<<< HEAD
     } else {
+      // =======
+      //     } else if (item.questionType === "longAnswer") {
+      //       return (
+      //         <div style={{ width: "80%" }}>
+      //           <Form
+      //             onFinish={(value) => this.handleResult(item, value["contents"])}
+      //           >
+      //             <Form.Item name="contents">
+      //               <TextField
+      //                 inputProps={{
+      //                   maxLength: `${item.answerLength}`,
+      //                 }}
+      //                 id="outlined-textarea"
+      //                 placeholder="Enter your response"
+      //                 multiline
+      //                 fullWidth
+      //                 variant="outlined"
+      //               />
+      //             </Form.Item>
+      //             <Form.Item>
+      //               <PrimaryButton type="submit">submit</PrimaryButton>
+      //             </Form.Item>
+      //           </Form>
+      //         </div>
+      //       );
+      //     } else
+      // >>>>>>> feature-horizontalScrolling
       return (
         <div className="questionContainer">
           Error, question type not supported.
@@ -204,6 +252,7 @@ export default class CardDeck extends Component {
   handleSections = async (direction) => {
     await this.props.handleNav(direction);
 
+    //TODO: remove eg 'enginRule' below... in fact I think can remove this function?
     this.setState({
       questions: this.props.section.questions,
       questionLen: this.props.section.questions.length,
@@ -245,7 +294,9 @@ export default class CardDeck extends Component {
                 <h5>/{questions.length + parseInt(item.questionId) - 1}</h5>
               </div>
 
-              <h4 className="primary-card-text">{item.questionText}</h4>
+              <Typography gutterBottom variant="h6">
+                {item.questionText}
+              </Typography>
               {this.questionTypeController(item)}
             </div>
           </CSSTransition>
@@ -258,7 +309,9 @@ export default class CardDeck extends Component {
         <div className="cards-wrapper">
           <div className="cards-list">
             {ItemList}
-            <div>Section Complete</div>
+            <div style={{ color: "white" }}>
+              Section Complete. <br /> Press "Next" to continue.
+            </div>
           </div>
         </div>
       </div>

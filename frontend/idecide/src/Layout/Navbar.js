@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
-import CssBaseline from "@material-ui/core/CssBaseline";
+// import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
@@ -52,7 +52,8 @@ import { getCsvDownloadLink } from "../API/surveyResultsAPI";
 
 import userContext from "../contexts/userContext";
 import PrimaryButton from "./../components/reusableComponents/PrimaryButton";
-import GetHelpContent from "./getHelpContent";
+import GetHelpDialog from "../components/reusableComponents/getHelpDialog";
+import { useHistory } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -137,6 +138,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function NavBar(props) {
+  let history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
   const [isLoading, setIsLoading] = useState(false);
@@ -211,7 +213,7 @@ function NavBar(props) {
         <div>
           {!isLoading && surveys ? (
             <div className={classes.root}>
-              <CssBaseline />
+              {/* <CssBaseline /> */}
               <AppBar
                 position="fixed"
                 style={{ background: "white" }}
@@ -239,7 +241,11 @@ function NavBar(props) {
                   </Collapse>
 
                   {/* TODO: replace this with react-router SPA routing to avoid reloading pages */}
-                  <IconButton onClick={() => (window.location.href = "/")}>
+                  <IconButton
+                    onClick={() => {
+                      history.push("/");
+                    }}
+                  >
                     <img
                       src={IconLogo}
                       alt="IconLogo"
@@ -410,7 +416,7 @@ function NavBar(props) {
               >
                 {props.children}
               </main>
-              <GetHelpContent open={openHelp} handleClose={handleClose} />
+              <GetHelpDialog open={openHelp} handleClose={handleClose} />
 
               {/** dialog for get help, relocated to its own component TODO remove this */}
               {/* <Dialog

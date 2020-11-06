@@ -224,7 +224,7 @@ export default function DashboardAllSurveysExpose() {
             </DialogActions>
           </Dialog>
 
-          <Dialog
+          {/* <Dialog
             open={isOpenCreateSurveyDialog}
             onClose={() => {
               setOpenCreateSurveyDialog(false);
@@ -276,7 +276,7 @@ export default function DashboardAllSurveysExpose() {
                 Cancel
               </Button>
             </DialogActions>
-          </Dialog>
+          </Dialog> */}
         </Grid>
       )}
     </div>

@@ -4,8 +4,10 @@ import { NavLink, BrowserRouter } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Container, Row, Col } from "react-bootstrap";
 import PrimaryButton from "./reusableComponents/PrimaryButton";
+import GetHelpDialog from "./reusableComponents/getHelpDialog";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import PhoneIcon from "@material-ui/icons/Phone";
 import {
   Card,
   CardContent,
@@ -24,8 +26,13 @@ import idecideLogo from "../images/idecide-logo.png";
 import idecideLogoWhite from "../images/idecide-logo-white.png";
 
 import userContext from "../contexts/userContext";
+import SaveIcon from "@material-ui/icons/Save";
 
 class Landing extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { helpOpen: false };
+  }
   static contextType = userContext;
 
   render() {
@@ -34,6 +41,12 @@ class Landing extends Component {
     const completionSaved = localStorage.getItem("prevCompletions");
     return (
       <div>
+        <GetHelpDialog
+          open={this.state.helpOpen}
+          handleClose={() => {
+            this.setState({ helpOpen: false });
+          }}
+        />
         <Container style={{ width: "100%" }}>
           <img
             src={idecideLogoWhite}
@@ -67,11 +80,38 @@ class Landing extends Component {
                 This website helps women who feel afraid of a current or
                 ex-partner to plan for the future.
               </Typography>
-              <NavLink
-                to="/surveyComponent/surveyHome"
-                style={{ textDecoration: "none" }}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
               >
-                <PrimaryButton style={{ background: "white" }}>
+                {/* placed the gethelp button on top due to user testing */}
+                <PrimaryButton
+                  style={{ background: "white", width: "fit-content" }}
+                  onClick={() => {
+                    this.setState({ helpOpen: true });
+                  }}
+                >
+                  <span
+                    style={{
+                      background:
+                        "linear-gradient(45deg, #DA76C7 30%, #8973E6 90%)",
+                      backgroundClip: "text",
+                      webkitBackgroundClip: "text",
+                      color: "rgba(0,0,0,.2)",
+                    }}
+                  >
+                    Get Help Now <PhoneIcon style={{ color: "#8973E6" }} />
+                  </span>
+                </PrimaryButton>
+                <PrimaryButton
+                  style={{ background: "white", width: "fit-content" }}
+                  onClick={() => {
+                    this.props.history.push("/surveyComponent/surveyHome");
+                  }}
+                >
                   <span
                     style={{
                       background:
@@ -84,16 +124,16 @@ class Landing extends Component {
                     {completionSaved
                       ? "Continue your session"
                       : "Start a new session"}
-                    <KeyboardArrowRightIcon />
+                    <KeyboardArrowRightIcon style={{ color: "#8973E6" }} />
                   </span>
                 </PrimaryButton>
-              </NavLink>
 
-              <NavLink
-                to="/loginComponent/loginPage"
-                style={{ textDecoration: "none" }}
-              >
-                <PrimaryButton style={{ background: "white" }}>
+                <PrimaryButton
+                  style={{ background: "white", width: "fit-content" }}
+                  onClick={() => {
+                    this.props.history.push("/loginComponent/loginPage");
+                  }}
+                >
                   <span
                     style={{
                       background:
@@ -103,11 +143,11 @@ class Landing extends Component {
                       color: "rgba(0,0,0,.2)",
                     }}
                   >
-                    View a saved action plan
-                    <AccountCircleIcon style={{ color: "#8973E6" }} />
+                    Restore a saved session &nbsp;
+                    <SaveIcon style={{ color: "#8973E6" }} />
                   </span>
                 </PrimaryButton>
-              </NavLink>
+              </div>
 
               {/* <PrimaryButton
                 style={{

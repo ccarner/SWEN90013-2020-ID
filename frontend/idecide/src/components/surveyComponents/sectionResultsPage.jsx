@@ -1,12 +1,10 @@
 import React from "react";
-
-import { Card, Accordion } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import PrimaryButton from "../reusableComponents/PrimaryButton";
+import InfoCard from "../reusableComponents/infoCard";
+import { Typography } from "@material-ui/core";
 
 /**
- * This component will show a) the 'feedback' from the survey and b) the answers
- * filled in by the user.
+ * This component will show a) a generic message for having completed the survey and
+ * b) a custom feedback message based on the answers given
  */
 
 export default function SectionResultsPage(props) {
@@ -15,38 +13,45 @@ export default function SectionResultsPage(props) {
       ""
     ) : (
       <React.Fragment>
-        <Card.Title>
-          Feedback <br /> <b>{props.feedbackCategory}</b>
-        </Card.Title>
-        <img src={props.feedbackImage} alt="" width="30%" />
-        <Card.Text
-          style={{ fontSize: "18px", padding: "20px", textAlign: "left" }}
-        >
-          <div dangerouslySetInnerHTML={{ __html: props.feedbackText }} />
-        </Card.Text>
+        <div style={{ textAlign: "center" }}>
+          <Typography gutterBottom variant="h4">
+            Feedback: {props.feedbackCategory}
+          </Typography>
+          {props.feedbackImage && (
+            <img
+              src={props.feedbackImage}
+              alt="feedback"
+              style={{ maxHeight: "30vh" }}
+            />
+          )}
+          <br />
+        </div>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: props.feedbackText,
+          }}
+        />
       </React.Fragment>
     );
 
-  return (
-    <div>
-      <Card>
-        <Card.Body>
-          <h1 className="text-center" style={{ color: "#9572A4" }}>
-            {props.heading === null
-              ? "Thank you for completing this section"
-              : props.heading}
-          </h1>
-          {props.bodyHtml != null && (
-            <div
-              dangerouslySetInnerHTML={{
-                __html: props.bodyHtml,
-              }}
-            />
-          )}
+  const cardBody = (
+    <React.Fragment>
+      {props.bodyHtml != null && (
+        <div
+          dangerouslySetInnerHTML={{
+            __html: props.bodyHtml,
+          }}
+        />
+      )}
+      {feedback}
+    </React.Fragment>
+  );
 
-          {feedback}
-        </Card.Body>
-      </Card>
-    </div>
+  return (
+    <InfoCard
+      heading={!props.heading ? "Section Complete" : props.heading}
+      cardTitle={null}
+      cardBody={cardBody}
+    ></InfoCard>
   );
 }

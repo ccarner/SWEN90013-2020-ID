@@ -1,4 +1,4 @@
-export default function evaluateFeedback(rules, factContainers) {
+export default function evaluateFeedback(rules, factContainers, surveyResults) {
   let RuleEngine = require("json-rules-engine");
   let engine = new RuleEngine.Engine();
 
@@ -84,19 +84,21 @@ export default function evaluateFeedback(rules, factContainers) {
   engine.addFact("INTENTION", intentionFact);
 
   //default facts and operators...
-  let prevCompletionsFact = function (params, almanac) {
-    var prevCompletions = JSON.parse(localStorage.getItem("prevCompletions"));
 
-    return prevCompletions;
-  };
+  // let prevCompletionsFact = function (params, almanac) {
+  //   var prevCompletions = JSON.parse(localStorage.getItem("prevCompletions"));
 
-  engine.addFact("prevCompletions", prevCompletionsFact);
+  //   return prevCompletions;
+  // };
+
+  engine.addFact("prevCompletions", surveyResults);
 
   let totalAnswerPointsFact = function (params, almanac) {
     return almanac.factValue("prevCompletions").then((prevCompletions) => {
       var totalPoints = 0;
       // totalAnswerPointsQuestions needs to be an array of form [[surveyId,sectionId,questionId], [surveyId,..,..],...]
       // one entry in array per question we're considering when adding up points.
+      console.log("questionparams were", params.totalAnswerPointsQuestions);
       for (const idArr of params.totalAnswerPointsQuestions) {
         // survey answers should be a nested object of surveys,sections,questions
         var question = null;
@@ -105,12 +107,12 @@ export default function evaluateFeedback(rules, factContainers) {
           if (idArr[2].includes("-")) {
             let re = /([\d]*)-([\d]*)/g;
             var match = re.exec(idArr[2]);
-            // console.log("match was", match);
+            console.log("match was", match);
             let startQ = match[1];
             let endQ = match[2];
             startQ = parseInt(startQ);
             endQ = parseInt(endQ);
-            // console.log("start/end was", startQ, endQ);
+            console.log("start/end was", startQ, endQ);
 
             for (var i = startQ; i <= endQ; i++) {
               params.totalAnswerPointsQuestions.push([

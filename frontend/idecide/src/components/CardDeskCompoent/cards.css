@@ -1,3 +1,13 @@
+/* define variables for colours of our buttons */
+:root {
+  --button6: rgb(57, 0, 243);
+  --button5: rgb(93, 0, 243);
+  --button4: rgb(158, 0, 243);
+  --button3: rgb(181, 11, 233);
+  --button2: rgb(230, 0, 251);
+  --button1: rgb(255, 94, 234);
+}
+
 .eeyCoj {
   display: flex;
   flex-direction: column;
@@ -89,7 +99,7 @@
   left: 0px;
   width: 100%;
   height: 2px;
-  background: rgb(35, 190, 163);
+  background: var(--button6);
 }
 .card-container h5 {
   display: inline-block;
@@ -97,7 +107,7 @@
   color: rgb(132, 143, 148);
 }
 .card-container .counter h5.current {
-  color: rgb(0, 126, 174);
+  color: var(--button6);
   margin-right: 4px;
 }
 .card-container .primary-card-text {
@@ -197,7 +207,7 @@
   background: none;
   border-width: 7px;
   border-style: solid;
-  border-color: rgb(2, 126, 174);
+  border-color: rgb(92, 74, 145);
   border-image: initial;
 }
 
@@ -234,9 +244,10 @@
   background: none;
   border-width: 7px;
   border-style: solid;
-  border-color: rgb(2, 126, 174);
+  border-color: rgb(92, 74, 145);
   border-image: initial;
 }
+
 .card-container .top::before {
   content: "";
   position: absolute;
@@ -247,40 +258,89 @@
   width: 12px;
   opacity: 0;
   z-index: -1;
-  background: rgb(2, 126, 174);
+  background: rgb(92, 74, 145);
   border-radius: 50%;
   transition: all 60ms ease 0s;
 }
-.option-container .composite-option-button:nth-of-type(2) .top {
+
+/* sets the outer circle colour */
+.card-container .composite-option-button:nth-of-type(6) .top {
   border-width: 7px;
   border-style: solid;
-  border-color: rgb(41, 104, 162);
-  border-image: initial;
-}
-.option-container .composite-option-button:nth-of-type(3) .top {
-  border-width: 7px;
-  border-style: solid;
-  border-color: rgb(92, 74, 145);
-  border-image: initial;
-}
-.card-container .composite-option-button:nth-of-type(4) .top {
-  border-width: 7px;
-  border-style: solid;
-  border-color: rgb(112, 62, 138);
+  border-color: var(--button6);
   border-image: initial;
 }
 .card-container .composite-option-button:nth-of-type(5) .top {
   border-width: 7px;
   border-style: solid;
-  border-color: rgb(163, 34, 123);
+  border-color: var(--button5);
   border-image: initial;
 }
-.card-container .composite-option-button:nth-of-type(6) .top {
+.card-container .composite-option-button:nth-of-type(4) .top {
   border-width: 7px;
   border-style: solid;
-  border-color: rgb(221, 0, 103);
+  border-color: var(--button4);
   border-image: initial;
 }
+.card-container .composite-option-button:nth-of-type(3) .top {
+  border-width: 7px;
+  border-style: solid;
+  border-color: var(--button3);
+  border-image: initial;
+}
+.card-container .composite-option-button:nth-of-type(2) .top {
+  border-width: 7px;
+  border-style: solid;
+  border-color: var(--button2);
+  border-image: initial;
+}
+.card-container .composite-option-button:nth-of-type(1) .top {
+  border-width: 7px;
+  border-style: solid;
+  border-color: var(--button1);
+  border-image: initial;
+}
+
+/* sets the inner circle/dot when hovered colour */
+.card-container .composite-option-button:nth-of-type(1) .top::before {
+  background-color: var(--button1);
+}
+.card-container .composite-option-button:nth-of-type(2) .top::before {
+  background-color: var(--button2);
+}
+.card-container .composite-option-button:nth-of-type(3) .top::before {
+  background-color: var(--button3);
+}
+.card-container .composite-option-button:nth-of-type(4) .top::before {
+  background-color: var(--button4);
+}
+.card-container .composite-option-button:nth-of-type(5) .top::before {
+  background-color: var(--button5);
+}
+.card-container .composite-option-button:nth-of-type(6) .top::before {
+  background-color: var(--button6);
+}
+
+/* sets the TEXT color */
+.card-container .composite-option-button:nth-of-type(1) .bottom {
+  color: var(--button1);
+}
+.card-container .composite-option-button:nth-of-type(2) .bottom {
+  color: var(--button2);
+}
+.card-container .composite-option-button:nth-of-type(3) .bottom {
+  color: var(--button3);
+}
+.card-container .composite-option-button:nth-of-type(4) .bottom {
+  color: var(--button4);
+}
+.card-container .composite-option-button:nth-of-type(5) .bottom {
+  color: var(--button5);
+}
+.card-container .composite-option-button:nth-of-type(6) .bottom {
+  color: var(--button6);
+}
+
 .card-container .composite-scale-container .composite-circle::before {
   opacity: 0;
 }
@@ -298,38 +358,7 @@
 
 .card-container .bottom {
   font-size: 14px;
-  color: rgb(2, 126, 174);
-}
-.card-container .composite-option-button:nth-of-type(2) .top::before {
-  background-color: rgb(41, 104, 162);
-}
-.card-container .composite-option-button:nth-of-type(3) .top::before {
-  background-color: rgb(92, 74, 145);
-}
-.card-container .composite-option-button:nth-of-type(4) .top::before {
-  background-color: rgb(112, 62, 138);
-}
-.card-container .composite-option-button:nth-of-type(5) .top::before {
-  background-color: rgb(163, 34, 123);
-}
-.card-container .composite-option-button:nth-of-type(6) .top::before {
-  background-color: rgb(221, 0, 103);
-}
-
-.card-container .composite-option-button:nth-of-type(2) .bottom {
-  color: rgb(41, 104, 162);
-}
-.card-container .composite-option-button:nth-of-type(3) .bottom {
   color: rgb(92, 74, 145);
-}
-.card-container .composite-option-button:nth-of-type(4) .bottom {
-  color: rgb(112, 62, 138);
-}
-.card-container .composite-option-button:nth-of-type(5) .bottom {
-  color: rgb(163, 34, 123);
-}
-.card-container .composite-option-button:nth-of-type(6) .bottom {
-  color: rgb(221, 0, 103);
 }
 
 .card-container .ranger-container-silder {
@@ -338,8 +367,8 @@
 .cards-container .ranger-container-silder .ant-slider-rail {
   background-image: linear-gradient(
     90deg,
-    rgb(0, 126, 174) 0%,
-    rgb(222, 0, 103) 100%
+    var(--button1) 0%,
+    var(--button6) 100%
   );
   border-radius: 5px;
   height: 8px;
@@ -353,7 +382,7 @@
 .cards-container .ranger-container-silder .ant-slider-handle {
   height: 30px;
   width: 30px;
-  background: rgb(222, 12, 111);
+  background: rgb(212, 20, 110);
   border-width: 2px;
   border-style: solid;
   border-color: rgb(255, 255, 255);
