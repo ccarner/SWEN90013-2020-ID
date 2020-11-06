@@ -35,6 +35,7 @@
   top: 0px;
   width: 100%;
   min-height: 400px;
+  margin-bottom: 80px;
   height: auto;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 20px 40px 0px;
   opacity: 1;
@@ -402,6 +403,9 @@
     height: 46px;
     width: 96px;
   }
+  .card-container .questionContainer li {
+    font-size: 16px;
+  }
 }
 
 @media (min-width: 1000px) {
@@ -445,6 +449,9 @@
   }
   .card-container .bottom {
     font-size: 16px;
+  }
+  .card-container .questionContainer li {
+    font-size: 25px;
   }
 }
 
