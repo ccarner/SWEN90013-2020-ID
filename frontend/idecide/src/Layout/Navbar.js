@@ -53,6 +53,7 @@ import { getCsvDownloadLink } from "../API/surveyResultsAPI";
 import userContext from "../contexts/userContext";
 import PrimaryButton from "./../components/reusableComponents/PrimaryButton";
 import GetHelpDialog from "../components/reusableComponents/getHelpDialog";
+import { useHistory } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -137,6 +138,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function NavBar(props) {
+  let history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
   const [isLoading, setIsLoading] = useState(false);
@@ -239,7 +241,11 @@ function NavBar(props) {
                   </Collapse>
 
                   {/* TODO: replace this with react-router SPA routing to avoid reloading pages */}
-                  <IconButton onClick={() => (window.location.href = "/")}>
+                  <IconButton
+                    onClick={() => {
+                      history.push("/");
+                    }}
+                  >
                     <img
                       src={IconLogo}
                       alt="IconLogo"

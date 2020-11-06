@@ -4,18 +4,30 @@ import PrimaryButton from "../reusableComponents/PrimaryButton";
 import evaluateFeedback from "../RuleEngine/evaluateFeedback";
 import { Link } from "react-router-dom";
 //TODO change this over to materialUI to be consistent (instead of bootstrap)
-import { Table, Accordion, CardDeck, Modal } from "react-bootstrap";
+import { Table, CardDeck, Accordion, Modal } from "react-bootstrap";
 import Grid from "antd/lib/card/Grid";
 import SaveIcon from "@material-ui/icons/Save";
 import "../../CSS/Modal.css";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import { Accordion as MuiAccordion, Typography } from "@material-ui/core";
+import { AccordionSummary as MuiAccordionSummary } from "@material-ui/core";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { withStyles } from "@material-ui/core/styles";
+import ActionPlanAccordion from "./actionPlanAccordion";
 
 //TODO refactor this class: LOTS of repetition of eg the slicing... ctrl-f for "view", there are about 6 instances, one per each accordion...
 // TODO: this class ia also quite laggy/slow I think when executing... needs to be improved speedwise
 
 var rules = require("../../SurveyJsons/actionPlanAlgorithm.json");
 var planHtmls = require("../../SurveyJsons/actionPlanHtml.json");
+
+const AccordionSummary = withStyles({
+  content: {
+    justifyContent: "center",
+  },
+})(MuiAccordionSummary);
 
 export default class ActionPlans extends Component {
   constructor(props) {
@@ -25,7 +37,7 @@ export default class ActionPlans extends Component {
       ModalBody: undefined,
       currentView: "top5",
     };
-    this.addResultsToFacts();
+    // this.addResultsToFacts();
     this.determineActionPlans();
     this.determineActionPlans = this.determineActionPlans.bind(this);
     this.handleAlignment = this.handleAlignment.bind(this);
@@ -33,61 +45,6 @@ export default class ActionPlans extends Component {
   handleAlignment(event, newView) {
     this.setState({ currentView: newView });
   }
-
-  addResultsToFacts = () => {
-    //facts for use in algorithm, fill with defaults
-    // var facts = {
-    //   HaveChildren: "Yes",
-    //   Intention: "I intend to leave the relationship",
-    //   Priority: "Safety",
-    // };
-    // var results = JSON.parse(localStorage.getItem("prevCompletions"));
-    // console.log("results are in", results);
-    // //TODO: need to add the parsing for the priorities
-    // for (var survey of results) {
-    //   for (var question of survey.questions) {
-    //     if (question !== null) {
-    //       if (
-    //         question.questionText ===
-    //           "What are your intentions regarding your relationship?" &&
-    //         question.questionAnswer.length !== 0
-    //       ) {
-    //         switch (question.questionAnswer[0]) {
-    //           case "I intend to stay in the relationship":
-    //             facts.Intention = "STAY";
-    //             break;
-    //           case "I intend to leave the relationship":
-    //             facts.Intention = "LEAVE";
-    //             break;
-    //           case "I have already left the relationship":
-    //             facts.Intention = "LEFT";
-    //             break;
-    //           default:
-    //             facts.Intention = "LEAVE";
-    //         }
-    //       }
-    //       if (
-    //         question.questionText ===
-    //           "Do you have any dependent children or step-children under the age of 18?" &&
-    //         question.questionAnswer.length !== 0
-    //       ) {
-    //         facts.HaveChildren = question.questionAnswer[0];
-    //       }
-    //       if (
-    //         question.questionText ===
-    //           "Please rank the following from most important to you at the top to least important at the bottom" &&
-    //         question.questionAnswer.length !== 0
-    //       ) {
-    //         facts.Priority = question.questionAnswer[0];
-    //       }
-    //     }
-    //   }
-    // }
-    // if (facts.HaveChildren === "Yes" && facts.Priority === "Children") {
-    //   facts.Priority = "Safety";
-    // }
-    // localStorage.setItem("actionPlanFacts", JSON.stringify(facts));
-  };
 
   determineActionPlans = () => {
     // var actionPlanFacts = JSON.parse(localStorage.getItem("actionPlanFacts"));
@@ -116,220 +73,99 @@ export default class ActionPlans extends Component {
   handleActionPlanAccordion = () => {
     var list = this.state.plan;
     console.log("plan is ----", this.state.plan);
+    var returnArray = [];
     if (list !== undefined) {
-      console.log(list[0], planHtmls);
       var firstType = planHtmls[list[0]].strategyType;
+
       if (firstType === "EMERGENCY") {
-        return (
-          <div>
-            <Accordion style={{ marginTop: 10 }}>
-              <Card
-                key={1}
+        returnArray.push(
+          <ActionPlanAccordion heading="EMERGENCY">
+            <CardDeck>
+              <div
                 style={{
-                  background: "rgba(54, 25, 25, 0.00004)",
-                  border: "0",
-                  boxShadow: "none",
+                  display: "grid",
+                  "grid-template-columns": "repeat(3,1fr)",
+                  gap: "45px",
+                  margin: "20px",
                 }}
               >
-                <Accordion.Toggle
-                  as={Card.Header}
-                  eventKey={1 + 1} // doesn't work with index of 0 for some reason?
-                  style={{
-                    background: "linear-gradient(40deg, #ff6ec4, #7873f5)",
-                    color: "white",
-                    "font-size": "25px",
-                  }}
-                >
-                  EMERGENCY
-                </Accordion.Toggle>
-
-                <Accordion.Collapse eventKey={1 + 1}>
-                  <CardDeck>
-                    <div
-                      style={{
-                        display: "grid",
-                        "grid-template-columns": "repeat(3,1fr)",
-                        gap: "45px",
-                        margin: "20px",
-                      }}
-                    >
-                      {this.state.plan &&
-                        this.state.plan.slice(0, 9).map((plan, index) => {
-                          var html = {
-                            __html: planHtmls[plan].strategyHtmlString,
-                          };
-
-                          return (
-                            <Card>
-                              <Card.Body>
-                                {planHtmls[plan].description}
-                              </Card.Body>
-
-                              <Card.Footer>
-                                <PrimaryButton
-                                  gradient="purple-gradient"
-                                  rounded
-                                  className="purple-gradient"
-                                  onClick={() => {
-                                    this.handleModalShow();
-                                    this.setState({
-                                      ModalBody: html,
-                                      modalHeader: planHtmls[plan].description,
-                                    });
-                                  }}
-                                >
-                                  view
-                                </PrimaryButton>
-                              </Card.Footer>
-                            </Card>
-                          );
-                        })}
-                    </div>
-                  </CardDeck>
-                </Accordion.Collapse>
-              </Card>
-            </Accordion>
-            <Accordion style={{ marginTop: 10 }}>
-              <Card
-                key={1}
-                style={{
-                  background: "rgba(54, 25, 25, 0.00004)",
-                  border: "0",
-                  boxShadow: "none",
-                }}
-              >
-                <Accordion.Toggle
-                  as={Card.Header}
-                  eventKey={1 + 1} // doesn't work with index of 0 for some reason?
-                  style={{
-                    background: "linear-gradient(40deg, #ff6ec4, #7873f5)",
-                    color: "white",
-                    "font-size": "25px",
-                  }}
-                >
-                  Your top 5 strategies
-                </Accordion.Toggle>
-
-                <Accordion.Collapse eventKey={1 + 1}>
-                  <CardDeck>
-                    <div
-                      style={{
-                        display: "grid",
-                        "grid-template-columns": "repeat(3,1fr)",
-                        gap: "45px",
-                        margin: "20px",
-                      }}
-                    >
-                      {this.state.plan &&
-                        this.state.plan.slice(9, 14).map((plan, index) => {
-                          // console.log("plan was", plan);
-                          var html = {
-                            __html: planHtmls[plan].strategyHtmlString,
-                          };
-
-                          return (
-                            <Card>
-                              <Card.Body>
-                                {planHtmls[plan].description}
-                              </Card.Body>
-
-                              <Card.Footer>
-                                <PrimaryButton
-                                  gradient="purple-gradient"
-                                  rounded
-                                  className="purple-gradient"
-                                  onClick={() => {
-                                    this.handleModalShow();
-                                    this.setState({
-                                      ModalBody: html,
-                                      modalHeader: planHtmls[plan].description,
-                                    });
-                                  }}
-                                >
-                                  view
-                                </PrimaryButton>
-                              </Card.Footer>
-                            </Card>
-                          );
-                        })}
-                    </div>
-                  </CardDeck>
-                </Accordion.Collapse>
-              </Card>
-            </Accordion>
-          </div>
-        );
-      } else {
-        return (
-          <Accordion style={{ marginTop: 10 }}>
-            <Card
-              key={1}
-              style={{
-                background: "rgba(54, 25, 25, 0.00004)",
-                border: "0",
-                boxShadow: "none",
-              }}
-            >
-              <Accordion.Toggle
-                as={Card.Header}
-                eventKey={1 + 1} // doesn't work with index of 0 for some reason?
-                style={{
-                  background: "linear-gradient(40deg, #ff6ec4, #7873f5)",
-                  color: "white",
-                  "font-size": "25px",
-                }}
-              >
-                Your top 5 strategies
-              </Accordion.Toggle>
-
-              <Accordion.Collapse eventKey={1 + 1}>
-                <CardDeck>
-                  <div
-                    style={{
-                      display: "grid",
-                      "grid-template-columns": "repeat(3,1fr)",
-                      gap: "45px",
-                      margin: "20px",
-                    }}
-                  >
-                    {this.state.plan &&
-                      this.state.plan.slice(0, 5).map((plan, index) => {
-                        // console.log("plan was", plan);
-                        var html = {
-                          __html: planHtmls[plan].strategyHtmlString,
-                        };
-
-                        return (
-                          <Card>
-                            <Card.Body>{planHtmls[plan].description}</Card.Body>
-
-                            <Card.Footer>
-                              <PrimaryButton
-                                gradient="purple-gradient"
-                                rounded
-                                className="purple-gradient"
-                                onClick={() => {
-                                  this.handleModalShow();
-                                  this.setState({
-                                    ModalBody: html,
-                                    modalHeader: planHtmls[plan].description,
-                                  });
-                                }}
-                              >
-                                view
-                              </PrimaryButton>
-                            </Card.Footer>
-                          </Card>
-                        );
-                      })}
-                  </div>
-                </CardDeck>
-              </Accordion.Collapse>
-            </Card>
-          </Accordion>
+                {this.state.plan &&
+                  this.state.plan.slice(0, 9).map((plan, index) => {
+                    var html = {
+                      __html: planHtmls[plan].strategyHtmlString,
+                    };
+                    return (
+                      <Card>
+                        <Card.Body>{planHtmls[plan].description}</Card.Body>
+                        <Card.Footer>
+                          <PrimaryButton
+                            gradient="purple-gradient"
+                            rounded
+                            className="purple-gradient"
+                            onClick={() => {
+                              this.handleModalShow();
+                              this.setState({
+                                ModalBody: html,
+                                modalHeader: planHtmls[plan].description,
+                              });
+                            }}
+                          >
+                            view
+                          </PrimaryButton>
+                        </Card.Footer>
+                      </Card>
+                    );
+                  })}
+              </div>
+            </CardDeck>
+          </ActionPlanAccordion>
         );
       }
+      returnArray.push(
+        <ActionPlanAccordion heading="Your Top 5 Recommended Plans">
+          <CardDeck>
+            <div
+              style={{
+                display: "grid",
+                "grid-template-columns": "repeat(3,1fr)",
+                gap: "45px",
+                margin: "20px",
+              }}
+            >
+              {this.state.plan &&
+                this.state.plan.slice(9, 14).map((plan, index) => {
+                  // console.log("plan was", plan);
+                  var html = {
+                    __html: planHtmls[plan].strategyHtmlString,
+                  };
+                  return (
+                    <Card>
+                      <Card.Body>{planHtmls[plan].description}</Card.Body>
+                      <Card.Footer>
+                        <PrimaryButton
+                          gradient="purple-gradient"
+                          rounded
+                          className="purple-gradient"
+                          onClick={() => {
+                            this.handleModalShow();
+                            this.setState({
+                              ModalBody: html,
+                              modalHeader: planHtmls[plan].description,
+                            });
+                          }}
+                        >
+                          view
+                        </PrimaryButton>
+                      </Card.Footer>
+                    </Card>
+                  );
+                })}
+            </div>
+          </CardDeck>
+        </ActionPlanAccordion>
+      );
     }
+    return returnArray;
   };
 
   handleAllStrategies = () => {
@@ -346,75 +182,53 @@ export default class ActionPlans extends Component {
     const strategyTypekeys = Object.keys(AllStrategies);
     return strategyTypekeys.map((type, index) => {
       return (
-        <Accordion style={{ marginTop: 10 }}>
-          <Card
-            key={index}
-            style={{
-              background: "rgba(54, 25, 25, 0.00004)",
-              border: "0",
-              boxShadow: "none",
-            }}
-          >
-            <Accordion.Toggle
-              as={Card.Header}
-              eventKey={index + 1} // doesn't work with index of 0 for some reason?
+        <ActionPlanAccordion heading={type}>
+          <CardDeck>
+            <div
               style={{
-                background: "linear-gradient(40deg, #ff6ec4, #7873f5)",
-                color: "white",
-                "font-size": "25px",
+                display: "grid",
+                "grid-template-columns": "repeat(3,1fr)",
+                gap: "45px",
+                margin: "20px",
               }}
             >
-              {type}
-            </Accordion.Toggle>
+              {AllStrategies &&
+                AllStrategies[type].map((plan, index) => {
+                  // console.log("plan was", plan);
+                  var html = {
+                    __html: planHtmls[plan].strategyHtmlString,
+                  };
 
-            <Accordion.Collapse eventKey={index + 1}>
-              <CardDeck>
-                <div
-                  style={{
-                    display: "grid",
-                    "grid-template-columns": "repeat(3,1fr)",
-                    gap: "45px",
-                    margin: "20px",
-                  }}
-                >
-                  {AllStrategies &&
-                    AllStrategies[type].map((plan, index) => {
-                      // console.log("plan was", plan);
-                      var html = {
-                        __html: planHtmls[plan].strategyHtmlString,
-                      };
+                  return (
+                    <Card>
+                      <Card.Body>{planHtmls[plan].description}</Card.Body>
 
-                      return (
-                        <Card>
-                          <Card.Body>{planHtmls[plan].description}</Card.Body>
-
-                          <Card.Footer>
-                            <PrimaryButton
-                              gradient="purple-gradient"
-                              rounded
-                              className="purple-gradient"
-                              onClick={() => {
-                                this.handleModalShow();
-                                this.setState({
-                                  ModalBody: html,
-                                  modalHeader: planHtmls[plan].description,
-                                });
-                              }}
-                            >
-                              view
-                            </PrimaryButton>
-                          </Card.Footer>
-                        </Card>
-                      );
-                    })}
-                </div>
-              </CardDeck>
-            </Accordion.Collapse>
-          </Card>
-        </Accordion>
+                      <Card.Footer>
+                        <PrimaryButton
+                          gradient="purple-gradient"
+                          rounded
+                          className="purple-gradient"
+                          onClick={() => {
+                            this.handleModalShow();
+                            this.setState({
+                              ModalBody: html,
+                              modalHeader: planHtmls[plan].description,
+                            });
+                          }}
+                        >
+                          view
+                        </PrimaryButton>
+                      </Card.Footer>
+                    </Card>
+                  );
+                })}
+            </div>
+          </CardDeck>
+        </ActionPlanAccordion>
       );
     });
   };
+
   handleStrategySwitch = () => {
     if (this.state.currentView === "top5") {
       return this.handleActionPlanAccordion();
@@ -472,11 +286,8 @@ export default class ActionPlans extends Component {
                 <ToggleButton value="top5">Top 5 Strategies</ToggleButton>
                 <ToggleButton value="all">More Strategies</ToggleButton>
               </ToggleButtonGroup>
-              {/* {this.handleActionPlanAccordion()} */}
+
               {this.handleStrategySwitch()}
-              {/* <Link to="/" style={{ textDecoration: "none" }}>
-                <PrimaryButton>Go home</PrimaryButton>
-              </Link> */}
             </Card.Body>
           </Card>
         </div>

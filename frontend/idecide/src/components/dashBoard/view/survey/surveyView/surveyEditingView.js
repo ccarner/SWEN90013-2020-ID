@@ -9,8 +9,11 @@ import SurveyEditingViewHeaders from "./surveyEditingViewHeaders";
 import SurveyEditingViewSection from "./surveyEditingViewSection";
 import PrimaryButton from "./../../../../reusableComponents/PrimaryButton";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import Fab from "@material-ui/core/Fab";
+import SwapVertIcon from "@material-ui/icons/SwapVert";
+import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
 
-import { Box, Button, Collapse, makeStyles } from "@material-ui/core";
 import {
   Card,
   CardContent,
@@ -21,13 +24,204 @@ import {
   Grid,
 } from "@material-ui/core";
 
+class SectionReorgViewMode extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.onDragEnd = this.onDragEnd.bind(this);
+  }
+
+  onDragEnd(result) {
+    //change state here
+    //TODO: reorder our columns
+    const { destination, source, draggableId } = result;
+
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      //didn't move
+      return;
+    }
+
+    if (!destination) {
+      //dropped somewhere outside of the droppable
+      return;
+    }
+
+    let [movedSection] = this.props.survey.surveySections.splice(
+      source.index,
+      1
+    );
+    this.props.survey.surveySections.splice(destination.index, 0, movedSection);
+    this.props.refreshView();
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        <Typography style={{ color: "white" }} variant="h6">
+          Section Reorder View (Drag and drop to reorder sections)
+        </Typography>
+        <DragDropContext onDragEnd={this.onDragEnd}>
+          <Droppable droppableId={"mainColumn"}>
+            {/* only one droppable, so just give id="mainColumn" */}
+            {(provided) => {
+              return (
+                <div
+                  id="droppableDiv"
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                >
+                  {this.props.surveyView.surveySections.map(
+                    (section, index) => {
+                      return (
+                        <Draggable
+                          draggableId={section.sectionId}
+                          index={index}
+                          key={section.sectionId}
+                        >
+                          {(provided) => {
+                            return (
+                              <div
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                ref={provided.innerRef}
+                              >
+                                <div style={{ padding: "0.5em" }}>
+                                  {/* using externaldiv + padding since using margin on card
+                                  causes issues when calculating height of objects for drag-n-drop */}
+                                  <Card>
+                                    <DragIndicatorIcon />
+                                    {section.sectionTitle}
+                                  </Card>
+                                </div>
+                              </div>
+                            );
+                          }}
+                        </Draggable>
+                      );
+                    }
+                  )}
+
+                  {
+                    // placeholder used to maintain space when dragging, see react-beautiful-dnd
+                    provided.placeholder
+                  }
+                </div>
+              );
+            }}
+          </Droppable>
+        </DragDropContext>
+      </React.Fragment>
+    );
+  }
+}
+
+class MainViewMode extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onDragEndMoveQuestions = this.onDragEndMoveQuestions.bind(this);
+  }
+
+  //this is for moving questions; placed at survey level so can move questions BETWEEN sections
+  onDragEndMoveQuestions(result) {
+    console.log("result was", result);
+    const { destination, source, draggableId } = result;
+
+    if (!destination) {
+      //dropped somewhere outside of the droppable
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      //didn't move
+      return;
+    }
+
+    //droppableIds are the sectionIndexes
+    //remove the question from original section array
+    let [movedQuestion] = this.props.survey.surveySections[
+      parseInt(source.droppableId)
+    ].questions.splice(source.index, 1);
+
+    //insert the question into new  section array
+    this.props.survey.surveySections[
+      parseInt(destination.droppableId)
+    ].questions.splice(destination.index, 0, movedQuestion);
+
+    this.props.refreshView();
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        <SurveyEditingViewHeaders
+          surveyDataStructure={this.props.survey}
+          surveyView={this.props.surveyView}
+          refreshView={this.props.refreshView}
+        />
+        <PrimaryButton
+          onClick={() => {
+            this.addNewSection(0);
+          }}
+        >
+          Create New Section Here <CreateOutlinedIcon />
+        </PrimaryButton>
+        <DragDropContext onDragEnd={this.onDragEndMoveQuestions}>
+          {this.props.surveyView.surveySections.map((section, index) => {
+            return (
+              <React.Fragment key={section.sectionId}>
+                <SurveyEditingViewSection
+                  // sectionId not really used, its the index that gets used
+                  sectionDataStructure={this.props.survey.surveySections[index]}
+                  sectionIndex={index}
+                  sectionView={section}
+                  refreshView={this.props.refreshView}
+                  handleDelete={(index) => {
+                    this.deleteSection(index);
+                  }}
+                />
+                <PrimaryButton
+                  style={{ marginBottom: "5vh" }} //adding bottom margin here since top-margin caused issues...
+                  onClick={() => {
+                    this.addNewSection(index + 1);
+                  }}
+                >
+                  Create New Section Here
+                  <CreateOutlinedIcon />
+                </PrimaryButton>
+              </React.Fragment>
+            );
+          })}
+        </DragDropContext>
+      </React.Fragment>
+    );
+  }
+}
+
 export default class surveyEditingView extends Component {
   constructor(props) {
     super(props);
     this.survey = null;
-    this.state = { isLoaded: false, popupDialogOpen: false, surveyView: null };
+    this.state = {
+      isLoaded: false,
+      popupDialogOpen: false,
+      surveyView: null,
+      isDragging: false,
+      inSectionReorgView: false,
+    };
     // this.setState = this.setState.bind(this); // so we can pass the setState function down to other components, not needed anymore
     this.refreshSurveyViewState = this.refreshSurveyViewState.bind(this);
+
+    this.getView = this.getView.bind(this);
   }
 
   //keeping track of the survey as a datastructure OUTSIDE of the state of the component, so that we can modify it however we want.
@@ -35,6 +229,7 @@ export default class surveyEditingView extends Component {
   //need to make a shallow copy so that react knows its been updated
   refreshSurveyViewState() {
     //TODO: test if still updates without the shallow copy
+    //apaprently it does...
     this.setState({ surveyView: this.survey });
   }
 
@@ -61,7 +256,7 @@ export default class surveyEditingView extends Component {
     var n = d.getMilliseconds();
 
     const blankSection = {
-      sectionId: n, //TODO: need to add an algorithm to choose a new sectionId automatically when creating a new section
+      sectionId: n.toString(), //TODO: need to add an algorithm to choose a new sectionId automatically when creating a new section
       sectionTitleText: "",
       sectionIntroductionBodyHtml: "",
       sectionFeedbackBodyHtml: "",
@@ -74,55 +269,65 @@ export default class surveyEditingView extends Component {
     this.refreshSurveyViewState();
   }
 
+  getView() {
+    if (!this.state.inSectionReorgView) {
+      return (
+        <MainViewMode
+          surveyView={this.state.survey}
+          survey={this.survey}
+          refreshView={this.refreshSurveyViewState}
+        />
+      );
+    } else {
+      return (
+        <SectionReorgViewMode
+          surveyView={this.state.survey}
+          survey={this.survey}
+          refreshView={this.refreshSurveyViewState}
+        />
+      );
+    }
+  }
+
   //pass to subcomponents both a) a reference to the datastructure (mutable) and
   //b) the 'view' which is based on the state of this main component.
   render() {
     return (
       <div>
+        <Fab
+          color={this.state.inSectionReorgView ? "secondary" : "primary"}
+          aria-label="add"
+          size="large"
+          style={{
+            position: "fixed",
+            bottom: "2em",
+            right: "2em",
+            zIndex: 100,
+          }}
+          onClick={() => {
+            this.setState((prevState) => {
+              return { inSectionReorgView: !prevState.inSectionReorgView };
+            });
+          }}
+        >
+          <SwapVertIcon />
+        </Fab>
+
         {this.state.isLoaded && (
           <React.Fragment>
             <Typography style={{ color: "white" }} variant="h2">
               {this.state.survey.surveyTitle}
             </Typography>
-            <SurveyEditingViewHeaders
-              surveyDataStructure={this.survey}
-              surveyView={this.state.survey}
-              refreshView={this.refreshSurveyViewState}
-            />
-
-            <PrimaryButton
-              onClick={() => {
-                this.addNewSection(0);
-              }}
-            >
-              Create New Section Here <CreateOutlinedIcon />
-            </PrimaryButton>
-
-            {this.state.survey.surveySections.map((section, index) => {
-              return (
-                <React.Fragment key={section.sectionId}>
-                  <SurveyEditingViewSection
-                    // sectionId not really used, its the index that gets used
-                    sectionDataStructure={this.survey.surveySections[index]}
-                    sectionIndex={index}
-                    sectionView={section}
-                    refreshView={this.refreshSurveyViewState}
-                    handleDelete={(index) => {
-                      this.deleteSection(index);
-                    }}
-                  />
-                  <PrimaryButton
-                    onClick={() => {
-                      this.addNewSection(index + 1);
-                    }}
-                  >
-                    Create New Section Here <CreateOutlinedIcon />
-                  </PrimaryButton>
-                </React.Fragment>
-              );
-            })}
+            {this.getView()}
           </React.Fragment>
         )}
+        <PrimaryButton
+          onClick={() => {
+            editSurvey(this.survey);
+          }}
+        >
+          Save/Upload Changes
+        </PrimaryButton>
       </div>
     );
   }

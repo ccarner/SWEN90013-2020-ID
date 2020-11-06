@@ -13,7 +13,7 @@
           "fact": "totalAnswerPoints",
           "operator": "greaterThanInclusive",
           "value": 1,
-          "params": { "totalAnswerPointsQuestions": ["2", "2", "31-42"] }
+          "params": { "totalAnswerPointsQuestions": [["2", "2", "31-42"]] }
         }
       ]
     }
@@ -30,9 +30,9 @@
       "any": [
         {
           "fact": "totalAnswerPoints",
-          "operator": "lessThanInclusive",
+          "operator": "lessThan",
           "value": 0,
-          "params": { "totalAnswerPointsQuestions": ["2", "2", "31-42"] }
+          "params": { "totalAnswerPointsQuestions": [["2", "2", "31-42"]] }
         }
       ]
     }

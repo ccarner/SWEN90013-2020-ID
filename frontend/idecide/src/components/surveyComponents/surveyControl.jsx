@@ -444,7 +444,7 @@ export default class SurveyControl extends Component {
                       onClick={(e) => {
                         this.handleNavigateSections(1);
                       }}
-                      disabled={/*false &&*/ !this.state.canProgress} //uncomment the "false &&" to debug
+                      // disabled={!this.state.canProgress} //comment out to debug, else uncomment for production
                       className={this.state.canProgress && "pulsing"}
                     >
                       Next <ChevronRightIcon />

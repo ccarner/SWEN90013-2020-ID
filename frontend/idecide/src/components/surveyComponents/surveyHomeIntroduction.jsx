@@ -35,7 +35,7 @@ export default function SurveyHomeIntroduction(props) {
     <React.Fragment>
       <InfoCard
         heading={"Introduction"}
-        cardTitle={"Welcome to I-Decide"}
+        cardTitle={null}
         cardBody={bodyContent}
       ></InfoCard>
       {/* TODO: abstract out this bottom bar with flex display as a component */}

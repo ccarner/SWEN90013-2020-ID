@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
@@ -13,21 +13,33 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-export default class SurveyEditingViewQuestion extends Component {
+export default class SurveyEditingViewQuestion extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       currentDialogShowing: "none", // one option per dialog type, eg "delete"
     };
+    this.updateFlag = false;
     this.renderDialogs = this.renderDialogs.bind(this);
     this.deleteSelectionOption = this.deleteSelectionOption.bind(this);
     this.updateSelectionOption = this.updateSelectionOption.bind(this);
     this.addNewSelectionOption = this.addNewSelectionOption.bind(this);
   }
 
+  //These methods ensure that only sections which have children that have updated will be rerendered...
+  componentDidUpdate() {
+    this.updateFlag = false;
+  }
+
+  shouldComponentUpdate(newProps) {
+    return this.updateFlag;
+  }
+
   handleChange(eventType, event) {
     const value = event.target.value;
     this.props.questionDataStructure[eventType] = value;
+    this.props.parentShouldUpdate();
+    this.updateFlag = true;
     this.props.refreshView();
   }
 
@@ -90,22 +102,26 @@ export default class SurveyEditingViewQuestion extends Component {
           <PrimaryButton onClick={this.addNewSelectionOption}>
             Add new selection option
           </PrimaryButton>
-          {this.props.questionView.selectionOptions.map((option, index) => {
-            return (
-              <SurveyEditingViewQuestionSelectionOptions
-                selectionOptionIndex={index}
-                selectionOptionDataStructure={
-                  this.props.questionDataStructure.selectionOptions[index]
-                }
-                selectionOptionView={
-                  this.props.questionView.selectionOptions[index]
-                }
-                refreshView={this.props.refreshView}
-                handleDelete={this.deleteSelectionOption}
-                handleUpdate={this.updateSelectionOption}
-              />
-            );
-          })}
+          {/* add a blank array if there isn't one there already */}
+
+          {this.props.questionView.selectionOptions &&
+            this.props.questionView.selectionOptions.map((option, index) => {
+              return (
+                <SurveyEditingViewQuestionSelectionOptions
+                  key={index}
+                  selectionOptionIndex={index}
+                  selectionOptionDataStructure={
+                    this.props.questionDataStructure.selectionOptions[index]
+                  }
+                  selectionOptionView={
+                    this.props.questionView.selectionOptions[index]
+                  }
+                  refreshView={this.props.refreshView}
+                  handleDelete={this.deleteSelectionOption}
+                  handleUpdate={this.updateSelectionOption}
+                />
+              );
+            })}
         </React.Fragment>
       );
     }
@@ -117,15 +133,24 @@ export default class SurveyEditingViewQuestion extends Component {
 
   deleteSelectionOption(index) {
     this.props.questionDataStructure.selectionOptions.splice(index, 1);
+    this.props.parentShouldUpdate();
+    this.updateFlag = true;
     this.props.refreshView();
   }
 
   updateSelectionOption(index, value) {
     this.props.questionDataStructure.selectionOptions[index] = value;
+    console.log("updating selection option");
+    this.props.parentShouldUpdate();
+    this.updateFlag = true;
     this.props.refreshView();
   }
 
   addNewSelectionOption() {
+    if (!this.props.questionDataStructure.selectionOptions) {
+      //if we eg changed question type, this array might not exist yet
+      this.props.questionDataStructure.selectionOptions = [];
+    }
     this.props.questionDataStructure.selectionOptions.splice(0, 0, "");
     this.props.refreshView();
   }

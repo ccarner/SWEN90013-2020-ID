@@ -23,14 +23,18 @@ button {
   color: whitesmoke;
 }
 
-body {
+#background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
   background-image: url("./images/homeBackground.png");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
   background-size: cover;
-  height: 100%;
-  margin: 0;
+  z-index: -1;
+}
+
+body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;

@@ -5,6 +5,7 @@ import TextField from "@material-ui/core/TextField";
 export default class surveyEditingViewHeaders extends Component {
   constructor(props) {
     super(props);
+    this.updateFlag = false;
   }
 
   handleChange(eventType, event) {
@@ -12,6 +13,15 @@ export default class surveyEditingViewHeaders extends Component {
 
     this.props.surveyDataStructure[eventType] = value;
     this.props.refreshView();
+    this.updateFlag = true;
+  }
+
+  componentDidUpdate() {
+    this.updateFlag = false;
+  }
+
+  shouldComponentUpdate(newProps) {
+    return this.updateFlag;
   }
 
   render() {

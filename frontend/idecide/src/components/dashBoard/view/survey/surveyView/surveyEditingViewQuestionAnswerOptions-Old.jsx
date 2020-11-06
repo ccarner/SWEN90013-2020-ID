@@ -3,7 +3,7 @@ import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
 import SurveyEditingViewQuestion from "./surveyEditingViewQuestion";
 
-export default class surveyEditingViewSection extends Component {
+export default class surveyEditingViewQuestionAnswerOptions extends Component {
   constructor(props) {
     super(props);
   }

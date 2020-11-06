@@ -11,7 +11,7 @@
       "sectionId": "1",
       "sectionTitle": "Partner Behaviours",
       "sectionIntroduction": "We would like to know if you have experienced any of the actions listed below from the partner / ex-partner who made you feel afraid. Please select the frequency, over the last 12 months, that it happened to you.",
-      "sectionIntroductionHtmlB64": "PGgzPk15IFNhZmV0eTwvaDM+CjxwPgogIEV4YW1wbGUgb2YgSFRNTCBmb3IgbXkgc2FmZXR5IGludHJvCjwvcD4KPGg0PkhlYWRlcjwvaDQ+Cjx1bD4KICA8bGk+TXV0dWFsIHRydXN0IGFuZCBzaGFyZWQgcG93ZXI8L2xpPgogIDxsaT5TdXBwb3J0IGFuZCBvcGVuIGNvbW11bmljYXJpb248L2xpPgogIDxsaT5Db21taXRtZW50IGFuZCBob25lc3R5PC9saT4KPC91bD4KQW4gdW5oZWFsdGh5IHJlbGF0aW9uc2hpcCBpbnZvbHZlczoKPHVsPgogIDxsaT5VbnN1cHBvcnRpdmUgYmVoYXZpb3VyPC9saT4KICA8bGk+TWlzdXNlIG9mIHBvd2VyIGFuZCBhdXRob3JpdHk8L2xpPgogIDxsaT5QYWluLCBmZWFyIG9yIGhhcm08L2xpPgo8L3VsPgo=",
+      "sectionIntroductionHtmlB64": "PGgzPk15IFNhZmV0eTwvaDM+CjxwPlRoaXMgbW9kdWxlIHdpbGwgYXNrIHF1ZXN0aW9ucyByZWxhdGVkIHRvIHlvdXIgcGh5c2ljYWwgc2FmZXR5IGluIHlvdXIgcmVsYXRpb25zaGlwLjwvcD4KPGg0PkEgaGVhbHRoeSByZWxhdGlvbnNoaXAgdHlwaWNhbGx5IGludm9sdmVzOjwvaDQ+Cjx1bD4KPGxpPk11dHVhbCB0cnVzdCBhbmQgc2hhcmVkIHBvd2VyPC9saT4KPGxpPlN1cHBvcnQgYW5kIG9wZW4gY29tbXVuaWNhcmlvbjwvbGk+CjxsaT5Db21taXRtZW50IGFuZCBob25lc3R5PC9saT4KPC91bD4KPGg0PkEgaGVhbHRoeSByZWxhdGlvbnNoaXAgdHlwaWNhbGx5IGludm9sdmVzOjwvaDQ+Cjx1bD4KPGxpPlVuc3VwcG9ydGl2ZSBiZWhhdmlvdXI8L2xpPgo8bGk+TWlzdXNlIG9mIHBvd2VyIGFuZCBhdXRob3JpdHk8L2xpPgo8bGk+UGFpbiwgZmVhciBvciBoYXJtPC9saT4KPC91bD4=",
       "questions": [
         {
           "questionId": "1",
@@ -573,7 +573,7 @@
       "sectionId": "2",
       "sectionTitle": "Danger Assessment",
       "sectionIntroduction": "Next, please answer these questions. These answers will help us determine how much physical danger you are in from your partner or ex-partner",
-      "sectionIntroductionHtmlB64": "PGgzPk15IFNhZmV0eTwvaDM+CjxwPgogIEV4YW1wbGUgb2YgSFRNTCBmb3IgbXkgc2FmZXR5IGludHJvCjwvcD4KPGg0PkhlYWRlcjwvaDQ+Cjx1bD4KICA8bGk+TXV0dWFsIHRydXN0IGFuZCBzaGFyZWQgcG93ZXI8L2xpPgogIDxsaT5TdXBwb3J0IGFuZCBvcGVuIGNvbW11bmljYXJpb248L2xpPgogIDxsaT5Db21taXRtZW50IGFuZCBob25lc3R5PC9saT4KPC91bD4KQW4gdW5oZWFsdGh5IHJlbGF0aW9uc2hpcCBpbnZvbHZlczoKPHVsPgogIDxsaT5VbnN1cHBvcnRpdmUgYmVoYXZpb3VyPC9saT4KICA8bGk+TWlzdXNlIG9mIHBvd2VyIGFuZCBhdXRob3JpdHk8L2xpPgogIDxsaT5QYWluLCBmZWFyIG9yIGhhcm08L2xpPgo8L3VsPgo=",
+      "sectionIntroductionHtmlB64": "PGRpdj4KPGRpdj5UaGVzZSBhbnN3ZXJzIHdpbGwgaGVscCB1cyBkZXRlcm1pbmUgaG93IG11Y2ggcGh5c2ljYWwgZGFuZ2VyIHlvdSBhcmUgaW4gZnJvbSB5b3VyIHBhcnRuZXIgb3IgZXgtcGFydG5lcjwvZGl2Pgo8L2Rpdj4=",
       "questions": [
         {
           "questionId": "31",
@@ -651,7 +651,9 @@
                 "fact": "totalAnswerPoints",
                 "operator": "greaterThanInclusive",
                 "value": 1,
-                "params": { "totalAnswerPointsQuestions": ["2", "2", "31-42"] }
+                "params": {
+                  "totalAnswerPointsQuestions": [["2", "2", "31-42"]]
+                }
               }
             ]
           }
@@ -668,9 +670,11 @@
             "any": [
               {
                 "fact": "totalAnswerPoints",
-                "operator": "lessThanInclusive",
-                "value": 0,
-                "params": { "totalAnswerPointsQuestions": ["2", "2", "31-42"] }
+                "operator": "lessThan",
+                "value": 1,
+                "params": {
+                  "totalAnswerPointsQuestions": [["2", "2", "31-42"]]
+                }
               }
             ]
           }

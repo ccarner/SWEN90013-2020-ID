@@ -87,6 +87,25 @@ class Landing extends Component {
                   alignItems: "center",
                 }}
               >
+                {/* placed the gethelp button on top due to user testing */}
+                <PrimaryButton
+                  style={{ background: "white", width: "fit-content" }}
+                  onClick={() => {
+                    this.setState({ helpOpen: true });
+                  }}
+                >
+                  <span
+                    style={{
+                      background:
+                        "linear-gradient(45deg, #DA76C7 30%, #8973E6 90%)",
+                      backgroundClip: "text",
+                      webkitBackgroundClip: "text",
+                      color: "rgba(0,0,0,.2)",
+                    }}
+                  >
+                    Get Help Now <PhoneIcon style={{ color: "#8973E6" }} />
+                  </span>
+                </PrimaryButton>
                 <PrimaryButton
                   style={{ background: "white", width: "fit-content" }}
                   onClick={() => {
@@ -126,25 +145,6 @@ class Landing extends Component {
                   >
                     Restore a saved session &nbsp;
                     <SaveIcon style={{ color: "#8973E6" }} />
-                  </span>
-                </PrimaryButton>
-
-                <PrimaryButton
-                  style={{ background: "white", width: "fit-content" }}
-                  onClick={() => {
-                    this.setState({ helpOpen: true });
-                  }}
-                >
-                  <span
-                    style={{
-                      background:
-                        "linear-gradient(45deg, #DA76C7 30%, #8973E6 90%)",
-                      backgroundClip: "text",
-                      webkitBackgroundClip: "text",
-                      color: "rgba(0,0,0,.2)",
-                    }}
-                  >
-                    Get Help Now <PhoneIcon style={{ color: "#8973E6" }} />
                   </span>
                 </PrimaryButton>
               </div>

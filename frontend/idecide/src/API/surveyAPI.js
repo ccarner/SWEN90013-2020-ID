@@ -119,7 +119,6 @@ export async function AddNewSurvey(surveyInfo) {
     },
     data: JSON.stringify(JSON.parse(surveyInfo)),
   });
-
   return dataPost;
 }
 
