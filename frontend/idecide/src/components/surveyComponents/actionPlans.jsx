@@ -76,8 +76,10 @@ export default class ActionPlans extends Component {
     var returnArray = [];
     if (list !== undefined) {
       var firstType = planHtmls[list[0]].strategyType;
+      var startOfNonEmergency = 0;
 
       if (firstType === "EMERGENCY") {
+        startOfNonEmergency = 9;
         returnArray.push(
           <ActionPlanAccordion heading="EMERGENCY">
             <CardDeck>
@@ -89,6 +91,7 @@ export default class ActionPlans extends Component {
                   margin: "20px",
                 }}
               >
+                {/* there are 9 emergency plans */}
                 {this.state.plan &&
                   this.state.plan.slice(0, 9).map((plan, index) => {
                     var html = {
@@ -133,33 +136,35 @@ export default class ActionPlans extends Component {
               }}
             >
               {this.state.plan &&
-                this.state.plan.slice(9, 14).map((plan, index) => {
-                  // console.log("plan was", plan);
-                  var html = {
-                    __html: planHtmls[plan].strategyHtmlString,
-                  };
-                  return (
-                    <Card>
-                      <Card.Body>{planHtmls[plan].description}</Card.Body>
-                      <Card.Footer>
-                        <PrimaryButton
-                          gradient="purple-gradient"
-                          rounded
-                          className="purple-gradient"
-                          onClick={() => {
-                            this.handleModalShow();
-                            this.setState({
-                              ModalBody: html,
-                              modalHeader: planHtmls[plan].description,
-                            });
-                          }}
-                        >
-                          view
-                        </PrimaryButton>
-                      </Card.Footer>
-                    </Card>
-                  );
-                })}
+                this.state.plan
+                  .slice(startOfNonEmergency, startOfNonEmergency + 5)
+                  .map((plan, index) => {
+                    // console.log("plan was", plan);
+                    var html = {
+                      __html: planHtmls[plan].strategyHtmlString,
+                    };
+                    return (
+                      <Card>
+                        <Card.Body>{planHtmls[plan].description}</Card.Body>
+                        <Card.Footer>
+                          <PrimaryButton
+                            gradient="purple-gradient"
+                            rounded
+                            className="purple-gradient"
+                            onClick={() => {
+                              this.handleModalShow();
+                              this.setState({
+                                ModalBody: html,
+                                modalHeader: planHtmls[plan].description,
+                              });
+                            }}
+                          >
+                            view
+                          </PrimaryButton>
+                        </Card.Footer>
+                      </Card>
+                    );
+                  })}
             </div>
           </CardDeck>
         </ActionPlanAccordion>
