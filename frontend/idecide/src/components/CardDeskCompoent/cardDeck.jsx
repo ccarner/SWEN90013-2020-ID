@@ -212,35 +212,31 @@ export default class CardDeck extends Component {
           </div>
         </div>
       );
-      // <<<<<<< HEAD
+    } else if (item.questionType === "longAnswer") {
+      return (
+        <div style={{ width: "80%" }}>
+          <Form
+            onFinish={(value) => this.handleResult(item, value["contents"])}
+          >
+            <Form.Item name="contents">
+              <TextField
+                inputProps={{
+                  maxLength: `${item.answerLength}`,
+                }}
+                id="outlined-textarea"
+                placeholder="Enter your response"
+                multiline
+                fullWidth
+                variant="outlined"
+              />
+            </Form.Item>
+            <Form.Item>
+              <PrimaryButton type="submit">submit</PrimaryButton>
+            </Form.Item>
+          </Form>
+        </div>
+      );
     } else {
-      // =======
-      //     } else if (item.questionType === "longAnswer") {
-      //       return (
-      //         <div style={{ width: "80%" }}>
-      //           <Form
-      //             onFinish={(value) => this.handleResult(item, value["contents"])}
-      //           >
-      //             <Form.Item name="contents">
-      //               <TextField
-      //                 inputProps={{
-      //                   maxLength: `${item.answerLength}`,
-      //                 }}
-      //                 id="outlined-textarea"
-      //                 placeholder="Enter your response"
-      //                 multiline
-      //                 fullWidth
-      //                 variant="outlined"
-      //               />
-      //             </Form.Item>
-      //             <Form.Item>
-      //               <PrimaryButton type="submit">submit</PrimaryButton>
-      //             </Form.Item>
-      //           </Form>
-      //         </div>
-      //       );
-      //     } else
-      // >>>>>>> feature-horizontalScrolling
       return (
         <div className="questionContainer">
           Error, question type not supported.
