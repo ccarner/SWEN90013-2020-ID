@@ -19,10 +19,6 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
     engine.addFact(fact.factName, fact.fact);
   }
 
-  //   engine.on("highRisk", (params) => {
-  //     console.log(params);
-  //   });
-
   let topPriorityFact = function (params, almanac) {
     return almanac.factValue("prevCompletions").then((prevCompletions) => {
       var topPriority = null;

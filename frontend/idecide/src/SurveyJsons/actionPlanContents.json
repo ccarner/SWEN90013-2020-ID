@@ -192,7 +192,7 @@
     "sequence": 5
   },
   "KEEP_DIARY": {
-    "description": "Keep a diary of any incidents thatt occur",
+    "description": "Keep a diary of any incidents that occur",
     "strategyHtmlString": "<p>It is a good idea to keep a private diary or record of any incidents of abusive behaviour that occur. Make a note every time you are assaulted giving the day and time. That way you can easily recall what actually happened. Keeping a diary can be useful if you are going to see the police or a domestic violence service, but even if you are not ready to report the violence or tell someone, it is important to keep a record for later. You can also document any injuries that occur including photos. Make sure you keep the diary in a secret location that your partner will not find. </p>",
     "strategyType": "SAFETY",
     "sequence": 0

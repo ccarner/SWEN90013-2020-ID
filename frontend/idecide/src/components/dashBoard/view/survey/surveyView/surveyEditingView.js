@@ -160,6 +160,34 @@ class MainViewMode extends React.Component {
     this.props.refreshView();
   }
 
+  deleteSection(index) {
+    this.props.survey.surveySections.splice(index, 1);
+    this.props.refreshView();
+  }
+
+  addNewSection(indexNumInsertBefore) {
+    //TODO: need to add an algorithm to choose a new sectionId automatically when creating a new section
+    var d = new Date();
+    var n = d.getMilliseconds();
+
+    const blankSection = {
+      sectionId: n.toString(), //TODO: need to add an algorithm to choose a new sectionId automatically when creating a new section
+      sectionTitleText: "",
+      sectionIntroductionBodyHtml: "",
+      sectionFeedbackBodyHtml: "",
+      sectionFeedbackHeadingText: "",
+      questions: [],
+      sectionResultAlgorithm: "null",
+    };
+
+    this.props.survey.surveySections.splice(
+      indexNumInsertBefore,
+      0,
+      blankSection
+    );
+    this.props.refreshView();
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -245,30 +273,6 @@ export default class surveyEditingView extends Component {
     fetchData(this.props.match.params.surveyId);
   }
 
-  deleteSection(index) {
-    this.survey.surveySections.splice(index, 1);
-    this.refreshSurveyViewState();
-  }
-
-  addNewSection(indexNumInsertBefore) {
-    //TODO: need to add an algorithm to choose a new sectionId automatically when creating a new section
-    var d = new Date();
-    var n = d.getMilliseconds();
-
-    const blankSection = {
-      sectionId: n.toString(), //TODO: need to add an algorithm to choose a new sectionId automatically when creating a new section
-      sectionTitleText: "",
-      sectionIntroductionBodyHtml: "",
-      sectionFeedbackBodyHtml: "",
-      sectionFeedbackHeadingText: "",
-      questions: [],
-      sectionResultAlgorithm: "null",
-    };
-
-    this.survey.surveySections.splice(indexNumInsertBefore, 0, blankSection);
-    this.refreshSurveyViewState();
-  }
-
   getView() {
     if (!this.state.inSectionReorgView) {
       return (
@@ -314,19 +318,19 @@ export default class surveyEditingView extends Component {
         </Fab>
 
         {this.state.isLoaded && (
-          <React.Fragment>
+          <div>
             <Typography style={{ color: "white" }} variant="h2">
               {this.state.survey.surveyTitle}
             </Typography>
             {this.getView()}
-          </React.Fragment>
+          </div>
         )}
         <PrimaryButton
           onClick={() => {
             editSurvey(this.survey);
           }}
         >
-          Save/Upload Changes
+          Save & Upload Changes
         </PrimaryButton>
       </div>
     );

@@ -25,6 +25,7 @@ import "./App.css";
 import clsx from "clsx";
 // import DashBoard from "./components/dashBoard/DBLayout";
 // import { ToastNotification } from "./components/reusableComponents/toastNotification";
+import KeyValuePairEditingPage from "./Layout/keyValuePairEditingPage";
 
 class App extends React.Component {
   // const [adminLogin, setAdminLogin] = React.useState(false);
@@ -97,8 +98,25 @@ class App extends React.Component {
         />
         <Route
           exact
+          path="/loginComponent/loginPageAdmin"
+          render={(props) => <LoginPage adminLogin={true} />}
+        />
+        <Route
+          exact
           path="/loginComponent/registerPage"
           component={RegisterPage}
+        />
+        <Route
+          exact
+          path="/dashboard/kvEditing=:key"
+          component={(props) => {
+            return (
+              <KeyValuePairEditingPage
+                key={props.match.params.surveyId}
+                {...props}
+              />
+            );
+          }}
         />
         <Route exact path="/loginComponent/adminInfo" component={AdminInfo} />
         {/* <Route exact path="/loginComponent/userInfo" component={UserInfo} /> */}

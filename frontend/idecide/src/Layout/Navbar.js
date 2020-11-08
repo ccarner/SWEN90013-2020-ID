@@ -54,6 +54,8 @@ import userContext from "../contexts/userContext";
 import PrimaryButton from "./../components/reusableComponents/PrimaryButton";
 import GetHelpDialog from "../components/reusableComponents/getHelpDialog";
 import { useHistory } from "react-router-dom";
+import keyValuePairsInfo from "./keyValuePagesInfo.json";
+import { EditIcon } from "@material-ui/icons/Edit";
 
 const drawerWidth = 240;
 
@@ -146,9 +148,10 @@ function NavBar(props) {
   const [open, setOpen] = React.useState(false);
   const [openHelp, setHelp] = React.useState(false);
   const [surveys, setSurveys] = React.useState([]);
-  const [showSurvey, setShowSurvey] = React.useState(true);
+  // const [showSiteComponents, setshowSiteComponents] = React.useState(true);
   const [link, setLink] = React.useState();
-  const [isAdmin, setAdmin] = React.useState(true); // handle admin sidebar display, please set in the login page with the setAdmin function(props).
+  const [siteEditOpen, setSiteEditOpen] = React.useState(false);
+
   const [openDownload, setOpenDownload] = React.useState(false);
 
   useEffect(() => {
@@ -205,6 +208,10 @@ function NavBar(props) {
   };
   const handleClose = () => {
     setHelp(false);
+  };
+
+  const toggleSiteEditOpen = () => {
+    setSiteEditOpen(!siteEditOpen);
   };
 
   return (
@@ -352,31 +359,72 @@ function NavBar(props) {
 
                 <Divider />
                 <List>
-                  <NavLink
-                    to={"/dashboard/surveys"}
-                    onMouseDown={() => setShowSurvey(!showSurvey)}
+                  <ListItem
+                    button
+                    onClick={() => {
+                      history.push("/");
+                      history.push("/dashboard/surveys");
+                    }}
                   >
-                    <ListItem button>
-                      <ListItemIcon>
-                        <BallotIcon />
-                      </ListItemIcon>
-                      <Typography
-                        color="textPrimary"
-                        gutterBottom
-                        variant="body1"
-                      >
-                        Surveys
-                      </Typography>
-                      <ListItemText />
-                      {showSurvey ? <ExpandLess /> : <ExpandMore />}
-                    </ListItem>
-                  </NavLink>
-                  <Collapse in={showSurvey} timeout="auto" unmountOnExit>
+                    <ListItemIcon>
+                      <AssignmentIcon />
+                    </ListItemIcon>
+                    <Typography
+                      color="textPrimary"
+                      gutterBottom
+                      variant="body1"
+                    >
+                      Surveys
+                    </Typography>
+                    <ListItemText />
+                    {/* {showSiteComponents ? <ExpandLess /> : <ExpandMore />} */}
+                  </ListItem>
+
+                  {/* <Collapse in={showSiteComponents} timeout="auto" unmountOnExit>
                     {surveys &&
                       surveys.map((survey, index) => (
+                        <MenuItem
+                          className={classes.nested}
+                          onClick={() => {
+                            history.push(
+                              "/dashboard/surveyId=" + survey.surveyId
+                            );
+                          }}
+                        >
+                          <ListItemIcon>
+                            <AssignmentIcon />
+                          </ListItemIcon>
+                          <Typography
+                            color="textSecondary"
+                            gutterBottom
+                            variant="body1"
+                          >
+                            {survey.surveyTitle}
+                          </Typography>
+                        </MenuItem>
+                      ))}
+                  </Collapse> */}
+
+                  <ListItem button onClick={toggleSiteEditOpen}>
+                    <ListItemIcon>
+                      <BallotIcon />
+                    </ListItemIcon>
+                    <Typography
+                      color="textPrimary"
+                      gutterBottom
+                      variant="body1"
+                    >
+                      Edit Site Components
+                    </Typography>
+                    <ListItemText />
+                    {siteEditOpen ? <ExpandLess /> : <ExpandMore />}
+                  </ListItem>
+                  <Collapse in={siteEditOpen} timeout="auto" unmountOnExit>
+                    {Object.keys(keyValuePairsInfo).map(
+                      (keyValuePairName, index) => (
                         <NavLink
-                          to={"/dashboard/surveyId=" + survey.surveyId}
-                          key={survey.surveyId}
+                          to={"/dashboard/kvEditing=" + keyValuePairName}
+                          key={keyValuePairName}
                         >
                           <MenuItem className={classes.nested}>
                             <ListItemIcon>
@@ -387,12 +435,14 @@ function NavBar(props) {
                               gutterBottom
                               variant="body1"
                             >
-                              {survey.surveyTitle}
+                              {keyValuePairsInfo[keyValuePairName].titleText}
                             </Typography>
                           </MenuItem>
                         </NavLink>
-                      ))}
+                      )
+                    )}
                   </Collapse>
+
                   <ListItem button onClick={handleDownloadOpen}>
                     <ListItemIcon>
                       <StorageIcon />

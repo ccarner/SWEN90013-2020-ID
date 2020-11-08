@@ -2,7 +2,6 @@
 import React from "react";
 
 import { loginUser } from "../../API/loginAPI";
-import AdminLogin from "../../App";
 import { Link } from "react-router-dom";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 import RegisterPage from "./registerPage";
@@ -28,8 +27,6 @@ export default class LoginPage extends React.Component {
     console.log(props);
     this.state = {
       isLoggingPage: true,
-      isLoggedIn: false,
-      isAdmin: false,
       username: null,
       password: null,
       showAdmin: false,
@@ -103,19 +100,15 @@ export default class LoginPage extends React.Component {
   };
 
   render() {
-    const style = {
-      width: "300px",
-      high: "500px",
-      padding: "10px 10px 50px 10px",
-    };
-
-    const { isLoggingPage, isLoggedIn, isAdmin } = this.state;
+    const { isLoggingPage } = this.state;
 
     if (isLoggingPage) {
       return (
         <div style={{ padding: "5%" }}>
           <h1 className="text-center" style={{ color: "white" }}>
-            Review a Saved Action Plan
+            {this.props.adminLogin
+              ? "Admin Login"
+              : "Review a Saved Action Plan"}
           </h1>
           <br />
           {/** 	 		   <Card className="surveyIntroCard" style={{ width: "80%" }}>
@@ -183,7 +176,9 @@ export default class LoginPage extends React.Component {
               <Divider />
               <CardContent>
                 <Typography color="textSecondary">
-                  Sign in here to review your previous action plan
+                  {this.props.adminLogin
+                    ? "Login using your admin details"
+                    : "Sign in here to review your previous action plan"}
                 </Typography>
                 <Box p={1} />
                 <TextField

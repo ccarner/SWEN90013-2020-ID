@@ -1,0 +1,18 @@
+{
+  "getHelpMessage": {
+    "titleText": "Get Help Page",
+    "description": "Information that appears in the 'get help' phone dialog box. You can enter HTML here and it will be rendered. See the product instructions for more information."
+  },
+  "introductionHtml": {
+    "titleText": "Session Introduction Page",
+    "description": "The content of the initial page after starting a new session. You can enter HTML here and it will be rendered. See the product instructions for more information."
+  },
+  "actionPlanAlgorithm": {
+    "titleText": "Action Plan Algorithm",
+    "description": "This is the algorithm for determining which action plans are recommended to users based on their responses. Use the names of the action plans from the 'Action Plan Content' document. This should be a valid JSON string. See the product instructions for more information."
+  },
+  "actionPlanContent": {
+    "titleText": "Action Plan Content",
+    "description": "The various action plans and their content that can be used as part of the Action Plan Algorithm. See the product instructions for more information."
+  }
+}

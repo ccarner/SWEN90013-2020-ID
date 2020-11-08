@@ -16,12 +16,12 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { withStyles } from "@material-ui/core/styles";
 import ActionPlanAccordion from "./actionPlanAccordion";
+import { getValue } from "../../API/keyValueAPI";
 
 //TODO refactor this class: LOTS of repetition of eg the slicing... ctrl-f for "view", there are about 6 instances, one per each accordion...
 // TODO: this class ia also quite laggy/slow I think when executing... needs to be improved speedwise
 
-var rules = require("../../SurveyJsons/actionPlanAlgorithm.json");
-var planHtmls = require("../../SurveyJsons/actionPlanHtml.json");
+// var actionPlanContents = require("../../SurveyJsons/actionPlanHtml.json");
 
 const AccordionSummary = withStyles({
   content: {
@@ -36,32 +36,32 @@ export default class ActionPlans extends Component {
       ModalShow: false,
       ModalBody: undefined,
       currentView: "top5",
+      actionPlanContents: null,
+      recommendedPlans: null,
     };
     // this.addResultsToFacts();
     this.determineActionPlans();
     this.determineActionPlans = this.determineActionPlans.bind(this);
     this.handleAlignment = this.handleAlignment.bind(this);
   }
+
+  async componentDidMount() {
+    const plans = JSON.parse(await getValue("actionPlanAlgorithm"));
+    this.setState({ actionPlanContents: plans });
+  }
+
   handleAlignment(event, newView) {
     this.setState({ currentView: newView });
   }
 
-  determineActionPlans = () => {
-    // var actionPlanFacts = JSON.parse(localStorage.getItem("actionPlanFacts"));
-    // var factsContainer = [];
-    // for (var key in actionPlanFacts) {
-    //   factsContainer.push({ factName: key, fact: actionPlanFacts[key] });
-    // }
-    // console.log("facts container is", factsContainer);
-
-    var data = require("../../SurveyJsons/actionPlanAlgorithm.json");
-    // console.log(777, this.props.isReview);
-    // alert(777);
-
+  determineActionPlans = async () => {
+    const algorithm = JSON.parse(await getValue("actionPlanAlgorithm"));
     const prevCompletions = JSON.parse(localStorage.getItem("prevCompletions"));
 
-    evaluateFeedback(data, [], prevCompletions).then((result) => {
-      this.setState({ plan: result.events.map(({ type }) => type) });
+    evaluateFeedback(algorithm, [], prevCompletions).then((result) => {
+      this.setState({
+        recommendedPlans: result.events.map(({ type }) => type),
+      });
       // console.log("result was in eval feedback", result);
     });
   };
@@ -71,15 +71,14 @@ export default class ActionPlans extends Component {
   };
 
   handleActionPlanAccordion = () => {
-    var list = this.state.plan;
-    console.log("plan is ----", this.state.plan);
+    var { recommendedPlans, actionPlanContents } = this.state;
     var returnArray = [];
-    if (list !== undefined) {
-      var firstType = planHtmls[list[0]].strategyType;
+    if (recommendedPlans && actionPlanContents) {
+      var firstType = actionPlanContents[recommendedPlans[0]].strategyType;
 
       if (firstType === "EMERGENCY") {
         returnArray.push(
-          <ActionPlanAccordion heading="EMERGENCY">
+          <ActionPlanAccordion heading="In Case of Emergency">
             <CardDeck>
               <div
                 style={{
@@ -89,33 +88,34 @@ export default class ActionPlans extends Component {
                   margin: "20px",
                 }}
               >
-                {this.state.plan &&
-                  this.state.plan.slice(0, 9).map((plan, index) => {
-                    var html = {
-                      __html: planHtmls[plan].strategyHtmlString,
-                    };
-                    return (
-                      <Card>
-                        <Card.Body>{planHtmls[plan].description}</Card.Body>
-                        <Card.Footer>
-                          <PrimaryButton
-                            gradient="purple-gradient"
-                            rounded
-                            className="purple-gradient"
-                            onClick={() => {
-                              this.handleModalShow();
-                              this.setState({
-                                ModalBody: html,
-                                modalHeader: planHtmls[plan].description,
-                              });
-                            }}
-                          >
-                            view
-                          </PrimaryButton>
-                        </Card.Footer>
-                      </Card>
-                    );
-                  })}
+                {recommendedPlans.slice(0, 9).map((plan, index) => {
+                  var html = {
+                    __html: actionPlanContents[plan].strategyHtmlString,
+                  };
+                  return (
+                    <Card>
+                      <Card.Body>
+                        {actionPlanContents[plan].description}
+                      </Card.Body>
+                      <Card.Footer>
+                        <PrimaryButton
+                          gradient="purple-gradient"
+                          rounded
+                          className="purple-gradient"
+                          onClick={() => {
+                            this.handleModalShow();
+                            this.setState({
+                              ModalBody: html,
+                              modalHeader: actionPlanContents[plan].description,
+                            });
+                          }}
+                        >
+                          view
+                        </PrimaryButton>
+                      </Card.Footer>
+                    </Card>
+                  );
+                })}
               </div>
             </CardDeck>
           </ActionPlanAccordion>
@@ -136,11 +136,13 @@ export default class ActionPlans extends Component {
                 this.state.plan.slice(9, 14).map((plan, index) => {
                   // console.log("plan was", plan);
                   var html = {
-                    __html: planHtmls[plan].strategyHtmlString,
+                    __html: actionPlanContents[plan].strategyHtmlString,
                   };
                   return (
                     <Card>
-                      <Card.Body>{planHtmls[plan].description}</Card.Body>
+                      <Card.Body>
+                        {actionPlanContents[plan].description}
+                      </Card.Body>
                       <Card.Footer>
                         <PrimaryButton
                           gradient="purple-gradient"
@@ -150,7 +152,7 @@ export default class ActionPlans extends Component {
                             this.handleModalShow();
                             this.setState({
                               ModalBody: html,
-                              modalHeader: planHtmls[plan].description,
+                              modalHeader: actionPlanContents[plan].description,
                             });
                           }}
                         >
@@ -169,10 +171,10 @@ export default class ActionPlans extends Component {
   };
 
   handleAllStrategies = () => {
-    const keys = Object.keys(planHtmls);
+    const keys = Object.keys(this.state.actionPlanContents);
     var AllStrategies = {};
     keys.map((item, index) => {
-      var tempStrategyType = planHtmls[item].strategyType;
+      var tempStrategyType = this.state.actionPlanContents[item].strategyType;
       if (AllStrategies.hasOwnProperty(tempStrategyType)) {
         AllStrategies[tempStrategyType].push(item);
       } else {
@@ -196,12 +198,15 @@ export default class ActionPlans extends Component {
                 AllStrategies[type].map((plan, index) => {
                   // console.log("plan was", plan);
                   var html = {
-                    __html: planHtmls[plan].strategyHtmlString,
+                    __html: this.state.actionPlanContents[plan]
+                      .strategyHtmlString,
                   };
 
                   return (
                     <Card>
-                      <Card.Body>{planHtmls[plan].description}</Card.Body>
+                      <Card.Body>
+                        {this.state.actionPlanContents[plan].description}
+                      </Card.Body>
 
                       <Card.Footer>
                         <PrimaryButton
@@ -212,7 +217,8 @@ export default class ActionPlans extends Component {
                             this.handleModalShow();
                             this.setState({
                               ModalBody: html,
-                              modalHeader: planHtmls[plan].description,
+                              modalHeader: this.state.actionPlanContents[plan]
+                                .description,
                             });
                           }}
                         >
@@ -283,7 +289,7 @@ export default class ActionPlans extends Component {
                 exclusive
                 onChange={this.handleAlignment}
               >
-                <ToggleButton value="top5">Top 5 Strategies</ToggleButton>
+                <ToggleButton value="top5">Recommended</ToggleButton>
                 <ToggleButton value="all">More Strategies</ToggleButton>
               </ToggleButtonGroup>
 

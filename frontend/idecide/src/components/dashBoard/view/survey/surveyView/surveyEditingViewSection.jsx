@@ -73,16 +73,20 @@ export default class SurveyEditingViewSection extends Component {
       0,
       blankQuestion
     );
+    this.updateFlag = true;
     this.refreshView();
   }
 
   renderDialogs() {
+    console.log("here rendering current dialog showing");
     if (this.state.currentDialogShowing === "delete") {
       return (
         <Dialog
           open={this.state.currentDialogShowing === "delete"}
           onClose={() => {
             this.setState({ currentDialogShowing: "none" });
+            this.updateFlag = true;
+            this.props.refreshView();
           }}
         >
           <DialogTitle>{"Confirm Section Delete?"}</DialogTitle>
@@ -96,6 +100,8 @@ export default class SurveyEditingViewSection extends Component {
             <PrimaryButton
               onClick={() => {
                 this.setState({ currentDialogShowing: "none" });
+                this.updateFlag = true;
+                this.props.refreshView();
               }}
               autoFocus
             >
@@ -116,7 +122,6 @@ export default class SurveyEditingViewSection extends Component {
     return (
       <React.Fragment>
         {this.renderDialogs()}
-
         <Card
           style={{
             display: "flex",
@@ -132,6 +137,8 @@ export default class SurveyEditingViewSection extends Component {
           <PrimaryButton
             onClick={() => {
               this.setState({ currentDialogShowing: "delete" });
+              this.updateFlag = true;
+              this.props.refreshView();
             }}
           >
             Delete this section <DeleteForeverOutlinedIcon />

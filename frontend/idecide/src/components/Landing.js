@@ -9,6 +9,7 @@ import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import PhoneIcon from "@material-ui/icons/Phone";
 import {
+  Link,
   Card,
   CardContent,
   CardHeader,
@@ -218,11 +219,25 @@ class Landing extends Component {
           </Container>
         </Card>
         <Card style={{ width: "100%", backgroundColor: "#163653" }}>
-          <Row className="align-items-center">
-            <Col>
-              <img src={unimelbLogo} style={{ width: "20%" }} alt="logo" />
-            </Col>
-          </Row>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <img src={unimelbLogo} style={{ width: "20%" }} alt="logo" />
+            <Link
+              style={{ color: "white" }}
+              href="#"
+              onClick={(event) => {
+                event.preventDefault();
+                this.props.history.push("/loginComponent/loginPageAdmin");
+              }}
+            >
+              Admin Login
+            </Link>
+          </div>
         </Card>
       </div>
     );

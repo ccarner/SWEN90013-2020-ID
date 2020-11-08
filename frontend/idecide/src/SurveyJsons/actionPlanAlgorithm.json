@@ -4,7 +4,11 @@
     "conditions": {
       "any": [
         { "fact": "DA_SUM", "operator": "greaterThanInclusive", "value": 1 },
-        { "fact": "CAS_SCORE", "operator": "greaterThanInclusive", "value": 1 }
+        {
+          "fact": "CAS_SCORE",
+          "operator": "greaterThanInclusive",
+          "value": 1
+        }
       ]
     }
   },
@@ -13,7 +17,11 @@
     "conditions": {
       "any": [
         { "fact": "DA_SUM", "operator": "greaterThanInclusive", "value": 1 },
-        { "fact": "CAS_SCORE", "operator": "greaterThanInclusive", "value": 1 }
+        {
+          "fact": "CAS_SCORE",
+          "operator": "greaterThanInclusive",
+          "value": 1
+        }
       ]
     }
   },
@@ -22,7 +30,11 @@
     "conditions": {
       "any": [
         { "fact": "DA_SUM", "operator": "greaterThanInclusive", "value": 1 },
-        { "fact": "CAS_SCORE", "operator": "greaterThanInclusive", "value": 1 }
+        {
+          "fact": "CAS_SCORE",
+          "operator": "greaterThanInclusive",
+          "value": 1
+        }
       ]
     }
   },
@@ -31,7 +43,11 @@
     "conditions": {
       "any": [
         { "fact": "DA_SUM", "operator": "greaterThanInclusive", "value": 1 },
-        { "fact": "CAS_SCORE", "operator": "greaterThanInclusive", "value": 1 }
+        {
+          "fact": "CAS_SCORE",
+          "operator": "greaterThanInclusive",
+          "value": 1
+        }
       ]
     }
   },
@@ -40,7 +56,11 @@
     "conditions": {
       "any": [
         { "fact": "DA_SUM", "operator": "greaterThanInclusive", "value": 1 },
-        { "fact": "CAS_SCORE", "operator": "greaterThanInclusive", "value": 1 }
+        {
+          "fact": "CAS_SCORE",
+          "operator": "greaterThanInclusive",
+          "value": 1
+        }
       ]
     }
   },
@@ -49,7 +69,11 @@
     "conditions": {
       "any": [
         { "fact": "DA_SUM", "operator": "greaterThanInclusive", "value": 1 },
-        { "fact": "CAS_SCORE", "operator": "greaterThanInclusive", "value": 1 }
+        {
+          "fact": "CAS_SCORE",
+          "operator": "greaterThanInclusive",
+          "value": 1
+        }
       ]
     }
   },
@@ -58,7 +82,11 @@
     "conditions": {
       "any": [
         { "fact": "DA_SUM", "operator": "greaterThanInclusive", "value": 1 },
-        { "fact": "CAS_SCORE", "operator": "greaterThanInclusive", "value": 1 }
+        {
+          "fact": "CAS_SCORE",
+          "operator": "greaterThanInclusive",
+          "value": 1
+        }
       ]
     }
   },
@@ -67,7 +95,11 @@
     "conditions": {
       "any": [
         { "fact": "DA_SUM", "operator": "greaterThanInclusive", "value": 1 },
-        { "fact": "CAS_SCORE", "operator": "greaterThanInclusive", "value": 1 }
+        {
+          "fact": "CAS_SCORE",
+          "operator": "greaterThanInclusive",
+          "value": 1
+        }
       ]
     }
   },
@@ -76,7 +108,11 @@
     "conditions": {
       "any": [
         { "fact": "DA_SUM", "operator": "greaterThanInclusive", "value": 1 },
-        { "fact": "CAS_SCORE", "operator": "greaterThanInclusive", "value": 1 }
+        {
+          "fact": "CAS_SCORE",
+          "operator": "greaterThanInclusive",
+          "value": 1
+        }
       ]
     }
   },

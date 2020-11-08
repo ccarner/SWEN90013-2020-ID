@@ -89,12 +89,13 @@ export default function DashboardAllSurveysExpose() {
       AddNewSurvey(surveyFileString)
         .then((data) => {
           console.log("data received", data);
+          toast("uploaded successfully");
         })
         .catch((err) => {
           console.error("error when uploading", err);
           toast("Failure to upload" + err);
         });
-      toast("uploaded successfully");
+
       setOpenUploadSurveyDialog(false);
       setOpenCreateSurveyDialog(false);
     } catch (err) {
