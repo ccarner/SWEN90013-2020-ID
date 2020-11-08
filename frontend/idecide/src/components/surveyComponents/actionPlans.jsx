@@ -38,32 +38,44 @@ export default class ActionPlans extends Component {
       currentView: "top5",
       actionPlanContents: null,
       recommendedPlans: null,
+      actionPlanAlgorithm: null,
     };
     // this.addResultsToFacts();
-    this.determineActionPlans();
+
     this.determineActionPlans = this.determineActionPlans.bind(this);
     this.handleAlignment = this.handleAlignment.bind(this);
   }
 
   async componentDidMount() {
-    const plans = JSON.parse(await getValue("actionPlanAlgorithm"));
-    this.setState({ actionPlanContents: plans });
+    const plans = JSON.parse(await getValue("actionPlanContents"));
+    const algorithm = JSON.parse(await getValue("actionPlanAlgorithm"));
+    console.warn("algorithm was", algorithm);
+    this.setState(
+      {
+        actionPlanContents: plans,
+        actionPlanAlgorithm: algorithm,
+      },
+      () => {
+        //then...
+        this.determineActionPlans();
+      }
+    );
   }
 
   handleAlignment(event, newView) {
     this.setState({ currentView: newView });
   }
 
-  determineActionPlans = async () => {
-    const algorithm = JSON.parse(await getValue("actionPlanAlgorithm"));
+  determineActionPlans = () => {
     const prevCompletions = JSON.parse(localStorage.getItem("prevCompletions"));
-
-    evaluateFeedback(algorithm, [], prevCompletions).then((result) => {
-      this.setState({
-        recommendedPlans: result.events.map(({ type }) => type),
-      });
-      // console.log("result was in eval feedback", result);
-    });
+    evaluateFeedback(this.state.actionPlanAlgorithm, [], prevCompletions).then(
+      (result) => {
+        this.setState({
+          recommendedPlans: result.events.map(({ type }) => type),
+        });
+        // console.log("result was in eval feedback", result);
+      }
+    );
   };
 
   handleModalShow = () => {
@@ -74,9 +86,21 @@ export default class ActionPlans extends Component {
     var { recommendedPlans, actionPlanContents } = this.state;
     var returnArray = [];
     if (recommendedPlans && actionPlanContents) {
-      var firstType = actionPlanContents[recommendedPlans[0]].strategyType;
+      console.log("currentaction Plans", recommendedPlans, actionPlanContents);
+      const countNumberEmergencyPlans = (accumulator, currentPlan) => {
+        console.log("current plan", currentPlan);
+        return actionPlanContents[currentPlan].strategyType === "EMERGENCY"
+          ? 1 + accumulator
+          : accumulator;
+      };
 
-      if (firstType === "EMERGENCY") {
+      var startOfNonEmergency = recommendedPlans.reduce(
+        countNumberEmergencyPlans
+      );
+
+      console.log("number of emergency plans was", startOfNonEmergency);
+
+      if (startOfNonEmergency > 0) {
         returnArray.push(
           <ActionPlanAccordion heading="In Case of Emergency">
             <CardDeck>
@@ -88,34 +112,37 @@ export default class ActionPlans extends Component {
                   margin: "20px",
                 }}
               >
-                {recommendedPlans.slice(0, 9).map((plan, index) => {
-                  var html = {
-                    __html: actionPlanContents[plan].strategyHtmlString,
-                  };
-                  return (
-                    <Card>
-                      <Card.Body>
-                        {actionPlanContents[plan].description}
-                      </Card.Body>
-                      <Card.Footer>
-                        <PrimaryButton
-                          gradient="purple-gradient"
-                          rounded
-                          className="purple-gradient"
-                          onClick={() => {
-                            this.handleModalShow();
-                            this.setState({
-                              ModalBody: html,
-                              modalHeader: actionPlanContents[plan].description,
-                            });
-                          }}
-                        >
-                          view
-                        </PrimaryButton>
-                      </Card.Footer>
-                    </Card>
-                  );
-                })}
+                {recommendedPlans
+                  .slice(0, startOfNonEmergency)
+                  .map((plan, index) => {
+                    var html = {
+                      __html: actionPlanContents[plan].strategyHtmlString,
+                    };
+                    return (
+                      <Card>
+                        <Card.Body>
+                          {actionPlanContents[plan].description}
+                        </Card.Body>
+                        <Card.Footer>
+                          <PrimaryButton
+                            gradient="purple-gradient"
+                            rounded
+                            className="purple-gradient"
+                            onClick={() => {
+                              this.handleModalShow();
+                              this.setState({
+                                ModalBody: html,
+                                modalHeader:
+                                  actionPlanContents[plan].description,
+                              });
+                            }}
+                          >
+                            view
+                          </PrimaryButton>
+                        </Card.Footer>
+                      </Card>
+                    );
+                  })}
               </div>
             </CardDeck>
           </ActionPlanAccordion>
@@ -132,9 +159,9 @@ export default class ActionPlans extends Component {
                 margin: "20px",
               }}
             >
-              {this.state.plan &&
-                this.state.plan.slice(9, 14).map((plan, index) => {
-                  // console.log("plan was", plan);
+              {recommendedPlans
+                .slice(startOfNonEmergency, startOfNonEmergency + 5)
+                .map((plan, index) => {
                   var html = {
                     __html: actionPlanContents[plan].strategyHtmlString,
                   };

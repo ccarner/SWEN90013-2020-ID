@@ -236,12 +236,13 @@ export default class CardDeck extends Component {
           </Form>
         </div>
       );
-    } else
+    } else {
       return (
         <div className="questionContainer">
           Error, question type not supported.
         </div>
       );
+    }
   }
 
   handleSections = async (direction) => {

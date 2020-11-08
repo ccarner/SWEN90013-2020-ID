@@ -199,15 +199,20 @@ export default class SurveyControl extends Component {
 
   submitHandler = async () => {
     this.setState({ isLoaded: false });
-    var postAnswer = this.state.results;
-    postAnswer.completedTime = JSON.stringify({
-      time: Date.now(),
-      type: this.state.surveyFile.surveyTitle,
-    });
+    const feedBack = await postingSurvey(this.state.results);
+    // var postAnswer = this.state.results;
+    // postAnswer.completedTime = JSON.stringify({
+    //   time: Date.now(),
+    //   type: this.state.surveyFile.surveyTitle,
+    // });
+    // if (this.state.surveyFile.surveyTitle === "My Priorities") {
+    //   // this.prioritiesAdaptor(postAnswer);
+    // }
+    // console.log(992, JSON.stringify(postAnswer));
 
-    console.log(992, JSON.stringify(postAnswer));
-
-    const feedback = await postingSurvey(postAnswer);
+    // const feedback = await postingSurvey(postAnswer);
+    // console.log(993, feedback);
+    // alert(993);
 
     this.props.completeHandler(this.state.results);
     this.setState({ isLoaded: true, currentSurveyState: "submitted" });

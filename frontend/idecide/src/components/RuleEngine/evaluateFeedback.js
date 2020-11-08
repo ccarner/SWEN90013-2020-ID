@@ -4,6 +4,7 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
 
   // console.log(669, rules, factContainers)
   // a rule is an object of form {conditions, event}
+  console.warn("rules was", rules);
   for (const rule of rules) {
     let engineRule = new RuleEngine.Rule(rule);
     engine.addRule(engineRule);
