@@ -6,6 +6,7 @@ const API_BASE = process.env.REACT_APP_BACKEND2_URL;
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export function getStaticImageUrlFromName(imageName) {
+  // const imageName_sample = "7.jpg";
   return API_BASE + `/images/${imageName}`;
 }
 
