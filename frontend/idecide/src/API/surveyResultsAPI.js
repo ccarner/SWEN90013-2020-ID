@@ -1,7 +1,7 @@
 import { getUserContext } from "./loginAPI";
 const axios = require("axios");
 
-const SURVEY_RESULT_URL = "https://www.idecide.icu:9012";
+const SURVEY_RESULT_URL = process.env.REACT_APP_BACKEND_URL;
 
 export async function getCsvDownloadLink() {
   const endpoint = SURVEY_RESULT_URL + `/answer/downloadResult`;

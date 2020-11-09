@@ -1,8 +1,9 @@
 import { getUserContext } from "./loginAPI";
 const axios = require("axios");
 
-const API_BASE = "http://8.210.28.169";
-const API_URL = "https://www.idecide.icu:9012";
+// const API_BASE = "http://8.210.28.169";
+const API_BASE = process.env.REACT_APP_BACKEND2_URL;
+const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export function getStaticImageUrlFromName(imageName) {
   return API_BASE + `/images/${imageName}`;

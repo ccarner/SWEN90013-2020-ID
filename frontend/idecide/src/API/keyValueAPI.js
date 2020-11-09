@@ -1,7 +1,7 @@
 import { getUserContext } from "./loginAPI";
 const axios = require("axios");
 
-const USER_URL = "https://www.idecide.icu:9012";
+const USER_URL = process.env.REACT_APP_BACKEND_URL;
 
 export async function getValue(key) {
   const endpoint = USER_URL + `/kv/${key}`;
