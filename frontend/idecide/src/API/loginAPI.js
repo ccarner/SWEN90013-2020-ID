@@ -1,7 +1,9 @@
 const axios = require("axios");
 
 // const USER_URL = "http://34.64.134.143:9008";
-const USER_URL = "https://www.idecide.icu:9012";
+// const USER_URL = "https://www.idecide.icu:9012";
+// const USER_URL = "http://3.104.249.201:9012";
+const USER_URL = process.env.REACT_APP_BACKEND_URL;
 // https://www.idecide.icu:9012/user/
 
 export async function registerUser(userIn) {
@@ -62,6 +64,9 @@ export function getUserContext() {
 export async function loginUser(userIn) {
   const { username, password } = userIn;
   var endpoint = USER_URL + `/user/login`;
+
+  // alert(112);
+  // console.log(112, process.env.REACT_APP_BACKEND2_URL);
 
   const result = await axios({
     url: endpoint, // send a request to the library API
