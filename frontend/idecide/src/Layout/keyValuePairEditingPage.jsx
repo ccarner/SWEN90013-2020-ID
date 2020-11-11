@@ -4,6 +4,8 @@ import { TextField, Card, Typography } from "@material-ui/core";
 import keyValuePagesInfo from "./keyValuePagesInfo.json";
 import PrimaryButton from "./../components/reusableComponents/PrimaryButton";
 import { toast } from "react-toastify";
+import "react-quill/dist/quill.snow.css";
+import ReactQuill from "react-quill";
 
 export default class KeyValuePairEditingPage extends Component {
   constructor(props) {
@@ -12,6 +14,28 @@ export default class KeyValuePairEditingPage extends Component {
     this.onChange = this.onChange.bind(this);
     this.resetState = this.resetState.bind(this);
     this.uploadValue = this.uploadValue.bind(this);
+    /*
+     * Quill modules to attach to editor
+     * See https://quilljs.com/docs/modules/ for complete options
+     */
+    this.quillModules = {
+      toolbar: [
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        ["bold", "italic", "underline", "strike", "blockquote"],
+        [
+          { list: "ordered" },
+          { list: "bullet" },
+          { indent: "-1" },
+          { indent: "+1" },
+        ],
+        ["link", "image", "video"],
+        ["clean"],
+      ],
+      clipboard: {
+        // toggle to add extra line breaks when pasting HTML:
+        matchVisual: false,
+      },
+    };
   }
 
   initialState() {
@@ -29,7 +53,7 @@ export default class KeyValuePairEditingPage extends Component {
   async fetchData() {
     console.log("getting for key", this.state.key);
     const value = await getValue(this.state.key);
-    this.setState({ value: value, loaded: true });
+    this.setState({ value: JSON.parse(value), loaded: true });
   }
 
   componentDidUpdate(prevProps) {
@@ -50,11 +74,17 @@ export default class KeyValuePairEditingPage extends Component {
   }
 
   onChange(event) {
-    this.setState({ value: event.target.value });
+    if (event.target) {
+      //received a JS event, from MUI
+      this.setState({ value: event.target.value });
+    }
+    //else received just a string from Quill
+    this.setState({ value: event });
+    console.log(event);
   }
 
   async uploadValue() {
-    var stringifiedValue = JSON.stringify(JSON.parse(this.state.value));
+    var stringifiedValue = JSON.stringify(this.state.value);
     try {
       setValue(this.state.key, stringifiedValue)
         .then((data) => {
@@ -85,7 +115,7 @@ export default class KeyValuePairEditingPage extends Component {
           {keyValuePagesInfo[this.state.key].description}
         </Typography>
         <Card style={{ margin: "1em", padding: "1em" }}>
-          <TextField
+          {/* <TextField
             id="filled-textarea"
             label="Value"
             placeholder="Write Value Here"
@@ -94,8 +124,14 @@ export default class KeyValuePairEditingPage extends Component {
             value={this.state.value}
             onChange={this.onChange}
             fullWidth
+          /> */}
+          <ReactQuill
+            value={this.state.value}
+            onChange={this.onChange}
+            modules={this.quillModules}
           />
         </Card>
+
         <PrimaryButton onClick={this.uploadValue}>
           Save & Upload Changes
         </PrimaryButton>
