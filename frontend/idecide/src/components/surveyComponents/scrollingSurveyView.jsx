@@ -58,7 +58,7 @@ export default class ScrollingSurveyView extends Component {
             display: "flex",
             overflowX: "auto",
             whiteSpace: "nowrap",
-            maxWidth: "90vw",
+            maxWidth: "100vw",
             // padding: "4em",
           }}
           ref={this.navRef}

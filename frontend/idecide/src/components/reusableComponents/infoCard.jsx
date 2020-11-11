@@ -14,7 +14,6 @@ export default function infoCard(props) {
       </Typography>
       <Card
         style={{
-          width: "80%",
           display: "flex",
           alignItems: "center",
           flexDirection: "column",

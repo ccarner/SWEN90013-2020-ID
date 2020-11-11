@@ -17,6 +17,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { withStyles } from "@material-ui/core/styles";
 import ActionPlanAccordion from "./actionPlanAccordion";
 import { getValue } from "../../API/keyValueAPI";
+import GetAppIcon from "@material-ui/icons/GetApp";
 
 //TODO refactor this class: LOTS of repetition of eg the slicing... ctrl-f for "view", there are about 6 instances, one per each accordion...
 // TODO: this class ia also quite laggy/slow I think when executing... needs to be improved speedwise
@@ -284,6 +285,9 @@ export default class ActionPlans extends Component {
           >
             <PrimaryButton>
               Save your Plan &nbsp; <SaveIcon />
+            </PrimaryButton>
+            <PrimaryButton>
+              Export as PDF &nbsp; <GetAppIcon />
             </PrimaryButton>
           </Link>
         </Card>
