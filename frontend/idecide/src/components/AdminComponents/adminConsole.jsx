@@ -3,7 +3,7 @@ import { getCsvDownloadLink } from "../../API/surveyResultsAPI";
 import PrimaryButton from "./../reusableComponents/PrimaryButton";
 import { Link } from "react-router-dom";
 import { Card, Container } from "react-bootstrap";
-import apiConfig from "./apiConfig.json";
+import apiConfig from "./apiConfig.js";
 
 export default class AdminConsole extends Component {
   constructor(props) {
@@ -22,8 +22,7 @@ export default class AdminConsole extends Component {
   }
 
   render() {
-    const csvUrl =
-      apiConfig.rootApiUrl + apiConfig.applicationPort + apiConfig.csvLocation;
+    const csvUrl = apiConfig().rootApiUrl + apiConfig().csvLocation;
     if (!this.state.downloadUrl) {
       return (
         // the commented out button will be first used to generate a download link

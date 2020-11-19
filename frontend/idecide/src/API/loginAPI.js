@@ -1,9 +1,9 @@
-import apiConfig from "./apiConfig.json";
+import apiConfig from "../appConfig";
 const axios = require("axios");
 
-// const API_URL = apiConfig.rootApiUrl + apiConfig.applicationPort;
+const API_URL = apiConfig().rootApiUrl;
 
-const API_URL = process.env.REACT_APP_BACKEND_URL;
+// const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export async function registerUser(userIn) {
   const { username, password } = userIn;

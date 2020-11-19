@@ -1,13 +1,13 @@
 import { getUserContext } from "./loginAPI";
-import apiConfig from "./apiConfig.json";
+import apiConfig from "../appConfig";
 const axios = require("axios");
 
 //"http://8.210.28.169"
-// const API_URL_FILESERVER = apiConfig.rootApiUrl + apiConfig.fileServerPort;
-// const API_URL = apiConfig.rootApiUrl + apiConfig.applicationPort;
+const API_URL_FILESERVER = apiConfig().fileServerUrl;
+const API_URL = apiConfig().rootApiUrl;
 
-const API_URL_FILESERVER = process.env.REACT_APP_BACKEND2_URL;
-const API_URL = process.env.REACT_APP_BACKEND_URL;
+// const API_URL_FILESERVER = process.env.REACT_APP_BACKEND2_URL;
+// const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export function getStaticImageUrlFromName(imageName) {
   return API_URL_FILESERVER + `/images/${imageName}`;

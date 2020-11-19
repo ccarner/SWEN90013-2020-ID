@@ -385,7 +385,7 @@ export default class ActionPlans extends Component {
           <h1 className="text-center" style={{ color: "white" }}>
             Action Plan
           </h1>
-          <p style={{ fontSize: "20px", color: "white" }}>
+          <p style={{ fontSize: "20px", color: "white", padding: "1em" }}>
             Based on your responses, we have recommended strategies to help you
             deal with your situation. There is additional help, resources and
             recommendations in the "More Strategies" section.

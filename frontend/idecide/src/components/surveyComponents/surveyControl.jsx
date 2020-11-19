@@ -20,6 +20,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ViewAndFooter from "./../reusableComponents/viewAndFooter";
 import { CircularProgress } from "@material-ui/core";
+import getConfig from "./../../appConfig";
 /**
  * This component is passed an ID for a survey, and then:
  * a) fetches survey data from server
@@ -241,7 +242,7 @@ export default class SurveyControl extends Component {
   }
 
   calculateFeedback(resultAlgorithm) {
-    // debugger;
+    // debugger; // this is a useful command that stops the JS engine in chrome
     //skip surveys that have no algorithm (have null for their alg)
     if (!resultAlgorithm) {
       //clears current result if there is no algorithm
@@ -406,7 +407,8 @@ export default class SurveyControl extends Component {
                       onClick={(e) => {
                         this.handleNavigateSections(1);
                       }}
-                      // disabled={!this.state.canProgress} //comment out to debug, else uncomment for production
+                      // show the button permanently when debug to speed through surveys
+                      disabled={getConfig().debug || !this.state.canProgress}
                       className={this.state.canProgress && "pulsing"}
                     >
                       Next <ChevronRightIcon />
