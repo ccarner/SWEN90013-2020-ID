@@ -5,10 +5,10 @@
 ![GitHub](https://img.shields.io/github/license/ccarner/SWEN90013-2020-ID)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ## Introduction
-```
+
 'I-Decide About My Relationship' is a healthy relationship tool and safety decision aid for women who have experienced domestic violence. Women can access this tool on the web to get insights into their partner's behaviours, possible risks to their safety, and information on resources available to them.
 iDecide currently lacks a mobile-friendly site, and its overall design requires modernisation. Furthermore, since the codebase was developed by/is owned by an external party, changing the current site will require a reimplementation of the tool.
-```
+
 
 ## Table of Contents
 - [Link of Products](#Link)
@@ -20,10 +20,11 @@ iDecide currently lacks a mobile-friendly site, and its overall design requires 
 - [License](#license)
 - [Contributors](#contributor)
 
-## Link of Products:
+## Link to deployed Product
 https://master.d2k5tq5frgdv7n.amplifyapp.com
+The product will also be available on https://idecide.org.au/ as soon as an ssl certificate is received.
 
-## Requirement:
+## Requirement
 - [Project Overview](https://github.com/ccarner/SWEN90013-2020-ID/blob/master/docs/Requirements/Project%20Overview%20%26%20Background.md)
 
 - [Goal Model](https://github.com/ccarner/SWEN90013-2020-ID/blob/master/docs/Requirements/Goal%20Model.pdf)
@@ -34,7 +35,7 @@ https://master.d2k5tq5frgdv7n.amplifyapp.com
 
 - [Non-Functional Requirements](https://github.com/ccarner/SWEN90013-2020-ID/blob/master/docs/Requirements/Non-Functional%20Requirements.pdf)
 
-## Desgin:
+## Design
 - [Architecture](https://github.com/ccarner/SWEN90013-2020-ID/blob/master/docs/Design/Architecture.pdf)
 
 - [Component Diagram](https://github.com/ccarner/SWEN90013-2020-ID/blob/master/docs/Design/Component%20Diagram.pdf)
@@ -45,7 +46,7 @@ https://master.d2k5tq5frgdv7n.amplifyapp.com
 
 - [Use Case Diagram](https://github.com/ccarner/SWEN90013-2020-ID/blob/master/docs/Design/Use%20Case%20Diagram.pdf)
 
-## Protocals
+## Protocols
 - [Code Review](https://github.com/ccarner/SWEN90013-2020-ID/blob/master/docs/Protocols/Code%20Review.pdf)
 
 - [Coding Conventions](https://github.com/ccarner/SWEN90013-2020-ID/blob/master/docs/Protocols/Coding%20Conventions.pdf)
@@ -83,8 +84,8 @@ https://master.d2k5tq5frgdv7n.amplifyapp.com
 
 ## License:
 ```
-Frontend: MIT Lisense
-Backend: Apache 2.0  
+Frontend: MIT License
+Backend: Apache 2.0 
 ```
 
 ## Contributors
