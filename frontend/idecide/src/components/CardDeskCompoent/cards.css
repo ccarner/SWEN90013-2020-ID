@@ -401,10 +401,10 @@
   align-items: center;
   gap: 6px;
 }
-/* .card-container .label-container {
+.card-container .label-container {
   display: flex;
   justify-content: space-between;
-} */
+}
 .card-container .label-container .label {
   font-size: 12px;
 }
@@ -413,9 +413,6 @@
 }
 .card-container .label-container .label:nth-of-type(2) {
   color: rgb(115, 60, 137);
-}
-.card-container .label-container .label:nth-of-type(3) {
-  color: rgb(0, 126, 174);
 }
 
 .cards-container .questionContainer {

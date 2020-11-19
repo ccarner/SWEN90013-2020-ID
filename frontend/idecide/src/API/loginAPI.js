@@ -1,7 +1,9 @@
 import apiConfig from "./apiConfig.json";
 const axios = require("axios");
 
-const API_URL = apiConfig.rootApiUrl + apiConfig.applicationPort;
+// const API_URL = apiConfig.rootApiUrl + apiConfig.applicationPort;
+
+const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export async function registerUser(userIn) {
   const { username, password } = userIn;
@@ -61,6 +63,9 @@ export function getUserContext() {
 export async function loginUser(userIn) {
   const { username, password } = userIn;
   var endpoint = API_URL + `/user/login`;
+
+  // alert(112);
+  // console.log(112, process.env.REACT_APP_BACKEND2_URL);
 
   const result = await axios({
     url: endpoint, // send a request to the library API
