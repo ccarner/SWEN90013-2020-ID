@@ -22,7 +22,7 @@ iDecide currently lacks a mobile-friendly site, and its overall design requires 
 
 ## Link to deployed Product
 https://master.d2k5tq5frgdv7n.amplifyapp.com
-The product will also be available on https://idecide.org.au/ as soon as an ssl certificate is received.
+The product will also be available on https://idecide.org.au/ as soon as the client can confirm that the current site hosted on this url is OK to be replaced. 👍
 
 ## Requirement
 - [Project Overview](https://github.com/ccarner/SWEN90013-2020-ID/blob/master/docs/Requirements/Project%20Overview%20%26%20Background.md)
