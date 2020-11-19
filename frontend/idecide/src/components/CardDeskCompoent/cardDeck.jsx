@@ -4,7 +4,7 @@ import { Button, Slider, Form } from "antd";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./cards.css";
 import "antd/dist/antd.css";
-import LoadingSpinner from "../reusableComponents/loadingSpinner";
+import LoadingSpinner from "../reusableComponents/loading";
 import SortableComponent from "../RankingComponent/testSortable";
 import PrimaryButton from "./../reusableComponents/PrimaryButton";
 import TextField from "@material-ui/core/TextField";

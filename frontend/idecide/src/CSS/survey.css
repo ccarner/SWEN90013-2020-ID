@@ -126,12 +126,19 @@
 }
 
 .surveyIntroCard {
+  width: 80%;
   position: relative;
-  top: 100px;
+  top: 1em;
   margin-left: auto;
   margin-right: auto;
 }
 
 .progress-bar {
   background-color: purple !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .surveyIntroCard {
+    width: 100%;
+  }
 }

@@ -1,28 +1,28 @@
-{
-  "surveyId": "3",
-  "surveyIntroduction": "There are many things to consider in deciding what to do about safety in your relationship. Thinking about what is most important in your life can help you decide what is best for you. What is most important to one woman may not be important at all to another. On the next page we will ask you to weigh up which of the factors below might be most important to you.",
-  "resultAlgorithm": "if(questions[0] > 10 && questions[4] == 'yes'){output=10}",
-  "surveyVersion": "2.0",
-  "surveyTitle": "Priority Survey",
-  "surveySections": [
-    {
-      "sectionId": "1",
-      "sectionTitle": "Priorities",
-      "sectionIntroduction": "There are 10 comparisons below. Slide the circle towards the priority that is most important in that pair",
-      "sectionType": "PriorityList",
-      "questions": [
-        {
-          "questionId": "1",
-          "questionText": "prioritize your concerns",
-          "selectionOptions": [
-            { "name": "My concern for safety" },
-            { "name": "Feelings for my partner" },
-            { "name": "My health and wellbeing" },
-            { "name": "Child Priority" },
-            { "name": "Having resources" }
-          ]
-        }
-      ]
-    }
-  ]
-}
+// {
+//   "surveyId": "3",
+//   "surveyIntroduction": "There are many things to consider in deciding what to do about safety in your relationship. Thinking about what is most important in your life can help you decide what is best for you. What is most important to one woman may not be important at all to another. On the next page we will ask you to weigh up which of the factors below might be most important to you.",
+//   "resultAlgorithm": "if(questions[0] > 10 && questions[4] == 'yes'){output=10}",
+//   "surveyVersion": "2.0",
+//   "surveyTitle": "Priority Survey",
+//   "surveySections": [
+//     {
+//       "sectionId": "1",
+//       "sectionTitleText": "Priorities",
+//       "sectionIntroduction": "There are 10 comparisons below. Slide the circle towards the priority that is most important in that pair",
+//       "sectionType": "PriorityList",
+//       "questions": [
+//         {
+//           "questionId": "1",
+//           "questionText": "prioritize your concerns",
+//           "selectionOptions": [
+//             { "name": "My concern for safety" },
+//             { "name": "Feelings for my partner" },
+//             { "name": "My health and wellbeing" },
+//             { "name": "Child Priority" },
+//             { "name": "Having resources" }
+//           ]
+//         }
+//       ]
+//     }
+//   ]
+// }

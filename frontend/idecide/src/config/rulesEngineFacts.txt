@@ -1,0 +1,91 @@
+"QUESTION_RESPONSE"
+Returns as an array the response to a question.
+Single answer questions only have one element in the array, eg ["yes"]
+
+
+"TOTAL_ANSWER_POINTS"
+Takes an array of survey,question IDs, question IDs can be a range.
+eg [[1,1-10],[2,1-10]] will sum the total of questions 1-10 for surveys
+1 and 2. Returns an Int which represents the number of 'abusive behavoiurs'
+which have occurred. Only works for specific Question types and with
+specific types of questions (syntactic sugar on top of QUESTION_RESPONSE)
+
+The addition logic works as:
+- If a question is 'singleSelection' (of some form), it will count as
+one point if the answer is not 'Never'
+- If a question is 'yesOrNo', 1 point is added if answer was 'yes'
+
+
+"TOP_PRIORITY": 
+No params, returns as a string the top priority.
+returns one from ["safety", "child", "resources", "health", "partner"]
+
+
+"INTENTION"
+No params, returns as a string the relationship intention.
+returns one of ["stay", "leave", "left"]
+
+"DA_SUM"
+Shortcut for "TOTAL_ANSWER_POINTS" for questions from mysafety.
+Returns TOTAL_ANSWER_POINTS for params of [["2", "31-42"]] 
+
+"CAS_SUM"
+Shortcut for "TOTAL_ANSWER_POINTS" for questions from mysafety.
+Returns TOTAL_ANSWER_POINTS for params of [["2", "1-30"]]
+
+
+"SEVERE_SUBSCALE_CAS_SCORE"
+Shortcut for "TOTAL_ANSWER_POINTS" for questions from mysafety.
+Returns TOTAL_ANSWER_POINTS for params of 
+[
+  ["2", "2"],
+  ["2", "5"],
+  ["2", "7"],
+  ["2", "15"],
+  ["2", "18"],
+  ["2", "22"],
+  ["2", "25"],
+  ["2", "26"],
+];
+
+
+"PHYSICAL_SUBSCALE_CAS_SCORE"
+Shortcut for "TOTAL_ANSWER_POINTS" for questions from mysafety.
+Returns TOTAL_ANSWER_POINTS for params of 
+[
+  ["2", "6"],
+  ["2", "10"],
+  ["2", "14"],
+  ["2", "17"],
+  ["2", "23"],
+  ["2", "27"],
+  ["2", "30"],
+];
+
+"EMOTIONAL_SUBSCALE_CAS_SCORE"
+Shortcut for "TOTAL_ANSWER_POINTS" for questions from mysafety.
+Returns TOTAL_ANSWER_POINTS for params of 
+[
+  ["2", "1"],
+  ["2", "4"],
+  ["2", "8"],
+  ["2", "9"],
+  ["2", "12"],
+  ["2", "19"],
+  ["2", "20"],
+  ["2", "21"],
+  ["2", "24"],
+  ["2", "28"],
+  ["2", "29"],
+];
+
+
+"HARASSMENT_SUBSCALE_CAS_SCORE"
+Shortcut for "TOTAL_ANSWER_POINTS" for questions from mysafety.
+Returns TOTAL_ANSWER_POINTS for params of 
+[
+  ["2", "3"],
+  ["2", "11"],
+  ["2", "13"],
+  ["2", "16"],
+];

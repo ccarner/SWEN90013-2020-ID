@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import SurveyControl from "./surveyControl";
 import "../../CSS/survey.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import LoadingSpinner from "../reusableComponents/loadingSpinner";
+import LoadingSpinner from "../reusableComponents/loading";
 import {
   getUserResults,
   getAllSurveys,
@@ -28,6 +28,8 @@ import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import SurveyHomeIntroduction from "./surveyHomeIntroduction";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import ViewAndFooter from "./../reusableComponents/viewAndFooter";
+
 /**
  * The parent component of all survey pages. This component:
  * a) fetches all available surveys from the server
@@ -198,7 +200,11 @@ export default class SurveyHome extends Component {
   };
 
   render() {
+    let userContext = this.context;
+    let userIsAnon = userContext.userType === "anon";
+
     var renderElements = []; // array of elements to be returned from render()
+    var footer = null; // elements to be rendered as a fixed bottom bar
     const { currentState } = this.state;
     const currentStep = this.getCurrentStep();
 
@@ -228,25 +234,12 @@ export default class SurveyHome extends Component {
     }
     if (currentState === "introduction") {
       renderElements.push(
-        <Grid
-          container
-          style={{
-            alignSelf: "center",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "2em",
-            flexDirection: "column",
-            flexWrap: "nowrap",
-            minHeight: "70vh",
+        <SurveyHomeIntroduction
+          handleNext={() => {
+            this.setState({ currentState: "menu" });
+            localStorage.setItem("stepperState", "menu");
           }}
-        >
-          <SurveyHomeIntroduction
-            handleNext={() => {
-              this.setState({ currentState: "menu" });
-              localStorage.setItem("stepperState", "menu");
-            }}
-          />
-        </Grid>
+        />
       );
     }
 
@@ -269,18 +262,17 @@ export default class SurveyHome extends Component {
             justifyContent: "center",
             // padding: "2em",
             width: "100vw",
-            marginBottom: "50px",
             flexDirection: "column",
             flexWrap: "nowrap",
           }}
         >
-          <div style={{ padding: "4em" }}>
-            <h1
+          <div style={{ padding: "1em" }}>
+            <h2
               className="text-center"
               style={{ color: "white", margin: "0.5em" }}
             >
               Help Me Decide
-            </h1>
+            </h2>
             <Typography style={{ color: "white" }} gutterBottom variant="h5">
               Completing the modules below will help us better understand your
               situation so we can generate a personalised action plan for you.
@@ -309,8 +301,36 @@ export default class SurveyHome extends Component {
     }
 
     if (!this.allSurveysComplete() && this.state.currentState === "menu") {
-      renderElements.push(
-        <Card style={{ position: "fixed", bottom: 0, width: "100%" }}>
+      // renderElements.push(
+      //   <Card style={{ position: "fixed", bottom: 0, width: "100%" }}>
+      //     <div
+      //       style={{
+      //         display: "flex",
+      //         flexDirection: "row",
+      //         justifyContent: "space-around",
+      //       }}
+      //     >
+      //       <PrimaryButton
+      //         disabled={!userIsAnon}
+      //         onClick={() => {
+      //           this.props.history.push("/loginComponent/registerPage");
+      //         }}
+      //       >
+      //         {userIsAnon ? (
+      //           <React.Fragment>
+      //             Save your Progress &nbsp; <SaveIcon />
+      //           </React.Fragment>
+      //         ) : (
+      //           <React.Fragment>
+      //             Your Progress is being saved <SaveIcon />
+      //           </React.Fragment>
+      //         )}
+      //       </PrimaryButton>
+      //     </div>
+      //   </Card>
+      // );
+      footer = (
+        <Card style={{ width: "100%" }}>
           <div
             style={{
               display: "flex",
@@ -319,19 +339,28 @@ export default class SurveyHome extends Component {
             }}
           >
             <PrimaryButton
+              disabled={!userIsAnon}
               onClick={() => {
                 this.props.history.push("/loginComponent/registerPage");
               }}
             >
-              Save your Progress &nbsp;
-              <SaveIcon />
+              {userIsAnon ? (
+                <React.Fragment>
+                  Save your Progress &nbsp; <SaveIcon />
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  Your Progress is being saved <SaveIcon />
+                </React.Fragment>
+              )}
             </PrimaryButton>
           </div>
         </Card>
       );
     } else if (this.state.currentState === "menu") {
-      renderElements.push(
-        <Card style={{ position: "fixed", bottom: 0, width: "100%" }}>
+      // renderElements.push(
+      footer = (
+        <Card style={{ width: "100%" }}>
           <Card.Body>
             <PrimaryButton
               className={"pulsing"}
@@ -346,7 +375,24 @@ export default class SurveyHome extends Component {
           </Card.Body>
         </Card>
       );
+      // );
     }
-    return renderElements;
+    if (footer) {
+      return (
+        <div
+          style={{ display: "flex", flexDirection: "column", height: "100%" }}
+        >
+          <ViewAndFooter view={renderElements} footer={footer} />
+        </div>
+      );
+    } else {
+      return (
+        <div
+          style={{ display: "flex", flexDirection: "column", height: "100%" }}
+        >
+          {renderElements}
+        </div>
+      );
+    }
   }
 }

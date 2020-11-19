@@ -1,7 +1,6 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
-import loadingSpinner from "./../reusableComponents/loadingSpinner";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
 const completedIcon = require("./iconCompleted.png");

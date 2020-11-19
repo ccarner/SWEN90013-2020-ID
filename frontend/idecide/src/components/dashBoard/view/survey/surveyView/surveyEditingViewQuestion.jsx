@@ -7,50 +7,61 @@ import SurveyEditingViewQuestionSelectionOptions from "./surveyEditingViewQuesti
 
 import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
 import PrimaryButton from "./../../../../reusableComponents/PrimaryButton";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 
-export default class SurveyEditingViewQuestion extends PureComponent {
+import update from "immutability-helper";
+
+export default class SurveyEditingViewQuestion extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      currentDialogShowing: "none", // one option per dialog type, eg "delete"
-    };
-    this.updateFlag = false;
-    this.renderDialogs = this.renderDialogs.bind(this);
+
     this.deleteSelectionOption = this.deleteSelectionOption.bind(this);
     this.updateSelectionOption = this.updateSelectionOption.bind(this);
     this.addNewSelectionOption = this.addNewSelectionOption.bind(this);
+    this.getQuestionFromProps = this.getQuestionFromProps.bind(this);
   }
 
-  //These methods ensure that only sections which have children that have updated will be rerendered...
-  componentDidUpdate() {
-    this.updateFlag = false;
+  getQuestionFromProps() {
+    return this.props.survey.surveySections[this.props.sectionIndex].questions[
+      this.props.questionIndex
+    ];
   }
 
   shouldComponentUpdate(newProps) {
-    return this.updateFlag;
+    return (
+      newProps.survey.surveySections[newProps.sectionIndex].questions[
+        newProps.questionIndex
+      ] !== this.getQuestionFromProps()
+    );
   }
 
   handleChange(eventType, event) {
     const value = event.target.value;
-    this.props.questionDataStructure[eventType] = value;
-    this.props.parentShouldUpdate();
-    this.updateFlag = true;
-    this.props.refreshView();
+
+    const updateQ = (prevSurvey) =>
+      update(prevSurvey, {
+        surveySections: {
+          [this.props.sectionIndex]: {
+            questions: {
+              [this.props.questionIndex]: { [eventType]: { $set: value } },
+            },
+          },
+        },
+      });
+    this.props.modifySurvey(updateQ);
   }
 
   questionTypeSpecificFields() {
-    if (this.props.questionView.questionType === "slider") {
+    const question = this.props.survey.surveySections[this.props.sectionIndex]
+      .questions[this.props.questionIndex];
+    if (question.questionType === "slider") {
       return (
         <React.Fragment>
           <TextField
             style={{ margin: "10px" }}
-            label="Slider Maximum Value (integer)"
-            value={this.props.questionView.sliderMinValue}
+            label="Maximum Value"
+            helperText="The maximum value for the slider"
+            value={question.sliderMinValue}
+            type="number"
             variant="outlined"
             onChange={(event) => {
               this.handleChange("sliderMaxValue", event);
@@ -58,8 +69,10 @@ export default class SurveyEditingViewQuestion extends PureComponent {
           />
           <TextField
             style={{ margin: "10px" }}
-            label="Slider Minimum Value (integer)"
-            value={this.props.questionView.sliderMaxValue}
+            label="Minimum Value"
+            helperText="The minimum value for the slider"
+            type="number"
+            value={question.sliderMaxValue}
             variant="outlined"
             onChange={(event) => {
               this.handleChange("sliderMinValue", event);
@@ -67,8 +80,10 @@ export default class SurveyEditingViewQuestion extends PureComponent {
           />
           <TextField
             style={{ margin: "10px" }}
-            label="Slider Default/Starting Value (integer)"
-            value={this.props.questionView.sliderDefaultValue}
+            label="Starting Value"
+            helperText="The starting value for the slider"
+            type="number"
+            value={question.sliderDefaultValue}
             variant="outlined"
             onChange={(event) => {
               this.handleChange("sliderDefaultValue", event);
@@ -76,12 +91,14 @@ export default class SurveyEditingViewQuestion extends PureComponent {
           />
         </React.Fragment>
       );
-    } else if (this.props.questionView.questionType === "longAnswer") {
+    } else if (question.questionType === "longAnswer") {
       return (
         <TextField
           style={{ margin: "10px" }}
-          label="Maximum Answer Length"
-          value={this.props.questionView.answerLength}
+          label="Maximum Length"
+          helperText="Maximum number of characters to allow in input"
+          type="number"
+          value={question.answerLength}
           variant="outlined"
           onChange={(event) => {
             this.handleChange("answerLength", event);
@@ -94,7 +111,7 @@ export default class SurveyEditingViewQuestion extends PureComponent {
         "singleSelectionVertical",
         "multipleSelection",
         "ranking",
-      ].includes(this.props.questionView.questionType)
+      ].includes(question.questionType)
     ) {
       // we need to include extra fields for selectionOption
       return (
@@ -104,19 +121,15 @@ export default class SurveyEditingViewQuestion extends PureComponent {
           </PrimaryButton>
           {/* add a blank array if there isn't one there already */}
 
-          {this.props.questionView.selectionOptions &&
-            this.props.questionView.selectionOptions.map((option, index) => {
+          {question.selectionOptions &&
+            question.selectionOptions.map((option, index) => {
               return (
                 <SurveyEditingViewQuestionSelectionOptions
                   key={index}
+                  survey={this.props.survey}
+                  sectionIndex={this.props.sectionIndex}
+                  questionIndex={this.props.questionIndex}
                   selectionOptionIndex={index}
-                  selectionOptionDataStructure={
-                    this.props.questionDataStructure.selectionOptions[index]
-                  }
-                  selectionOptionView={
-                    this.props.questionView.selectionOptions[index]
-                  }
-                  refreshView={this.props.refreshView}
                   handleDelete={this.deleteSelectionOption}
                   handleUpdate={this.updateSelectionOption}
                 />
@@ -133,72 +146,76 @@ export default class SurveyEditingViewQuestion extends PureComponent {
 
   deleteSelectionOption(index) {
     this.props.questionDataStructure.selectionOptions.splice(index, 1);
-    this.props.parentShouldUpdate();
-    this.updateFlag = true;
-    this.props.refreshView();
+
+    const deleteQuestOpt = (prevSurvey) =>
+      update(prevSurvey, {
+        surveySections: {
+          [this.props.sectionIndex]: {
+            questions: {
+              [this.props.questionId]: {
+                questionOptions: { $splice: [[index, 1]] },
+              },
+            },
+          },
+        },
+      });
+    this.props.modifySurvey(deleteQuestOpt);
   }
 
   updateSelectionOption(index, value) {
-    this.props.questionDataStructure.selectionOptions[index] = value;
-    console.log("updating selection option");
-    this.props.parentShouldUpdate();
-    this.updateFlag = true;
-    this.props.refreshView();
+    // this.props.questionDataStructure.selectionOptions[index] = value;
+    const updateQuestOpt = (prevSurvey) =>
+      update(prevSurvey, {
+        surveySections: {
+          [this.props.sectionIndex]: {
+            questions: {
+              [this.props.questionIndex]: {
+                selectionOptions: { [index]: { $set: value } },
+              },
+            },
+          },
+        },
+      });
+    this.props.modifySurvey(updateQuestOpt);
   }
 
   addNewSelectionOption() {
-    if (!this.props.questionDataStructure.selectionOptions) {
-      //if we eg changed question type, this array might not exist yet
-      this.props.questionDataStructure.selectionOptions = [];
-    }
-    this.props.questionDataStructure.selectionOptions.splice(0, 0, "");
-    this.props.refreshView();
-  }
+    let innerImmutabilityOperation = null;
 
-  renderDialogs() {
-    if (this.state.currentDialogShowing === "delete") {
-      return (
-        <Dialog
-          open={this.state.currentDialogShowing === "delete"}
-          onClose={() => {
-            this.setState({ currentDialogShowing: "none" });
-          }}
-        >
-          <DialogTitle>{"Confirm Question Delete?"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Are you sure you want to delete this question?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <PrimaryButton
-              onClick={() => {
-                this.setState({ currentDialogShowing: "none" });
-              }}
-              autoFocus
-            >
-              Cancel
-            </PrimaryButton>
-            <PrimaryButton
-              onClick={() =>
-                this.props.handleDeleteQuestion(this.props.questionIndex)
-              }
-            >
-              Confirm Delete <DeleteForeverOutlinedIcon />
-            </PrimaryButton>
-          </DialogActions>
-        </Dialog>
-      );
+    if (!this.getQuestionFromProps().selectionOptions) {
+      //if we eg changed question type, this array might not exist yet
+      innerImmutabilityOperation = {
+        $merge: {
+          selectionOptions: [],
+        },
+      };
+    } else {
+      //the array exists, splice in the new value
+      innerImmutabilityOperation = {
+        selectionOptions: { $splice: [[0, 0, ""]] },
+      };
     }
+
+    const updateSelectOpt = (prevSurvey) =>
+      update(prevSurvey, {
+        surveySections: {
+          [this.props.sectionIndex]: {
+            questions: {
+              [this.props.questionIndex]: innerImmutabilityOperation,
+            },
+          },
+        },
+      });
+    this.props.modifySurvey(updateSelectOpt);
   }
 
   render() {
+    const question = this.getQuestionFromProps();
     return (
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        {this.renderDialogs()}
+      <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
         <PrimaryButton
           onClick={() => {
-            this.setState({ currentDialogShowing: "delete" });
+            this.props.handleDeleteQuestion(this.props.questionIndex);
           }}
         >
           Delete this Question <DeleteForeverOutlinedIcon />
@@ -206,7 +223,7 @@ export default class SurveyEditingViewQuestion extends PureComponent {
         <TextField
           style={{ margin: "10px" }}
           label="Question Text"
-          value={this.props.questionView.questionText}
+          value={question.questionText}
           variant="outlined"
           onChange={(event) => {
             this.handleChange("questionText", event);
@@ -215,7 +232,7 @@ export default class SurveyEditingViewQuestion extends PureComponent {
         <TextField
           style={{ margin: "10px" }}
           label="Question Image Name (do not include '.png' or the url)"
-          value={this.props.questionView.questionImage}
+          value={question.questionImage}
           variant="outlined"
           onChange={(event) => {
             this.handleChange("questionImage", event);
@@ -224,7 +241,7 @@ export default class SurveyEditingViewQuestion extends PureComponent {
         <TextField
           style={{ margin: "10px" }}
           label="Section Feedback Body Html"
-          value={this.props.questionView.sectionFeedbackBodyHtml}
+          value={question.sectionFeedbackBodyHtml}
           variant="outlined"
           onChange={(event) => {
             this.handleChange("sectionFeedbackBodyHtml", event);
@@ -232,8 +249,9 @@ export default class SurveyEditingViewQuestion extends PureComponent {
         />
         {"Question Type:"}
         <Select
+          variant="outlined"
           style={{ margin: "10px" }}
-          value={this.props.questionView.questionType}
+          value={question.questionType}
           label="Question Type"
           onChange={(event) => {
             this.handleChange("questionType", event);

@@ -1,7 +1,8 @@
 import { getUserContext } from "./loginAPI";
+import apiConfig from "./apiConfig.json";
 const axios = require("axios");
 
-const API_URL = "https://www.idecide.icu:9012";
+const API_URL = apiConfig.rootApiUrl + apiConfig.applicationPort;
 
 export async function getValue(key) {
   const endpoint = API_URL + `/kv/${key}`;

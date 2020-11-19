@@ -18,13 +18,13 @@ import Alert from "@material-ui/lab/Alert";
 import EditIcon from "@material-ui/icons/Edit";
 import { NavLink } from "react-router-dom";
 import { getAllSurveys, AddNewSurvey } from "../../../../API/surveyAPI";
-import Loading from "../../../util/loading";
 import SurveyOptionsButtons from "./surveyOptionsButtons";
-import PrimaryButton from "../../../reusableComponents/PrimaryButton";
+import PrimaryButtonContrast from "../../../reusableComponents/primaryButtonContrast";
 import BackupIcon from "@material-ui/icons/Backup";
 import NoteAddIcon from "@material-ui/icons/NoteAdd";
 
 import { toast } from "react-toastify";
+import Loading from "./../../../reusableComponents/loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,18 +68,7 @@ export default function DashboardAllSurveysExpose() {
     false
   );
 
-  const [newSurveyAttributes, setNewSurveyAttributes] = React.useState({
-    title: "",
-    descrpition: "",
-  });
   const [uploadedSurveyFile, setUploadedSurveyFile] = useState("");
-
-  const handleChange = (prop) => (event) => {
-    setNewSurveyAttributes({
-      ...newSurveyAttributes,
-      [prop]: event.target.value,
-    });
-  };
 
   //takes a STRINGIFIED json (ie need to verify its proper json already)
   //and pops toasts if there is an issue with upload.
@@ -87,9 +76,14 @@ export default function DashboardAllSurveysExpose() {
     try {
       //don't need to parse / unparse, leave it as stringified json
       AddNewSurvey(surveyFileString)
-        .then((data) => {
-          console.log("data received", data);
-          toast("uploaded successfully");
+        .then((result) => {
+          console.log("result received", result);
+          if (result.data.flag) {
+            toast("Uploaded successfully");
+            fetchData();
+          } else {
+            toast("Error :" + result.data.message);
+          }
         })
         .catch((err) => {
           console.error("error when uploading", err);
@@ -97,7 +91,6 @@ export default function DashboardAllSurveysExpose() {
         });
 
       setOpenUploadSurveyDialog(false);
-      setOpenCreateSurveyDialog(false);
     } catch (err) {
       toast("Failure to upload" + err);
       console.error("Error when uploading file", err);
@@ -112,28 +105,29 @@ export default function DashboardAllSurveysExpose() {
   };
 
   const AddNewSurveys = async () => {
+    var d = new Date();
+    var n = d.getMilliseconds();
     var surveyFileString = JSON.stringify({
-      surveyId: Array.from(data).length + 1 + "",
-      surveyTitle: newSurveyAttributes.title,
-      surveyIntroduction: newSurveyAttributes.description,
-      surveyVersion: "",
+      surveyId: n.toString(),
+      surveyIntroduction: "Write an introduction here",
+      surveyTitle: "New Survey",
       surveySections: [],
     });
 
     uploadSurveyPopToasts(surveyFileString);
   };
 
+  const fetchData = async () => {
+    setIsLoading(true);
+    const result = await getAllSurveys();
+
+    console.log("result is", result);
+
+    setData(result.data);
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      const result = await getAllSurveys();
-
-      setData(result.data);
-      setIsLoading(false);
-      //		console.log(data);
-      //		console.log(isLoading);
-    };
-
     fetchData();
   }, []);
 
@@ -148,28 +142,26 @@ export default function DashboardAllSurveysExpose() {
           direction="row"
           justify="flex-end"
           alignItems="center"
-          direction="row"
-          justify="flex-end"
-          alignItems="center"
         >
           <Grid item>
-            <PrimaryButton
-              style={{ width: "16em" }}
+            <PrimaryButtonContrast
               onClick={() => {
-                setOpenCreateSurveyDialog(true);
+                AddNewSurveys(true);
               }}
             >
-              <NoteAddIcon style={{ paddingRight: "5px" }} /> Create New Survey
-            </PrimaryButton>
-            <PrimaryButton
-              style={{ width: "16em" }}
+              <NoteAddIcon style={{ paddingRight: "5px", color: "#8973E6" }} />{" "}
+              Create New Survey
+            </PrimaryButtonContrast>
+            <PrimaryButtonContrast
               onClick={() => {
                 setOpenUploadSurveyDialog(true);
               }}
             >
-              <BackupIcon style={{ paddingRight: "5px" }} /> Upload Survey File
-            </PrimaryButton>
+              <BackupIcon style={{ paddingRight: "5px", color: "#8973E6" }} />{" "}
+              Upload Survey File
+            </PrimaryButtonContrast>
           </Grid>
+
           <Grid container spacing={2}>
             {data.map((item) => (
               <Grid item lg={4} md={6} xs={12} key={item.surveyId}>
@@ -224,60 +216,6 @@ export default function DashboardAllSurveysExpose() {
               </Button>
             </DialogActions>
           </Dialog>
-
-          {/* <Dialog
-            open={isOpenCreateSurveyDialog}
-            onClose={() => {
-              setOpenCreateSurveyDialog(false);
-            }}
-            aria-labelledby="max-width-dialog-title"
-            maxWidth="md"
-            style={{ zIndex: 999 }}
-          >
-            <DialogTitle id="form-dialog-title">Survey</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                Please input the title and description for the new Survey.
-              </DialogContentText>
-              <TextField
-                id="outlined-multiline-flexible"
-                required
-                fullWidth
-                value={newSurveyAttributes.title}
-                onChange={handleChange("title")}
-                label="Title"
-                variant="outlined"
-              />
-              <DialogContentText>
-                value={newSurveyAttributes.title}
-              </DialogContentText>
-              <TextField
-                id="outlined-multiline-flexible"
-                multiline
-                fullWidth
-                required
-                value={newSurveyAttributes.description}
-                onChange={handleChange("descrpition")}
-                rows={4}
-                label="Description"
-                variant="outlined"
-              />
-            </DialogContent>
-            <DialogContent></DialogContent>
-            <DialogActions>
-              <Button onClick={AddNewSurveys} color="primary">
-                Confirm
-              </Button>
-              <Button
-                onClick={() => {
-                  setOpenCreateSurveyDialog(false);
-                }}
-                color="primary"
-              >
-                Cancel
-              </Button>
-            </DialogActions>
-          </Dialog> */}
         </Grid>
       )}
     </div>

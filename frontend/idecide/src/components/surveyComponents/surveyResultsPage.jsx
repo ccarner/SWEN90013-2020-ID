@@ -42,7 +42,7 @@ export default function SurveyResultsPage(props) {
 
   return (
     <InfoCard
-      heading={!props.heading ? "Module Complete" : props.heading}
+      heading={!props.heading ? "Thank you" : props.heading}
       cardTitle={null}
       cardBody={cardBody || "Thank you for completing this module."}
     >

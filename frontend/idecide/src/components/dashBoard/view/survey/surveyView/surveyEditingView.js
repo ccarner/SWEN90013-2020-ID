@@ -8,11 +8,14 @@ import { getSurveyById, editSurvey } from "../../../../../API/surveyAPI";
 import SurveyEditingViewHeaders from "./surveyEditingViewHeaders";
 import SurveyEditingViewSection from "./surveyEditingViewSection";
 import PrimaryButton from "./../../../../reusableComponents/PrimaryButton";
+import PrimaryButtonContrast from "./../../../../reusableComponents/primaryButtonContrast";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Fab from "@material-ui/core/Fab";
 import SwapVertIcon from "@material-ui/icons/SwapVert";
 import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
+import update from "immutability-helper";
+import UndoIcon from "@material-ui/icons/Undo";
 
 import {
   Card,
@@ -27,13 +30,11 @@ import {
 class SectionReorgViewMode extends React.Component {
   constructor(props) {
     super(props);
-
     this.onDragEnd = this.onDragEnd.bind(this);
   }
 
+  //dragging around sections to reorder them
   onDragEnd(result) {
-    //change state here
-    //TODO: reorder our columns
     const { destination, source, draggableId } = result;
 
     if (!destination) {
@@ -53,12 +54,19 @@ class SectionReorgViewMode extends React.Component {
       return;
     }
 
-    let [movedSection] = this.props.survey.surveySections.splice(
-      source.index,
-      1
-    );
-    this.props.survey.surveySections.splice(destination.index, 0, movedSection);
-    this.props.refreshView();
+    const movedSection = this.props.survey.surveySections[source.index];
+
+    const swapSections = (prevSurvey) =>
+      update(prevSurvey, {
+        surveySections: {
+          $splice: [
+            [source.index, 1],
+            [destination.index, 0, movedSection],
+          ],
+        },
+      });
+
+    this.props.modifySurvey(swapSections);
   }
 
   render() {
@@ -77,36 +85,34 @@ class SectionReorgViewMode extends React.Component {
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >
-                  {this.props.surveyView.surveySections.map(
-                    (section, index) => {
-                      return (
-                        <Draggable
-                          draggableId={section.sectionId}
-                          index={index}
-                          key={section.sectionId}
-                        >
-                          {(provided) => {
-                            return (
-                              <div
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                ref={provided.innerRef}
-                              >
-                                <div style={{ padding: "0.5em" }}>
-                                  {/* using externaldiv + padding since using margin on card
+                  {this.props.survey.surveySections.map((section, index) => {
+                    return (
+                      <Draggable
+                        draggableId={section.sectionId}
+                        index={index}
+                        key={section.sectionId}
+                      >
+                        {(provided) => {
+                          return (
+                            <div
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              ref={provided.innerRef}
+                            >
+                              <div style={{ padding: "0.5em" }}>
+                                {/* using externaldiv + padding since using margin on card
                                   causes issues when calculating height of objects for drag-n-drop */}
-                                  <Card>
-                                    <DragIndicatorIcon />
-                                    {section.sectionTitle}
-                                  </Card>
-                                </div>
+                                <Card>
+                                  <DragIndicatorIcon />
+                                  {section.sectionTitleText}
+                                </Card>
                               </div>
-                            );
-                          }}
-                        </Draggable>
-                      );
-                    }
-                  )}
+                            </div>
+                          );
+                        }}
+                      </Draggable>
+                    );
+                  })}
 
                   {
                     // placeholder used to maintain space when dragging, see react-beautiful-dnd
@@ -130,7 +136,6 @@ class MainViewMode extends React.Component {
 
   //this is for moving questions; placed at survey level so can move questions BETWEEN sections
   onDragEndMoveQuestions(result) {
-    console.log("result was", result);
     const { destination, source, draggableId } = result;
 
     if (!destination) {
@@ -147,22 +152,57 @@ class MainViewMode extends React.Component {
     }
 
     //droppableIds are the sectionIndexes
-    //remove the question from original section array
-    let [movedQuestion] = this.props.survey.surveySections[
-      parseInt(source.droppableId)
-    ].questions.splice(source.index, 1);
+    const destId = parseInt(destination.droppableId);
+    const sourceId = parseInt(source.droppableId);
 
-    //insert the question into new  section array
-    this.props.survey.surveySections[
-      parseInt(destination.droppableId)
-    ].questions.splice(destination.index, 0, movedQuestion);
+    const movedQuestion = this.props.survey.surveySections[sourceId].questions[
+      source.index
+    ];
 
-    this.props.refreshView();
+    const swapQuestions = (prevSurvey) => {
+      var swapObject;
+      if (destId === sourceId) {
+        swapObject = {
+          [destId]: {
+            questions: {
+              $splice: [
+                [source.index, 1],
+                [destination.index, 0, movedQuestion],
+              ],
+            },
+          },
+        };
+      } else {
+        swapObject = {
+          [destId]: {
+            questions: { $splice: [[destination.index, 0, movedQuestion]] },
+          },
+          [sourceId]: {
+            questions: {
+              $splice: [[source.index, 1]],
+            },
+          },
+        };
+      }
+
+      // console.log("swapobj", swapObject);
+
+      return update(prevSurvey, {
+        surveySections: swapObject,
+      });
+    };
+
+    this.props.modifySurvey(swapQuestions);
   }
 
   deleteSection(index) {
-    this.props.survey.surveySections.splice(index, 1);
-    this.props.refreshView();
+    const deleteSec = (prevSurvey) =>
+      update(prevSurvey, {
+        surveySections: {
+          $splice: [[index, 1]],
+        },
+      });
+    this.props.modifySurvey(deleteSec);
   }
 
   addNewSection(indexNumInsertBefore) {
@@ -173,51 +213,52 @@ class MainViewMode extends React.Component {
     const blankSection = {
       sectionId: n.toString(), //TODO: need to add an algorithm to choose a new sectionId automatically when creating a new section
       sectionTitleText: "",
-      sectionIntroductionBodyHtml: "",
+      surveyIntroductionHtmlB64: "",
       sectionFeedbackBodyHtml: "",
       sectionFeedbackHeadingText: "",
       questions: [],
-      sectionResultAlgorithm: "null",
+      sectionResultAlgorithm: null,
     };
 
-    this.props.survey.surveySections.splice(
-      indexNumInsertBefore,
-      0,
-      blankSection
-    );
-    this.props.refreshView();
+    const addSec = (prevSurvey) =>
+      update(prevSurvey, {
+        surveySections: {
+          $splice: [[indexNumInsertBefore, 0, blankSection]],
+        },
+      });
+
+    this.props.modifySurvey(addSec);
   }
 
   render() {
     return (
       <React.Fragment>
         <SurveyEditingViewHeaders
-          surveyDataStructure={this.props.survey}
-          surveyView={this.props.surveyView}
-          refreshView={this.props.refreshView}
+          survey={this.props.survey}
+          modifySurvey={this.props.modifySurvey}
         />
-        <PrimaryButton
+        <PrimaryButtonContrast
           onClick={() => {
             this.addNewSection(0);
           }}
         >
           Create New Section Here <CreateOutlinedIcon />
-        </PrimaryButton>
+        </PrimaryButtonContrast>
+        {/* dragdrop context outside of map, so can drag qs between sections */}
         <DragDropContext onDragEnd={this.onDragEndMoveQuestions}>
-          {this.props.surveyView.surveySections.map((section, index) => {
+          {this.props.survey.surveySections.map((section, index) => {
             return (
               <React.Fragment key={section.sectionId}>
                 <SurveyEditingViewSection
                   // sectionId not really used, its the index that gets used
-                  sectionDataStructure={this.props.survey.surveySections[index]}
+                  modifySurvey={this.props.modifySurvey}
+                  survey={this.props.survey}
                   sectionIndex={index}
-                  sectionView={section}
-                  refreshView={this.props.refreshView}
                   handleDelete={(index) => {
                     this.deleteSection(index);
                   }}
                 />
-                <PrimaryButton
+                <PrimaryButtonContrast
                   style={{ marginBottom: "5vh" }} //adding bottom margin here since top-margin caused issues...
                   onClick={() => {
                     this.addNewSection(index + 1);
@@ -225,7 +266,7 @@ class MainViewMode extends React.Component {
                 >
                   Create New Section Here
                   <CreateOutlinedIcon />
-                </PrimaryButton>
+                </PrimaryButtonContrast>
               </React.Fragment>
             );
           })}
@@ -238,36 +279,63 @@ class MainViewMode extends React.Component {
 export default class surveyEditingView extends Component {
   constructor(props) {
     super(props);
-    this.survey = null;
     this.state = {
+      survey: null,
+      canUndo: false,
       isLoaded: false,
       popupDialogOpen: false,
-      surveyView: null,
       isDragging: false,
       inSectionReorgView: false,
     };
-    // this.setState = this.setState.bind(this); // so we can pass the setState function down to other components, not needed anymore
-    this.refreshSurveyViewState = this.refreshSurveyViewState.bind(this);
+    // this.setState = this.setState.bind(this); // so we can pass the setState function down to other components
+    this.modifySurvey = this.modifySurvey.bind(this);
+    this.surveyStateHistory = [];
 
     this.getView = this.getView.bind(this);
+    this.undoStateChange = this.undoStateChange.bind(this);
+    this.addStateToHistory = this.addStateToHistory.bind(this);
   }
 
-  //keeping track of the survey as a datastructure OUTSIDE of the state of the component, so that we can modify it however we want.
-  //whenever we want to rerener it, call this function to refresh the state / rerender props.
-  //need to make a shallow copy so that react knows its been updated
-  refreshSurveyViewState() {
-    //TODO: test if still updates without the shallow copy
-    //apaprently it does...
-    this.setState({ surveyView: this.survey });
+  addStateToHistory() {
+    this.surveyStateHistory.push(this.state.survey);
+    //if history gets too long, remove some stuff
+    if (this.surveyStateHistory.length > 50) {
+      this.surveyStateHistory.splice(0, 5);
+    }
+  }
+
+  undoStateChange() {
+    const length = this.surveyStateHistory.length;
+    if (length > 0) {
+      this.setState({ survey: this.surveyStateHistory[length - 1] }, () => {
+        this.surveyStateHistory.splice(length - 1, 1);
+      });
+    }
+
+    if (length < 2) {
+      this.setState({ canUndo: false });
+    }
+  }
+
+  //this function gets passed to children
+  //takes a unary function: input is the previous survey, output is new survey state
+  modifySurvey(newSurveyFunction) {
+    this.addStateToHistory();
+    this.setState((prevState) => {
+      console.log("prevstate is", prevState);
+      console.log("new state is", newSurveyFunction(prevState.survey));
+      // return {};
+      return {
+        survey: newSurveyFunction(prevState.survey),
+        canUndo: true,
+      };
+    });
   }
 
   componentDidMount() {
     const fetchData = async (surveyId) => {
       const result = await getSurveyById(surveyId);
-      this.survey = result;
       this.setState({ survey: result, isLoaded: true });
-
-      // console.log("survey data was", result, this.props.surveyId);
     };
     //id comes from URL parameter
     fetchData(this.props.match.params.surveyId);
@@ -277,17 +345,15 @@ export default class surveyEditingView extends Component {
     if (!this.state.inSectionReorgView) {
       return (
         <MainViewMode
-          surveyView={this.state.survey}
-          survey={this.survey}
-          refreshView={this.refreshSurveyViewState}
+          survey={this.state.survey}
+          modifySurvey={this.modifySurvey}
         />
       );
     } else {
       return (
         <SectionReorgViewMode
-          surveyView={this.state.survey}
-          survey={this.survey}
-          refreshView={this.refreshSurveyViewState}
+          survey={this.state.survey}
+          modifySurvey={this.modifySurvey}
         />
       );
     }
@@ -300,7 +366,7 @@ export default class surveyEditingView extends Component {
       <div>
         <Fab
           color={this.state.inSectionReorgView ? "secondary" : "primary"}
-          aria-label="add"
+          aria-label="section reorganisation"
           size="large"
           style={{
             position: "fixed",
@@ -317,6 +383,22 @@ export default class surveyEditingView extends Component {
           <SwapVertIcon />
         </Fab>
 
+        <Fab
+          color={"primary"}
+          aria-label="undo"
+          size="large"
+          disabled={!this.state.canUndo}
+          style={{
+            position: "fixed",
+            bottom: "8em",
+            right: "2em",
+            zIndex: 100,
+          }}
+          onClick={this.undoStateChange}
+        >
+          <UndoIcon />
+        </Fab>
+
         {this.state.isLoaded && (
           <div>
             <Typography style={{ color: "white" }} variant="h2">
@@ -325,19 +407,19 @@ export default class surveyEditingView extends Component {
             {this.getView()}
           </div>
         )}
-        <PrimaryButton
+        <PrimaryButtonContrast
           onClick={() => {
             editSurvey(this.survey);
           }}
         >
           Save & Upload Changes
-        </PrimaryButton>
+        </PrimaryButtonContrast>
       </div>
     );
   }
 }
 
-// import { useState, useEffect, createContext } from "react";
+// import React, { useState, useEffect, createContext } from "react";
 // import { Box, Button, Collapse, makeStyles } from "@material-ui/core";
 // import {
 //   Card,
@@ -588,3 +670,5 @@ export default class surveyEditingView extends Component {
 //     //    </Dialog>
 //   );
 // };
+
+// export default SurveyEditingView;

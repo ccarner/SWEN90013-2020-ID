@@ -4,12 +4,13 @@
   "surveyImageName": "1305799574060929024.png",
   "surveyVersion": "1.0",
   "surveyIntroduction": "This section of I-DECIDE walks you through some questions and activities to help you think about the health of your relationship with the partner or ex-partner who has made you feel afraid or unsafe.",
-  "surveyIntroductionHtmlB64": "PGgzPk15IFJlbGF0aW9uc2hpcCBIZWFsdGg8L2gzPgo8cD4KICBUaGlzIHNlY3Rpb24gb2YgSS1ERUNJREUgd2Fsa3MgeW91IHRocm91Z2ggc29tZSBxdWVzdGlvbnMgYW5kIGFjdGl2aXRpZXMgdG8KICBoZWxwIHlvdSB0aGluayBhYm91dCB0aGUgaGVhbHRoIG9mIHlvdXIgcmVsYXRpb25zaGlwIHdpdGggdGhlIHBhcnRuZXIgb3IKICBleC1wYXJ0bmVyIHdobyBoYXMgbWFkZSB5b3UgZmVlbCBhZnJhaWQgb3IgdW5zYWZlLgo8L3A+CjxoND5XaGF0IGlzIGEgaGVhbHRoeSByZWxhdGlvbnNoaXA/PC9oND4KPHA+CiAgU29tZXRpbWVzLCBpdCBjYW4gYmUgZGlmZmljdWx0IHRvIHRlbGwgV2hldGhlciBhIHJlbGF0aW9uc2hpcCBpcyBoZWFsdGh5IG9yCiAgdW5oZWFsdGh5IGJlY2F1c2Ugd2UgZG9jcyd0IGhhdmUgYW55dGhpbmcgdG8gY29tcGFyZSBpdCB0by4gR2VuZXJhbGx5LCBhCiAgaGVhbHRoeSByZWxhdGlvbnNoaXAgaW52b2x2ZXM6CjwvcD4KPHVsPgogIDxsaT5NdXR1YWwgdHJ1c3QgYW5kIHNoYXJlZCBwb3dlcjwvbGk+CiAgPGxpPlN1cHBvcnQgYW5kIG9wZW4gY29tbXVuaWNhcmlvbjwvbGk+CiAgPGxpPkNvbW1pdG1lbnQgYW5kIGhvbmVzdHk8L2xpPgo8L3VsPgpBbiB1bmhlYWx0aHkgcmVsYXRpb25zaGlwIGludm9sdmVzOgo8dWw+CiAgPGxpPlVuc3VwcG9ydGl2ZSBiZWhhdmlvdXI8L2xpPgogIDxsaT5NaXN1c2Ugb2YgcG93ZXIgYW5kIGF1dGhvcml0eTwvbGk+CiAgPGxpPlBhaW4sIGZlYXIgb3IgaGFybTwvbGk+CjwvdWw+CjxwPgogIE1vc3QgY291cGxlcyBoYXZlIGFyZ3VtZW50cyBhbmQgZmlnaHRzLCBidXQgdGhpcyBkb2VzIG5vdCBuZWNlc3NhcmlseSBtZWFuCiAgeW91ciByZWxhdGlvbnNoaXAgaXMgdW5oZWFsdGh5LiBIb3dldmVyICwgd2hlbiBvbmUgcGVyc29uIGlzIGZlZWxpbmcgdW5zYWZlIG9yCiAgYWZyYWlkIGluIHRoZSByZWxhdGlvbnNoaXAsIHRoaXMgaXMgdXN1YWxseSBhIHNpZ24gdGhhdCB0aGVyZSBhcmUgc2VyaW91cwogIHByb2JsZW1zLiBJdCBpcyBhIGdvb2QgaWRlYSB0byByZWd1bGFybHkgYXNzZXNzIHlvdXIgcmVsYXRpb25zaGlwIHVzaW5nIHRoZQogIHNjYWxlcyBiZWxvdy4KPC9wPg==",
+  "surveyIntroductionHtmlB64": "<h3>My Relationship Health</h3>\n<p>\n  This section of I-DECIDE walks you through some questions and activities to\n  help you think about the health of your relationship with the partner or\n  ex-partner who has made you feel afraid or unsafe.\n</p>\n<h4>What is a healthy relationship?</h4>\n<p>\n  Sometimes, it can be difficult to tell Whether a relationship is healthy or\n  unhealthy because we docs't have anything to compare it to. Generally, a\n  healthy relationship involves:\n</p>\n<ul>\n  <li>Mutual trust and shared power</li>\n  <li>Support and open communicarion</li>\n  <li>Commitment and honesty</li>\n</ul>\nAn unhealthy relationship involves:\n<ul>\n  <li>Unsupportive behaviour</li>\n  <li>Misuse of power and authority</li>\n  <li>Pain, fear or harm</li>\n</ul>\n<p>\n  Most couples have arguments and fights, but this does not necessarily mean\n  your relationship is unhealthy. However , when one person is feeling unsafe or\n  afraid in the relationship, this is usually a sign that there are serious\n  problems. It is a good idea to regularly assess your relationship using the\n  scales below.\n</p>",
+  "surveyResultHtml": "",
+  "surveyResultHeading": "",
   "surveySections": [
     {
-      "sectionTitle": "Your relationship with the current or ex-partner",
-      "sectionIntroduction": "Relationship Survey, section 1",
-      "sectionIntroductionHtmlB64": "",
+      "sectionTitleText": "Your relationship with the current or ex-partner",
+      "sectionIntroductionBodyHtml": "Relationship Survey, section 1",
       "sectionIndex": 0,
       "questions": [
         {
@@ -39,9 +40,8 @@
       "sectionResultAlgorithm": null
     },
     {
-      "sectionTitle": "Partner Behaviours",
-      "sectionIntroduction": "Relationship Survey Section 2",
-      "sectionIntroductionHtmlB64": "",
+      "sectionTitleText": "Partner Behaviours",
+      "sectionIntroductionBodyHtml": "Relationship Survey Section 2",
       "sectionId": "1",
       "sectionIndex": 1,
       "questions": [

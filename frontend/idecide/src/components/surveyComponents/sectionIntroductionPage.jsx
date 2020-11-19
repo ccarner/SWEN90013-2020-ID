@@ -7,22 +7,20 @@ import InfoCard from "../reusableComponents/infoCard";
  */
 export default function SectionIntroductionPage(props) {
   var cardBody = null;
-  if (props.section.sectionIntroductionHtmlB64) {
+  if (props.section.sectionIntroductionBodyHtml) {
     cardBody = (
       <div
         className="content"
         dangerouslySetInnerHTML={{
-          __html: atob(props.section.sectionIntroductionHtmlB64),
+          __html: props.section.sectionIntroductionBodyHtml,
         }}
       ></div>
     );
-  } else {
-    cardBody = props.section.sectionIntroduction;
   }
 
   return (
     <InfoCard
-      heading={props.section.sectionTitle}
+      heading={props.section.sectionTitleText}
       cardTitle={null}
       cardBody={cardBody}
     />

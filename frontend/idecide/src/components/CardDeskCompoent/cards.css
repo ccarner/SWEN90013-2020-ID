@@ -16,7 +16,6 @@
   width: 100%;
 }
 .cards-container {
-  padding-top: 50px;
   display: flex;
   flex-direction: column;
   -webkit-box-align: center;
@@ -30,7 +29,7 @@
   flex-direction: column;
   -webkit-box-pack: center;
   justify-content: center;
-  height: 450px;
+  height: 650px;
   width: calc(100vw - 40px);
   max-width: 420px;
   position: relative;

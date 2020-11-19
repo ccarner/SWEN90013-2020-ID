@@ -1,3 +1,4 @@
+//this class IS being used
 import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import EditIcon from "@material-ui/icons/Edit";
@@ -5,12 +6,6 @@ import Editable from "../dashboardAllSurveysExpose";
 import { DropzoneDialogBase } from "material-ui-dropzone";
 import { saveAs } from "file-saver";
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  TextField,
-  DialogContentText,
-  DialogActions,
   Box,
   Collapse,
   Card,
@@ -215,7 +210,7 @@ const SurveyCard = ({ surveyHeaders, editable, ...rest }) => {
             surveyId={surveyHeaders.surveyId}
           />
         </CardContent>
-        <Divider />
+        {/* <Divider />
         <Box p={1}>
           <Grid container justify="space-between" spacing={2}>
             <Grid item>
@@ -240,7 +235,7 @@ const SurveyCard = ({ surveyHeaders, editable, ...rest }) => {
               </Typography>
             </Grid>
           </Grid>
-        </Box>
+        </Box> */}
       </Card>
       {/* <Dialog
         open={open}
