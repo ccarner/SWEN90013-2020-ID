@@ -3,17 +3,18 @@
   "surveyTitle": "My Situation",
   "surveyVersion": "1.0",
   "surveyIntroduction": "In order for us to provide you with relevant help and information, we need to ask a couple of questions about your current situation",
-  "surveyIntroductionHtmlB64": "PHA+IEluIHRoaXMgc2VjdGlvbiB3ZSB3aWxsIGFzayBhYm91dCB5b3VyIGludGVudGlvbnMgZm9yIHlvdXIgCnJlbGF0aW9uc2hpcCB3aXRoIHlvdXIgcGFydG5lciBvciBleC0gcGFydG5lci4gV2UgCnVuZGVyc3RhbmQgdGhhdCB5b3VyIGZlZWxpbmdzIGFib3V0IHdoYXQgeW91IHdvdWxkIGxpa2UgCnRvIGRvIG1heSBjaGFuZ2UsIGFuZCB0aGF0IHlvdSBtaWdodCBmZWVsIGNvbmZ1c2VkLiBJdCBpcyAKYmVzdCB0byBhbnN3ZXIgYWJvdXQgaG93IHlvdSBhcmUgZmVlbGluZyByaWdodCBub3csIGV2ZW4gCmlmIHRoaXMgbWlnaHQgYmUgZGlmZmVyZW50IGluIHRoZSBmdXR1cmUuIDwvcD4=",
+  "surveyIntroductionHtmlB64": "<p>\n  In this section we will ask about your intentions for your relationship with\n  your partner or ex- partner. We understand that your feelings about what you\n  would like to do may change, and that you might feel confused. It is best to\n  answer about how you are feeling right now, even if this might be different in\n  the future.\n</p>",
+  "surveyResultHtml": "",
+  "surveyResultHeading": "",
   "surveyImageName": "",
   "surveyDisplayOrder": 1,
   "surveySections": [
     {
       "sectionId": "1",
-      "sectionTitle": "You and Your Family",
-      "sectionIntroduction": "These questions are about your current situation and your family",
-      "surveyIntroductionHtmlB64": "",
-      "sectionFeedbackHtml": "<p>Thank you for completing this section</p>",
-      "sectionFeedbackHeading": "Thank you",
+      "sectionTitleText": "You and Your Family",
+      "surveyIntroductionHtmlB64": "These questions are about your current situation and your family",
+      "sectionFeedbackBodyHtml": "",
+      "sectionFeedbackHeadingText": "",
       "questions": [
         {
           "questionId": "1",

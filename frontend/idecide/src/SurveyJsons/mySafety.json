@@ -3,15 +3,16 @@
   "surveyTitle": "My Safety",
   "surveyVersion": "1.0",
   "surveyIntroduction": "We would like to ask you some questions about behaviours or actions you may have experienced from your partner or ex-partner.",
-  "surveyIntroductionHtmlB64": "PHA+PHN0cm9uZz5Zb3VyIFNhZmV0eSBpcyBJbXBvcnRhbnQuPC9zdHJvbmc+PC9wPgo8cD5UaGlzIG1vZHVsZSB3aWxsIGFzayBxdWVzdGlvbnMgYWJvdXQgYWN0aW9ucyB5b3VyIHBhcnRuZXIgaGFzIHRha2VuIHdoaWNoIG1heSBoYXZlIGFmZmVjdGVkIHlvdXIgc2FmZXR5LjwvcD4=",
+  "surveyIntroductionHtmlB64": "<h3>Partner Behaviours</h3>\n<p>\n  We would like to ask you some questions about behaviours or actions you may\n  have experienced from your partner or ex- partner. We would like to know it\n  vou experienced anv Of the actions listed below trom the partner / ex-partner\n  who made you feel afraid. Please tick the frequency, over the last twelve\n  months, that it happened to you. There is space at the bottom for behaviours\n  not in the list.\n</p>",
+  "surveyResultHtml": "",
+  "surveyResultHeading": "",
   "surveyImageName": "",
   "surveyDisplayOrder": 2,
   "surveySections": [
     {
       "sectionId": "1",
-      "sectionTitle": "Partner Behaviours",
-      "sectionIntroduction": "We would like to know if you have experienced any of the actions listed below from the partner / ex-partner who made you feel afraid. Please select the frequency, over the last 12 months, that it happened to you.",
-      "sectionIntroductionHtmlB64": "PGgzPk15IFNhZmV0eTwvaDM+CjxwPlRoaXMgbW9kdWxlIHdpbGwgYXNrIHF1ZXN0aW9ucyByZWxhdGVkIHRvIHlvdXIgcGh5c2ljYWwgc2FmZXR5IGluIHlvdXIgcmVsYXRpb25zaGlwLjwvcD4KPGg0PkEgaGVhbHRoeSByZWxhdGlvbnNoaXAgdHlwaWNhbGx5IGludm9sdmVzOjwvaDQ+Cjx1bD4KPGxpPk11dHVhbCB0cnVzdCBhbmQgc2hhcmVkIHBvd2VyPC9saT4KPGxpPlN1cHBvcnQgYW5kIG9wZW4gY29tbXVuaWNhcmlvbjwvbGk+CjxsaT5Db21taXRtZW50IGFuZCBob25lc3R5PC9saT4KPC91bD4KPGg0PkEgaGVhbHRoeSByZWxhdGlvbnNoaXAgdHlwaWNhbGx5IGludm9sdmVzOjwvaDQ+Cjx1bD4KPGxpPlVuc3VwcG9ydGl2ZSBiZWhhdmlvdXI8L2xpPgo8bGk+TWlzdXNlIG9mIHBvd2VyIGFuZCBhdXRob3JpdHk8L2xpPgo8bGk+UGFpbiwgZmVhciBvciBoYXJtPC9saT4KPC91bD4=",
+      "sectionTitleText": "Partner Behaviours",
+      "sectionIntroductionBodyHtml": "We would like to know if you have experienced any of the actions listed below from the partner / ex-partner who made you feel afraid. Please select the frequency, over the last 12 months, that it happened to you.",
       "questions": [
         {
           "questionId": "1",
@@ -571,9 +572,8 @@
     },
     {
       "sectionId": "2",
-      "sectionTitle": "Danger Assessment",
-      "sectionIntroduction": "Next, please answer these questions. These answers will help us determine how much physical danger you are in from your partner or ex-partner",
-      "sectionIntroductionHtmlB64": "PGRpdj4KPGRpdj5UaGVzZSBhbnN3ZXJzIHdpbGwgaGVscCB1cyBkZXRlcm1pbmUgaG93IG11Y2ggcGh5c2ljYWwgZGFuZ2VyIHlvdSBhcmUgaW4gZnJvbSB5b3VyIHBhcnRuZXIgb3IgZXgtcGFydG5lcjwvZGl2Pgo8L2Rpdj4=",
+      "sectionTitleText": "Danger Assessment",
+      "sectionIntroductionBodyHtml": "Next, please answer these questions. These answers will help us determine how much physical danger you are in from your partner or ex-partner",
       "questions": [
         {
           "questionId": "31",
@@ -648,11 +648,11 @@
           "conditions": {
             "any": [
               {
-                "fact": "totalAnswerPoints",
+                "fact": "TOTAL_ANSWER_POINTS",
                 "operator": "greaterThanInclusive",
                 "value": 1,
                 "params": {
-                  "totalAnswerPointsQuestions": [["2", "2", "31-42"]]
+                  "totalAnswerPointsQuestions": [["2", "31-42"]]
                 }
               }
             ]
@@ -669,11 +669,11 @@
           "conditions": {
             "any": [
               {
-                "fact": "totalAnswerPoints",
+                "fact": "TOTAL_ANSWER_POINTS",
                 "operator": "lessThan",
                 "value": 1,
                 "params": {
-                  "totalAnswerPointsQuestions": [["2", "2", "31-42"]]
+                  "totalAnswerPointsQuestions": [["2", "31-42"]]
                 }
               }
             ]

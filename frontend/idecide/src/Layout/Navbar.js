@@ -42,7 +42,6 @@ import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
 import { getAllSurveys, getSectionBySurveyId } from "../API/surveyAPI";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import PhoneIcon from "@material-ui/icons/Phone";
-import Loading from "../components/util/loading";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import { Box, Tooltip } from "@material-ui/core";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
@@ -56,6 +55,7 @@ import GetHelpDialog from "../components/reusableComponents/getHelpDialog";
 import { useHistory } from "react-router-dom";
 import keyValuePairsInfo from "./keyValuePagesInfo.json";
 import { EditIcon } from "@material-ui/icons/Edit";
+import Loading from "./../components/reusableComponents/loading";
 
 const drawerWidth = 240;
 
@@ -73,6 +73,7 @@ const theme = createMuiTheme({
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    height: "100vh",
   },
   appBar: {
     transition: theme.transitions.create(["margin", "width"], {
@@ -454,6 +455,25 @@ function NavBar(props) {
                     >
                       Download Data
                     </Typography>
+                  </ListItem>
+                  <ListItem
+                    button
+                    onClick={() => {
+                      history.push("/dashboard/images");
+                    }}
+                  >
+                    <ListItemIcon>
+                      <AssignmentIcon />
+                    </ListItemIcon>
+                    <Typography
+                      color="textPrimary"
+                      gutterBottom
+                      variant="body1"
+                    >
+                      Images
+                    </Typography>
+                    <ListItemText />
+                    {/* {showSiteComponents ? <ExpandLess /> : <ExpandMore />} */}
                   </ListItem>
                 </List>
               </Drawer>

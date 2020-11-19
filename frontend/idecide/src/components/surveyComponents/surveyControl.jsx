@@ -11,12 +11,15 @@ import SectionIntroductionPage from "./sectionIntroductionPage";
 import SurveyResultsPage from "./surveyResultsPage";
 import SectionResultsPage from "./sectionResultsPage";
 import ProgressBar from "../reusableComponents/progressBar";
-import LoadingSpinner from "../reusableComponents/loadingSpinner";
+import CircularProgressWithLabel from "../reusableComponents/circularProgressWithLabel";
+import LoadingSpinner from "../reusableComponents/loading";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
 import evaluateRule from "../RuleEngine/evaluateFeedback";
-import Grid from "@material-ui/core/Grid";
+
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ViewAndFooter from "./../reusableComponents/viewAndFooter";
+import { CircularProgress } from "@material-ui/core";
 /**
  * This component is passed an ID for a survey, and then:
  * a) fetches survey data from server
@@ -72,7 +75,7 @@ export default class SurveyControl extends Component {
     var surveyPageMap = [];
     var sectionCounter = 0;
     for (var section of surveyFile.surveySections) {
-      if (section.sectionIntroductionHtmlB64 || section.sectionIntroduction) {
+      if (section.sectionIntroductionBodyHtml) {
         // if the file has an intro (html or text), note it in the map
         surveyPageMap.push([sectionCounter, "introduction"]);
       }
@@ -81,8 +84,8 @@ export default class SurveyControl extends Component {
 
       if (
         section.sectionResultAlgorithm ||
-        section.sectionFeedbackHtml ||
-        section.sectionFeedbackHeading
+        section.sectionFeedbackBodyHtml ||
+        section.sectionFeedbackHeadingText
       ) {
         // if the file has a result algorithm, note it on the map
         surveyPageMap.push([sectionCounter, "results"]);
@@ -280,26 +283,33 @@ export default class SurveyControl extends Component {
   render() {
     const { isLoaded } = this.state;
     var renderArray = [];
+    var footer = null; // footer is the bar stuck at bottom of display
 
     // the top bar with status of completion, name of survey etc
-    renderArray.push(
+    var header = (
       <Card style={{ zIndex: -1, width: "100%" }}>
-        <Container>
-          <Row className="align-items-center">
-            <Col>
-              <h3 style={{ color: "#9572A4", margin: "20px" }}>
-                {this.state.surveyFile.surveyTitle}
-              </h3>
-            </Col>
-            <Col>
-              <ProgressBar
-                showLabel={false}
-                value={this.state.percentageCompleted}
-              />
-            </Col>
-            <Col>{Math.round(this.state.percentageCompleted)}% Completed</Col>
-          </Row>
-        </Container>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "row",
+            margin: "0.5em",
+          }}
+        >
+          <h3 style={{ color: "#9572A4", marginRight: "1em" }}>
+            {this.state.surveyFile.surveyTitle}
+          </h3>
+
+          <CircularProgressWithLabel value={this.state.percentageCompleted} />
+
+          {/* <div style={{ width: "min(30em, 50%)" }}>
+            <ProgressBar
+              showLabel={true}
+              value={this.state.percentageCompleted}
+            />
+          </div> */}
+        </div>
       </Card>
     );
 
@@ -313,25 +323,11 @@ export default class SurveyControl extends Component {
       //we have loaded
       if (this.state.currentSurveyState === "introduction") {
         renderArray.push(
-          // todo: unify these grid styles as eg a css class...
-          <Grid
-            container
-            style={{
-              alignSelf: "center",
-              alignItems: "center",
-              justifyContent: "center",
-              minHeight: "70vh",
-              padding: "2em",
-              flexDirection: "column",
-              flexWrap: "nowrap",
-            }}
-          >
-            <SurveyIntroductionPage
-              returnHome={this.props.returnHome}
-              survey={this.state.surveyFile}
-              startSurvey={this.handleStart}
-            />
-          </Grid>
+          <SurveyIntroductionPage
+            returnHome={this.props.returnHome}
+            survey={this.state.surveyFile}
+            startSurvey={this.handleStart}
+          />
         );
       } else if (this.state.currentSurveyState === "started") {
         const pageType = this.currentPageType();
@@ -339,95 +335,56 @@ export default class SurveyControl extends Component {
         if (pageType === "introduction") {
           //this is a section introduction
           renderArray.push(
-            <Grid
-              container
-              style={{
-                alignSelf: "center",
-                alignItems: "center",
-                justifyContent: "center",
-                minHeight: "70vh",
-                padding: "2em",
-                flexDirection: "column",
-                flexWrap: "nowrap",
-              }}
-            >
-              <SectionIntroductionPage
-                section={
-                  this.state.surveyFile.surveySections[
-                    this.currentSectionNumber()
-                  ]
-                }
-              />
-            </Grid>
+            <SectionIntroductionPage
+              section={
+                this.state.surveyFile.surveySections[
+                  this.currentSectionNumber()
+                ]
+              }
+            />
           );
         } else if (pageType === "results") {
           //add section results page here...
           renderArray.push(
-            <Grid
-              container
-              style={{
-                alignSelf: "center",
-                alignItems: "center",
-                justifyContent: "center",
-                minHeight: "70vh",
-                padding: "2em",
-                flexDirection: "column",
-                flexWrap: "nowrap",
-              }}
-            >
-              <SectionResultsPage
-                heading={
-                  this.state.surveyFile.surveySections[
-                    this.currentSectionNumber()
-                  ].sectionFeedbackHeading
-                }
-                bodyHtml={
-                  this.state.surveyFile.surveySections[
-                    this.currentSectionNumber()
-                  ].sectionFeedbackHtml
-                }
-                feedbackText={this.state.feedbackText}
-                feedbackImage={this.state.feedbackImage}
-                feedbackCategory={this.state.feedbackCategory}
-              />
-            </Grid>
+            <SectionResultsPage
+              heading={
+                this.state.surveyFile.surveySections[
+                  this.currentSectionNumber()
+                ].sectionFeedbackHeadingText
+              }
+              bodyHtml={
+                this.state.surveyFile.surveySections[
+                  this.currentSectionNumber()
+                ].sectionFeedbackBodyHtml
+              }
+              feedbackText={this.state.feedbackText}
+              feedbackImage={this.state.feedbackImage}
+              feedbackCategory={this.state.feedbackCategory}
+            />
           );
         } else if (pageType === "questions") {
           //push the questions for the current section to the screen
           renderArray.push(
-            <Grid
-              container
-              style={{
-                alignSelf: "center",
-                alignItems: "center",
-                justifyContent: "center",
-                minHeight: "70vh",
-                padding: "2em",
-                flexDirection: "column",
-                flexWrap: "nowrap",
+            <SurveySection
+              questionHandler={this.questionHandler}
+              section={
+                this.state.surveyFile.surveySections[
+                  this.currentSectionNumber()
+                ]
+              }
+              canProgress={() => {
+                this.setState({ canProgress: true });
               }}
-            >
-              <SurveySection
-                questionHandler={this.questionHandler}
-                section={
-                  this.state.surveyFile.surveySections[
-                    this.currentSectionNumber()
-                  ]
-                }
-                canProgress={() => {
-                  this.setState({ canProgress: true });
-                }}
-                results={this.state.results.questions}
-              />
-            </Grid>
+              results={this.state.results.questions}
+            />
           );
         }
         // bottom navigation
-        renderArray.push(
+        // renderArray.push(
+        footer = (
           <React.Fragment>
             <Card
               style={{
-                position: "fixed",
                 bottom: 0,
                 width: "100%",
               }}
@@ -460,33 +417,44 @@ export default class SurveyControl extends Component {
             </Card>
           </React.Fragment>
         );
+        // );
       } else if (this.state.currentSurveyState === "submitted") {
         renderArray.push(
-          <Grid
-            container
-            style={{
-              alignSelf: "center",
-              alignItems: "center",
-              justifyContent: "center",
-              minHeight: "70vh",
-              padding: "2em",
-              flexDirection: "column",
-              flexWrap: "nowrap",
-            }}
-          >
-            <SurveyResultsPage
-              returnHome={this.props.returnHome}
-              heading={this.state.surveyFile.surveyResultHeading}
-              bodyHtml={this.state.surveyFile.surveyResultHtml}
-              surveyResults={this.state.results.questions}
-              feedbackText={this.state.feedbackText}
-              feedbackImage={this.state.feedbackImage}
-              feedbackCategory={this.state.feedbackCategory}
-            />
-          </Grid>
+          <SurveyResultsPage
+            returnHome={this.props.returnHome}
+            heading={this.state.surveyFile.surveyResultHeading}
+            bodyHtml={this.state.surveyFile.surveyResultHtml}
+            surveyResults={this.state.results.questions}
+            feedbackText={this.state.feedbackText}
+            feedbackImage={this.state.feedbackImage}
+            feedbackCategory={this.state.feedbackCategory}
+          />
         );
       }
     }
-    return renderArray;
+
+    return (
+      <ViewAndFooter
+        view={
+          <div
+            style={{ display: "flex", flexDirection: "column", height: "100%" }}
+          >
+            {header}
+            <div
+              id="headerFlexDiv"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                flexGrow: 1,
+              }}
+            >
+              {renderArray}
+            </div>
+          </div>
+        }
+        footer={footer}
+      />
+    );
   }
 }

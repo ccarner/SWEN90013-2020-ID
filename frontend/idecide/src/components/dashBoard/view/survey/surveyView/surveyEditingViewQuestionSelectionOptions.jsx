@@ -8,16 +8,26 @@ import PrimaryButton from "./../../../../reusableComponents/PrimaryButton";
 export default class surveyEditingViewSelectionOptions extends Component {
   constructor(props) {
     super(props);
+    this.getQuestionOptionFromProps = this.getQuestionOptionFromProps.bind(
+      this
+    );
+  }
+
+  getQuestionOptionFromProps() {
+    return this.props.survey.surveySections[this.props.sectionIndex].questions[
+      this.props.questionIndex
+    ].selectionOptions[this.props.selectionOptionIndex];
   }
 
   render() {
+    const option = this.getQuestionOptionFromProps();
     return (
       <Card
         style={{ display: "flex", flexDirection: "column", padding: "20px" }}
       >
         <TextField
           label={"Selection Option #" + (this.props.selectionOptionIndex + 1)}
-          value={this.props.selectionOptionView || ""}
+          value={option || ""}
           variant="outlined"
           onChange={(event) => {
             this.props.handleUpdate(

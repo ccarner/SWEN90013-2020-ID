@@ -1,13 +1,12 @@
+import apiConfig from "./apiConfig.json";
 const axios = require("axios");
 
-// const USER_URL = "http://34.64.134.143:9008";
-const USER_URL = "https://www.idecide.icu:9012";
-// https://www.idecide.icu:9012/user/
+const API_URL = apiConfig.rootApiUrl + apiConfig.applicationPort;
 
 export async function registerUser(userIn) {
   const { username, password } = userIn;
 
-  const endpoint = USER_URL + `/user`;
+  const endpoint = API_URL + `/user`;
 
   const result = await axios({
     url: endpoint, // send a request to the library API
@@ -30,7 +29,7 @@ export async function registerUser(userIn) {
 }
 
 export async function getAllAdmins() {
-  const endpoint = USER_URL + `/admin/adminList`;
+  const endpoint = API_URL + `/admin/adminList`;
   try {
     const result = await axios({
       url: endpoint, // send a request to the library API
@@ -47,7 +46,7 @@ export async function getAllAdmins() {
 }
 
 export function getAllUsers() {
-  const endpoint = `https://www.idecide.icu:9012/user/userList`;
+  const endpoint = API_URL + `/user/userList`;
   try {
     return axios.get(endpoint).then((res) => res.data);
   } catch (e) {
@@ -61,7 +60,7 @@ export function getUserContext() {
 
 export async function loginUser(userIn) {
   const { username, password } = userIn;
-  var endpoint = USER_URL + `/user/login`;
+  var endpoint = API_URL + `/user/login`;
 
   const result = await axios({
     url: endpoint, // send a request to the library API
@@ -88,7 +87,7 @@ export async function loginUser(userIn) {
 }
 
 export async function anonymousUser() {
-  var endpoint = USER_URL + `/user/anonymousLogin`;
+  var endpoint = API_URL + `/user/anonymousLogin`;
   const result = await axios({
     url: endpoint, // send a request to the library API
     method: "GET", // HTTP GET method
@@ -98,7 +97,8 @@ export async function anonymousUser() {
   });
 
   let userContext = {
-    userType: result.data.data.roles,
+    // userType: result.data.data.roles,
+    userType: "anon",
     token: result.data.data.token,
     userId: result.data.data.id,
   };

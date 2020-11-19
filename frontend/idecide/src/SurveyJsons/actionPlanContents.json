@@ -25,7 +25,7 @@
   },
   "DISC_EPLAN": {
     "description": "Discuss your emergency plan with a trusted family member or friend.",
-    "strategyHtmlString": "<p>Talk to family members or friends about your emergency plan. Tell them how they can help and support you. Share your plan only with those who you trust to keep your plan private and to help you if you need it. Don&rsquo;t tell anyone who may tell your partner. &nbsp;</p>",
+    "strategyHtmlString": "<p>Talk to family members or friends about your emergency plan. Tell them how they can help and support you. Share your plan only with those who you trust to keep your plan private and to help you if you need it. Don't tell anyone who may tell your partner. &nbsp;</p>",
     "strategyType": "EMERGENCY",
     "sequence": 1
   },
@@ -49,7 +49,7 @@
   },
   "GATHER_IMP_ITEMS": {
     "description": "Gather copies of important papers, phone numbers, extra house keys, car keys, and cash, and organise a safe place to store them.",
-    "strategyHtmlString": "<p>If you need to leave quickly, you may not have time to take important things you will need. These include: <br />&bull; Birth certificates, passports or other identification.<br />&bull; Health cards (for you and your children).<br />&bull; Bank and credit cards, bank account numbers and PINS or passwords for accounts.<br />&bull; Your last Income Tax Return / Notice of Assessment. <br />&bull; House and/or car keys.<br />&bull; Medication and/or prescriptions. <br />&bull; Pictures of the abuser and your children (in case you need to show others what they look like). <br />&bull; Personal address/telephone book. <br />&bull; Mobile phone. <br />&bull; Legal documents (e.g. immigration papers, house deed/lease, restraining orders/peace bonds, ownership for a car).<br />&bull; Anything else which is important to you (e.g. photos, jewellery, or things with sentimental value).<br />&bull; Special toys or comforts for children, pets, or for yourself <br /><br />If you can&rsquo;t store these things in your home for fear your partner will find them, make copies of documents and leave them with someone you trust. Your local women&rsquo;s shelter will also keep them for you.</p>",
+    "strategyHtmlString": "<p>If you need to leave quickly, you may not have time to take important things you will need. These include: <br> Birth certificates, passports or other identification.<br> Health cards (for you and your children).<br> Bank and credit cards, bank account numbers and PINS or passwords for accounts.<br> Your last Income Tax Return / Notice of Assessment. <br> House and/or car keys.<br> Medication and/or prescriptions. <br> Pictures of the abuser and your children (in case you need to show others what they look like). <br> Personal address/telephone book. <br> Mobile phone. <br> Legal documents (e.g. immigration papers, house deed/lease, restraining orders/peace bonds, ownership for a car).<br> Anything else which is important to you (e.g. photos, jewellery, or things with sentimental value).<br> Special toys or comforts for children, pets, or for yourself <br><br>",
     "strategyType": "EMERGENCY",
     "sequence": 1
   },
@@ -61,7 +61,7 @@
   },
   "PLAN_CHILD_SAFE": {
     "description": "Find somewhere to send your children if your partner becomes abusive",
-    "strategyHtmlString": "<p>Violence between adults can be unsafe or threatening for children. If they are old enough, it may be better for children to leave the house if your partner becomes abusive. Together with your child, make a list of adults they feel safe with. This could be a trusted neighbour, family member or friend, but preferably somebody close by who can be reached quickly.&nbsp;</p><p>Once you and your child/ren have chosen a safe person, ask that person if they would be prepared to look after your child in an emergency. Make sure your child knows their telephone number, address, and how to get to the safe person&rsquo;s house. Practice the safety plan.</p>",
+    "strategyHtmlString": "<p>Violence between adults can be unsafe or threatening for children. If they are old enough, it may be better for children to leave the house if your partner becomes abusive. Together with your child, make a list of adults they feel safe with. This could be a trusted neighbour, family member or friend, but preferably somebody close by who can be reached quickly.&nbsp;</p><p>Once you and your child/ren have chosen a safe person, ask that person if they would be prepared to look after your child in an emergency. Make sure your child knows their telephone number, address, and how to get to the safe person's house. Practice the safety plan.</p>",
     "strategyType": "CHILDREN",
     "sequence": 2
   },

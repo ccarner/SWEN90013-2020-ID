@@ -3,6 +3,7 @@ import { getCsvDownloadLink } from "../../API/surveyResultsAPI";
 import PrimaryButton from "./../reusableComponents/PrimaryButton";
 import { Link } from "react-router-dom";
 import { Card, Container } from "react-bootstrap";
+import apiConfig from "./apiConfig.json";
 
 export default class AdminConsole extends Component {
   constructor(props) {
@@ -21,6 +22,8 @@ export default class AdminConsole extends Component {
   }
 
   render() {
+    const csvUrl =
+      apiConfig.rootApiUrl + apiConfig.applicationPort + apiConfig.csvLocation;
     if (!this.state.downloadUrl) {
       return (
         // the commented out button will be first used to generate a download link
@@ -34,15 +37,18 @@ export default class AdminConsole extends Component {
               <Card.Title>Admin Console</Card.Title>
               {/* NOTE: currently this is hardcoded to one URL, but in future we need to use the API 
               to obtain a download link first (currently had CORS issues so hardcoded link) */}
-              <a href="http://8.210.28.169/files/totalResult.csv" download>
+
+              <a href={csvUrl} download>
                 <PrimaryButton extraStyle={{ width: "40em" }}>
                   Click here to download a CSV file of all results
                 </PrimaryButton>
-               
               </a>
-              <PrimaryButton extraStyle={{ width: "40em" }} onClick={()=>window.location.href="../../dashboard"}>
-                 Admin Dashboard
-                </PrimaryButton>
+              <PrimaryButton
+                extraStyle={{ width: "40em" }}
+                onClick={() => (window.location.href = "../../dashboard")}
+              >
+                Admin Dashboard
+              </PrimaryButton>
             </Card.Body>
           </Card>
         </Container>

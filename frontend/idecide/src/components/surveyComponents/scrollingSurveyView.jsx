@@ -54,7 +54,6 @@ export default class ScrollingSurveyView extends Component {
       <React.Fragment>
         <div
           style={{
-            marginBottom: "10vh",
             display: "flex",
             overflowX: "auto",
             whiteSpace: "nowrap",

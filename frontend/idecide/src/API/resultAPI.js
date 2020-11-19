@@ -1,10 +1,11 @@
 import { getUserContext } from "./loginAPI";
+import apiConfig from "./apiConfig.json";
 const axios = require("axios");
 
-const USER_URL = "https://www.idecide.icu:9012";
+const API_URL = apiConfig.rootApiUrl + apiConfig.applicationPort;
 
 export async function getResultByUser(userId) {
-  var endpoint = USER_URL + `/answer/getResult/${userId}`;
+  var endpoint = API_URL + `/answer/getResult/${userId}`;
   const result = await axios({
     url: endpoint, // send a request to the library API
     method: "GET", // HTTP GET method

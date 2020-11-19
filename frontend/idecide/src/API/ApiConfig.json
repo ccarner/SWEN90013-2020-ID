@@ -1,2 +1,6 @@
-//add the API configs here, eg URLs
-{}
+{
+  "rootApiUrl": "https://www.idecide.icu",
+  "applicationPort": ":9012",
+  "fileServerPort": ":443",
+  "csvFileLocation": "/files/totalResult.csv"
+}

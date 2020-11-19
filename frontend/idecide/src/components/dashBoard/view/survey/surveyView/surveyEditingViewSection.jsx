@@ -11,53 +11,52 @@ import PrimaryButton from "./../../../../reusableComponents/PrimaryButton";
 import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import update from "immutability-helper";
+import EditAlgorithmView from "./algorithmView/editAlgorithmView";
 
 export default class SurveyEditingViewSection extends Component {
   constructor(props) {
     super(props);
-    this.updateFlag = false;
-    this.state = {
-      currentDialogShowing: "none", // one option per dialog type, eg "delete"
-    };
-    //filter out and grab the section we're actually working on.
-    this.renderDialogs = this.renderDialogs.bind(this);
-    this.handleChildHasUpdated = this.handleChildHasUpdated.bind(this);
-    this.componentDidUpdate = this.componentDidUpdate.bind(this);
     this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
   }
 
-  //These methods ensure that only sections which have children that have updated will be rerendered...
-  handleChildHasUpdated() {
-    this.updateFlag = true;
-  }
-
-  componentDidUpdate() {
-    this.updateFlag = false;
-  }
-
   shouldComponentUpdate(newProps) {
-    return this.updateFlag;
+    return (
+      this.props.survey.surveySections[this.props.sectionIndex] !==
+      newProps.survey.surveySections[this.props.sectionIndex]
+    );
   }
 
   handleChange(eventType, event) {
     var value = event.target.value;
-    this.props.sectionDataStructure[eventType] = value;
-    this.updateFlag = true;
-    this.props.refreshView();
+    // this.props.sectionDataStructure[eventType] = value;
+
+    const updateSection = (prevSurvey) =>
+      update(prevSurvey, {
+        surveySections: {
+          [this.props.sectionIndex]: {
+            [eventType]: { $set: value },
+          },
+        },
+      });
+
+    this.props.modifySurvey(updateSection);
   }
 
   deleteQuestion(index) {
-    this.props.sectionDataStructure.questions.splice(index, 1);
-    this.props.refreshView();
+    // this.props.sectionDataStructure.questions.splice(index, 1);
+
+    const deleteQ = (prevSurvey) =>
+      update(prevSurvey, {
+        surveySections: {
+          [this.props.sectionIndex]: { questions: { $splice: [[index, 1]] } },
+        },
+      });
+    this.props.modifySurvey(deleteQ);
   }
 
   addNewQuestion(indexNumInsertBefore) {
-    //TODO: need to add an algorithm to choose a new sectionId automatically when creating a new section
+    //TODO: need to add an algorithm to choose a new questionID automatically when creating a new section
     var d = new Date();
     var n = d.getMilliseconds();
 
@@ -68,60 +67,30 @@ export default class SurveyEditingViewSection extends Component {
       questionImage: "",
     };
 
-    this.props.sectionDataStructure.questions.splice(
-      indexNumInsertBefore,
-      0,
-      blankQuestion
-    );
-    this.updateFlag = true;
-    this.refreshView();
-  }
+    const addQ = (prevSurvey) =>
+      update(prevSurvey, {
+        surveySections: {
+          [this.props.sectionIndex]: {
+            questions: { $splice: [[indexNumInsertBefore, 0, blankQuestion]] },
+          },
+        },
+      });
+    this.props.modifySurvey(addQ);
 
-  renderDialogs() {
-    console.log("here rendering current dialog showing");
-    if (this.state.currentDialogShowing === "delete") {
-      return (
-        <Dialog
-          open={this.state.currentDialogShowing === "delete"}
-          onClose={() => {
-            this.setState({ currentDialogShowing: "none" });
-            this.updateFlag = true;
-            this.props.refreshView();
-          }}
-        >
-          <DialogTitle>{"Confirm Section Delete?"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Are you sure you want to delete this entire section and all
-              associated questions?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <PrimaryButton
-              onClick={() => {
-                this.setState({ currentDialogShowing: "none" });
-                this.updateFlag = true;
-                this.props.refreshView();
-              }}
-              autoFocus
-            >
-              Cancel
-            </PrimaryButton>
-            <PrimaryButton
-              onClick={() => this.props.handleDelete(this.props.sectionIndex)}
-            >
-              Confirm Delete <DeleteForeverOutlinedIcon />
-            </PrimaryButton>
-          </DialogActions>
-        </Dialog>
-      );
-    }
+    //above is immutability-helper version of:
+    // this.props.sectionDataStructure.questions.splice(
+    //   indexNumInsertBefore,
+    //   0,
+    //   blankQuestion
+    // );
   }
 
   render() {
+    const surveySection = this.props.survey.surveySections[
+      this.props.sectionIndex
+    ];
     return (
       <React.Fragment>
-        {this.renderDialogs()}
         <Card
           style={{
             display: "flex",
@@ -132,14 +101,10 @@ export default class SurveyEditingViewSection extends Component {
           }}
         >
           <Typography variant="h2" gutterBottom>
-            Section: {this.props.sectionView.sectionTitle}
+            Section: {surveySection.sectionTitleText}
           </Typography>
           <PrimaryButton
-            onClick={() => {
-              this.setState({ currentDialogShowing: "delete" });
-              this.updateFlag = true;
-              this.props.refreshView();
-            }}
+            onClick={() => this.props.handleDelete(this.props.sectionIndex)}
           >
             Delete this section <DeleteForeverOutlinedIcon />
           </PrimaryButton>
@@ -147,7 +112,7 @@ export default class SurveyEditingViewSection extends Component {
           <TextField
             style={{ margin: "10px" }}
             label="Section Title Text"
-            value={this.props.sectionView.sectionTitleText || ""}
+            value={surveySection.sectionTitleText || ""}
             variant="outlined"
             onChange={(event) => {
               this.handleChange("sectionTitleText", event);
@@ -156,7 +121,7 @@ export default class SurveyEditingViewSection extends Component {
           <TextField
             style={{ margin: "10px" }}
             label="Section Introduction Body Html "
-            value={this.props.sectionView.sectionIntroductionBodyHtml || ""}
+            value={surveySection.sectionIntroductionBodyHtml || ""}
             variant="outlined"
             onChange={(event) => {
               this.handleChange("sectionIntroductionBodyHtml", event);
@@ -165,7 +130,7 @@ export default class SurveyEditingViewSection extends Component {
           <TextField
             style={{ margin: "10px" }}
             label="Section Feedback Body Html"
-            value={this.props.sectionView.sectionFeedbackBodyHtml || ""}
+            value={surveySection.sectionFeedbackBodyHtml || ""}
             variant="outlined"
             onChange={(event) => {
               this.handleChange("sectionFeedbackBodyHtml", event);
@@ -175,79 +140,85 @@ export default class SurveyEditingViewSection extends Component {
           <Droppable droppableId={this.props.sectionIndex.toString()}>
             {(provided) => {
               return (
-                <div
-                  id={this.props.sectionIndex.toString()}
-                  className="droppableDiv"
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                >
-                  {this.props.sectionView.questions &&
-                    this.props.sectionView.questions.map((question, index) => {
-                      return (
-                        <Draggable
-                          draggableId={question.questionId}
-                          index={index}
-                          key={question.questionId}
-                        >
-                          {(provided) => {
-                            return (
-                              <div
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                ref={provided.innerRef}
-                              >
-                                <Accordion
-                                  key={question.questionId}
-                                  // IMPORTANT NOTE: this transition props stops the accordion details from rendering
-                                  // if they are not open!!
-                                  TransitionProps={{ unmountOnExit: true }}
+                <React.Fragment>
+                  <PrimaryButton
+                    onClick={() => {
+                      this.addNewQuestion(0);
+                    }}
+                  >
+                    Add new question
+                  </PrimaryButton>
+                  <div
+                    id={this.props.sectionIndex.toString()}
+                    className="droppableDiv"
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    {surveySection.questions &&
+                      surveySection.questions.map((question, index) => {
+                        return (
+                          <Draggable
+                            draggableId={question.questionId}
+                            index={index}
+                            key={question.questionId}
+                          >
+                            {(provided) => {
+                              return (
+                                <div
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                  ref={provided.innerRef}
                                 >
-                                  <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon />}
+                                  <Accordion
+                                    key={question.questionId}
+                                    // IMPORTANT NOTE: this transition props stops the accordion details from rendering
+                                    // if they are not open!!
+                                    TransitionProps={{ unmountOnExit: true }}
                                   >
-                                    <DragIndicatorIcon />
-                                    <Typography>
-                                      Question #
-                                      {index +
-                                        1 +
-                                        " : " +
-                                        question.questionText}
-                                    </Typography>
-                                  </AccordionSummary>
-                                  <AccordionDetails>
-                                    <SurveyEditingViewQuestion
-                                      parentShouldUpdate={
-                                        this.handleChildHasUpdated
-                                      }
-                                      questionDataStructure={
-                                        this.props.sectionDataStructure
-                                          .questions[index]
-                                      }
-                                      questionIndex={index}
-                                      questionView={
-                                        this.props.sectionView.questions[index]
-                                      }
-                                      refreshView={this.props.refreshView}
-                                      handleDeleteQuestion={() => {
-                                        this.deleteQuestion(index);
-                                      }}
-                                    />
-                                  </AccordionDetails>
-                                </Accordion>
-                              </div>
-                            );
-                          }}
-                        </Draggable>
-                      );
-                    })}
-                  {
-                    // placeholder used to maintain space when dragging, see react-beautiful-dnd
-                    provided.placeholder
-                  }
-                </div>
+                                    <AccordionSummary
+                                      expandIcon={<ExpandMoreIcon />}
+                                    >
+                                      <DragIndicatorIcon />
+                                      <Typography>
+                                        Question #
+                                        {index +
+                                          1 +
+                                          " : " +
+                                          question.questionText}
+                                      </Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                      <SurveyEditingViewQuestion
+                                        survey={this.props.survey}
+                                        sectionIndex={this.props.sectionIndex}
+                                        questionIndex={index}
+                                        modifySurvey={this.props.modifySurvey}
+                                        handleDeleteQuestion={() => {
+                                          this.deleteQuestion(index);
+                                        }}
+                                      />
+                                    </AccordionDetails>
+                                  </Accordion>
+                                </div>
+                              );
+                            }}
+                          </Draggable>
+                        );
+                      })}
+                    {
+                      // placeholder used to maintain space when dragging, see react-beautiful-dnd
+                      provided.placeholder
+                    }
+                  </div>
+                </React.Fragment>
               );
             }}
           </Droppable>
+          <EditAlgorithmView
+            sectionIndex={this.props.sectionIndex}
+            algorithm={surveySection.sectionResultAlgorithm}
+            modifySurvey={this.props.modifySurvey}
+          />
         </Card>
       </React.Fragment>
     );

@@ -8,18 +8,21 @@ import CardContent from "@material-ui/core/CardContent";
  */
 export default function infoCard(props) {
   return (
-    <React.Fragment>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        flexDirection: "column",
+        flexWrap: "nowrap",
+        margin: window.matchMedia("(max-width: 600px)").matches
+          ? "0.5em"
+          : "5%",
+      }}
+    >
       <Typography style={{ color: "white" }} gutterBottom variant="h3">
         {props.heading}
       </Typography>
-      <Card
-        style={{
-          display: "flex",
-          alignItems: "center",
-          flexDirection: "column",
-          flexWrap: "nowrap",
-        }}
-      >
+      <Card>
         <CardContent>
           <Typography gutterBottom variant="h3">
             {props.cardTitle}
@@ -34,6 +37,6 @@ export default function infoCard(props) {
           {props.children}
         </CardContent>
       </Card>
-    </React.Fragment>
+    </div>
   );
 }

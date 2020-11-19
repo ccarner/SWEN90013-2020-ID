@@ -26,6 +26,7 @@ import clsx from "clsx";
 // import DashBoard from "./components/dashBoard/DBLayout";
 // import { ToastNotification } from "./components/reusableComponents/toastNotification";
 import KeyValuePairEditingPage from "./Layout/keyValuePairEditingPage";
+import ImageManagementView from "./components/dashBoard/view/imageManagementView/imageManagementView";
 
 class App extends React.Component {
   // const [adminLogin, setAdminLogin] = React.useState(false);
@@ -80,6 +81,7 @@ class App extends React.Component {
           path="/dashboard/surveys"
           component={dashboardAllSurveysExpose}
         />
+        <Route exact path="/dashboard/images" component={ImageManagementView} />
         <Route
           exact
           path="/dashboard/surveyId=:surveyId"

@@ -3,15 +3,14 @@
   "surveyTitle": "I-Decide Feedback",
   "surveyVersion": "1.0",
   "surveyIntroduction": "Please provide us with some feedback on your experience using I-Decide",
-  "surveyIntroductionHtmlB64": "PHA+V2VsbCBkb25lIG9uIHdvcmtpbmcgeW91ciB3YXkgdGhyb3VnaCB0aGlzIHdlYnNpdGUuIFdlIGFkbWlyZSB5b3VyIGNvdXJhZ2UgaW4gY29tcGxldGluZyB0aGVzZSBhY3Rpdml0aWVzLCBhbmQgd2lzaCB5b3UgYWxsIHRoZSBiZXN0IGluIGNhcnJ5aW5nIG91dCB0aGVzZSBzdGVwcy4gUmVtZW1iZXIsIHRoZXJlIGFyZSByZXNvdXJjZXMgYXZhaWxhYmxlIGlmIHlvdSBuZWVkIGhlbHAgYWxvbmcgdGhlIHdheSwgaW5jbHVkaW5nIGEgY29uZmlkZW50aWFsIGNvdW5zZWxsaW5nIGxpbmUgKDE4MDAgUkVTUEVDVCAtIDE4MDAgNzM3IDczMikuIE5vdyB0aGF0IHlvdSBoYXZlIGNvbXBsZXRlZCBhbGwgdGhlIHNlY3Rpb25zIG9mIHRoZSB3ZWJzaXRlLCB3ZSB3b3VsZCBsaWtlIHRvIGFzayB5b3UgYSBjb3VwbGUgb2YgZmluYWwgcXVlc3Rpb25zIGFib3V0IHlvdXIgZXhwZXJpZW5jZXMuIDwvcD4=",
+  "surveyIntroductionHtmlB64": "<p>\n  Well done on working your way through this website. We admire your courage in\n  completing these activities, and wish you all the best in carrying out these\n  steps. Remember, there are resources available if you need help along the way,\n  including a confidential counselling line (1800 RESPECT - 1800 737 732). Now\n  that you have completed all the sections of the website, we would like to ask\n  you a couple of final questions about your experiences.\n</p>",
   "surveyDisplayOrder": 4,
   "surveyImageName": "",
   "surveySections": [
     {
       "sectionId": "1",
-      "sectionTitle": "",
-      "sectionIntroduction": "",
-      "sectionIntroductionHtmlB64": "",
+      "sectionTitleText": "Feedback",
+      "sectionIntroductionBodyHtml": "",
       "questions": [
         {
           "questionIndex": 0,

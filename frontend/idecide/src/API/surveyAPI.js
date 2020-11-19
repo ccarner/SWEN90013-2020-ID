@@ -1,11 +1,13 @@
 import { getUserContext } from "./loginAPI";
+import apiConfig from "./apiConfig.json";
 const axios = require("axios");
 
-const API_BASE = "http://8.210.28.169";
-const API_URL = "https://www.idecide.icu:9012";
+//"http://8.210.28.169"
+const API_URL_FILESERVER = apiConfig.rootApiUrl + apiConfig.fileServerPort;
+const API_URL = apiConfig.rootApiUrl + apiConfig.applicationPort;
 
 export function getStaticImageUrlFromName(imageName) {
-  return API_BASE + `/images/${imageName}`;
+  return API_URL_FILESERVER + `/images/${imageName}`;
 }
 
 export async function getSurveyById(surveyId) {
@@ -94,7 +96,21 @@ export async function editSurvey(surveyInfo) {
   return dataPost;
 }
 
-export async function addImageForSurvey(surveyId, imgUrl) {
+// export async function addImageForSurvey(nameOfImage, imgData) {
+//   await axios({
+//     url: API_URL + "/survey/uploadImg", // send a request to the library API
+//     method: "POST", // HTTP POST method
+//     headers: {
+//       "content-type": "multipart/form-data",
+//       Authorization: localStorage.getItem("userContext").token,
+//     },
+//     surveyId: nameOfImage,
+//     img: imgData,
+//   });
+// }
+
+//upload a new image
+export async function addImageForSurvey(formData) {
   await axios({
     url: API_URL + "/survey/uploadImg", // send a request to the library API
     method: "POST", // HTTP POST method
@@ -102,8 +118,30 @@ export async function addImageForSurvey(surveyId, imgUrl) {
       "content-type": "multipart/form-data",
       Authorization: localStorage.getItem("userContext").token,
     },
-    surveyId: surveyId,
-    img: imgUrl,
+    data: formData,
+  });
+}
+
+export async function deleteImage(imageName) {
+  await axios({
+    url: API_URL + "/survey/delImage", // send a request to the library API
+    method: "POST", // HTTP POST method
+    headers: {
+      "content-type": "application/json",
+      Authorization: localStorage.getItem("userContext").token,
+    },
+    data: { path: imageName },
+  });
+}
+
+export function getAllImageNames() {
+  return axios({
+    url: API_URL + "/survey/allImgId", // send a request to the library API
+    method: "POST", // HTTP POST method
+    headers: {
+      "content-type": "multipart/form-data",
+      Authorization: localStorage.getItem("userContext").token,
+    },
   });
 }
 

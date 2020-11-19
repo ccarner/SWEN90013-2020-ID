@@ -101,9 +101,9 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
         var question = null;
         try {
           // if its abbreviated, eg "31-42", replace it with the actual Q numbers
-          if (idArr[2].includes("-")) {
+          if (idArr[1].includes("-")) {
             let re = /([\d]*)-([\d]*)/g;
-            var match = re.exec(idArr[2]);
+            var match = re.exec(idArr[1]);
             console.log("match was", match);
             let startQ = match[1];
             let endQ = match[2];
@@ -111,24 +111,39 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
             endQ = parseInt(endQ);
             console.log("start/end was", startQ, endQ);
 
-            for (var i = startQ; i <= endQ; i++) {
-              params.totalAnswerPointsQuestions.push([
-                idArr[0],
-                idArr[1],
-                i.toString(),
-              ]);
+            if (startQ < endQ) {
+              //protects against incorrectly entered values, stops infinite loop
+              for (var i = startQ; i <= endQ; i++) {
+                params.totalAnswerPointsQuestions.push([
+                  idArr[0],
+                  i.toString(),
+                ]);
+              }
+            } else {
+              console.error(
+                "The starting question was GREATER than the finishing question in a totalAnswerPointsFact: ",
+                idArr[1]
+              );
             }
-            // not removing since IN the array while looping through, so just skip loop iteration
+            // not removing the entry from the array, since currently IN the array looping through, so just skip loop iteration
             continue;
           }
+          //since the prevCompletions questions array is just an array of objects with each one having an 'id' attribute, we need to create a temp
+          // datastructure to index based on the id
           //TODO doesn't actually use the ID of section, since the question ID itself is unique... maybe remove the ID of section from the format...
-          question = prevCompletions[idArr[0]].questions[idArr[2]];
+          const surveyQuestions = prevCompletions[idArr[0]].questions;
+          var surveyQuestionsIndexedId = {};
+          for (var q of surveyQuestions) {
+            if (q) {
+              surveyQuestionsIndexedId[q.questionId] = q;
+            }
+          }
+          //now can access using the ID of the question
+          question = surveyQuestionsIndexedId[idArr[1]];
         } catch (err) {
           console.error(
             "An answer for an uncompleted question was requested",
-            idArr[0],
-            idArr[1],
-            idArr[2]
+            idArr
           );
         }
         if (question !== undefined && question != null) {
@@ -143,32 +158,27 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
             question.questionAnswer[0] === "Yes"
           ) {
             totalPoints += 1;
-          } else if (question.questionType === "singleSelection") {
+          } else if (question.questionType.includes("singleSelection")) {
             if (
-              question.questionAnswer.indexOf("Once") > -1 ||
-              question.questionAnswer.indexOf("Sometimes") > -1 ||
-              question.questionAnswer.indexOf("Several Times") > -1 ||
-              question.questionAnswer.indexOf("Once A Month") > -1 ||
-              question.questionAnswer.indexOf("Once A Month") > -1 ||
-              question.questionAnswer.indexOf("Once A Week") > -1 ||
-              question.questionAnswer.indexOf("Daily") > -1
+              question.questionAnswer.length > 0 &&
+              question.questionAnswer.indexOf("Never") === -1
             ) {
+              //if the answer was not 'Never', count it as an abusive behaviour that HAS occurred
               totalPoints += 1;
             }
           }
         }
       }
-      // console.log("total points is", totalPoints);
-      // console.log("Questions were", params.totalAnswerPointsQuestions);
+      console.log("total points was", totalPoints, params);
       return totalPoints;
     });
   };
 
-  engine.addFact("totalAnswerPoints", totalAnswerPointsFact);
+  engine.addFact("TOTAL_ANSWER_POINTS", totalAnswerPointsFact);
 
   let dangerAssessmentPointsFact = function (params, almanac) {
     // mysafety = survey Id of "2"
-    params.totalAnswerPointsQuestions = [["2", "2", "31-42"]];
+    params.totalAnswerPointsQuestions = [["2", "31-42"]];
     return totalAnswerPointsFact(params, almanac);
   };
 
@@ -176,7 +186,7 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
 
   let casScore = function (params, almanac) {
     // mysafety = survey Id of "2"
-    params.totalAnswerPointsQuestions = [["2", "1", "1-30"]];
+    params.totalAnswerPointsQuestions = [["2", "1-30"]];
     return totalAnswerPointsFact(params, almanac);
   };
 
@@ -185,14 +195,14 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
   let SEVERE_SUBSCALE_CAS_SCORE = function (params, almanac) {
     // mysafety = survey Id of "2"
     params.totalAnswerPointsQuestions = [
-      ["2", "1", "2"],
-      ["2", "1", "5"],
-      ["2", "1", "7"],
-      ["2", "1", "15"],
-      ["2", "1", "18"],
-      ["2", "1", "22"],
-      ["2", "1", "25"],
-      ["2", "1", "26"],
+      ["2", "2"],
+      ["2", "5"],
+      ["2", "7"],
+      ["2", "15"],
+      ["2", "18"],
+      ["2", "22"],
+      ["2", "25"],
+      ["2", "26"],
     ];
 
     // return totalAnswerPointsFact(params, almanac);
@@ -206,13 +216,13 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
   let PHYSICAL_SUBSCALE_CAS_SCORE = function (params, almanac) {
     // mysafety = survey Id of "2"
     params.totalAnswerPointsQuestions = [
-      ["2", "1", "6"],
-      ["2", "1", "10"],
-      ["2", "1", "14"],
-      ["2", "1", "17"],
-      ["2", "1", "23"],
-      ["2", "1", "27"],
-      ["2", "1", "30"],
+      ["2", "6"],
+      ["2", "10"],
+      ["2", "14"],
+      ["2", "17"],
+      ["2", "23"],
+      ["2", "27"],
+      ["2", "30"],
     ];
     return totalAnswerPointsFact(params, almanac);
   };
@@ -222,17 +232,17 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
   let EMOTIONAL_SUBSCALE_CAS_SCORE = function (params, almanac) {
     // mysafety = survey Id of "2"
     params.totalAnswerPointsQuestions = [
-      ["2", "1", "1"],
-      ["2", "1", "4"],
-      ["2", "1", "8"],
-      ["2", "1", "9"],
-      ["2", "1", "12"],
-      ["2", "1", "19"],
-      ["2", "1", "20"],
-      ["2", "1", "21"],
-      ["2", "1", "24"],
-      ["2", "1", "28"],
-      ["2", "1", "29"],
+      ["2", "1"],
+      ["2", "4"],
+      ["2", "8"],
+      ["2", "9"],
+      ["2", "12"],
+      ["2", "19"],
+      ["2", "20"],
+      ["2", "21"],
+      ["2", "24"],
+      ["2", "28"],
+      ["2", "29"],
     ];
     return totalAnswerPointsFact(params, almanac);
   };
@@ -241,10 +251,10 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
 
   let HARASSMENT_SUBSCALE_CAS_SCORE = function (params, almanac) {
     params.totalAnswerPointsQuestions = [
-      ["2", "1", "3"],
-      ["2", "1", "11"],
-      ["2", "1", "13"],
-      ["2", "1", "16"],
+      ["2", "3"],
+      ["2", "11"],
+      ["2", "13"],
+      ["2", "16"],
     ];
     return totalAnswerPointsFact(params, almanac);
   };
@@ -254,37 +264,39 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
     HARASSMENT_SUBSCALE_CAS_SCORE
   );
 
+  //returns the answer from a response, ONLY RETURNS FIRST VALUE from answer....
   let questionResponseFact = function (params, almanac) {
     return almanac.factValue("prevCompletions").then((prevCompletions) => {
       var answer = null;
       try {
-        answer =
-          prevCompletions[params.surveyId][params.sectionId][params.questionId];
+        answer = prevCompletions[params.surveyId].questions;
+        answer = answer.reduce(
+          (question) => question.questionId === params.questionId
+        );
+        answer = answer[0];
       } catch (error) {
         console.error(
           "Error: a surveyAnswer fact was requested, and either the answer didn't exist in completions or the required params were not provided to the fact"
         );
         answer = null;
       }
-      return answer;
+      return answer[0];
     });
   };
 
-  engine.addFact("questionResponse", questionResponseFact);
+  engine.addFact("QUESTION_RESPONSE", questionResponseFact);
 
   //operator to determine if answers for a question are equal to a specific value
+  //NOTE that this is not usef currently, since really only useful when some answer types
+  // allow for multiple answers. For single-answer types, can just use "equals"
   engine.addOperator("surveyAnswerEquals", (factValue, jsonValue) => {
+    //compare for equality of two arrays
     factValue = factValue.sort();
     jsonValue = jsonValue.sort();
 
     if (factValue === jsonValue) return true;
     if (factValue == null || jsonValue == null) return false;
     if (factValue.length !== jsonValue.length) return false;
-
-    // If you don't care about the order of the elements inside
-    // the array, you should sort both arrays here.
-    // Please note that calling sort on an array will modify that array.
-    // you might want to clone your array first.
 
     for (var i = 0; i < factValue.length; ++i) {
       if (factValue[i] !== jsonValue[i]) return false;

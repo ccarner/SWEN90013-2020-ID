@@ -1,7 +1,7 @@
 import React from "react";
 
 import { getAllAdmins } from "../../API/loginAPI";
-import LoadingSpinner from "../reusableComponents/loadingSpinner";
+import LoadingSpinner from "../reusableComponents/loading";
 
 export default class AdminInfo extends React.Component {
   constructor(props) {
@@ -18,7 +18,7 @@ export default class AdminInfo extends React.Component {
   fetchAdmins = async () => {
     const data = await getAllAdmins();
     this.setState({ admins: data["data"], isLoaded: true });
-  }
+  };
 
   componentDidMount() {
     this.fetchAdmins();

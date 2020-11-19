@@ -1,10 +1,11 @@
 import { getUserContext } from "./loginAPI";
+import apiConfig from "./apiConfig.json";
 const axios = require("axios");
 
-const SURVEY_RESULT_URL = "https://www.idecide.icu:9012";
+const API_URL = apiConfig.rootApiUrl + apiConfig.applicationPort;
 
 export async function getCsvDownloadLink() {
-  const endpoint = SURVEY_RESULT_URL + `/answer/downloadResult`;
+  const endpoint = API_URL + `/answer/downloadResult`;
   const dataPost = await axios({
     url: endpoint, // send a request to the library API
     method: "GET", // HTTP POST method
@@ -19,7 +20,7 @@ export async function getCsvDownloadLink() {
 
 //todo not sure we use this api?
 export async function getActionPlanStrategy() {
-  const endpoint = SURVEY_RESULT_URL + `/actionplan/actionStrategyRule`;
+  const endpoint = API_URL + `/actionplan/actionStrategyRule`;
   try {
     const dataFetched = axios.get(endpoint).then((res) => res.data);
     return dataFetched;
@@ -29,7 +30,7 @@ export async function getActionPlanStrategy() {
 }
 
 export async function getResults() {
-  const endpoint = `https://www.idecide.icu:9012/answer/getResult`;
+  const endpoint = API_URL + `/answer/getResult`;
   try {
     const dataFetched = axios.get(endpoint).then((res) => res.data);
     return dataFetched;

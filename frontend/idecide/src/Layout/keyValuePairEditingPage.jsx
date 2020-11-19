@@ -53,7 +53,8 @@ export default class KeyValuePairEditingPage extends Component {
   async fetchData() {
     console.log("getting for key", this.state.key);
     const value = await getValue(this.state.key);
-    this.setState({ value: JSON.parse(value), loaded: true });
+    console.log("value is", value);
+    this.setState({ value: value, loaded: true });
   }
 
   componentDidUpdate(prevProps) {
@@ -84,9 +85,9 @@ export default class KeyValuePairEditingPage extends Component {
   }
 
   async uploadValue() {
-    var stringifiedValue = JSON.stringify(this.state.value);
+    // var stringifiedValue = JSON.stringify(this.state.value);
     try {
-      setValue(this.state.key, stringifiedValue)
+      setValue(this.state.key, this.state.value)
         .then((data) => {
           console.log("data received", data);
           if (data.flag) {
@@ -120,7 +121,7 @@ export default class KeyValuePairEditingPage extends Component {
             label="Value"
             placeholder="Write Value Here"
             multiline
-            variant="filled"
+            variant="outlined"
             value={this.state.value}
             onChange={this.onChange}
             fullWidth

@@ -21,82 +21,29 @@ export default class SurveySection extends React.Component {
     this.props.questionHandler(questionId, newValue);
   }
 
-  // /**
-  //  * creates an array of question components, based on their types
-  //  */
-  // createQuestionArray() {
-  //   return this.props.section.questions.map((question, index) => {
-  //     if (question.questionType === "slider") {
-  //       return (
-  //         <div key={question.questionId}>
-  //           <QuestionSlider
-  //             handleChange={this.props.handleQuestion}
-  //             id={question.questionId}
-  //             currentValue={
-  //               this.props.results[question.questionId].questionAnswer
-  //             }
-  //             question={question}
-  //           />
-  //         </div>
-  //       );
-  //     } else if (question.questionType === "singleSelection") {
-  //       return (
-  //         <div key={question.questionId}>
-  //           <SingleChoice
-  //             handleChange={this.props.handleQuestion}
-  //             id={question.questionId}
-  //             currentValue={
-  //               this.props.results[question.questionId].questionAnswer
-  //             }
-  //             question={question}
-  //           />
-  //         </div>
-  //       );
-  //     } else if (question.questionType === "YorN") {
-  //       return (
-  //         <div key={question.questionId}>
-  //           <QuestionYesOrNo
-  //             handleChange={this.props.handleQuestion}
-  //             id={question.questionId}
-  //             currentValue={
-  //               this.props.results[question.questionId].questionAnswer
-  //             }
-  //             question={question}
-  //           />
-  //         </div>
-  //       );
-  //     }
-  //   });
-  // }
-
   handleSectionType = (section) => {
-    if (section.sectionType === undefined) {
-      return (
-        <CardDeck
-          key={section.sectionId}
-          handleAnswer={this.handleInputChange}
-          section={section}
-          canProgress={this.props.canProgress}
-        />
-      );
-      //TODO: can remove this 'dragable list': this was before it was put INTO the card deck
-    } else if (section.sectionType === "ranking") {
-      return (
-        <DragableList handleAnswer={this.handleInputChange} section={section} />
-      );
-    }
+    return (
+      <CardDeck
+        key={section.sectionId}
+        handleAnswer={this.handleInputChange}
+        section={section}
+        canProgress={this.props.canProgress}
+      />
+    );
   };
 
   render() {
     return (
-      <React.Fragment>
-        <div style={{ display: "inline" }}>
-          <Typography style={{ color: "white" }} gutterBottom variant="h3">
-            {this.props.section.sectionTitle}
-          </Typography>
-          {this.handleSectionType(this.props.section)}
-        </div>
-      </React.Fragment>
+      <div>
+        <Typography
+          style={{ color: "white", margin: "5%" }}
+          gutterBottom
+          variant="h3"
+        >
+          {this.props.section.sectionTitleText}
+        </Typography>
+        {this.handleSectionType(this.props.section)}
+      </div>
     );
   }
 }

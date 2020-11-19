@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { Collapse } from "react-bootstrap";
 import PrimaryButton from "../reusableComponents/PrimaryButton";
-import LoadingSpinner from "../reusableComponents/loadingSpinner";
+import LoadingSpinner from "../reusableComponents/loading";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import SaveIcon from "@material-ui/icons/Save";
 
@@ -10,6 +10,7 @@ import InfoCard from "../reusableComponents/infoCard";
 import { Card, Typography } from "@material-ui/core";
 
 import { getValue } from "../../API/keyValueAPI";
+import ViewAndFooter from "./../reusableComponents/viewAndFooter";
 
 export default function SurveyHomeIntroduction(props) {
   const [getIntroHtml, setIntroHtml] = useState("");
@@ -32,31 +33,75 @@ export default function SurveyHomeIntroduction(props) {
   );
 
   return (
-    <React.Fragment>
-      <InfoCard
-        heading={"Introduction"}
-        cardTitle={null}
-        cardBody={bodyContent}
-      ></InfoCard>
-      {/* TODO: abstract out this bottom bar with flex display as a component */}
-      <Card style={{ position: "fixed", bottom: 0, width: "100%" }}>
+    <ViewAndFooter
+      view={
         <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-around",
-          }}
+          style={{ display: "flex", flexDirection: "column", height: "100%" }}
         >
-          <PrimaryButton onClick={props.handleNext}>
-            Continue a previous session &nbsp;
-            <SaveIcon />
-          </PrimaryButton>
-          <PrimaryButton onClick={props.handleNext}>
-            Begin new session
-            <ChevronRightIcon />
-          </PrimaryButton>
+          <div
+            id="headerFlexDiv"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              flexGrow: 1,
+            }}
+          >
+            <InfoCard
+              heading={"Introduction"}
+              cardTitle={null}
+              cardBody={bodyContent}
+            />
+          </div>
         </div>
-      </Card>
-    </React.Fragment>
+      }
+      footer={
+        <Card style={{ width: "100%" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-around",
+            }}
+          >
+            <PrimaryButton onClick={props.handleNext}>
+              Continue a previous session &nbsp;
+              <SaveIcon />
+            </PrimaryButton>
+            <PrimaryButton onClick={props.handleNext}>
+              Begin new session
+              <ChevronRightIcon />
+            </PrimaryButton>
+          </div>
+        </Card>
+      }
+    />
+
+    // <React.Fragment>
+    //   <InfoCard
+    //     heading={"Introduction"}
+    //     cardTitle={null}
+    //     cardBody={bodyContent}
+    //   />
+    //   {/* TODO: abstract out this bottom bar with flex display as a component */}
+    //   <Card style={{ position: "fixed", bottom: 0, width: "100%" }}>
+    //     <div
+    //       style={{
+    //         display: "flex",
+    //         flexDirection: "row",
+    //         justifyContent: "space-around",
+    //       }}
+    //     >
+    //       <PrimaryButton onClick={props.handleNext}>
+    //         Continue a previous session &nbsp;
+    //         <SaveIcon />
+    //       </PrimaryButton>
+    //       <PrimaryButton onClick={props.handleNext}>
+    //         Begin new session
+    //         <ChevronRightIcon />
+    //       </PrimaryButton>
+    //     </div>
+    //   </Card>
+    // </React.Fragment>
   );
 }
