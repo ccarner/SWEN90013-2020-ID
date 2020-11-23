@@ -409,7 +409,8 @@ export default class surveyEditingView extends Component {
         )}
         <PrimaryButtonContrast
           onClick={() => {
-            editSurvey(this.survey);
+            console.log(995, this.state.survey)
+            editSurvey(this.state.survey);
           }}
         >
           Save & Upload Changes

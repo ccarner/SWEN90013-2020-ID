@@ -29,7 +29,7 @@ export default class SurveyEditingViewQuestion extends Component {
   shouldComponentUpdate(newProps) {
     return (
       newProps.survey.surveySections[newProps.sectionIndex].questions[
-        newProps.questionIndex
+      newProps.questionIndex
       ] !== this.getQuestionFromProps()
     );
   }
@@ -58,24 +58,24 @@ export default class SurveyEditingViewQuestion extends Component {
         <React.Fragment>
           <TextField
             style={{ margin: "10px" }}
-            label="Maximum Value"
-            helperText="The maximum value for the slider"
+            label="Minimum Value"
+            // helperText="The minimum value for the slider"
             value={question.sliderMinValue}
             type="number"
             variant="outlined"
             onChange={(event) => {
-              this.handleChange("sliderMaxValue", event);
+              this.handleChange("sliderMinValue", event);
             }}
           />
           <TextField
             style={{ margin: "10px" }}
-            label="Minimum Value"
-            helperText="The minimum value for the slider"
+            label="Maximum Value"
+            // helperText="The maximum value for the slider"
             type="number"
             value={question.sliderMaxValue}
             variant="outlined"
             onChange={(event) => {
-              this.handleChange("sliderMinValue", event);
+              this.handleChange("sliderMaxValue", event);
             }}
           />
           <TextField
