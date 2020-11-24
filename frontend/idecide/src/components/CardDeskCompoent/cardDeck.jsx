@@ -28,8 +28,17 @@ export default class CardDeck extends Component {
   }
 
   componentDidMount() {
+    let questionsIn = this.props.section.questions;
+    // let questionLength = questionsIn.length;
+    let questionCount = 1;
+
+    questionsIn.forEach((questionEach) => {
+      questionEach["questionIndex"] = questionCount;
+      questionCount = questionCount + 1;
+    });
+
     this.setState({
-      questions: this.props.section.questions,
+      questions: questionsIn,
       questionLen: this.props.section.questions.length,
       algorithmRelatedQuestion: this.props.section.algorithmRelatedQuestion,
       enginRule: this.props.section.enginRule,
@@ -77,9 +86,7 @@ export default class CardDeck extends Component {
     });
 
     this.handleClick(item);
-    console.log(
-      parseInt(item.questionId) + " :" + parseInt(this.state.questionLen)
-    );
+
     // if (item.questionId == this.state.questionLen) {
     //   JsonRuleEngine(
     //     this.state.result,
@@ -99,8 +106,7 @@ export default class CardDeck extends Component {
 
   handleSubmit = (item, value) => {
     //Make a network call somewhere
-    console.log(item);
-    console.log(value);
+
     this.handleResult();
   };
 
@@ -128,26 +134,29 @@ export default class CardDeck extends Component {
       let silderresult = 0;
 
       return (
-        <div className="questionContainer">
+
+        < div className="questionContainer" >
           <Slider
             ref={`slider-${item.questionId}`}
             className="ranger-container-silder"
-            defaultValue={0}
-            min={item.sliderMinValue}
+            defaultValue={5}
+            min={0}
             max={item.sliderMaxValue}
             onAfterChange={(event) => {
               silderresult = event;
             }}
-          /> <div className="label-container">
+          />
 
-          <span className="label" >
-            {item.sliderMinValue}
-          </span>
-          <span className="label" >
-            {item.sliderMaxValue}
-          </span>
 
-      </div>
+          <div className="label-container">
+
+            <span className="label" >
+              {item.sliderMinValue}
+            </span>
+            <span className="label" >
+              {item.sliderMaxValue}
+            </span>
+          </div>
 
           {/* Need to discuss about the button locations */}
           <div className="button-container">
@@ -162,7 +171,7 @@ export default class CardDeck extends Component {
               CONFIRM
             </PrimaryButton>
           </div>
-        </div>
+        </div >
       );
     } else if (item.questionType === "yesOrNo") {
       return (
@@ -268,7 +277,7 @@ export default class CardDeck extends Component {
   };
 
   render() {
-    var questions = this.state.questions;
+    var { questions, questionLen } = this.state;
 
     let fadeAwayState = this.state.fadeAwayState;
     if (questions == null) {
@@ -278,6 +287,7 @@ export default class CardDeck extends Component {
         </div>
       );
     }
+
 
     const ItemList = (
       <TransitionGroup>
@@ -294,9 +304,12 @@ export default class CardDeck extends Component {
               `}
               key={index}
             >
+              {/* MARKER: questionIndex Counter */}
               <div className="counter" style={{ marginTop: 40 }}>
-                <h5 className="current">{item.questionId}</h5>
-                <h5>/{questions.length + parseInt(item.questionId) - 1}</h5>
+                {/* <h5 className="current">{item.questionId}</h5> */}
+                <h5 className="current">{item.questionIndex}</h5>
+                {/* <h5>/{questions.length + parseInt(item.questionId) - 1}</h5> */}
+                <h5>/{questionLen}</h5>
               </div>
 
               <Typography gutterBottom variant="h6">

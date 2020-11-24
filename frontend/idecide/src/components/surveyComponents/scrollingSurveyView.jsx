@@ -24,11 +24,9 @@ export default class ScrollingSurveyView extends Component {
         this.props.completionStatus[this.props.allSurveys[index].surveyId] ===
         "Next"
       ) {
-        console.log("next survey was", index);
         return index;
       }
     }
-    console.log("next survey not found");
     return -1;
   }
 

@@ -24,7 +24,7 @@ export default class LoginPage extends React.Component {
   static contextType = userContext;
   constructor(props) {
     super(props);
-    console.log(props);
+
     this.state = {
       isLoggingPage: true,
       username: null,
@@ -44,7 +44,7 @@ export default class LoginPage extends React.Component {
   handleHistory = async () => {
     const userContext = JSON.parse(localStorage.getItem("userContext"));
     const prevCompletionHistory = await getResultByUser(userContext.userId);
-    console.log("prev completion is ----*", prevCompletionHistory);
+
     var surveyResults = {};
     // convert into format of {"surveyId":{surveyCompetion}}
     for (const surveyCompletion of prevCompletionHistory) {
@@ -72,7 +72,7 @@ export default class LoginPage extends React.Component {
     const response = await loginUser(userObject);
 
     if (response.flag) {
-      // console.log(response);
+
       this.context.setUserContext({
         userId: response.data.id,
         userType: response.data.roles,

@@ -45,13 +45,12 @@ const Tools = ({ className, ...rest }, ref) => {
   let { sectionSearch, setSectionSearch } = useContext(SectionSearch);
 
   const handleSecChange = (event) => {
-    console.log(event.target);
+
     setSection(event.target.value);
     setSectionIndex(event.target.value);
     setSectionSearch(sections[event.target.value]);
   };
-  console.log(sectionSearch);
-  //	useContext(SectionSearch);
+
 
   const handleChange = (event) => {
     setSurvey(event.target.value);
@@ -60,13 +59,13 @@ const Tools = ({ className, ...rest }, ref) => {
 
   const fetchData = async (id) => {
     const result = await getSectionBySurveyId(id);
-    console.log(result.surveySections);
+
     setSections(result.surveySections);
     setOpenSection(true);
   };
 
   const handleSearch = () => {
-    //	console.log("result.surveySections");
+    // TODO
   };
 
   return (

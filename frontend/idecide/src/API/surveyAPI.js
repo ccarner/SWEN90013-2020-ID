@@ -20,7 +20,7 @@ export async function getSurveyById(surveyId) {
     var survey = JSON.parse(dataFetched["data"]["jsonStr"]);
     Object.assign(survey, dataFetched["data"]);
     delete survey.jsonStr;
-    console.log("pulled survey was", survey);
+
     return survey;
   } catch (e) {
     return e;
@@ -30,10 +30,10 @@ export async function getSurveyById(surveyId) {
 // not sure what this function is for? Looks just like getSurveyById?
 export async function getSectionBySurveyId(surveyId) {
   const endpoint = API_URL + `/survey/` + surveyId;
-  console.log(endpoint);
+
   try {
     const dataFetched = await axios.get(endpoint).then((res) => res.data);
-    console.log(dataFetched);
+
     return JSON.parse(dataFetched["data"]["jsonStr"]);
   } catch (e) {
     return e;
@@ -64,8 +64,6 @@ export async function getAllSurveys() {
 export async function postingSurvey(surveyIn) {
   const endpoint = API_URL + `/answer`;
   const token = getUserContext().token;
-  console.log("token is-----*", token);
-  console.log("surveyIn", surveyIn);
 
   const dataPost = await axios({
     url: endpoint, // send a request to the library API
@@ -81,7 +79,7 @@ export async function postingSurvey(surveyIn) {
 
 export async function editSurvey(surveyInfo) {
   const endpoint = API_URL + `/survey`;
-  console.log(surveyInfo);
+
   const dataPost = await axios({
     url: endpoint, // send a request to the library API
     method: "PUT", // HTTP POST method
@@ -150,7 +148,7 @@ export function getAllImageNames() {
 
 export async function AddNewSurvey(surveyInfo) {
   const endpoint = API_URL + `/survey`;
-  console.log(surveyInfo);
+
   const dataPost = await axios({
     url: endpoint, // send a request to the library API
     method: "POST", // HTTP POST method
@@ -165,7 +163,7 @@ export async function AddNewSurvey(surveyInfo) {
 
 export async function DeleteSurvey(surveyId) {
   const endpoint = API_URL + `/survey/` + surveyId;
-  console.log(surveyId);
+
   const dataPost = await axios({
     url: endpoint, // send a request to the library API
     method: "DELETE", // HTTP POST method

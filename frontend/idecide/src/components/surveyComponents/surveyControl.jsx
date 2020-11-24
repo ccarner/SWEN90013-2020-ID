@@ -129,7 +129,6 @@ export default class SurveyControl extends Component {
         questionResults[parseInt(question.questionId)] = questionResult;
       });
     });
-    console.log("QuestionResults is", questionResults);
     return questionResults;
   }
 
@@ -174,7 +173,7 @@ export default class SurveyControl extends Component {
             prevState.currentSurveyMapPosition + lambdaSection,
           sectionQuestions: this.state.surveyFile.surveySections[
             prevState.surveyPageMap[
-              prevState.currentSurveyMapPosition + lambdaSection
+            prevState.currentSurveyMapPosition + lambdaSection
             ][0]
           ],
           percentageCompleted:
@@ -204,19 +203,6 @@ export default class SurveyControl extends Component {
   submitHandler = async () => {
     this.setState({ isLoaded: false });
     const feedBack = await postingSurvey(this.state.results);
-    // var postAnswer = this.state.results;
-    // postAnswer.completedTime = JSON.stringify({
-    //   time: Date.now(),
-    //   type: this.state.surveyFile.surveyTitle,
-    // });
-    // if (this.state.surveyFile.surveyTitle === "My Priorities") {
-    //   // this.prioritiesAdaptor(postAnswer);
-    // }
-    // console.log(992, JSON.stringify(postAnswer));
-
-    // const feedback = await postingSurvey(postAnswer);
-    // console.log(993, feedback);
-    // alert(993);
 
     this.props.completeHandler(this.state.results);
     this.setState({ isLoaded: true, currentSurveyState: "submitted" });
@@ -262,9 +248,8 @@ export default class SurveyControl extends Component {
             feedbackCategory: results.events[0].params.categoryName,
           });
         } else {
-          console.log(
-            "A survey which HAS a feedback algorithm did not return any events after evaluation, potentially the feedback algorithm was not total"
-          );
+          // "A survey which HAS a feedback algorithm did not return 
+          // any events after evaluation, potentially the feedback algorithm was not total"
           this.setState({
             feedbackText: null,
             feedbackImage: null,
@@ -339,7 +324,7 @@ export default class SurveyControl extends Component {
             <SectionIntroductionPage
               section={
                 this.state.surveyFile.surveySections[
-                  this.currentSectionNumber()
+                this.currentSectionNumber()
                 ]
               }
             />
@@ -370,7 +355,7 @@ export default class SurveyControl extends Component {
               questionHandler={this.questionHandler}
               section={
                 this.state.surveyFile.surveySections[
-                  this.currentSectionNumber()
+                this.currentSectionNumber()
                 ]
               }
               canProgress={() => {

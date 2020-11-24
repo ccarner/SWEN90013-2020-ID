@@ -1,0 +1,689 @@
+{
+    "surveyResultHeading": "",
+    "surveyDisplayOrder": 2,
+    "surveyResultHtml": "",
+    "surveySections": [
+        {
+            "sectionId": "1",
+            "sectionTitleText": "Partner Behaviours",
+            "sectionIntroductionBodyHtml": "We would like to know if you have experienced any of the actions listed below from the partner / ex-partner who made you feel afraid. Please select the frequency, over the last 12 months, that it happened to you.",
+            "questions": [
+                {
+                    "questionId": "1",
+                    "questionText": "Told me I wasn't good enough",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "2",
+                    "questionText": "Kept me from Medical Care",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "3",
+                    "questionText": "Followed Me",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "4",
+                    "questionText": "Tried to turn family, friends or children against me",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "5",
+                    "questionText": "Locked me in the bedroom",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "6",
+                    "questionText": "Slapped Me",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "7",
+                    "questionText": "Forced me to have sex",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "8",
+                    "questionText": "Told me I was ugly",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "9",
+                    "questionText": "Tried to keep me from seeing or talking to my family",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "10",
+                    "questionText": "Threw me",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "11",
+                    "questionText": "Hung around outside my house",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "12",
+                    "questionText": "Blamed me for causing their violent behaviour",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "13",
+                    "questionText": "Harassed me over the phone",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "14",
+                    "questionText": "Shook me",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "15",
+                    "questionText": "Tried to force me to have sex",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "16",
+                    "questionText": "Harassed me at my work",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "17",
+                    "questionText": "Pushed, grabbed or shoved me",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "18",
+                    "questionText": "Used a knife or gun or other weapon",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "19",
+                    "questionText": "Became upset if dinner/housework wasn't done when they thought it should be",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "20",
+                    "questionText": "Told me I was crazy",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "21",
+                    "questionText": "Told me that no-one would ever want me",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "22",
+                    "questionText": "Took my wallet and left me stranded",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "23",
+                    "questionText": "Hit or tried to hit me with something",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "24",
+                    "questionText": "Did not want me to socialise with my female friends",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "25",
+                    "questionText": "Put foreign objects in my vagina",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "26",
+                    "questionText": "Refused to let me work outside the home",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "27",
+                    "questionText": "Kicked me, bit me, or hit me with a fist",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "28",
+                    "questionText": "Tried to convince my friends, family or children that I was crazy",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "29",
+                    "questionText": "Told me I was stupid",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                },
+                {
+                    "questionId": "30",
+                    "questionText": "Beat me up",
+                    "questionType": "singleSelection",
+                    "selectionOptions": [
+                        "Never",
+                        "Only Once",
+                        "Several Times",
+                        "Once per Month",
+                        "Once per Week",
+                        "Daily"
+                    ]
+                }
+            ],
+            "sectionResultAlgorithm": [
+                {
+                    "event": {
+                        "type": "SEVERE_COMBINED_ABUSE",
+                        "params": {
+                            "categoryName": "You may be suffering from abuse",
+                            "responseString": "You seem to have experienced serious abusive behaviours from your partner. It is not acceptable for these things to happen in relationships. It is probably affecting your mental and physical health. A bit later, this website will suggest some things you could try to help you look after yourself during this stressful time and to keep you safe. The next section will ask you more specifically about physical violence using a surv'ey. We would like to emphasise that emotional abuse can be just as harmful as physical abuse, however we Offer this section as one way to help women reflect on their physical danger"
+                        }
+                    },
+                    "conditions": {
+                        "any": [
+                            {
+                                "fact": "SEVERE_SUBSCALE_CAS_SCORE",
+                                "operator": "greaterThanInclusive",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                {
+                    "event": {
+                        "type": "PHYSICAL_ABUSE_ONLY",
+                        "params": {
+                            "categoryName": "You may be suffering from abuse",
+                            "responseString": "You seem to have experienced physical actions from your partner that are abusive. It is not acceptable for this to happen in relationships. A bit later, this decision aid will suggest some things you could try to help you look after yourself during this stressful time. The next section will ask you more specifically about physical violence using a survey. We would like to emphasise that emotional abuse can be just as harmful as physical abuse, however we offer this sectiqn as one way to help women reflect on their physical danger. "
+                        }
+                    },
+                    "conditions": {
+                        "all": [
+                            {
+                                "fact": "PHYSICAL_SUBSCALE_CAS_SCORE",
+                                "operator": "greaterThanInclusive",
+                                "value": 1
+                            },
+                            {
+                                "fact": "SEVERE_SUBSCALE_CAS_SCORE",
+                                "operator": "equal",
+                                "value": 0
+                            },
+                            {
+                                "fact": "EMOTIONAL_SUBSCALE_CAS_SCORE",
+                                "operator": "equal",
+                                "value": 0
+                            },
+                            {
+                                "fact": "HARASSMENT_SUBSCALE_CAS_SCORE",
+                                "operator": "equal",
+                                "value": 0
+                            }
+                        ]
+                    }
+                },
+                {
+                    "event": {
+                        "type": "EMOTIONAL_ABUSE_ONLY",
+                        "params": {
+                            "categoryName": "You may be suffering from abuse",
+                            "responseString": "You seem to have experienced emotional actions from your partner that are abusive. It is not acceptable for this to happen in relationships. A bit later, this decision aid will suggest some things you could try to help you look after yourself during this stressful time. The next section will ask you more specifically about physical violence using a survey. We would like to emphasise that emotional abuse can be just as harmful as physical abuse, however we offer this sectiqn as one way to help women reflect on their physical danger. "
+                        }
+                    },
+                    "conditions": {
+                        "all": [
+                            {
+                                "all": [
+                                    {
+                                        "fact": "PHYSICAL_SUBSCALE_CAS_SCORE",
+                                        "operator": "equal",
+                                        "value": 0
+                                    },
+                                    {
+                                        "fact": "SEVERE_SUBSCALE_CAS_SCORE",
+                                        "operator": "equal",
+                                        "value": 0
+                                    }
+                                ],
+                                "any": [
+                                    {
+                                        "fact": "EMOTIONAL_SUBSCALE_CAS_SCORE",
+                                        "operator": "greaterThanInclusive",
+                                        "value": 1
+                                    },
+                                    {
+                                        "fact": "HARASSMENT_SUBSCALE_CAS_SCORE",
+                                        "operator": "greaterThanInclusive",
+                                        "value": 1
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "event": {
+                        "type": "PHYSICAL_AND_EMOTIONAL_ABUSE",
+                        "params": {
+                            "categoryName": "You may be suffering from abuse",
+                            "responseString": "You seem to have experienced physical and emotional actions from your partner that are abusive. It is not acceptable for this to happen in relationships. A bit later, this decision aid will suggest some things you could try to help you look after yourself during this stressful time. The next section will ask you more specifically about physical violence using a survey. We would like to emphasise that emotional abuse can be just as harmful as physical abuse, however we offer this sectiqn as one way to help women reflect on their physical danger. "
+                        }
+                    },
+                    "conditions": {
+                        "all": [
+                            {
+                                "all": [
+                                    {
+                                        "fact": "PHYSICAL_SUBSCALE_CAS_SCORE",
+                                        "operator": "greaterThanInclusive",
+                                        "value": 1
+                                    },
+                                    {
+                                        "fact": "SEVERE_SUBSCALE_CAS_SCORE",
+                                        "operator": "equal",
+                                        "value": 0
+                                    }
+                                ],
+                                "any": [
+                                    {
+                                        "fact": "EMOTIONAL_SUBSCALE_CAS_SCORE",
+                                        "operator": "greaterThanInclusive",
+                                        "value": 1
+                                    },
+                                    {
+                                        "fact": "HARASSMENT_SUBSCALE_CAS_SCORE",
+                                        "operator": "greaterThanInclusive",
+                                        "value": 1
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "event": {
+                        "type": "NO_FEEDBACK",
+                        "params": {
+                            "categoryName": "No Feedback Available",
+                            "responseString": "Unfortunately we are unable to give you feedback on this section as you hadn't experienced any of those specific behaviours. However, you have obviously experienced similar behaviours from your (ex) partner that are concerning you. A bit later, this decision aid will suggest strategies for safety and wellbeing that may be helpful. "
+                        }
+                    },
+                    "conditions": {
+                        "all": [
+                            {
+                                "fact": "PHYSICAL_SUBSCALE_CAS_SCORE",
+                                "operator": "greaterThanInclusive",
+                                "value": 0
+                            },
+                            {
+                                "fact": "SEVERE_SUBSCALE_CAS_SCORE",
+                                "operator": "equal",
+                                "value": 0
+                            },
+                            {
+                                "fact": "EMOTIONAL_SUBSCALE_CAS_SCORE",
+                                "operator": "equal",
+                                "value": 0
+                            },
+                            {
+                                "fact": "HARASSMENT_SUBSCALE_CAS_SCORE",
+                                "operator": "equal",
+                                "value": 0
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "sectionId": "2",
+            "sectionTitleText": "Danger Assessment",
+            "sectionIntroductionBodyHtml": "Next, please answer these questions. These answers will help us determine how much physical danger you are in from your partner or ex-partner",
+            "questions": [
+                {
+                    "questionId": "31",
+                    "questionText": "Has the physical violence increased in severity or frequency over the past year?",
+                    "questionType": "yesOrNo"
+                },
+                {
+                    "questionId": "32",
+                    "questionText": "Does your partner own a gun?",
+                    "questionType": "yesOrNo"
+                },
+                {
+                    "questionId": "33",
+                    "questionText": "Have you left your partner after living together during the past year?",
+                    "questionType": "yesOrNo"
+                },
+                {
+                    "questionId": "34",
+                    "questionText": "Is he unemployed?",
+                    "questionType": "yesOrNo"
+                },
+                {
+                    "questionId": "35",
+                    "questionText": "Has your partner ever used a weapon against you, or threatened you with violence?",
+                    "questionType": "yesOrNo"
+                },
+                {
+                    "questionId": "36",
+                    "questionText": "Does your partner ever threaten to kill you?",
+                    "questionType": "yesOrNo"
+                },
+                {
+                    "questionId": "37",
+                    "questionText": "Has your partner avoided being arrested for partner violence?",
+                    "questionType": "yesOrNo"
+                },
+                {
+                    "questionId": "38",
+                    "questionText": "Do you have a child that was not with this partner?",
+                    "questionType": "yesOrNo"
+                },
+                {
+                    "questionId": "39",
+                    "questionText": "Does your partner ever force you into having sex when you don't wish to do so?",
+                    "questionType": "yesOrNo"
+                },
+                {
+                    "questionId": "40",
+                    "questionText": "Does your partner ever try to choke you?",
+                    "questionType": "yesOrNo"
+                },
+                {
+                    "questionId": "41",
+                    "questionText": "Does your partner use illegal drugs?",
+                    "questionType": "yesOrNo"
+                },
+                {
+                    "questionId": "42",
+                    "questionText": "Is your partner an alcoholic or problem drinker?",
+                    "questionType": "yesOrNo"
+                }
+            ],
+            "sectionResultAlgorithm": [
+                {
+                    "event": {
+                        "type": "highRisk",
+                        "params": {
+                            "categoryName": "At Risk",
+                            "responseString": " You seem to have experienced serious abusive behaviours from your partner. It is not acceptable for these things to happen in relationships. It is probably affecting your mental and physical health and possibly your studies as well. "
+                        }
+                    },
+                    "conditions": {
+                        "any": [
+                            {
+                                "fact": "TOTAL_ANSWER_POINTS",
+                                "operator": "greaterThanInclusive",
+                                "value": 1,
+                                "params": {
+                                    "totalAnswerPointsQuestions": [
+                                        [
+                                            "2",
+                                            "31-42"
+                                        ]
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "event": {
+                        "type": "lowRiskEvent",
+                        "params": {
+                            "categoryName": "Low Risk",
+                            "responseString": "Your responses indicate that you are at low risk of serious abusive behaviours from your partner."
+                        }
+                    },
+                    "conditions": {
+                        "any": [
+                            {
+                                "fact": "TOTAL_ANSWER_POINTS",
+                                "operator": "lessThan",
+                                "value": 1,
+                                "params": {
+                                    "totalAnswerPointsQuestions": [
+                                        [
+                                            "2",
+                                            "31-42"
+                                        ]
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -40,8 +40,6 @@ const NewSurveyS = (props) => {
   const [newQuestion, addNew] = React.useState([]);
 
   const fatherName = useContext(CountContext);
-  console.log(fatherName);
-  console.log(props.match.params.surveyId || "Hello");
   const surveyId = props.match.params.surveyId;
 
   const [age, setAge, qN] = React.useState("");
@@ -58,88 +56,87 @@ const NewSurveyS = (props) => {
       {isLoading ? (
         <div>Loading ...</div>
       ) : (
-        <div>
-          <Box p={2}>
-            <Card>
-              <CardHeader title="New Survey Section" />
+          <div>
+            <Box p={2}>
+              <Card>
+                <CardHeader title="New Survey Section" />
+                <Divider />
+                <CardContent>
+                  <TextField
+                    id="outlined-multiline-flexible"
+                    required
+                    fullWidth
+                    label="Title"
+                    variant="outlined"
+                  />
+                </CardContent>
+                <CardContent>
+                  <TextField
+                    id="outlined-multiline-flexible"
+                    required
+                    multiline
+                    rows={4}
+                    fullWidth
+                    label="Description"
+                    variant="outlined"
+                  />
+                </CardContent>
+              </Card>
+            </Box>
+            {newQuestion.map((nq) => {
+              return (
+                <div key={nq}>
+                  <Box p={1} />
+                  <CountContext.Provider value={nq}>
+                    <QuestionComponent />
+                  </CountContext.Provider>
+                </div>
+              );
+            })}
+
+            <Box my={2}>
+              <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                size="large"
+                onClick={() => {
+                  setCount(count + 1);
+                  addNew([...newQuestion, count]);
+                }}
+              >
+                Add New Quesiton
+            </Button>
+            </Box>
+            <Card my={2}>
               <Divider />
               <CardContent>
-                <TextField
-                  id="outlined-multiline-flexible"
-                  required
-                  fullWidth
-                  label="Title"
-                  variant="outlined"
-                />
-              </CardContent>
-              <CardContent>
-                <TextField
-                  id="outlined-multiline-flexible"
-                  required
-                  multiline
-                  rows={4}
-                  fullWidth
-                  label="Description"
-                  variant="outlined"
-                />
-              </CardContent>
-            </Card>
-          </Box>
-          {newQuestion.map((nq) => {
-            console.log(nq);
-            return (
-              <div key={nq}>
-                <Box p={1} />
-                <CountContext.Provider value={nq}>
-                  <QuestionComponent />
-                </CountContext.Provider>
-              </div>
-            );
-          })}
-
-          <Box my={2}>
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              size="large"
-              onClick={() => {
-                setCount(count + 1);
-                addNew([...newQuestion, count]);
-              }}
-            >
-              Add New Quesiton
-            </Button>
-          </Box>
-          <Card my={2}>
-            <Divider />
-            <CardContent>
-              {/*Array.from(data).map((item) => (
+                {/*Array.from(data).map((item) => (
 						<div>
 							{item.questionId}------------------
 						</div>
 					))*/}
-              <Divider />
-              <Button
-                variant="contained"
-                color="secondary"
-                size="large"
-                onClick={() => {}}
-              >
-                Save
+                <Divider />
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  onClick={() => { }}
+                >
+                  Save
               </Button>
-              <Button
-                variant="outlined"
-                color="primary"
-                size="large"
-                onClick={() => {}}
-              >
-                Publish
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  size="large"
+                  onClick={() => { }}
+                >
+                  Publish
               </Button>
-            </CardContent>
-          </Card>
-        </div>
-      )}
+              </CardContent>
+            </Card>
+          </div>
+        )}
     </Container>
   );
 };

@@ -13,7 +13,7 @@ export default function PrimaryButtonContrast(props) {
         style={{
           background: "linear-gradient(45deg, #DA76C7 30%, #8973E6 90%)",
           backgroundClip: "text",
-          webkitBackgroundClip: "text",
+          WebkitBackgroundClip: "text",
           color: "rgba(0,0,0,.2)",
         }}
       >

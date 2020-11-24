@@ -29,15 +29,12 @@ export default function APLayout() {
       const result = await getAllSurveys();
       setData(result.data);
       setIsLoading(false);
-      //	console.log(data);
-      //	console.log(isLoading);
+
     };
 
     fetchData();
   }, []);
 
-  //	console.log(isLoading);
-  //	console.log(data);
   return (
     <Grid
       className={classes.root}
@@ -48,14 +45,14 @@ export default function APLayout() {
       {isLoading ? (
         <Loading />
       ) : (
-        <Grid container spacing={5}>
-          <Grid item xs={12}>
-            <SurveyContext.Provider value={data}>
-              <ActionDisplay />
-            </SurveyContext.Provider>
+          <Grid container spacing={5}>
+            <Grid item xs={12}>
+              <SurveyContext.Provider value={data}>
+                <ActionDisplay />
+              </SurveyContext.Provider>
+            </Grid>
           </Grid>
-        </Grid>
-      )}
+        )}
     </Grid>
   );
 }

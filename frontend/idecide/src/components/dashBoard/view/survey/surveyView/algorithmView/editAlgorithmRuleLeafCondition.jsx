@@ -68,10 +68,6 @@ export default class EditAlgorithmRuleLeafCondition extends Component {
         this.props.conditionObject.params.totalAnswerPointsQuestions !==
         undefined
       ) {
-        console.log(
-          "here",
-          this.props.conditionObject.params.totalAnswerPointsQuestion
-        );
         extraParamFields.push(
           <div>
             <div>

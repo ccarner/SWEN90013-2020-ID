@@ -94,23 +94,13 @@ const SurveyCard = ({ surveyHeaders, editable, ...rest }) => {
     setValues({ ...values, [prop]: event.target.value });
   };
 
-  // const submit = (e) => {
-  //   e.preventDefault();
-  //   const data = new FormData(form.current);
-  //   fetch("https://www.idecide.icu:9012/survey/uploadImg", {
-  //     method: "POST",
-  //     body: data,
-  //   })
-  //     .then((res) => res.json())
-  //     .then((json) => console.log(json));
-  // };
 
   const handleUploadImg = async () => {
-    console.log(files);
+
     let formData = new FormData();
     formData.set("img", files);
     formData.set("surveyId", surveyHeaders.surveyId + "");
-    console.log(formData);
+
     await addImageForSurvey(formData);
   };
 
@@ -145,13 +135,11 @@ const SurveyCard = ({ surveyHeaders, editable, ...rest }) => {
     handleUploadImg();
     const feedBack = await editSurvey(readyData)
       .then((data) => {
-        console.log(data);
         setOpenGreen(true);
       })
       .catch((error) => {
         setOpen(true);
         setError(error + "");
-        //			alert('Error from processDataAsycn() with async( When promise gets rejected ): ' + error);
       });
     return feedBack;
   };

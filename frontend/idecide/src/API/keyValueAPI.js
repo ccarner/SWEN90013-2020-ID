@@ -21,19 +21,6 @@ export async function getValue(key) {
 export async function setValue(key, value) {
   const endpoint = API_URL + `/kv/`;
 
-  console.log("sending", {
-    url: endpoint, // send a request to the library API
-    method: "POST", // HTTP POST method
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: getUserContext().token,
-    },
-    data: JSON.stringify({
-      key: key,
-      value: value,
-    }),
-  });
-
   const result = await axios({
     url: endpoint, // send a request to the library API
     method: "POST", // HTTP POST method

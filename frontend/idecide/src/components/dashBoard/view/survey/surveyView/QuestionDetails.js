@@ -51,7 +51,6 @@ const QuestionDetails = (props) => {
         }
       })
       .catch((error) => {
-        //setOpen(true);
         alert(error + "");
       });
   };

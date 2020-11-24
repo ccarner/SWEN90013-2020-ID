@@ -77,7 +77,6 @@ export default function DashboardAllSurveysExpose() {
       //don't need to parse / unparse, leave it as stringified json
       AddNewSurvey(surveyFileString)
         .then((result) => {
-          console.log("result received", result);
           if (result.data.flag) {
             toast("Uploaded successfully");
             fetchData();
@@ -120,9 +119,6 @@ export default function DashboardAllSurveysExpose() {
   const fetchData = async () => {
     setIsLoading(true);
     const result = await getAllSurveys();
-
-    console.log("result is", result);
-
     setData(result.data);
     setIsLoading(false);
   };
@@ -136,88 +132,88 @@ export default function DashboardAllSurveysExpose() {
       {isLoading ? (
         <Loading />
       ) : (
-        <Grid
-          container
-          spacing={5}
-          direction="row"
-          justify="flex-end"
-          alignItems="center"
-        >
-          <Grid item>
-            <PrimaryButtonContrast
-              onClick={() => {
-                AddNewSurveys(true);
-              }}
-            >
-              <NoteAddIcon style={{ paddingRight: "5px", color: "#8973E6" }} />{" "}
+          <Grid
+            container
+            spacing={5}
+            direction="row"
+            justify="flex-end"
+            alignItems="center"
+          >
+            <Grid item>
+              <PrimaryButtonContrast
+                onClick={() => {
+                  AddNewSurveys();
+                }}
+              >
+                <NoteAddIcon style={{ paddingRight: "5px", color: "#8973E6" }} />{" "}
               Create New Survey
             </PrimaryButtonContrast>
-            <PrimaryButtonContrast
-              onClick={() => {
-                setOpenUploadSurveyDialog(true);
-              }}
-            >
-              <BackupIcon style={{ paddingRight: "5px", color: "#8973E6" }} />{" "}
+              <PrimaryButtonContrast
+                onClick={() => {
+                  setOpenUploadSurveyDialog(true);
+                }}
+              >
+                <BackupIcon style={{ paddingRight: "5px", color: "#8973E6" }} />{" "}
               Upload Survey File
             </PrimaryButtonContrast>
-          </Grid>
+            </Grid>
 
-          <Grid container spacing={2}>
-            {data.map((item) => (
-              <Grid item lg={4} md={6} xs={12} key={item.surveyId}>
-                <SurveyCard
-                  style={{ height: 400 }}
-                  key={item.surveyId}
-                  surveyHeaders={item}
-                  useStyles
+            <Grid container spacing={2}>
+              {data.map((item) => (
+                <Grid item lg={4} md={6} xs={12} key={item.surveyId}>
+                  <SurveyCard
+                    style={{ height: 400 }}
+                    key={item.surveyId}
+                    surveyHeaders={item}
+                    useStyles
+                  />
+                </Grid>
+              ))}
+            </Grid>
+
+            <Dialog
+              open={isOpenUploadSurveyDialog}
+              onClose={() => {
+                setOpenUploadSurveyDialog(false);
+              }}
+              aria-labelledby="max-width-dialog-title"
+              //	fullWidth="md"
+              maxWidth="md"
+              style={{ zIndex: 999 }}
+            >
+              <DialogTitle id="form-dialog-title">Survey</DialogTitle>
+              <DialogContent>
+                <DialogContentText>Upload a survey file</DialogContentText>
+                <input
+                  type="file"
+                  name="uploadedSurvey"
+                  accept=".json"
+                  onChange={(event) => {
+                    setUploadedSurveyFile(event.target.files[0]);
+                  }}
                 />
-              </Grid>
-            ))}
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  onClick={() => {
+                    handleUploadedSurvey(uploadedSurveyFile);
+                  }}
+                  color="primary"
+                >
+                  Upload
+              </Button>
+                <Button
+                  onClick={() => {
+                    setOpenUploadSurveyDialog(false);
+                  }}
+                  color="primary"
+                >
+                  Close
+              </Button>
+              </DialogActions>
+            </Dialog>
           </Grid>
-
-          <Dialog
-            open={isOpenUploadSurveyDialog}
-            onClose={() => {
-              setOpenUploadSurveyDialog(false);
-            }}
-            aria-labelledby="max-width-dialog-title"
-            //	fullWidth="md"
-            maxWidth="md"
-            style={{ zIndex: 999 }}
-          >
-            <DialogTitle id="form-dialog-title">Survey</DialogTitle>
-            <DialogContent>
-              <DialogContentText>Upload a survey file</DialogContentText>
-              <input
-                type="file"
-                name="uploadedSurvey"
-                accept=".json"
-                onChange={(event) => {
-                  setUploadedSurveyFile(event.target.files[0]);
-                }}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button
-                onClick={() => {
-                  handleUploadedSurvey(uploadedSurveyFile);
-                }}
-                color="primary"
-              >
-                Upload
-              </Button>
-              <Button
-                onClick={() => {
-                  setOpenUploadSurveyDialog(false);
-                }}
-                color="primary"
-              >
-                Close
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </Grid>
-      )}
+        )}
     </div>
   );
 }

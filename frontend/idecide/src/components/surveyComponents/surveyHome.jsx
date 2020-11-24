@@ -136,6 +136,8 @@ export default class SurveyHome extends Component {
     }
     //Improvement: factor out all of the parsing of localstorage to put this into state
     // But need to make sure setState when the previous completions change...
+
+    let finishedCount = 0;
     const previousCompletions = JSON.parse(
       localStorage.getItem("prevCompletions")
     );
@@ -144,17 +146,23 @@ export default class SurveyHome extends Component {
         !previousCompletions ||
         !previousCompletions.hasOwnProperty(survey.surveyId)
       ) {
-        return false;
+        // return false;
+        // If a survey is yet to be finished, do not count
+      } else {
+        finishedCount = finishedCount + 1;
       }
     }
-    return true;
+    if (finishedCount >= (this.state.allSurveys.length - 1)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   async componentDidMount() {
     if (!this.context.userContext.userId) {
-      console.log(
-        "User has not logged in, no userId provided, log in anonymously"
-      );
+
+      // "User has not logged in, no userId provided, log in anonymously"
       await anonymousUser();
     }
     var surveys = await getAllSurveys();
@@ -249,7 +257,7 @@ export default class SurveyHome extends Component {
           returnHome={this.returnHomeCallback}
           surveyId={this.state.currentSurveyId}
           userId={this.context.userContext.userId}
-          completeHandler={() => {}}
+          completeHandler={() => { }}
         />
       );
     } else if (currentState === "menu" && this.state.loaded) {
@@ -349,10 +357,10 @@ export default class SurveyHome extends Component {
                   Save your Progress &nbsp; <SaveIcon />
                 </React.Fragment>
               ) : (
-                <React.Fragment>
-                  Your Progress is being saved <SaveIcon />
-                </React.Fragment>
-              )}
+                  <React.Fragment>
+                    Your Progress is being saved <SaveIcon />
+                  </React.Fragment>
+                )}
             </PrimaryButton>
           </div>
         </Card>
@@ -377,6 +385,8 @@ export default class SurveyHome extends Component {
       );
       // );
     }
+
+
     if (footer) {
       return (
         <div

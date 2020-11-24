@@ -1,7 +1,8 @@
 //debug
 
 export default function getConfig() {
-  if (process.env.REACT_APP_BACKEND_URL) {
+  // if (process.env.REACT_APP_BACKEND_URL) {
+  if (false) {
     return {
       rootApiUrl: process.env.REACT_APP_BACKEND_URL,
       fileServerUrl: process.env.REACT_APP_BACKEND2_URL,
