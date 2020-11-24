@@ -40,8 +40,7 @@ const NewSurvey = (props) => {
   const [newQuestion, addNew] = React.useState([]);
 
   const fatherName = useContext(CountContext);
-  console.log(fatherName);
-  console.log(props.match.params.surveyId || "Hello");
+
   const surveyId = props.match.params.surveyId;
 
   const [age, setAge, qN] = React.useState("");
@@ -49,26 +48,12 @@ const NewSurvey = (props) => {
   const [data, setData] = useState({ hits: [] });
 
   useEffect(() => {
-    /*	const fetchData = async () => {
-			const endpoint = `http://8.210.28.169:9009/survey/${surveyId}`;
-			try {
-				const dataFetched = await axios.get(endpoint).then((res) => res.data);
-				console.log(dataFetched);
-				return JSON.parse(dataFetched['data']['jsonStr']);
-			} catch (e) {
-				return e;
-			}
-		};
-		fetchData();*/
 
     const fetchData = async () => {
       setIsLoading(true);
       const result = await getSurveyById(surveyId);
-      //	console.log(result.surveySections[0]);
       //	setData(result.surveySections[0].questions);
       setIsLoading(false);
-      console.log(data);
-      console.log(isLoading);
     };
 
     fetchData();
@@ -84,87 +69,86 @@ const NewSurvey = (props) => {
       {isLoading ? (
         <div>Loading ...</div>
       ) : (
-        <div>
-          <Card>
-            <CardHeader
-              action={
-                <Button color="primary" variant="contained">
-                  Edit
+          <div>
+            <Card>
+              <CardHeader
+                action={
+                  <Button color="primary" variant="contained">
+                    Edit
                 </Button>
-              }
-              //   subheader="Description"
-              title="Questionnaire"
-            />
-            <Divider />
-            <CardContent>
-              <Box display="flex" p={1}>
-                <TextField
-                  id="outlined-multiline-static"
-                  label="Description"
-                  multiline
-                  rows={4}
-                  fullWidth
-                  defaultValue=""
-                  variant="outlined"
-                />
-              </Box>
-            </CardContent>
-          </Card>
-          {newQuestion.map((nq) => {
-            console.log(nq);
-            return (
-              <div key={nq}>
-                <Box p={1} />
-                <CountContext.Provider value={nq}>
-                  <QuestionComponent />
-                </CountContext.Provider>
-              </div>
-            );
-          })}
+                }
+                //   subheader="Description"
+                title="Questionnaire"
+              />
+              <Divider />
+              <CardContent>
+                <Box display="flex" p={1}>
+                  <TextField
+                    id="outlined-multiline-static"
+                    label="Description"
+                    multiline
+                    rows={4}
+                    fullWidth
+                    defaultValue=""
+                    variant="outlined"
+                  />
+                </Box>
+              </CardContent>
+            </Card>
+            {newQuestion.map((nq) => {
+              return (
+                <div key={nq}>
+                  <Box p={1} />
+                  <CountContext.Provider value={nq}>
+                    <QuestionComponent />
+                  </CountContext.Provider>
+                </div>
+              );
+            })}
 
-          <Box my={2}>
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              size="large"
-              onClick={() => {
-                setCount(count + 1);
-                addNew([...newQuestion, count]);
-              }}
-            >
-              Add New Question
+            <Box my={2}>
+              <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                size="large"
+                onClick={() => {
+                  setCount(count + 1);
+                  addNew([...newQuestion, count]);
+                }}
+              >
+                Add New Question
             </Button>
-          </Box>
-          <Card my={2}>
-            <Divider />
-            <CardContent>
-              {/*Array.from(data).map((item) => (
+            </Box>
+            <Card my={2}>
+              <Divider />
+              <CardContent>
+                {/*Array.from(data).map((item) => (
 						<div>
 							{item.questionId}------------------
 						</div>
 					))*/}
-              <Divider />
-              <Button
-                variant="contained"
-                color="secondary"
-                size="large"
-                onClick={() => {}}
-              >
-                Save
+                <Divider />
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  onClick={() => { }}
+                >
+                  Save
               </Button>
-              <Button
-                variant="outlined"
-                color="primary"
-                size="large"
-                onClick={() => {}}
-              >
-                Publish
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  size="large"
+                  onClick={() => { }}
+                >
+                  Publish
               </Button>
-            </CardContent>
-          </Card>
-        </div>
-      )}
+              </CardContent>
+            </Card>
+          </div>
+        )}
     </Container>
   );
 };

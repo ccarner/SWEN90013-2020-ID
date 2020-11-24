@@ -37,7 +37,6 @@ export default class imageManagementView extends Component {
 
   componentDidMount() {
     getAllImageNames().then((response) => {
-      console.log("data is", response.data);
       this.setState({ imageList: response.data, loadedImageList: true });
     });
     //TODO: this is a hack while the getAllImageNames API still has cors issues

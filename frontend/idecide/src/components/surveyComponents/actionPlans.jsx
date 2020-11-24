@@ -65,7 +65,6 @@ export default class ActionPlans extends Component {
     var lastxy = { x: 20, y: 30 };
 
     const setLastxy = (value) => {
-      console.log("value was", value);
       lastxy = value;
     };
 
@@ -78,7 +77,6 @@ export default class ActionPlans extends Component {
       );
       doc.text(20, lastxy.y + 14, splitTitle);
       lastxy.y += 10 * splitTitle.length;
-      console.log("now attempting", plan);
 
       await doc.fromHTML(
         this.state.actionPlanContents[plan].strategyHtmlString,
@@ -127,7 +125,6 @@ export default class ActionPlans extends Component {
           recommendedPlans: result.events.map(({ type }) => type),
           loaded: true,
         });
-        // console.log("result was in eval feedback", result);
       }
     );
   };
@@ -140,12 +137,9 @@ export default class ActionPlans extends Component {
     var { recommendedPlans, actionPlanContents } = this.state;
     var returnArray = [];
     if (recommendedPlans && actionPlanContents) {
-      console.log("currentaction Plans", recommendedPlans, actionPlanContents);
-
       // emergency plans come first, then non-emergency plans. Count number of
       // emergency plans using reduce / an accumulator
       const countNumberEmergencyPlans = (accumulator, currentPlan) => {
-        console.log("current plan", currentPlan);
         return actionPlanContents[currentPlan].strategyType === "EMERGENCY"
           ? 1 + accumulator
           : accumulator;
@@ -154,8 +148,6 @@ export default class ActionPlans extends Component {
         countNumberEmergencyPlans,
         0
       );
-
-      console.log("number of emergency plans was", startOfNonEmergency);
 
       if (startOfNonEmergency > 0) {
         returnArray.push(
@@ -283,7 +275,6 @@ export default class ActionPlans extends Component {
           >
             {AllStrategies &&
               AllStrategies[type].map((plan, index) => {
-                // console.log("plan was", plan);
                 var html = {
                   __html: this.state.actionPlanContents[plan]
                     .strategyHtmlString,
@@ -358,10 +349,10 @@ export default class ActionPlans extends Component {
                   Save your Plan &nbsp; <SaveIcon />
                 </React.Fragment>
               ) : (
-                <React.Fragment>
-                  Your Plan is saved <SaveIcon />
-                </React.Fragment>
-              )}
+                  <React.Fragment>
+                    Your Plan is saved <SaveIcon />
+                  </React.Fragment>
+                )}
             </PrimaryButton>
             <PrimaryButton onClick={this.makePdf}>
               Export as PDF &nbsp; <GetAppIcon />
@@ -403,7 +394,9 @@ export default class ActionPlans extends Component {
 
               {this.handleStrategySwitch()}
             </Card.Body>
+            <p>Thanks for using I-DECIDE. We hope it was helpful.</p>
           </Card>
+
         </div>
       </div>
     );

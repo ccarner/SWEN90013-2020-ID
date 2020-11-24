@@ -35,14 +35,12 @@ export default function DCLayout() {
       const surveys = await getAllSurveys();
       setData(surveys.data);
       setIsLoading(false);
-      console.log(data);
-      console.log(isLoading);
+
     };
 
     fetchData();
   }, []);
 
-  console.log(isLoading);
   return (
     <Grid
       className={classes.root}
@@ -53,19 +51,19 @@ export default function DCLayout() {
       {isLoading ? (
         <Loading />
       ) : (
-        <Grid container spacing={2}>
-          <SectionSearch.Provider value={{ sectionSearch, setSectionSearch }}>
-            <Grid item xs={12} alignContent="flex-end">
-              <CountContext.Provider value={data}>
-                <Tools />
-              </CountContext.Provider>
-            </Grid>
-            <Grid item xs={12}>
-              <DataDisplay />
-            </Grid>
-          </SectionSearch.Provider>
-        </Grid>
-      )}
+          <Grid container spacing={2}>
+            <SectionSearch.Provider value={{ sectionSearch, setSectionSearch }}>
+              <Grid item xs={12} alignContent="flex-end">
+                <CountContext.Provider value={data}>
+                  <Tools />
+                </CountContext.Provider>
+              </Grid>
+              <Grid item xs={12}>
+                <DataDisplay />
+              </Grid>
+            </SectionSearch.Provider>
+          </Grid>
+        )}
     </Grid>
   );
 }

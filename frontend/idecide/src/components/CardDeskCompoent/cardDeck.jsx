@@ -86,9 +86,7 @@ export default class CardDeck extends Component {
     });
 
     this.handleClick(item);
-    console.log(
-      parseInt(item.questionId) + " :" + parseInt(this.state.questionLen)
-    );
+
     // if (item.questionId == this.state.questionLen) {
     //   JsonRuleEngine(
     //     this.state.result,
@@ -108,8 +106,7 @@ export default class CardDeck extends Component {
 
   handleSubmit = (item, value) => {
     //Make a network call somewhere
-    console.log(item);
-    console.log(value);
+
     this.handleResult();
   };
 
@@ -135,7 +132,7 @@ export default class CardDeck extends Component {
       );
     } else if (item.questionType === "slider") {
       let silderresult = 0;
-      console.log(882, item)
+
       return (
 
         < div className="questionContainer" >
@@ -290,7 +287,7 @@ export default class CardDeck extends Component {
         </div>
       );
     }
-    console.log(771, questions[0], questions.length)
+
 
     const ItemList = (
       <TransitionGroup>

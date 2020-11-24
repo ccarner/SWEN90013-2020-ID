@@ -2,7 +2,6 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
   let RuleEngine = require("json-rules-engine");
   let engine = new RuleEngine.Engine();
 
-  // console.log(669, rules, factContainers)
   // a rule is an object of form {conditions, event}
   console.warn("rules was", rules);
   for (const rule of rules) {
@@ -26,10 +25,9 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
       try {
         // result for Q1 of priorities survey, then return first component = 'top' priority
         // ID of my priorities survey is "4"
-        console.log("prevCompletions is ---*", prevCompletions);
+
         topPriority = prevCompletions[4].questions[1].questionAnswer[0];
 
-        console.log("topPriority was", topPriority);
         // the top priorities as given are the quetion answers, eg "My Safety".. and could be changed
         let priorities = ["safety", "child", "resources", "health", "partner"];
         for (var priority of priorities) {
@@ -44,7 +42,7 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
           " (Top priorities question)"
         );
       }
-      // console.log("top priority was", topPriority);
+
       return topPriority;
     });
   };
@@ -73,7 +71,7 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
           " (Intentions question)"
         );
       }
-      // console.log("intention was", intention);
+
       return intention;
     });
   };
@@ -95,7 +93,7 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
       var totalPoints = 0;
       // totalAnswerPointsQuestions needs to be an array of form [[surveyId,sectionId,questionId], [surveyId,..,..],...]
       // one entry in array per question we're considering when adding up points.
-      console.log("questionparams were", params.totalAnswerPointsQuestions);
+
       for (const idArr of params.totalAnswerPointsQuestions) {
         // survey answers should be a nested object of surveys,sections,questions
         var question = null;
@@ -104,12 +102,12 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
           if (idArr[1].includes("-")) {
             let re = /([\d]*)-([\d]*)/g;
             var match = re.exec(idArr[1]);
-            console.log("match was", match);
+
             let startQ = match[1];
             let endQ = match[2];
             startQ = parseInt(startQ);
             endQ = parseInt(endQ);
-            console.log("start/end was", startQ, endQ);
+
 
             if (startQ < endQ) {
               //protects against incorrectly entered values, stops infinite loop
@@ -169,7 +167,7 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
           }
         }
       }
-      console.log("total points was", totalPoints, params);
+
       return totalPoints;
     });
   };
@@ -207,7 +205,7 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
 
     // return totalAnswerPointsFact(params, almanac);
     var value = totalAnswerPointsFact(params, almanac);
-    // console.log("severe subscale is", value);
+
     return value;
   };
 
@@ -305,10 +303,6 @@ export default function evaluateFeedback(rules, factContainers, surveyResults) {
   });
 
   var results = engine.run().then((result) => {
-    // console.log(
-    //   "all rules executed; the following events were triggered: ",
-    //   result.events
-    // );
     return result;
   });
   return results;

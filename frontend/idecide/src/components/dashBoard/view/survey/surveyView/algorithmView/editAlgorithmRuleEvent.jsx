@@ -10,8 +10,6 @@ import update from "immutability-helper";
 export default class EditAlgorithmRuleEvent extends Component {
   handleChange(eventType, event) {
     var value = event.target.value;
-    console.log("value was", value, eventType, this.props.modifySurvey);
-    // this.props.sectionDataStructure[eventType] = value;
 
     const updateRuleEvent = (prevSurvey) =>
       update(prevSurvey, {

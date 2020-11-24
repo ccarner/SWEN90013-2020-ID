@@ -78,25 +78,6 @@ export default class EditAlgorithmRuleSubCondition extends Component {
       }
     }
 
-    // console.log(
-    //   "the final value was",
-    //   this.props.ruleIndex,
-    //   pathObject,
-    //   {
-    //     surveySections: {
-    //       [this.props.sectionIndex]: {
-    //         sectionResultAlgorithm: {
-    //           [this.props.ruleIndex]: {
-    //             conditions: pathObject,
-    //           },
-    //         },
-    //       },
-    //     },
-    //   },
-    //   this.props.rule,
-    //   this.props.conditionLocationMap
-    // );
-
     //now updateLocation should point to a nested structure compatible with
     //immutability helper!
 
@@ -117,7 +98,7 @@ export default class EditAlgorithmRuleSubCondition extends Component {
   }
 
   handleTypeChange(newType) {
-    console.log("new condition type is", newType);
+
     var newCondition = {};
     if (newType !== this.valueType()) {
       if (newType === "CONDITION") {
@@ -131,8 +112,7 @@ export default class EditAlgorithmRuleSubCondition extends Component {
         newCondition = { any: [], all: [] };
       }
     }
-    // console.log("new condition is", newCondition);
-    // console.log("old condition was", this.props.conditionObject);
+
     //overwrite this whole object
     this.handleChange({ $set: newCondition });
   }

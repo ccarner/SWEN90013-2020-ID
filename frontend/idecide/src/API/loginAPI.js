@@ -64,9 +64,6 @@ export async function loginUser(userIn) {
   const { username, password } = userIn;
   var endpoint = API_URL + `/user/login`;
 
-  // alert(112);
-  // console.log(112, process.env.REACT_APP_BACKEND2_URL);
-
   const result = await axios({
     url: endpoint, // send a request to the library API
     method: "POST", // HTTP POST method

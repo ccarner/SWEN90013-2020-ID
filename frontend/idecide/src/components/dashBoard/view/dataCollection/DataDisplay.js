@@ -75,7 +75,7 @@ const headCells = [
   { id: "question", numeric: false, disablePadding: true, label: "Questions" },
   { id: "type", numeric: false, disablePadding: false, label: "Type" },
   /*	{ id: 'yes', numeric: true, disablePadding: false, label: 'Yes' },
-	{ id: 'no', numeric: true, disablePadding: false, label: 'No' },*/
+  { id: 'no', numeric: true, disablePadding: false, label: 'No' },*/
   { id: "never", numeric: true, disablePadding: false, label: "Never" },
   { id: "onlyOnce", numeric: true, disablePadding: false, label: "Only Once" },
   {
@@ -113,7 +113,7 @@ const headCells1 = [
   { id: "question", numeric: false, disablePadding: true, label: "Questions" },
   { id: "type", numeric: false, disablePadding: false, label: "Type" },
   /*	{ id: 'yes', numeric: true, disablePadding: false, label: 'Yes' },
-	{ id: 'no', numeric: true, disablePadding: false, label: 'No' },*/
+  { id: 'no', numeric: true, disablePadding: false, label: 'No' },*/
   { id: "never", numeric: true, disablePadding: false, label: "Never" },
   { id: "onlyOnce", numeric: true, disablePadding: false, label: "Only Once" },
   {
@@ -206,13 +206,13 @@ const useToolbarStyles = makeStyles((theme) => ({
   highlight:
     theme.palette.type === "light"
       ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-        }
+        color: theme.palette.secondary.main,
+        backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+      }
       : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
-        },
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.secondary.dark,
+      },
   title: {
     flex: "1 1 100%",
   },
@@ -222,7 +222,6 @@ const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { numSelected } = props.numSelected;
   const sectionTitleText = props.sectionTitleText;
-  // console.log(props);
 
   return (
     <Toolbar
@@ -240,15 +239,15 @@ const EnhancedTableToolbar = (props) => {
           {numSelected} selected
         </Typography>
       ) : (
-        <Typography
-          className={classes.title}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          {sectionTitleText}
-        </Typography>
-      )}
+          <Typography
+            className={classes.title}
+            variant="h6"
+            id="tableTitle"
+            component="div"
+          >
+            {sectionTitleText}
+          </Typography>
+        )}
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
@@ -257,12 +256,12 @@ const EnhancedTableToolbar = (props) => {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
+          <Tooltip title="Filter list">
+            <IconButton aria-label="filter list">
+              <FilterListIcon />
+            </IconButton>
+          </Tooltip>
+        )}
     </Toolbar>
   );
 };
@@ -307,48 +306,45 @@ export default function DataDisplay() {
   const [data, setData] = useState({ hits: [] });
   const [surveySection, setSurveySection] = useState({ hits: [] });
   let { sectionSearch } = useContext(SectionSearch);
-  console.log(sectionSearch);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       const result1 = await getAllSurveys();
-      //    console.log(result1);
+
       const result = await getSurveyById(result1.data[0].surveyId);
       setData(result.surveySections[0]);
       setSurveySection(result.surveySections);
       setIsLoading(false);
-      console.log(result);
-      //			console.log(data);
-      //			console.log(isLoading);
+
     };
     fetchData();
   }, []);
-  //	console.log(data.questions);
+
   const rows = [
     typeof data.questions !== "undefined"
       ? createData(
-          data.questions[0].questionText,
-          data.questions[0].questionType,
-          1,
-          10,
-          7,
-          44,
-          63,
-          40
-        )
+        data.questions[0].questionText,
+        data.questions[0].questionType,
+        1,
+        10,
+        7,
+        44,
+        63,
+        40
+      )
       : "",
     typeof data.questions !== "undefined"
       ? createData(
-          data.questions[1].questionText,
-          data.questions[1].questionType,
-          5,
-          15,
-          4,
-          20,
-          33,
-          60
-        )
+        data.questions[1].questionText,
+        data.questions[1].questionType,
+        5,
+        15,
+        4,
+        20,
+        33,
+        60
+      )
       : "",
     /*  createData('Cupcake', 305, 3.7, 67, 4.3),
     createData('Donut', 452, 25.0, 51, 4.9),

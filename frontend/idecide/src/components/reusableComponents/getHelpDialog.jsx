@@ -14,7 +14,6 @@ export default function GetHelpDialog(props) {
   const fetchHtml = async () => {
     const html = await getValue("getHelpMessage");
     setContentHtml(html);
-    console.log("html was", html);
   };
 
   useEffect(() => {

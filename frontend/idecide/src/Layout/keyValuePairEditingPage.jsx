@@ -51,18 +51,11 @@ export default class KeyValuePairEditingPage extends Component {
   }
 
   async fetchData() {
-    console.log("getting for key", this.state.key);
     const value = await getValue(this.state.key);
-    console.log("value is", value);
     this.setState({ value: value, loaded: true });
   }
 
   componentDidUpdate(prevProps) {
-    console.log(
-      "props",
-      prevProps.match.params.key,
-      this.props.match.params.key
-    );
     if (prevProps.match.params.key !== this.props.match.params.key) {
       this.resetState().then(() => {
         this.fetchData();
@@ -81,7 +74,6 @@ export default class KeyValuePairEditingPage extends Component {
     }
     //else received just a string from Quill
     this.setState({ value: event });
-    console.log(event);
   }
 
   async uploadValue() {
@@ -89,7 +81,6 @@ export default class KeyValuePairEditingPage extends Component {
     try {
       setValue(this.state.key, this.state.value)
         .then((data) => {
-          console.log("data received", data);
           if (data.flag) {
             toast("uploaded successfully");
           } else {

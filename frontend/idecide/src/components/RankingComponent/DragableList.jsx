@@ -27,7 +27,7 @@ class DragableList extends Component {
 
   loadRankList = () => {
     var question = this.props.section.questions[0];
-    // console.log(question.selectionOptions);
+
     var newtasks = {};
     var newcolumns = {
       "column-1": {
@@ -51,7 +51,7 @@ class DragableList extends Component {
     //here will handle the result !
 
     this.props.handleAnswer(item.questionId, result);
-    console.log(this.state.columns["column-1"].taskIds);
+
   };
 
   onDragEnd = (result) => {
