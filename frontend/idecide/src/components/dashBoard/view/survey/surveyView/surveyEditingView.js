@@ -16,6 +16,7 @@ import SwapVertIcon from "@material-ui/icons/SwapVert";
 import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
 import update from "immutability-helper";
 import UndoIcon from "@material-ui/icons/Undo";
+import LoadingSpinner from "../../../../reusableComponents/loading";
 
 import {
   Card,
@@ -359,64 +360,88 @@ export default class surveyEditingView extends Component {
     }
   }
 
+  handleUpdate = async (updatedSurvey) => {
+    console.log(882, updatedSurvey)
+    let updatedResult = await editSurvey(updatedSurvey);
+    console.log(883, updatedResult);
+    // setTimeout(updatedResult, 1000);
+    if (updatedResult.data.flag) {
+      // this.setState({ isLoaded: true });
+      window.location.reload();
+    } else {
+      let failMessage = "Update failed, the reason is: " + updatedResult.data.message;
+      alert(failMessage);
+    }
+    console.log(885, this.state);
+  }
+
   //pass to subcomponents both a) a reference to the datastructure (mutable) and
   //b) the 'view' which is based on the state of this main component.
   render() {
-    return (
-      <div>
-        <Fab
-          color={this.state.inSectionReorgView ? "secondary" : "primary"}
-          aria-label="section reorganisation"
-          size="large"
-          style={{
-            position: "fixed",
-            bottom: "2em",
-            right: "2em",
-            zIndex: 100,
-          }}
-          onClick={() => {
-            this.setState((prevState) => {
-              return { inSectionReorgView: !prevState.inSectionReorgView };
-            });
-          }}
-        >
-          <SwapVertIcon />
-        </Fab>
+    const { isLoaded } = this.state;
+    if (isLoaded === false) {
+      return (
+        <div>
+          <LoadingSpinner />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Fab
+            color={this.state.inSectionReorgView ? "secondary" : "primary"}
+            aria-label="section reorganisation"
+            size="large"
+            style={{
+              position: "fixed",
+              bottom: "2em",
+              right: "2em",
+              zIndex: 100,
+            }}
+            onClick={() => {
+              this.setState((prevState) => {
+                return { inSectionReorgView: !prevState.inSectionReorgView };
+              });
+            }}
+          >
+            <SwapVertIcon />
+          </Fab>
 
-        <Fab
-          color={"primary"}
-          aria-label="undo"
-          size="large"
-          disabled={!this.state.canUndo}
-          style={{
-            position: "fixed",
-            bottom: "8em",
-            right: "2em",
-            zIndex: 100,
-          }}
-          onClick={this.undoStateChange}
-        >
-          <UndoIcon />
-        </Fab>
+          <Fab
+            color={"primary"}
+            aria-label="undo"
+            size="large"
+            disabled={!this.state.canUndo}
+            style={{
+              position: "fixed",
+              bottom: "8em",
+              right: "2em",
+              zIndex: 100,
+            }}
+            onClick={this.undoStateChange}
+          >
+            <UndoIcon />
+          </Fab>
 
-        {this.state.isLoaded && (
-          <div>
-            <Typography style={{ color: "white" }} variant="h2">
-              {this.state.survey.surveyTitle}
-            </Typography>
-            {this.getView()}
-          </div>
-        )}
-        <PrimaryButtonContrast
-          onClick={() => {
-            console.log(995, this.state.survey)
-            editSurvey(this.state.survey);
-          }}
-        >
-          Save & Upload Changes
+          {this.state.isLoaded && (
+            <div>
+              <Typography style={{ color: "white" }} variant="h2">
+                {this.state.survey.surveyTitle}
+              </Typography>
+              {this.getView()}
+            </div>
+          )}
+          <PrimaryButtonContrast
+            onClick={() => {
+              this.setState({ isLoaded: false });
+              this.handleUpdate(this.state.survey);
+            }}
+          >
+            Save & Upload Changes
         </PrimaryButtonContrast>
-      </div>
-    );
+        </div>
+      );
+    }
   }
 }
 
