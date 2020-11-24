@@ -279,7 +279,7 @@ function NavBar(props) {
                           <Grid item>
                             <PrimaryButton
                               onClick={userContextValue.logout}
-                              // className={clsx(classes.button)}
+                            // className={clsx(classes.button)}
                             >
                               <ExitToAppIcon />
                               {isWidthUp("sm", width) ? "LOGOUT" : ""}
@@ -289,41 +289,41 @@ function NavBar(props) {
                       )}
                     {(!userContextValue.userContext.userType ||
                       userContextValue.userContext.userType !== "admin") && (
-                      <Grid
-                        container
-                        direction="row"
-                        justify="flex-end"
-                        alignItems="center"
-                        spacing={2}
-                      >
-                        <Grid item>
-                          <Tooltip title="Get more help">
-                            <PrimaryButton
-                              className={clsx(classes.button)}
-                              onClick={handleOpen}
-                            >
-                              <PhoneIcon />
-                              {isWidthUp("sm", width) ? "Get Help" : ""}
-                            </PrimaryButton>
-                          </Tooltip>
+                        <Grid
+                          container
+                          direction="row"
+                          justify="flex-end"
+                          alignItems="center"
+                          spacing={2}
+                        >
+                          <Grid item>
+                            <Tooltip title="Get more help">
+                              <PrimaryButton
+                                className={clsx(classes.button)}
+                                onClick={handleOpen}
+                              >
+                                <PhoneIcon />
+                                {isWidthUp("sm", width) ? "Get Help" : ""}
+                              </PrimaryButton>
+                            </Tooltip>
+                          </Grid>
+                          <Grid item>
+                            <Tooltip title="Click to quickly exit the site and clear saved data">
+                              <PrimaryButton
+                                className={clsx(classes.button)}
+                                onClick={() => {
+                                  userContextValue.logout();
+                                  window.location.href =
+                                    "https://www.weather.com.au/";
+                                }}
+                              >
+                                <ExitToAppIcon />
+                                {isWidthUp("sm", width) ? "Quick Exit" : ""}
+                              </PrimaryButton>
+                            </Tooltip>
+                          </Grid>
                         </Grid>
-                        <Grid item>
-                          <Tooltip title="Click to quickly exit the site and clear saved data">
-                            <PrimaryButton
-                              className={clsx(classes.button)}
-                              onClick={() => {
-                                userContextValue.logout();
-                                window.location.href =
-                                  "https://www.weather.com.au/";
-                              }}
-                            >
-                              <ExitToAppIcon />
-                              {isWidthUp("sm", width) ? "Quick Exit" : ""}
-                            </PrimaryButton>
-                          </Tooltip>
-                        </Grid>
-                      </Grid>
-                    )}
+                      )}
                   </Grid>
                 </Toolbar>
               </AppBar>
@@ -341,8 +341,8 @@ function NavBar(props) {
                     {theme.direction === "ltr" ? (
                       <ChevronLeftIcon />
                     ) : (
-                      <ChevronRightIcon />
-                    )}
+                        <ChevronRightIcon />
+                      )}
                   </IconButton>
                 </div>
                 <Divider />
@@ -565,8 +565,8 @@ function NavBar(props) {
               </Dialog>
             </div>
           ) : (
-            <Loading isLoading={isLoading} />
-          )}
+              <Loading isLoading={isLoading} />
+            )}
         </div>
       )}
     </userContext.Consumer>

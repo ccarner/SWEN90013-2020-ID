@@ -140,7 +140,6 @@ const SurveyCard = ({ surveyHeaders, editable, ...rest }) => {
       .catch((error) => {
         setOpen(true);
         setError(error + "");
-        //			alert('Error from processDataAsycn() with async( When promise gets rejected ): ' + error);
       });
     return feedBack;
   };
