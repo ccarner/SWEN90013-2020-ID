@@ -70,7 +70,10 @@ class App extends React.Component {
     return (
       <Switch>
         {/* TODO: make the dashboard a single hierarchical component that is navigated via links... */}
-        <Route exact path="/dashboard" component={DashBoard} />
+        {/* <Route exact path="/dashboard" component={DashBoard} /> */}
+        <Route exact path="/dashboard" render={(props)=> <DashBoard {...props}/>} />
+
+        
         {/* <Redirect
           exact
           from="/surveyComponent/"

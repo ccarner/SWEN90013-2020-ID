@@ -214,6 +214,9 @@ export default class SurveyEditingViewSection extends Component {
               );
             }}
           </Droppable>
+
+
+
           <EditAlgorithmView
             sectionIndex={this.props.sectionIndex}
             algorithm={surveySection.sectionResultAlgorithm}

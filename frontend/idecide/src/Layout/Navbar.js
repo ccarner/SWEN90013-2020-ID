@@ -486,51 +486,8 @@ function NavBar(props) {
               >
                 {props.children}
               </main>
+
               <GetHelpDialog open={openHelp} handleClose={handleClose} />
-
-              {/** dialog for get help, relocated to its own component TODO remove this */}
-              {/* <Dialog
-                open={openHelp}
-                onClose={handleClose}
-                aria-labelledby="max-width-dialog-title"
-                maxWidth="md"
-                fullWidth
-              >
-                <DialogTitle id="form-dialog-title">Get Help</DialogTitle>
-                <Divider />
-                <DialogContent>
-                  <DialogContentText>
-                    If you’re looking for help, you can call:
-                  </DialogContentText>
-                  <Typography variant="body1" gutterBottom>
-                    1800 RESPECT --{" "}
-                    <a href={`tel:1800 737 732`}>1800 737 732</a>
-                  </Typography>
-                  <Typography variant="body1" gutterBottom>
-                    Lifeline -- <a href={`tel:13 11 14`}>13 11 14</a>
-                  </Typography>
-                  <Typography variant="body1" gutterBottom>
-                    Sexual Assault Crisis Line --{" "}
-                    <a href={`tel:1800 737 732`}>1800 806 292</a>
-                  </Typography>
-                  <Typography variant="body1" gutterBottom>
-                    QLife -- <a href={`tel:1800 184 627`}>1800 184 627</a>
-                  </Typography>
-                  <Typography variant="body1" gutterBottom>
-                    InTouch Multicultural Centre Against Family Violence --{" "}
-                    <a href={`tel:1800 737 732`}>1800 755 988</a>
-                  </Typography>
-                </DialogContent>
-
-                <DialogActions>
-                  <PrimaryButton
-                    onClick={handleClose}
-                    className={clsx(classes.button)}
-                  >
-                    Close
-                  </PrimaryButton>
-                </DialogActions>
-              </Dialog> */}
 
               {/** dialog for download data*/}
               <Dialog
