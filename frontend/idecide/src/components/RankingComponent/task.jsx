@@ -5,7 +5,7 @@ import "./DraggableList.css";
 const Container = styled.div`
   margin-buttom: 8px;
   border: 1px solid lightgrey;
-  border-radius: 2em;
+  borderradius: 2em;
   padding: 8px;
   font-size: 1rem;
   text-align: center;

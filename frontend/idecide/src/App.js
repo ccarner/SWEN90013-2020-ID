@@ -8,9 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
 import Landing from "./components/Landing";
-import Questions from "./components/Questions";
-import ActionPlan from "./components/ActionPlan";
-import Framework from "./components/Framework";
+// import Questions from "./components/Questions";
+// import ActionPlan from "./components/ActionPlan";
+// import Framework from "./components/Framework";
 import DashBoard from "./components/dashBoard/DBLayout";
 import PersistentDrawerLeft from "./Layout/Navbar";
 import dashboardAllSurveysExpose from "./components/dashBoard/view/survey/dashboardAllSurveysExpose";
@@ -71,9 +71,9 @@ class App extends React.Component {
       <Switch>
         {/* TODO: make the dashboard a single hierarchical component that is navigated via links... */}
         {/* <Route exact path="/dashboard" component={DashBoard} /> */}
-        <Route exact path="/dashboard" render={(props)=> <DashBoard {...props}/>} />
+        <Route exact path="/dashboard" render={(props) => <DashBoard {...props} />} />
 
-        
+
         {/* <Redirect
           exact
           from="/surveyComponent/"

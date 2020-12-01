@@ -225,9 +225,10 @@ export default class SurveyHome extends Component {
     }
 
     // render the stepper
-    if (["introduction", "menu", "actionPlan"].indexOf(currentState) > -1) {
+    let thisIndex = ["introduction", "menu", "actionPlan"].indexOf(currentState)
+    if (thisIndex > -1) {
       renderElements.push(
-        <Card style={{ flexDirection: "row", justifyContent: "center" }}>
+        <Card style={{ flexDirection: "row", justifyContent: "center" }} key={thisIndex} >
           <Stepper activeStep={currentStep} style={{ minWidth: "80%" }}>
             {steps.map((label, index) => {
               return (

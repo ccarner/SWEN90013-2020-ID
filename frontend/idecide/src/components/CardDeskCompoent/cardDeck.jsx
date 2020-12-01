@@ -179,13 +179,13 @@ export default class CardDeck extends Component {
           <div className="button-container">
             <PrimaryButton
               gradient="aqua"
-              style={{ border: "none", "border-radius": "15px" }}
+              style={{ border: "none", "borderradius": "15px" }}
               onClick={() => this.handleResult(item, "No")}
             >
               No
             </PrimaryButton>
             <PrimaryButton
-              style={{ border: "none", "border-radius": "15px" }}
+              style={{ border: "none", "borderradius": "15px" }}
               onClick={() => this.handleResult(item, "Yes")}
             >
               Yes
